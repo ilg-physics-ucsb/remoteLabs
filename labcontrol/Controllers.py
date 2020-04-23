@@ -8,6 +8,12 @@ class BaseController(object):
     def cmd_handler(self, cmd, *params):
         pass
 
+# class Relay:
+#     def __init__(self, name, pins):
+#         self.commands={}
+#         self.name = name
+#         self.device_type = "controller"
+#         self.pins=pins
 
 class Stepper(stp.Motor):
 
@@ -56,6 +62,39 @@ class Stepper(stp.Motor):
     #         l.append(int(p))
 
 class Keithley6514Electrometer:
+
+    def __init__(self, name, visa_resource):
+        self.name = name
+        self.device_type = "measurement"
+        self.commands = {
+            "press": {"method": self.press_key, 
+                      "parser": self.__press_key_parser
+                    }
+        }
+        self.inst = visa_resource
+        self.inst.write("SYST:INIT")
+    
+    def cleanup(self):
+        pass
+    
+    def reset(self):
+        pass
+
+    def cmd_handler(self, cmd, params):
+        if cmd not in self.commands:
+            raise CommandError(cmd)
+        parsed_argument = self.commands[cmd]["parser"](params)
+        self.commands[cmd]["method"](parsed_argument)
+    
+    def press_key(self, params):
+        self.inst.write(params)
+    
+    def __press_key_parser(self, params):
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
+        return params[0]
+
+    
+class Keithley2000Multimeter: #copied unaltered from Electrometer on 200423
 
     def __init__(self, name, visa_resource):
         self.name = name

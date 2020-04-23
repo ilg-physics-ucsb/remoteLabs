@@ -1,2 +1,2 @@
 from .Experiment import Experiment
-from .Controllers import Stepper, Keithley6514Electrometer
+from .Controllers import Stepper, Keithley6514Electrometer,Keithley2000Multimeter

@@ -17,7 +17,7 @@
 
         start.addEventListener('click', function (e) {
             // var address = document.getElementById('address').value;
-            var signalling_server_hostname = location.hostname || "192.168.1.61";
+            var signalling_server_hostname = location.hostname || "192.168.0.32";
             var signalling_server_address = signalling_server_hostname + ':' + (8081 || (location.protocol === 'https:' ? 443 : 80));
             var protocol = location.protocol === "https:" ? "wss:" : "ws:";
             var address = location.hostname + ':' + (8081 || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
@@ -106,11 +106,11 @@
         // }, false);
 
         left.addEventListener('click', function() {
-            dataChannel.send("Stp1/move/-200");
+            dataChannel.send("Pot/move/-200");
         })
 
         right.addEventListener('click', function() {
-            dataChannel.send("Stp1/move/200");
+            dataChannel.send("Pot/move/200");
         })
 
         voltButton.addEventListener('click', function(event) {
