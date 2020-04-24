@@ -5,9 +5,10 @@ resource_manager = visa.ResourceManager("@py")
 visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=57600)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
-# visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB1::INSTR', baud_rate=57600) #not sure if USB# is unique 2004234
-# visa_multimeter.read_termination = "\r\n"
-# visa_multimeter.write_termination = "\r\n"
+
+visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB1::INSTR', baud_rate=19200) #not sure if USB# is unique 2004234
+visa_multimeter.read_termination = "\r\n"
+visa_multimeter.write_termination = "\r\n"
 
 socket_path = "/tmp/uv4l.socket"
 
@@ -20,13 +21,13 @@ potentiometer = Stepper("Pot", pot_pins)
 # lamp = Relay("Lamp",lamp_pins)
 
 electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
-# multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
+multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 
 exp = Experiment()
 #exp.add_device(lamp)
 exp.add_device(potentiometer)
 #exp.add_device(filterWheel)
 exp.add_device(electrometer)
-#exp.add_device(multimeter)
+exp.add_device(multimeter)
 exp.set_socket_path(socket_path)
 exp.setup()

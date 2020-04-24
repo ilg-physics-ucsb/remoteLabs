@@ -23,10 +23,7 @@ class Stepper(stp.Motor):
             "move": {"method": self.move, 
                      "parser": self.__move_parser
                     }
-            # "jiggle": {"method": self.jiggle,
-            #             "parser": self.__jiggle_parser
-            # }
-        }
+       }
         self.name = name
         self.device_type = "controller"
         
@@ -38,6 +35,7 @@ class Stepper(stp.Motor):
         self.commands[cmd]["method"](parsed_argument)
     
     def move(self, steps):
+        print(steps)
         super().move(steps)
         super().release()
     
