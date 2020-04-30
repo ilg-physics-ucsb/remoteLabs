@@ -6,14 +6,13 @@ RTCPeerConnection = window.RTCPeerConnection || /*window.mozRTCPeerConnection ||
 RTCSessionDescription = /*window.mozRTCSessionDescription ||*/ window.RTCSessionDescription;
 RTCIceCandidate = /*window.mozRTCIceCandidate ||*/ window.RTCIceCandidate;
 var dataChannel;
-
-function signal(url, onStream, onError, onClose, onMessage) {
+function signal(url, videoElement, vformat, onStream, onError, onClose, onMessage) {
     if ("WebSocket" in window) {
         console.log("opening web socket: " + url);
-        var ws = new WebSocket(url);
-        var pc;
-        var iceCandidates = [];
-        var hasRemoteDesc = false;
+        let ws = new WebSocket(url);
+        let pc;
+        let iceCandidates = [];
+        let hasRemoteDesc = false;
 
         function addIceCandidates() {
             if (hasRemoteDesc) {
@@ -58,11 +57,11 @@ function signal(url, onStream, onError, onClose, onMessage) {
 
             if ('ontrack' in pc) {
                 pc.ontrack = function (event) {
-                    onStream(event.streams[0]);
+                    onStream(event.streams[0], videoElement);
                 };
             } else {  // onaddstream() deprecated
                 pc.onaddstream = function (event) {
-                    onStream(event.stream);
+                    onStream(event.stream, videoElement);
                 };
             }
 
@@ -85,7 +84,7 @@ function signal(url, onStream, onError, onClose, onMessage) {
                     // (e.g. it's H264 on the Raspberry Pi)
                     // Make sure the browser supports the codec too.
                     force_hw_vcodec: true,
-                    vformat: 30, /* 30=640x480, 30 fps */
+                    vformat: vformat, /* 30=640x480, 30 fps */
                     trickle_ice: true
                 }
             };
@@ -172,7 +171,7 @@ function signal(url, onStream, onError, onClose, onMessage) {
                 ws = null;
             }
             if (onClose) {
-                onClose();
+                onClose(videoElement);
             }
         };
 
