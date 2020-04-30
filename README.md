@@ -7,7 +7,7 @@ At the time of writing we are using Raspbery Pi 4 4GB model with Raspbian Lite B
 
 ### Raspbian Lite
 
-The most simple way to get Raspbian Lite is to go to the  (Raspberry Pi downloads)[https://www.raspberrypi.org/downloads/] page and follow on of the first three links to download the imager. Choose the link based on the operating system you are running on your own computer, not the Raspberry Pi.
+The most simple way to get Raspbian Lite is to go to the  [Raspberry Pi downloads](https://www.raspberrypi.org/downloads/) page and follow on of the first three links to download the imager. Choose the link based on the operating system you are running on your own computer, not the Raspberry Pi.
 
 Once you have the imager installed simply ask it to flash Raspbian Lite onto the SD Card. 
 
@@ -29,7 +29,7 @@ echo "" > ssh
 
 #### Making WiFi work
 
-We are almost ready to plug in the SD Card. But since we are going headless we need to give the Pi access to your WiFi when it boots. To do that you need to add a file named (wpa_supplicant.conf)[https://www.raspberrypi.org/documentation/configuration/wireless/headless.md] to root of the SD card as well. 
+We are almost ready to plug in the SD Card. But since we are going headless we need to give the Pi access to your WiFi when it boots. To do that you need to add a file named [wpa_supplicant.conf](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) to root of the SD card as well. 
 
 This time you can make the file in Notepad, or some other simple text editor on your computer and drag and drop it onto the SD card. Teh contents of the file should look like the following:
 ```
