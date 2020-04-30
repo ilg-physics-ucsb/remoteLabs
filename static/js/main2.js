@@ -1,5 +1,9 @@
-// (function () {
-var signalObj = null;
+var signalling_server_hostname = location.hostname || "192.168.1.61";
+// For the First webcam signalling server
+var signalling_server_address1 = signalling_server_hostname + ':' + (8081 || (location.protocol === 'https:' ? 443 : 80));
+
+var signalling_server_address2 = signalling_server_hostname + ':' + (8082 || (location.protocol === 'https:' ? 443 : 80));
+
 
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
@@ -71,111 +75,17 @@ window.addEventListener('DOMContentLoaded', function () {
     var downRange2000Button = document.getElementById('DownRange2000');
     var autoRange2000Button = document.getElementById('AutoRange2000');
 
-
-    // var play = document.getElementById('play')
-    // var ctx = canvas.getContext('2d');
-    // var effect = document.getElementById('effect');
     var isEffectActive = false;
 
-    start.addEventListener('click', function (e) {
-        // var address = document.getElementById('address').value;
-        var signalling_server_hostname = location.hostname || "192.168.0.32";
-        var signalling_server_address = signalling_server_hostname + ':' + (8081 || (location.protocol === 'https:' ? 443 : 80));
-        var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-        var address = location.hostname + ':' + (8081 || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-        var wsurl = protocol + '//' + address;
-        // var server = document.getElementById("signalling_server").value.toLowerCase();
-        // var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-        // var wsurl = new WebSocket(protocol + '//' + server + '/stream/webrtc');
-        // var wsurl = new WebSocket(protocol + '//' + signalling_server_address + '/stream/webrtc');
 
-        if (!isStreaming) {
-            signalObj = new signal(wsurl,
-                    function (stream) {
-                        console.log('got a stream!');
-                        //var url = window.URL || window.webkitURL;
-                        //video.src = url ? url.createObjectURL(stream) : stream; // deprecated
-                        video.srcObject = stream;
-                        // video.play(); Zak commented this and added stuff below
-                        var playPromise = video.play();
-                        console.log(playPromise);
+    cam1 = new webRTCConnection(signalling_server_address1, video, 63, true, true);
+    cam2 = new webRTCConnection(signalling_server_address2, video2, 63, true, false);
 
-                        // if (playPromise !== undefined) {
-                        //     playPromise.then(_ => {
-                        //         console.log("Zak says video is playing");
-                        //     })
-                        //     .catch(error => {
-                        //         console.log(error)
-                        //     })
-                        // }
-                    },
-                    function (error) {
-                        alert(error);
-                    },
-                    function () {
-                        console.log('websocket closed. bye bye!');
-                        video.srcObject = null;
-                        //video.src = ''; // deprecated
-                        // ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        isStreaming = false;
-                    },
-                    function (message) {
-                        alert(message);
-                    }
-            );
-        }
-    }, false);
-
-    stop.addEventListener('click', function (e) {
-        if (signalObj) {
-            signalObj.hangup();
-            signalObj = null;
-        }
-    }, false);
-
-    // Wait until the video stream can play
-    video.addEventListener('canplay', function (e) {
-        if (!isStreaming) {
-            // canvas.setAttribute('width', video.videoWidth);
-            // canvas.setAttribute('height', video.videoHeight);
-            isStreaming = true;
-        }
-    }, false);
-
-    video2.addEventListener('canplay', function (e) {
-        if (!isStreaming2) {
-            // canvas.setAttribute('width', video.videoWidth);
-            // canvas.setAttribute('height', video.videoHeight);
-            isStreaming2 = true;
-        }
-    }, false);
-
-    // Wait for the video to start to play
-    // video.addEventListener('play', function () {
-    //     // Every 33 milliseconds copy the video image to the canvas
-    //     setInterval(function () {
-    //         if (video.paused || video.ended) {
-    //             return;
-    //         }
-    //     }, 33);
-    // }, false);
-
-    // video2.addEventListener('play', function () {
-    //     // Every 33 milliseconds copy the video image to the canvas
-    //     setInterval(function () {
-    //         if (video.paused || video.ended) {
-    //             return;
-    //         }
-    //     }, 33);
-    // }, false);
-
-    // play.addEventListener('click', function() {
-    //     video.play();
-    // })
-
-    // effect.addEventListener('click', function () {
-    //     isEffectActive = !isEffectActive;
-    // }, false);
+    // cam1.createPeerConnection();
+    cam1.start();
+    var dataChannel = cam1.dataChannel;
+    // cam2.start();
+    
 
     left.addEventListener('click', function() {
         dataChannel.send("Pot/move/-200");
@@ -472,65 +382,8 @@ window.addEventListener('DOMContentLoaded', function () {
     })
 //END Keithley 2000 Multimeter Buttons
 
-    start.click();
-    isStreaming2 = setupCamera2(isStreaming2, video2, true);
 });
 
 window.addEventListener('beforeunload', function(e) {
     dataChannel.close();
 })
-// })();
-
-function setupCamera2(isStreaming2, video2, rotate) {
-    // if (rotate) {
-    //     video2.style.transform="rotate(180deg)";
-    // }
-    // var address = document.getElementById('address').value;
-    var signalling_server_hostname = location.hostname || "192.168.0.32";
-    var signalling_server_address = signalling_server_hostname + ':' + (8082 || (location.protocol === 'https:' ? 443 : 80));
-    var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-    var address = location.hostname + ':' + (8082 || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    var wsurl = protocol + '//' + address;
-    // var server = document.getElementById("signalling_server").value.toLowerCase();
-    // var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-    // var wsurl = new WebSocket(protocol + '//' + server + '/stream/webrtc');
-    // var wsurl = new WebSocket(protocol + '//' + signalling_server_address + '/stream/webrtc');
-
-    if (!isStreaming2) {
-        signalObj2 = new signal(wsurl,
-                function (stream) {
-                    console.log('got a stream!');
-                    //var url = window.URL || window.webkitURL;
-                    //video.src = url ? url.createObjectURL(stream) : stream; // deprecated
-                    video2.srcObject = stream;
-                    // video.play(); Zak commented this and added stuff below
-                    var playPromise = video2.play();
-                    console.log(playPromise);
-
-                    if (playPromise !== undefined) {
-                        playPromise.then(_ => {
-                            console.log("Zak says video is playing");
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-                    }
-                },
-                function (error) {
-                    alert(error);
-                },
-                function () {
-                    console.log('websocket closed. bye bye!');
-                    video2.srcObject = null;
-                    //video.src = ''; // deprecated
-                    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    isStreaming2 = false;
-                },
-                function (message) {
-                    alert(message);
-                }
-        );
-        return isStreaming2;
-    }
-    
-}

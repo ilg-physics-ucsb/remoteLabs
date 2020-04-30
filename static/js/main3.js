@@ -1,5 +1,55 @@
-// (function () {
-var signalObj = null;
+
+
+// This is the function that adds the video stream. You can have it do other things once it receives a stream.
+// Something like turn off a loading element.
+function connectStream(stream, videoElement) {
+    if (videoElement) {
+        console.log("got a stream! Putting stream in the following video" );
+        console.log(videoElement);
+        videoElement.srcObject = stream;
+        videoElement.setAttribute("data-playing", "true");
+        // videoElement.play();
+    }
+}
+
+//This function gets run if there is an error returned from teh websocket connecting to the stream.
+function errorStream(error){
+    alert(error);
+}
+
+// This functions gets run when the websocket is closed.
+function closeStream(videoElement) {
+    if (videoElement) {
+        console.log("websocket closed. bye bye!");
+        videoElement.srcObject = null;
+        videoElement.setAttribute("data-playing", "false");
+    }
+}
+
+// This function gets run when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
+function onWebsocketMessage(message){
+    alert(message);
+}
+
+function setupWebRTC(port, videoElement, vformat) {
+    var signalling_server_hostname = location.hostname || "192.168.0.32";
+    var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
+    var protocol = location.protocol === "https:" ? "wss:" : "ws:";
+    // var address = url + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
+    var address = location.hostname + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
+    // protocol = "wss:";
+    // var address = url + "/webrtc";
+    var wsurl = protocol + '//' + address;
+
+    console.log(videoElement);
+    if (videoElement && videoElement.getAttribute('data-playing') == "false") {
+        var signalObj = new signal(wsurl, videoElement, vformat, connectStream, errorStream, closeStream, onWebsocketMessage)
+    }
+
+    return signalObj
+}
+
+
 
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
@@ -10,6 +60,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var video2 = document.getElementById('v2');
     var left = document.getElementById('left');
     var right = document.getElementById('right');
+    // var abort = document.getElementById('abort');
 
     // for Keithley 6514 Electrometer
     var shift6514Button = document.getElementById('Shift6514');
@@ -72,110 +123,13 @@ window.addEventListener('DOMContentLoaded', function () {
     var autoRange2000Button = document.getElementById('AutoRange2000');
 
 
-    // var play = document.getElementById('play')
-    // var ctx = canvas.getContext('2d');
-    // var effect = document.getElementById('effect');
-    var isEffectActive = false;
 
-    start.addEventListener('click', function (e) {
-        // var address = document.getElementById('address').value;
-        var signalling_server_hostname = location.hostname || "192.168.0.32";
-        var signalling_server_address = signalling_server_hostname + ':' + (8081 || (location.protocol === 'https:' ? 443 : 80));
-        var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-        var address = location.hostname + ':' + (8081 || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-        var wsurl = protocol + '//' + address;
-        // var server = document.getElementById("signalling_server").value.toLowerCase();
-        // var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-        // var wsurl = new WebSocket(protocol + '//' + server + '/stream/webrtc');
-        // var wsurl = new WebSocket(protocol + '//' + signalling_server_address + '/stream/webrtc');
+    var mainCamSignal = setupWebRTC(8081, video, 25);
 
-        if (!isStreaming) {
-            signalObj = new signal(wsurl,
-                    function (stream) {
-                        console.log('got a stream!');
-                        //var url = window.URL || window.webkitURL;
-                        //video.src = url ? url.createObjectURL(stream) : stream; // deprecated
-                        video.srcObject = stream;
-                        // video.play(); Zak commented this and added stuff below
-                        var playPromise = video.play();
-                        console.log(playPromise);
-
-                        // if (playPromise !== undefined) {
-                        //     playPromise.then(_ => {
-                        //         console.log("Zak says video is playing");
-                        //     })
-                        //     .catch(error => {
-                        //         console.log(error)
-                        //     })
-                        // }
-                    },
-                    function (error) {
-                        alert(error);
-                    },
-                    function () {
-                        console.log('websocket closed. bye bye!');
-                        video.srcObject = null;
-                        //video.src = ''; // deprecated
-                        // ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        isStreaming = false;
-                    },
-                    function (message) {
-                        alert(message);
-                    }
-            );
-        }
-    }, false);
-
-    stop.addEventListener('click', function (e) {
-        if (signalObj) {
-            signalObj.hangup();
-            signalObj = null;
-        }
-    }, false);
-
-    // Wait until the video stream can play
-    video.addEventListener('canplay', function (e) {
-        if (!isStreaming) {
-            // canvas.setAttribute('width', video.videoWidth);
-            // canvas.setAttribute('height', video.videoHeight);
-            isStreaming = true;
-        }
-    }, false);
-
-    video2.addEventListener('canplay', function (e) {
-        if (!isStreaming2) {
-            // canvas.setAttribute('width', video.videoWidth);
-            // canvas.setAttribute('height', video.videoHeight);
-            isStreaming2 = true;
-        }
-    }, false);
-
-    // Wait for the video to start to play
-    // video.addEventListener('play', function () {
-    //     // Every 33 milliseconds copy the video image to the canvas
-    //     setInterval(function () {
-    //         if (video.paused || video.ended) {
-    //             return;
-    //         }
-    //     }, 33);
-    // }, false);
-
-    // video2.addEventListener('play', function () {
-    //     // Every 33 milliseconds copy the video image to the canvas
-    //     setInterval(function () {
-    //         if (video.paused || video.ended) {
-    //             return;
-    //         }
-    //     }, 33);
-    // }, false);
-
-    // play.addEventListener('click', function() {
-    //     video.play();
-    // })
-
-    // effect.addEventListener('click', function () {
-    //     isEffectActive = !isEffectActive;
-    // }, false);
+    video.addEventListener("playing", function(event){
+        console.log("Ready For Video 2");
+        secondaryCamSignal = setupWebRTC(8082, video2, 5);
+    })
 
     left.addEventListener('click', function() {
         dataChannel.send("Pot/move/-200");
@@ -184,6 +138,10 @@ window.addEventListener('DOMContentLoaded', function () {
     right.addEventListener('click', function() {
         dataChannel.send("Pot/move/200");
     })
+
+    // abort.addEventListener('click', function() {
+    //     dataChannel.send("Electrometer/press/ABOR")
+    // })
 //BEGIN Keithley 6514 Electrometer Buttons
     shift6514Button.addEventListener('click', function(event) {
         //Prevent it from reloading
@@ -295,12 +253,14 @@ window.addEventListener('DOMContentLoaded', function () {
     })
     haltButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 30");
+        // dataChannel.send("Electrometer/press/SYST:KEY 30");
+        dataChannel.send("Electrometer/press/ABOR");
         return false
     })
     trigger6514Button.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 31");
+        // dataChannel.send("Electrometer/press/SYST:KEY 31");
+        dataChannel.send("Electrometer/press/INIT");
         return false
     })
     exit6514Button.addEventListener('click', function(event) {
@@ -472,65 +432,9 @@ window.addEventListener('DOMContentLoaded', function () {
     })
 //END Keithley 2000 Multimeter Buttons
 
-    start.click();
-    isStreaming2 = setupCamera2(isStreaming2, video2, true);
 });
 
 window.addEventListener('beforeunload', function(e) {
     dataChannel.close();
 })
-// })();
-
-function setupCamera2(isStreaming2, video2, rotate) {
-    // if (rotate) {
-    //     video2.style.transform="rotate(180deg)";
-    // }
-    // var address = document.getElementById('address').value;
-    var signalling_server_hostname = location.hostname || "192.168.0.32";
-    var signalling_server_address = signalling_server_hostname + ':' + (8082 || (location.protocol === 'https:' ? 443 : 80));
-    var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-    var address = location.hostname + ':' + (8082 || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    var wsurl = protocol + '//' + address;
-    // var server = document.getElementById("signalling_server").value.toLowerCase();
-    // var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-    // var wsurl = new WebSocket(protocol + '//' + server + '/stream/webrtc');
-    // var wsurl = new WebSocket(protocol + '//' + signalling_server_address + '/stream/webrtc');
-
-    if (!isStreaming2) {
-        signalObj2 = new signal(wsurl,
-                function (stream) {
-                    console.log('got a stream!');
-                    //var url = window.URL || window.webkitURL;
-                    //video.src = url ? url.createObjectURL(stream) : stream; // deprecated
-                    video2.srcObject = stream;
-                    // video.play(); Zak commented this and added stuff below
-                    var playPromise = video2.play();
-                    console.log(playPromise);
-
-                    if (playPromise !== undefined) {
-                        playPromise.then(_ => {
-                            console.log("Zak says video is playing");
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-                    }
-                },
-                function (error) {
-                    alert(error);
-                },
-                function () {
-                    console.log('websocket closed. bye bye!');
-                    video2.srcObject = null;
-                    //video.src = ''; // deprecated
-                    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    isStreaming2 = false;
-                },
-                function (message) {
-                    alert(message);
-                }
-        );
-        return isStreaming2;
-    }
     
-}
