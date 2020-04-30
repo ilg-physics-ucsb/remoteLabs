@@ -1,3 +1,11 @@
 #electrometer {
-    width:900px;
+    width:100%;
 }
+#multimeter {
+    width:100%;
+}
+
+/* This flips the video */
+#v2 {
+    transform: rotate(180deg);
+} 
