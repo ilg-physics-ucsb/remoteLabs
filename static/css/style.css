@@ -1,6 +1,10 @@
 #electrometer {
-    width:80%;
+    width:60%;
 }
 #multimeter {
-    width:80%;
+    width:60%;
+}
+#filterwheel {
+ width:30% ;  
+ transform: rotate(0deg);
 }

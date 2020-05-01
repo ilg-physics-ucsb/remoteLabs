@@ -71,6 +71,7 @@ class Keithley6514Electrometer:
         }
         self.inst = visa_resource
         self.inst.write("SYST:INIT")
+        # self.inst.write("DISP:ENAB 1")
     
     def cleanup(self):
         pass
@@ -86,7 +87,7 @@ class Keithley6514Electrometer:
     
     def press_key(self, params):
         self.inst.write(params)
-    
+
     def __press_key_parser(self, params):
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
         return params[0]

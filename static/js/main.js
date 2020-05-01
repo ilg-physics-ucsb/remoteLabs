@@ -1,13 +1,16 @@
 // (function () {
     var signalObj = null;
+    // var browser = require("webextension-polyfill");
 
     window.addEventListener('DOMContentLoaded', function () {
         var isStreaming = false;
         var start = document.getElementById('start');
         var stop = document.getElementById('stop');
         var video = document.getElementById('v');
-        var left = document.getElementById('left');
-        var right = document.getElementById('right');
+        var leftPot = document.getElementById('leftPot');
+        var rightPot = document.getElementById('rightPot');
+        var leftWheel = document.getElementById('leftWheel');
+        var rightWheel = document.getElementById('rightWheel');
 
         // for Keithley 6514 Electrometer
         var shift6514Button = document.getElementById('Shift6514');
@@ -69,6 +72,7 @@
         var downRange2000Button = document.getElementById('DownRange2000');
         var autoRange2000Button = document.getElementById('AutoRange2000');
 
+ 
 
         // var play = document.getElementById('play')
         // var ctx = canvas.getContext('2d');
@@ -95,17 +99,17 @@
                             //video.src = url ? url.createObjectURL(stream) : stream; // deprecated
                             video.srcObject = stream;
                             // video.play(); Zak commented this and added stuff below
-                            var playPromise = video.play();
-                            console.log(playPromise);
+                            // var playPromise = video.play();
+                            // console.log(playPromise);
 
-                            if (playPromise !== undefined) {
-                                playPromise.then(_ => {
-                                    console.log("Zak says video is playing");
-                                })
-                                .catch(error => {
-                                    console.log(error)
-                                })
-                            }
+                            // if (playPromise !== undefined) {
+                            //     playPromise.then(_ => {
+                            //         console.log("Zak says video is playing");
+                            //     })
+                            //     .catch(error => {
+                            //         console.log(error)
+                            //     })
+                            // }
                         },
                         function (error) {
                             alert(error);
@@ -165,14 +169,25 @@
         //     isEffectActive = !isEffectActive;
         // }, false);
 
-        left.addEventListener('click', function() {
+        leftPot.addEventListener('click', function() {
             dataChannel.send("Pot/move/-200");
+            print('left pot')
         })
 
-        right.addEventListener('click', function() {
+        rightPot.addEventListener('click', function() {
             dataChannel.send("Pot/move/200");
         })
-//BEGIN Keithley 6514 Electrometer Buttons
+
+        leftWheel.addEventListener('click', function() {
+            dataChannel.send("Wheel/move/-200");
+        })
+
+        rightWheel.addEventListener('click', function() {
+            dataChannel.send("Wheel/move/200");
+        })
+
+
+        //BEGIN Keithley 6514 Electrometer Buttons
         shift6514Button.addEventListener('click', function(event) {
             //Prevent it from reloading
             event.stopPropagation();
