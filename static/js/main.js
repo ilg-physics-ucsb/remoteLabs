@@ -1,7 +1,6 @@
 
 
-// This is the function that adds the video stream. You can have it do other things once it receives a stream.
-// Something like turn off a loading element.
+// This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
 function connectStream(stream, videoElement) {
     if (videoElement) {
         console.log("got a stream! Putting stream in the following video" );
@@ -12,7 +11,7 @@ function connectStream(stream, videoElement) {
     }
 }
 
-//This function gets run if there is an error returned from teh websocket connecting to the stream.
+//This function runs if there is an error returned from teh websocket connecting to the stream.
 function errorStream(error){
     alert(error);
 }
@@ -20,19 +19,20 @@ function errorStream(error){
 // This functions gets run when the websocket is closed.
 function closeStream(videoElement) {
     if (videoElement) {
-        console.log("websocket closed. bye bye!");
         videoElement.srcObject = null;
         videoElement.setAttribute("data-playing", "false");
+        console.log("websocket closed. bye bye!");
+
     }
 }
 
-// This function gets run when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
+// This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
 function onWebsocketMessage(message){
     alert(message);
 }
 
 function setupWebRTC(port, videoElement, vformat) {
-    var signalling_server_hostname = location.hostname || "192.168.0.32";
+    var signalling_server_hostname = location.hostname || "192.168.0.2";
     var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
     var protocol = location.protocol === "https:" ? "wss:" : "ws:";
     // var address = url + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
