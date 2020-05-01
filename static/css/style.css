@@ -1,4 +1,5 @@
 #electrometer {
+<<<<<<< HEAD
     width:60%;
 }
 #multimeter {
@@ -8,3 +9,15 @@
  width:30% ;  
  transform: rotate(0deg);
 }
+=======
+    width:100%;
+}
+#multimeter {
+    width:100%;
+}
+
+/* This flips the video */
+#v2 {
+    transform: rotate(180deg);
+} 
+>>>>>>> master
