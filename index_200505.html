@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>UCSB Physics Remote Lab - Photoelectric Effect</title>
+  <title>Webcam Test</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
@@ -14,104 +14,91 @@
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="static/css/mdb.min.css">
   <!-- Your custom styles (optional) -->
-  <link rel="stylesheet" href="static/css/styleGrid.css">
-  <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
-  <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
- 
+  <link rel="stylesheet" href="static/css/style.css">
+  <!-- <style>
+    body{
+      margin: 30 px;
+    }
+    .my-container  {
+      border: 1 px  solid green;
+    }
+    .my-row {
+      border: 3 px solid red;
+    }
+    .my-col {
+      border: 3 px dotted blue;
+    }
+  </style> -->
 </head>
 <body>
   <script src="static/js/signalling.js"></script>
   <script src="static/js/main.js"></script>
   <!-- Start your project here-->  
-  <div class="pagecontainer w-row">
-    <div id="PageHead" class="column w-row">
-        <h1 class="Title">Photoelectric Effect</h1>
-        <h5 class="SubTitle">Click <strong>here</strong> to access the lab guide via GauchoSpace</h5>
-      
-      <div id="TopTextLeft" class="column w-col w-col-6">
-        <h2 class="SubTitle">Set-Up</h2>
-        <div>This is some text inside of a div block</div>
-      </div>
-      <div id="TopTextRight" class="column w-col w-col-6">
-        <h2 class="SubTitle">Get Help</h2>
-        <div>This is some text inside of a div block</div>     
-      </div>
+  <h1>Photoelectric Effect</h1>
+  <!-- <video id="remoteVideo" playsinline autoplay muted></video> -->
+  <div class="container my-container">
+      <!-- <div class="col d-flex justify-content-center"> 
+        <div class="btn-group" role="group" aria-label="Stepper Control">
+          <button id="start" class="btn btn-primary"> Start </button>
+          <button id="stop" class="btn btn-primary"> Stop </button>
+          <button id="play" class="btn btn-primary">Play</button>
+          <button class="btn btn-primary"></button>
+        </div>
+      </div> -->
+      <!-- <div class="col d-flex justify-content-center">
+        <div class="btn-group" role="group" aria-label="Stepper Control">
+          <button id="leftWheel" class="btn btn-primary"> wheel LEFT </button>
+          <button id="rightWheel" class="btn btn-primary"> Wheel RIGHT </button>
+        </div>
+        <div class="col d-flex justify-content-center"> 
+          <button id="abort" class="btn btn-primary"> Abort Electrometer </button>
+        </div> 
+      </div>-->
     </div>
-    <div id="PageMiddle" class="w-row">
-      <div id="SideImagesLeft" class="column w-col w-col-2">
-        <figure class="Photo">
-            <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
-            <a href="static/docs/PenRayGasLamps.pdf">
-                <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
-            </a><br>
-            <a href="static/docs/Hg-NeEmission.jpg">
-                <img id="Spectrum" class="lamp_img" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
-            </a><br>
-        </figure>
-        <figure class="Photo">
-            <strong>Filters: Edumund Optics&#174; Bandpass Interefernce Filters</strong> <br> 
-            <a href="static/docs/curv_f365.pdf">
-                <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
-            </a>
-            <a href="static/docs/curv_f436.pdf">
-                <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
-            </a>
-            <a href="static/docs/curv_f546.pdf">
-                <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
-            </a>
-            <a href="static/docs/curv_f577.pdf">
-                <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
-            </a><br>
-            (click each for its transmission curve)
-        </figure>
-        <figure class="Device embed wheel">
-            <img id="filterwheel" src="static/imgs/FilterWheel.png" usemap="#image-map-fw">
-                <map name="image-map-fw">
-                    <area id="f577" alt="577 nm" title="577 nm" coords="697,1236,197" shape="circle">
-                    <area id="f546" alt="546 nm" title="546 nm" coords="1125,979,166" shape="circle">
-                    <area id="f436" alt="436 nm" title="436 nm" coords="1115,495,151" shape="circle">
-                    <area id="f365" alt="365 nm" title="365 nm" coords="707,247,153" shape="circle">
-                </map>   
-        </figure>
-      </div>  
-    
-      <div id="VideoCenter" class="column w-col w-col-8">
+
+    <div class="row my-row">
+      <div class="col d-flex justify-content-center align-self-center">
+        <!-- Image Map Generated by http://www.image-map.net/ -->
+          <div id="filters" class="col d-flex justify-content-center align-self-center">
+            <img id="filter577" src="static/imgs/filter577.png" >
+            <img id="filter546" src="static/imgs/filter546.png" >
+            <img id="filter436" src="static/imgs/filter436.png" >
+            <img id="filter365" src="static/imgs/filter365.png" >
+          </div>
+        <p>
+        <!-- <div> -->
+        <img id="filterwheel" src="static/imgs/FilterWheel.png" usemap="#image-map-fw">
+        <map name="image-map-fw">
+          <area id="f577" alt="577 nm" title="577 nm" coords="697,1236,197" shape="circle">
+          <area id="f546" alt="546 nm" title="546 nm" coords="1125,979,166" shape="circle">
+          <area id="f436" alt="436 nm" title="436 nm" coords="1115,495,151" shape="circle">
+          <area id="f365" alt="365 nm" title="365 nm" coords="707,247,153" shape="circle">
+        </map>          
+      </div>
+      <div class="col d-flex justify-content-center">
         <video id='v' data-playing="false" autoplay="" muted></video>
         <!-- <img id="webcam" src="" alt="" srcset=""> -->
         <!-- <img src="http://192.168.0.2:8082/stream/video.mjpeg" alt="" srcset=""> -->
       </div>
-      
-      <div id="SideImagesRight" class="column w-col w-col-2">
-        <figure class="Photo">
-          <strong>Circuit Diagram</strong>
-          <a href="static/imgs/photoelectricCircuit.jpg">
-              <img id="Circuit" class="lamp_img" alt="" src="static/imgs/photoelectricCircuit.jpg">
-          </a><br>
-      </figure>
-        <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
-        <label for="3.6_degree">3.6&#176;</label>
-           <!-- &nbsp;&nbsp;&nbsp; -->
-        <input type="radio" id="36_degree" name="angleStep" value="36" checked>
-        <label for="36_degree">36&#176;</label>
-           <!-- &nbsp;&nbsp;&nbsp; -->
-        <input type="radio" id="360_degree" name="angleStep" value="360">
-        <label for="360_degree">360&#176;</label>
-           <br>
-        <figure class="Photo">
+      <div id="potButtons" class="col d-flex justify-content-end align-self-end">
+        <!-- <div class="btn-group" role="group" aria-label="Stepper Control"> -->
           <img id="leftPot" src="static/imgs/counterclockwise.png"/> 
+        <!-- </div> -->
+        <!-- <div class="col d-flex justify-content-center align-self-end"> -->
           <img id="knob" src="static/imgs/knob.png"/> 
+        <!-- </div> -->
+        <!-- <div class="col d-flex justify-content-start align-self-end"> -->
           <img id="rightPot" src="static/imgs/clockwise.png"/> 
-        </figure>
+         <!-- </div> -->
       </div>
-      <div>This session will close in <span id="time">05:00</span> minutes.</div>
     </div>
-    <div id="PageBottom" class="w-row">
-      <div id="BottomLeft" class="column w-col w-col-6">
+  
+ <p></p>
+    <div class="row my-row">
+      <div class="col d-flex justify-content-center">
         <img id="electrometer" src="static/imgs/Keithley6514Electrometer.jpg" usemap="#image-map-6514"> 
         <map name="image-map-6514">
           <area id="Shift6514" 		alt="Shift" 				 title="Shift" 		  coords="102,331,17" shape="circle">
-          <area id="Local6514" 		alt="Local" 				 title="Local" 		  coords="102,399,17" shape="circle">
           <area id="Voltage" 	alt="Voltage" 			 title="Voltage" 		coords="200,331,29" shape="circle">
           <area id="Current" 	alt="Current" 			 title="Current" 		coords="285,331,29" shape="circle">
           <area id="Resistance" 	alt="Resistance" title="Resistance" coords="381,331,29" shape="circle">
@@ -141,11 +128,10 @@
           <area id="AutoRange6514" 	alt="AutoRange" 	 title="AutoRange" 	coords="908,381,1007,418" shape="rect">
         </map>
       </div>
-      <div id="BottomRight" class="column w-col w-col-6">
-        <img id="multimeter"  src="static/imgs/Keithley2000Multimeter.jpg" usemap="#image-map-2000">
+      <div class="col d-flex justify-content-center">
+        <img id="multimeter" src="static/imgs/Keithley2000Multimeter.jpg" usemap="#image-map-2000">
         <map name="image-map-2000">
           <area id="Shift2000" 		alt="Shift" 				title="Shift" 		coords="102,331,17" shape="circle">
-          <area id="Local2000" 		alt="Local" 				 title="Local" 		  coords="102,399,17" shape="circle">
           <area id="DCvoltage" 	alt="DCvoltage" 				title="DCvoltage" 		coords="200,331,29" shape="circle">
           <area id="ACvoltage" 	alt="ACvoltage" 				title="ACvoltage" 		coords="285,331,29" shape="circle">
           <area id="DCcurrent" 	alt="DCcurrent" 			title="DCcurrent" 	coords="381,331,29" shape="circle">
@@ -176,11 +162,12 @@
         </map>
       </div>
     </div>
-  </div>
 
-  
-  <!-- End your project here-->
+    
+</div>
   <!-- <script src="{{  url_for('static', filename='js/uv4l.js')  }}"></script> -->
+  <!-- End your project here-->
+
   <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script> -->
 
   <!-- jQuery - These are all the scripts to do all the styling -->
@@ -192,6 +179,7 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="static/js/mdb.min.js"></script>
   <!-- Your custom scripts (optional) -->
+
   <script type="text/javascript" src="static/js/imageMapResizer.min.js"></script>
   <script type="text/javascript">imageMapResize();</script>
 

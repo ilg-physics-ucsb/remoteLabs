@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-// (function () {
-    var signalObj = null;
-    // var browser = require("webextension-polyfill");
-
-    window.addEventListener('DOMContentLoaded', function () {
-        var isStreaming = false;
-        var start = document.getElementById('start');
-        var stop = document.getElementById('stop');
-        var video = document.getElementById('v');
-        var leftPot = document.getElementById('leftPot');
-        var rightPot = document.getElementById('rightPot');
-        var leftWheel = document.getElementById('leftWheel');
-        var rightWheel = document.getElementById('rightWheel');
-=======
-
->>>>>>> master
 
 // This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
 function connectStream(stream, videoElement) {
@@ -32,16 +15,12 @@ function errorStream(error){
     alert(error);
 }
 
-<<<<<<< HEAD
- 
-=======
 // This functions gets run when the websocket is closed.
 function closeStream(videoElement) {
     if (videoElement) {
         videoElement.srcObject = null;
         videoElement.setAttribute("data-playing", "false");
         console.log("websocket closed. bye bye!");
->>>>>>> master
 
     }
 }
@@ -51,45 +30,7 @@ function onWebsocketMessage(message){
     alert(message);
 }
 
-<<<<<<< HEAD
-            if (!isStreaming) {
-                signalObj = new signal(wsurl,
-                        function (stream) {
-                            console.log('got a stream!');
-                            //var url = window.URL || window.webkitURL;
-                            //video.src = url ? url.createObjectURL(stream) : stream; // deprecated
-                            video.srcObject = stream;
-                            // video.play(); Zak commented this and added stuff below
-                            // var playPromise = video.play();
-                            // console.log(playPromise);
-
-                            // if (playPromise !== undefined) {
-                            //     playPromise.then(_ => {
-                            //         console.log("Zak says video is playing");
-                            //     })
-                            //     .catch(error => {
-                            //         console.log(error)
-                            //     })
-                            // }
-                        },
-                        function (error) {
-                            alert(error);
-                        },
-                        function () {
-                            console.log('websocket closed. bye bye!');
-                            video.srcObject = null;
-                            //video.src = ''; // deprecated
-                            // ctx.clearRect(0, 0, canvas.width, canvas.height);
-                            isStreaming = false;
-                        },
-                        function (message) {
-                            alert(message);
-                        }
-                );
-            }
-        }, false);
-=======
-function setupWebRTC(port, videoElement, vformat) {
+function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     var signalling_server_hostname = location.hostname || "192.168.0.2";
     var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
     var protocol = location.protocol === "https:" ? "wss:" : "ws:";
@@ -101,28 +42,36 @@ function setupWebRTC(port, videoElement, vformat) {
 
     console.log(videoElement);
     if (videoElement && videoElement.getAttribute('data-playing') == "false") {
-        var signalObj = new signal(wsurl, videoElement, vformat, connectStream, errorStream, closeStream, onWebsocketMessage)
+        var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
     }
->>>>>>> master
 
     return signalObj
 }
 
 
 
+
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
     var isStreaming2 = false;
+    var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
+    var currentPosition = 0;
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
     var video2 = document.getElementById('v2');
-    var left = document.getElementById('left');
-    var right = document.getElementById('right');
-    // var abort = document.getElementById('abort');
+     // var abort = document.getElementById('abort');
+    
+    // for Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
+    var f577 = document.getElementById('f577');
+    var f546 = document.getElementById('f546');
+    var f436 = document.getElementById('f436');
+    var f365 = document.getElementById('f365');
+    var filterwheel = document.getElementById('filterwheel')
 
     // for Keithley 6514 Electrometer
     var shift6514Button = document.getElementById('Shift6514');
+    var local6514Button = document.getElementById('Local6514');
     var voltageButton = document.getElementById('Voltage');
     var currentButton = document.getElementById('Current');
     var resistanceButton = document.getElementById('Resistance');
@@ -151,172 +100,9 @@ window.addEventListener('DOMContentLoaded', function () {
     var downRange6514Button = document.getElementById('DownRange6514');
     var autoRange6514Button = document.getElementById('AutoRange6514');
 
-<<<<<<< HEAD
-        leftPot.addEventListener('click', function() {
-            dataChannel.send("Pot/move/-200");
-            print('left pot')
-        })
-
-        rightPot.addEventListener('click', function() {
-            dataChannel.send("Pot/move/200");
-        })
-
-        leftWheel.addEventListener('click', function() {
-            dataChannel.send("Wheel/move/-200");
-        })
-
-        rightWheel.addEventListener('click', function() {
-            dataChannel.send("Wheel/move/200");
-        })
-
-
-        //BEGIN Keithley 6514 Electrometer Buttons
-        shift6514Button.addEventListener('click', function(event) {
-            //Prevent it from reloading
-            event.stopPropagation();
-            //Run our command
-            dataChannel.send("Electrometer/press/SYST:KEY 1");
-            //Ensure it doesn't reload
-            return false
-        })
-        voltageButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 2");
-            return false
-        })
-        currentButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 3");
-            return false
-        })
-        resistanceButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 4");
-            return false
-        })
-        chargeButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 5");
-            return false
-        })
-        externalFeedbackButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 6");
-            return false
-        })
-        zeroCheckButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 7");
-            return false
-        })
-        zeroCorrectButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 8");
-            return false
-        })
-        groundButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 16");
-            return false
-        })
-        averageButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 18");
-            return false
-        })
-        medianButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 19");
-            return false
-        })
-        relativeButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 20");
-            return false
-        })
-        limitButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 21");
-            return false
-        })
-        digits6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 22");
-            return false
-        })
-        rate6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 23");
-            return false
-        })
-        cursorLeft6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 24");
-            return false
-        })
-        cursorRight6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 15");
-            return false
-        })
-        store6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 26");
-            return false
-        })
-        recall6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 27");
-            return false
-        })
-        delayButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 28");
-            return false
-        })
-        dampingButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 29");
-            return false
-        })
-        haltButton.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 30");
-            return false
-        })
-        trigger6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 31");
-            return false
-        })
-        exit6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 32");
-            return false
-        })
-        enter6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 14");
-            return false
-        })
-        upRange6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 11");
-            return false
-        })
-        downRange6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 13");
-            return false
-        })
-        autoRange6514Button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            dataChannel.send("Electrometer/press/SYST:KEY 12");
-            return false
-        })
-=======
     //for Keithley 2000 Multimeter
     var shift2000Button = document.getElementById('Shift2000');
+    var local2000Button = document.getElementById('Local2000');
     var dcVoltageButton = document.getElementById('DCvoltage');
     var acVoltageButton = document.getElementById('ACvoltage');
     var dcCurrentButton = document.getElementById('DCcurrent');
@@ -346,31 +132,131 @@ window.addEventListener('DOMContentLoaded', function () {
     var autoRange2000Button = document.getElementById('AutoRange2000');
 
 
+    //for LiveFeed
+    // var mainCamSignal = setupWebRTC(8081, video, 50);
+    var mainCamSignal = setupWebRTC(5002, video, 50);
+    window.setTimeout(timeOutHandler,300000)
 
-    var mainCamSignal = setupWebRTC(8081, video, 25);
+    function timeOutHandler(){
+        mainCamSignal.hangup()
+        alert("Your session has timed out.")
+    }
 
-    video.addEventListener("playing", function(event){
-        console.log("Ready For Video 2");
-        secondaryCamSignal = setupWebRTC(8082, video2, 5);
-    })
-
-    left.addEventListener('click', function() {
-        dataChannel.send("Pot/move/-200");
-    })
-
-    right.addEventListener('click', function() {
-        dataChannel.send("Pot/move/200");
-    })
-
-    // abort.addEventListener('click', function() {
-    //     dataChannel.send("Electrometer/press/ABOR")
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+    
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+            display.textContent = minutes + ":" + seconds;
+    
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+    
+    window.onload = function () {
+        var fiveMinutes = 60 * 5,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
+    // video.addEventListener("playing", function(event){
+    //     console.log("Ready For Video 2");
+    //     secondaryCamSignal = setupWebRTC(8082, video2, 5);
     // })
+
+    //for Potentiometer
+    var leftPot = document.getElementById('leftPot');
+    var rightPot = document.getElementById('rightPot');
+    var threeDegree = document.getElementById('3.6_degree');
+    var thirtySixDegree = document.getElementById('36_degree');
+    var threeSixtyDegree = document.getElementById('360_degree');
+    var potSteps=20;
+  
+    //BEGIN Potentiometer Buttons 
+    threeDegree.addEventListener('click', function(){
+        potSteps=2;
+    })
+    thirtySixDegree.addEventListener('click', function(){
+        potSteps=20;
+    })
+    threeSixtyDegree.addEventListener('click', function(){
+        potSteps=200;
+    })
+
+    leftPot.addEventListener('click', function() {
+        console.log("leftPot was clicked");
+        dataChannel.send("Pot/move/"+(-potSteps));
+    })
+
+    rightPot.addEventListener('click', function() {
+        console.log("rightPot was clicked");
+        dataChannel.send("Pot/move/"+potSteps);
+    })
+//END Potentiometer Buttons
+
+//BEGIN Filter Wheel Buttons 
+    function calculateWheelSteps(currentPosition, desiredPosition) {
+        //Math to be implimented
+        let motorSteps = 0;
+        motorSteps = (desiredPosition - currentPosition) * stepsPerDegree;
+        //Last thing to do:
+        currentPosition = desiredPosition;
+        return motorSteps
+    }   
+    // f577.addEventListener('click', function(event) {
+    //     event.stopPropagation();
+    //     motoreSteps = calculateFilterSteps(currentPosition, 0);
+    //     if (motorSteps!=0) {
+    //         dataChannel.send("Wheel/move/"+motorSteps);
+    //         filterwheel.style.transform='rotate(0deg)';
+    //     }
+    //     return false
+    // })
+    f577.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dataChannel.send("Wheel/goto/180deg");
+        // filterwheel.style.transform='rotate(0deg)';
+        return false
+    })
+    f546.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dataChannel.send("Wheel/goto/120deg");
+        // filterwheel.style.transform='rotate(-60deg)';
+        return false
+    })
+    f436.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dataChannel.send("Wheel/goto/60deg");
+        // filterwheel.style.transform='rotate(-120deg)';
+        return false
+    })
+    f365.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dataChannel.send("Wheel/goto/0deg");
+        // filterwheel.style.transform='rotate(-180deg)';
+        return false
+    })
+//END Filter Wheel Buttons
+    
 //BEGIN Keithley 6514 Electrometer Buttons
     shift6514Button.addEventListener('click', function(event) {
         //Prevent it from reloading
         event.stopPropagation();
         //Run our command
         dataChannel.send("Electrometer/press/SYST:KEY 1");
+        //Ensure it doesn't reload
+        return false
+    })
+    local6514Button.addEventListener('click', function(event) {
+        //Prevent it from reloading
+        event.stopPropagation();
+        //Run our command
+        dataChannel.send("Electrometer/press/SYST:LOC");
         //Ensure it doesn't reload
         return false
     })
@@ -476,14 +362,14 @@ window.addEventListener('DOMContentLoaded', function () {
     })
     haltButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        // dataChannel.send("Electrometer/press/SYST:KEY 30");
-        dataChannel.send("Electrometer/press/ABOR");
+        dataChannel.send("Electrometer/press/SYST:KEY 30");
+        // dataChannel.send("Electrometer/press/SYST:ABOR");
         return false
     })
     trigger6514Button.addEventListener('click', function(event) {
         event.stopPropagation();
-        // dataChannel.send("Electrometer/press/SYST:KEY 31");
-        dataChannel.send("Electrometer/press/INIT");
+        dataChannel.send("Electrometer/press/SYST:KEY 31");
+        // dataChannel.send("Electrometer/press/TRIG:");
         return false
     })
     exit6514Button.addEventListener('click', function(event) {
@@ -511,12 +397,20 @@ window.addEventListener('DOMContentLoaded', function () {
         dataChannel.send("Electrometer/press/SYST:KEY 12");
         return false
     })
->>>>>>> master
+    // abort.addEventListener('click', function() {
+    //     dataChannel.send("Electrometer/press/ABOR")
+    // })
 //END Keithley 6514 Electrometer Buttons
+
 //BEGIN Keithley 2000 Multimeter Buttons
     shift2000Button.addEventListener('click', function(event) {
         event.stopPropagation();
         dataChannel.send("Multimeter/press/SYST:KEY 1");
+        return false
+    })
+    local2000Button.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dataChannel.send("Multimeter/press/SYST:LOC");
         return false
     })
     dcVoltageButton.addEventListener('click', function(event) {
@@ -662,3 +556,99 @@ window.addEventListener('beforeunload', function(e) {
     dataChannel.close();
 })
     
+// function select_remote_hw_vcodec() {
+//     document.getElementById('remote_hw_vcodec').checked = true;
+//     var vformat = document.getElementById('remote_vformat').value;
+//     switch (vformat) {
+//         case '5':
+//             document.getElementById('remote-video').style.width = "320px";
+//             document.getElementById('remote-video').style.height = "240px";
+//             break;
+//         case '10':
+//             document.getElementById('remote-video').style.width = "320px";
+//             document.getElementById('remote-video').style.height = "240px";
+//             break;
+//         case '20':
+//             document.getElementById('remote-video').style.width = "352px";
+//             document.getElementById('remote-video').style.height = "288px";
+//             break;
+//         case '25':
+//             document.getElementById('remote-video').style.width = "640px";
+//             document.getElementById('remote-video').style.height = "480px";
+//             break;
+//         case '30':
+//             document.getElementById('remote-video').style.width = "640px";
+//             document.getElementById('remote-video').style.height = "480px";
+//             break;
+//         case '35':
+//             document.getElementById('remote-video').style.width = "800px";
+//             document.getElementById('remote-video').style.height = "480px";
+//             break;
+//         case '40':
+//             document.getElementById('remote-video').style.width = "960px";
+//             document.getElementById('remote-video').style.height = "720px";
+//             break;
+//         case '50':
+//             document.getElementById('remote-video').style.width = "1024px";
+//             document.getElementById('remote-video').style.height = "768px";
+//             break;
+//         case '55':
+//             document.getElementById('remote-video').style.width = "1280px";
+//             document.getElementById('remote-video').style.height = "720px";
+//             break;
+//         case '60':
+//             document.getElementById('remote-video').style.width = "1280px";
+//             document.getElementById('remote-video').style.height = "720px";
+//             break;
+//         case '63':
+//             document.getElementById('remote-video').style.width = "1280px";
+//             document.getElementById('remote-video').style.height = "720px";
+//             break;
+//         case '65':
+//             document.getElementById('remote-video').style.width = "1280px";
+//             document.getElementById('remote-video').style.height = "768px";
+//             break;
+//         case '70':
+//             document.getElementById('remote-video').style.width = "1280px";
+//             document.getElementById('remote-video').style.height = "768px";
+//             break;
+//         case '75':
+//             document.getElementById('remote-video').style.width = "1536px";
+//             document.getElementById('remote-video').style.height = "768px";
+//             break;
+//         case '80':
+//             document.getElementById('remote-video').style.width = "1280px";
+//             document.getElementById('remote-video').style.height = "960px";
+//             break;
+//         case '90':
+//             document.getElementById('remote-video').style.width = "1600px";
+//             document.getElementById('remote-video').style.height = "768px";
+//             break;
+//         case '95':
+//             document.getElementById('remote-video').style.width = "1640px";
+//             document.getElementById('remote-video').style.height = "1232px";
+//             break;
+//         case '97':
+//             document.getElementById('remote-video').style.width = "1640px";
+//             document.getElementById('remote-video').style.height = "1232px";
+//             break;
+//         case '98':
+//             document.getElementById('remote-video').style.width = "1792px";
+//             document.getElementById('remote-video').style.height = "896px";
+//             break;
+//         case '99':
+//             document.getElementById('remote-video').style.width = "1792px";
+//             document.getElementById('remote-video').style.height = "896px";
+//             break;
+//         case '100':
+//             document.getElementById('remote-video').style.width = "1920px";
+//             document.getElementById('remote-video').style.height = "1080px";
+//             break;
+//         case '105':
+//             document.getElementById('remote-video').style.width = "1920px";
+//             document.getElementById('remote-video').style.height = "1080px";
+//             break;
+//         default:
+//             document.getElementById('remote-video').style.width = "1280px";
+//             document.getElementById('remote-video').style.height = "720px";
+//     }
