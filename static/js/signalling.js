@@ -6,7 +6,7 @@ RTCPeerConnection = window.RTCPeerConnection || /*window.mozRTCPeerConnection ||
 RTCSessionDescription = /*window.mozRTCSessionDescription ||*/ window.RTCSessionDescription;
 RTCIceCandidate = /*window.mozRTCIceCandidate ||*/ window.RTCIceCandidate;
 var dataChannel;
-function signal(url, videoElement, vformat, onStream, onError, onClose, onMessage) {
+function signal(url, videoElement, vformat, hardwareCodec, onStream, onError, onClose, onMessage) {
     if ("WebSocket" in window) {
         console.log("opening web socket: " + url);
         let ws = new WebSocket(url);
@@ -83,7 +83,7 @@ function signal(url, videoElement, vformat, onStream, onError, onClose, onMessag
                     // If forced, the hardware codec depends on the arch.
                     // (e.g. it's H264 on the Raspberry Pi)
                     // Make sure the browser supports the codec too.
-                    force_hw_vcodec: true,
+                    force_hw_vcodec: hardwareCodec,
                     vformat: vformat, /* 30=640x480, 30 fps */
                     trickle_ice: true
                 }

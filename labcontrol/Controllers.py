@@ -1,4 +1,7 @@
 import RPistepper as stp
+from adafruit_motorkit import MotorKit 
+from adafruit_motor import stepper
+import time
 
 class BaseController(object):
     
@@ -15,18 +18,22 @@ class BaseController(object):
 #         self.device_type = "controller"
 #         self.pins=pins
 
-class Stepper(stp.Motor):
+class StepperSimple(stp.Motor):
 
-    def __init__(self, name, pins, delay=0.01):
+    def __init__(self, name, pins, delay=0.01, refPoints={}):
         super().__init__(pins, delay)
         self.commands = {
             "move": {"method": self.move, 
                      "parser": self.__move_parser
+                    },
+            "goto": {"method": self.goto, 
+                     "parser": self.__goto_parser
                     }
-       }
+                        }
         self.name = name
         self.device_type = "controller"
-        
+        self.refPoints = refPoints
+        self.currentPosition = 0
     
     def cmd_handler(self, cmd, params):
         if cmd not in self.commands:
@@ -38,6 +45,22 @@ class Stepper(stp.Motor):
         print(steps)
         super().move(steps)
         super().release()
+        self.currentPosition+=steps
+        
+    def __move_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "move")
+        return int(params[0])
+
+    def goto(self, position):
+        print(position)
+        endPoint=self.refPoints[position]   
+        self.move(endPoint-self.currentPosition)
+
+    def __goto_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "goto")
+        return params[0]
     
     def cleanup(self):
         super().cleanup()
@@ -45,19 +68,79 @@ class Stepper(stp.Motor):
     def reset(self):
         super().reset()
     
+    
+
+class StepperI2C(MotorKit):
+
+    def __init__(self, name, terminal, bounds, delay=0.01, refPoints={}):
+        super().__init__()
+        self.commands = {
+            "move": {"method": self.move, 
+                     "parser": self.__move_parser
+                    },
+            "goto": {"method": self.goto, 
+                     "parser": self.__goto_parser
+                    }
+                        }
+        self.terminal_options = {1: super().stepper1, 2: super().stepper2}
+        self.name = name
+        self.device_type = "controller"
+        self.refPoints = refPoints
+        self.currentPosition = 0
+        self.device = self.terminal_options[terminal]
+        self.delay = delay
+        self.style = stepper.DOUBLE
+        self.lowerBound = bounds[0]
+        self.upperBound = bounds[1]
+    
+    def cmd_handler(self, cmd, params):
+        if cmd not in self.commands:
+            raise CommandError(cmd)
+        parsed_argument = self.commands[cmd]["parser"](params)
+        self.commands[cmd]["method"](parsed_argument)
+    
+    def setup(self, style):
+        pass
+
+    def move(self, steps):
+        print(steps)
+        if steps >= 0:
+            direction = stepper.BACKWARD
+        else: 
+            direction = stepper.FORWARD
+        if self.currentPosition+steps <self.lowerBound and steps < 0:
+            steps = self.lowerBound-self.currentPosition
+        elif self.currentPosition+steps >self.upperBound and steps > 0:
+            steps = self.upperBound-self.currentPosition
+        for i in range(abs(steps)):
+            self.device.onestep(style=self.style, direction=direction)
+            time.sleep(self.delay)
+        self.currentPosition+=steps
+        self.device.release()
+        
     def __move_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
         return int(params[0])
 
-    # def jiggle(self):
-    #     Do jiggle stuff
+    def goto(self, position):
+        print(position)
+        endPoint=self.refPoints[position]   
+        self.move(endPoint-self.currentPosition)
+
+    def __goto_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "goto")
+        return params[0]
     
-    # def __jiggle_parser(self, params)
-    #     parameters = params.split(",")
-    #     l = []
-    #     for p in parameters:
-    #         l.append(int(p))
+    def cleanup(self):
+        # super().cleanup(
+        pass
+    
+    def reset(self):
+        self.move(-self.currentPosition)
+        # pass
+  
 
 class Keithley6514Electrometer:
 
@@ -71,6 +154,7 @@ class Keithley6514Electrometer:
         }
         self.inst = visa_resource
         self.inst.write("SYST:INIT")
+        # self.inst.write("DISP:ENAB 1")
     
     def cleanup(self):
         pass
@@ -86,7 +170,7 @@ class Keithley6514Electrometer:
     
     def press_key(self, params):
         self.inst.write(params)
-    
+
     def __press_key_parser(self, params):
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
         return params[0]
