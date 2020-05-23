@@ -141,7 +141,7 @@ sudo apt install uv4l uv4l-uvc uv4l-server uv4l-webrtc python3-pip git
 Once everything is done installing we will now need to install some Python Packages that are required. Run the following command.
 
 ```bash
-pip3 install RPistepper pyvisa pyvisa-py
+pip3 install RPistepper pyvisa pyvisa-py adafruit-circuitpython-motorkit python-tplink-smarthome dlipower
 ```
 
 ### Getting Remote Labs files.
