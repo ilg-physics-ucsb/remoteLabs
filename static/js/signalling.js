@@ -32,7 +32,7 @@ function signal(url, videoElement, vformat, hardwareCodec, onStream, onError, on
 
         ws.onopen = function () {
             /* First we create a peer connection */
-            var config = {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]};
+            var config = {"iceServers": [{"urls": "stun:numb.viagenie.ca"}, {"urls": "turn:numb.viagenie.ca", "username": "zespley@physics.ucsb.edu", "credential": "AUY*400VHXlfuV4&@uM59a$9vIONf"}]};
             var options = {optional: []};
             pc = new RTCPeerConnection(config, options);
             iceCandidates = [];

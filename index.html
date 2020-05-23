@@ -1,3 +1,4 @@
+<!-- PHOTOELECTRIC EFFECT CONTROL PAGE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,41 +27,65 @@
   <!-- Start your project here-->  
   <div class="pagecontainer w-row">
     <div id="PageHead" class="column w-row">
-        <h1 class="Title">Photoelectric Effect</h1>
-        <h5 class="SubTitle">Click <strong>here</strong> to access the lab guide via GauchoSpace</h5>
-      
+      <h1 class="Title">Photoelectric Effect</h1>
+      <div class="text-block">
+        <h5 class="SubTitle">
+          <a target="_blank" href="static/docs/PElabGuide.pdf">Click here to access the lab guide.</a>
+            <br>
+          <span style="font-weight: 100;font-style: italic;"> This will become a link to the course's GauchoSpace.</span>
+        </h5>
+      </div> 
       <div id="TopTextLeft" class="column w-col w-col-6">
         <h2 class="SubTitle">Set-Up</h2>
-        <div>This is some text inside of a div block</div>
+        <div class="text-block">
+          Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
+          as well as to equipment manuals and manufacturer websites. 
+        </div>
       </div>
       <div id="TopTextRight" class="column w-col w-col-6">
         <h2 class="SubTitle">Get Help</h2>
-        <div>This is some text inside of a div block</div>     
+        <div class="text-block">
+          Here students will be advised of options for synchronous and asynchronous assistance.
+          <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
+          so they can use the various Zoom features to request help in real time.
+          There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.
+        </div>     
       </div>
     </div>
     <div id="PageMiddle" class="w-row">
       <div id="SideImagesLeft" class="column w-col w-col-2">
-        <figure class="Photo">
-            <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
-            <a href="static/docs/PenRayGasLamps.pdf">
-                <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
-            </a><br>
-            <a href="static/docs/Hg-NeEmission.jpg">
-                <img id="Spectrum" class="lamp_img" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
-            </a><br>
+        <figure class="Icon">
+          (click to toggle the Hg-Ne lamp)
+          <img id="toggleSwitch" src="static/imgs/toggleSwitch.png" usemap="#image-map-ts">
+          <map name="image-map-ts">
+              <!-- <area id="HgNeLampOFF" alt="Click here to turn OFF" title="Click here to turn OFF" coords="0,0,200,100" shape="rect"> -->
+              <area id="HgNeTOGGLE" alt="Click here to turn ON" title="Click here to turn ON" coords="0,0,200,200" shape="rect">
+          </map> <br>
+          
+                    
         </figure>
         <figure class="Photo">
+            <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
+            <a target="_blank" href="static/docs/PenRayGasLamps.pdf">
+                <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
+            </a><br>
+            <a target="_blank" href="static/docs/Hg-NeEmission.jpg">
+                <img id="Spectrum" class="lamp_img" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
+            </a><br><br><br>
+        </figure>
+        
+        <figure class="Photo">
             <strong>Filters: Edumund Optics&#174; Bandpass Interefernce Filters</strong> <br> 
-            <a href="static/docs/curv_f365.pdf">
+            <a target="_blank" href="static/docs/curv_f365.pdf">
                 <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
             </a>
-            <a href="static/docs/curv_f436.pdf">
+            <a target="_blank" href="static/docs/curv_f436.pdf">
                 <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
             </a>
-            <a href="static/docs/curv_f546.pdf">
+            <a target="_blank" href="static/docs/curv_f546.pdf">
                 <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
             </a>
-            <a href="static/docs/curv_f577.pdf">
+            <a target="_blank" href="static/docs/curv_f577.pdf">
                 <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
             </a><br>
             (click each for its transmission curve)
@@ -68,27 +93,45 @@
         <figure class="Device embed wheel">
             <img id="filterwheel" src="static/imgs/FilterWheel.png" usemap="#image-map-fw">
                 <map name="image-map-fw">
-                    <area id="f577" alt="577 nm" title="577 nm" coords="697,1236,197" shape="circle">
-                    <area id="f546" alt="546 nm" title="546 nm" coords="1125,979,166" shape="circle">
-                    <area id="f436" alt="436 nm" title="436 nm" coords="1115,495,151" shape="circle">
-                    <area id="f365" alt="365 nm" title="365 nm" coords="707,247,153" shape="circle">
+                  <area id="f365" alt="365 nm" title="365 nm" coords="707,247,153" shape="circle">
+                  <area id="f436" alt="436 nm" title="436 nm" coords="1115,495,151" shape="circle">
+                  <area id="f546" alt="546 nm" title="546 nm" coords="1125,979,166" shape="circle">
+                  <area id="f577" alt="577 nm" title="577 nm" coords="697,1236,197" shape="circle">
+                   
+                    
+                    
                 </map>   
+                <br>
+                (click on a filter to rotate it into position)
         </figure>
-      </div>  
-    
+      </div>      
       <div id="VideoCenter" class="column w-col w-col-8">
-        <video id='v' data-playing="false" autoplay="" muted></video>
+        <div class="video w-video w-embed">
+          <video id='v' data-playing="false" autoplay="" muted></video>
+        </div>
         <!-- <img id="webcam" src="" alt="" srcset=""> -->
         <!-- <img src="http://192.168.0.2:8082/stream/video.mjpeg" alt="" srcset=""> -->
-      </div>
-      
+        <div class="Warning">
+          This session will end and the motors will reset in 
+          <span id="time" style="color:red;font-weight:bold">25:00</span> 
+          minutes.
+        </div>
+      </div>  
       <div id="SideImagesRight" class="column w-col w-col-2">
+        <figure class="Icon">
+          (click to toggle the ambient light)
+          <img id="lightSwitch" src="static/imgs/lightSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+            <!-- <area id="ambientOFF" alt="Click here to toggle the lightSwitch" title="Click here to turn OFF" coords="200,143,312,255" shape="rect"> -->
+            <area id="ambientTOGGLE" alt="toggle switch" title="Click here to turn ON" coords="200,257,312,369" shape="rect">
+          </map>           
+        </figure>
         <figure class="Photo">
           <strong>Circuit Diagram</strong>
-          <a href="static/imgs/photoelectricCircuit.jpg">
+          <a target="_blank" href="static/imgs/photoelectricCircuit.jpg">
               <img id="Circuit" class="lamp_img" alt="" src="static/imgs/photoelectricCircuit.jpg">
           </a><br>
-      </figure>
+        </figure>
         <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
         <label for="3.6_degree">3.6&#176;</label>
            <!-- &nbsp;&nbsp;&nbsp; -->
@@ -102,83 +145,92 @@
           <img id="leftPot" src="static/imgs/counterclockwise.png"/> 
           <img id="knob" src="static/imgs/knob.png"/> 
           <img id="rightPot" src="static/imgs/clockwise.png"/> 
+          <br>
+          (click on the arrows to rotate the potentiometer)
         </figure>
+        <br>
+        <!-- <figure class="Icon">
+          (click to toggle the ambient light)
+          <img id="lightSwitch" src="static/imgs/lightSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+             <area id="ambientTOGGLE" alt="toggle switch" title="Click here to turn ON" coords="200,257,312,369" shape="rect">
+          </map>           
+        </figure> -->
       </div>
-      <div>This session will close in <span id="time">05:00</span> minutes.</div>
     </div>
     <div id="PageBottom" class="w-row">
       <div id="BottomLeft" class="column w-col w-col-6">
-        <img id="electrometer" src="static/imgs/Keithley6514Electrometer.jpg" usemap="#image-map-6514"> 
+        <img id="electrometer" src="static/imgs/Keithley6514ElectrometerTXT.jpg" usemap="#image-map-6514"> 
         <map name="image-map-6514">
-          <area id="Shift6514" 		alt="Shift" 				 title="Shift" 		  coords="102,331,17" shape="circle">
-          <area id="Local6514" 		alt="Local" 				 title="Local" 		  coords="102,399,17" shape="circle">
-          <area id="Voltage" 	alt="Voltage" 			 title="Voltage" 		coords="200,331,29" shape="circle">
-          <area id="Current" 	alt="Current" 			 title="Current" 		coords="285,331,29" shape="circle">
-          <area id="Resistance" 	alt="Resistance" title="Resistance" coords="381,331,29" shape="circle">
-          <area id="Charge" 	alt="Charge" 				 title="Charge" 		coords="466,331,29" shape="circle">
-          <area id="ExternalFeedback" alt="ExternalFeedback" 	title="ExternalFeedback" coords="562,331,29" shape="circle">
-          <area id="ZeroCheck" 	alt="ZeroCheck" 	 title="ZeroCheck" 	coords="647,331,29" shape="circle">
-          <area id="ZeroCorrect" 	alt="ZeroCorrect" title="ZeroCorrect" 	coords="743,331,29" shape="circle">
-          <area id="Ground" 	alt="Ground" 				 title="Ground" 		coords="828,331,29" shape="circle">
-          <area id="Average" 	alt="Average" 			 title="Average" 		coords="166,428,238,393" shape="rect">
-          <area id="Median" 	alt="Median" 				 title="Median" 		coords="242,393,316,428" shape="rect">
-          <area id="Relative" 	alt="Relative" 		 title="Relative" 	coords="420,393,346,428" shape="rect">
-          <area id="Limit" 		alt="Limit" 				 title="Limit" 		  coords="423,393,499,428" shape="rect">
-          <area id="Digits6514" 		alt="Digits" 				 title="Digits" 		  coords="603,393,529,428" shape="rect">
-          <area id="Rate6514" 		alt="Rate" 				   title="Rate" 		  coords="606,393,678,428" shape="rect">
-          <area id="CursorLeft6514" 	alt="CursorLeft" title="CursorLeft" coords="786,393,712,428" shape="rect">
-          <area id="CursorRight6514" 	alt="CursorRight" title="CursorRight" coords="789,393,859,428" shape="rect">
-          <area id="Store6514" 		alt="Store" 				 title="Store" 		  coords="238,460,163,496" shape="rect">
-          <area id="Recall6514" 	alt="Recall" 				 title="Recall" 		coords="242,460,314,496" shape="rect">
-          <area id="Delay" 		alt="Delay" 				 title="Delay" 		  coords="420,460,346,496" shape="rect">
-          <area id="Damping" 	alt="Damping" 			 title="Damping" 		coords="423,460,495,496" shape="rect">
-          <area id="Halt" 		alt="Halt" 				   title="Halt" 		  coords="603,460,529,497" shape="rect">
-          <area id="Trigger6514" 	alt="Trigger" 			 title="Trigger" 		coords="606,460,678,497" shape="rect">
-          <area id="Exit6514" 		alt="Exit" 				   title="Exit" 			coords="786,460,712,498" shape="rect">
-          <area id="Enter6514" 		alt="Enter" 				 title="Enter" 		  coords="789,460,863,498" shape="rect">
-          <area id="UpRange6514" 	alt="UpRange" 			 title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-          <area id="DownRange6514" 	alt="DownRange" 	 title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-          <area id="AutoRange6514" 	alt="AutoRange" 	 title="AutoRange" 	coords="908,381,1007,418" shape="rect">
+          <area id="Shift6514" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Shift" 		  coords="102,331,17" shape="circle">
+          <area id="Local6514" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Local" 		  coords="102,399,17" shape="circle">
+          <area id="Power6514" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Power" 		  coords="99,479,17" shape="circle">
+          <area id="Voltage" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Voltage" 		coords="200,331,29" shape="circle">
+          <area id="Current" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Current" 		coords="285,331,29" shape="circle">
+          <area id="Resistance" 	    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Resistance"  coords="381,331,29" shape="circle">
+          <area id="Charge" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Charge" 		  coords="466,331,29" shape="circle">
+          <area id="ExternalFeedback" onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="ExternalFeedback" coords="562,331,29" shape="circle">
+          <area id="ZeroCheck" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="ZeroCheck" 	coords="647,331,29" shape="circle">
+          <area id="ZeroCorrect" 	    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="ZeroCorrect" coords="743,331,29" shape="circle">
+          <area id="Ground" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Ground" 		  coords="828,331,29" shape="circle">
+          <area id="Average" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Average" 		coords="166,428,238,393" shape="rect">
+          <area id="Median" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Median" 		  coords="242,393,316,428" shape="rect">
+          <area id="Relative" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Relative" 	  coords="420,393,346,428" shape="rect">
+          <area id="Limit" 		        onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Limit" 		  coords="423,393,499,428" shape="rect">
+          <area id="Digits6514" 	    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Digits"      coords="603,393,529,428" shape="rect">
+          <area id="Rate6514" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Rate" 		    coords="606,393,678,428" shape="rect">
+          <area id="CursorLeft6514" 	onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="CursorLeft"  coords="786,393,712,428" shape="rect">
+          <area id="CursorRight6514" 	onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="CursorRight" coords="789,393,859,428" shape="rect">
+          <area id="Store6514" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()" title="Store" 		  coords="238,460,163,496" shape="rect">
+          <area id="Recall6514"		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Recall" 		  coords="242,460,314,496" shape="rect">
+          <area id="Delay" 		        onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Delay" 		  coords="420,460,346,496" shape="rect">
+          <area id="Damping" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Damping" 		coords="423,460,495,496" shape="rect">
+          <area id="Halt" 		        onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Halt" 		    coords="603,460,529,497" shape="rect">
+          <area id="Trigger6514" 	    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Trigger" 		coords="606,460,678,497" shape="rect">
+          <area id="Exit6514" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Exit" 			  coords="786,460,712,498" shape="rect">
+          <area id="Enter6514" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Enter" 		  coords="789,460,863,498" shape="rect">
+          <area id="UpRange6514" 	    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
+          <area id="DownRange6514" 	  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
+          <area id="AutoRange6514"	  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
         </map>
       </div>
       <div id="BottomRight" class="column w-col w-col-6">
-        <img id="multimeter"  src="static/imgs/Keithley2000Multimeter.jpg" usemap="#image-map-2000">
+        <img id="multimeter"  src="static/imgs/Keithley2000MultimeterTXT.jpg" usemap="#image-map-2000">
         <map name="image-map-2000">
-          <area id="Shift2000" 		alt="Shift" 				title="Shift" 		coords="102,331,17" shape="circle">
-          <area id="Local2000" 		alt="Local" 				 title="Local" 		  coords="102,399,17" shape="circle">
-          <area id="DCvoltage" 	alt="DCvoltage" 				title="DCvoltage" 		coords="200,331,29" shape="circle">
-          <area id="ACvoltage" 	alt="ACvoltage" 				title="ACvoltage" 		coords="285,331,29" shape="circle">
-          <area id="DCcurrent" 	alt="DCcurrent" 			title="DCcurrent" 	coords="381,331,29" shape="circle">
-          <area id="ACcurrent" 	alt="ACcurrent" 				title="ACcurrent" 		coords="466,331,29" shape="circle">
-          <area id="2wireResistance" alt="2wireResistance" 	title="2wireResistance"coords="562,331,29" shape="circle">
-          <area id="4wireResistance" 	alt="4wireResistance" 			title="4wireResistance" 	coords="647,331,29" shape="circle">
-          <area id="Frequency" 	alt="Frequency" 			title="Frequency" 	coords="743,331,29" shape="circle">
-          <area id="Temperature" 	alt="Temperature" 				title="Temperature" 		coords="828,331,29" shape="circle">
-          <area id="ExternalTrigger" 	alt="ExternalTrigger" 			title="ExternalTrigger" 		coords="166,428,238,393" shape="rect">
-          <area id="Trigger2000" 	alt="Trigger" 				title="Trigger" 		coords="242,393,316,428" shape="rect">
-          <area id="Store2000" 	alt="Store" 			title="Store" 		coords="420,393,346,428" shape="rect">
-          <area id="Recall2000" 		alt="Recall" 				title="Recall" 		coords="423,393,499,428" shape="rect">
-          <area id="Filter" 		alt="Filter" 				title="Filter" 		coords="603,393,529,428" shape="rect">
-          <area id="Relative" 		alt="Relative" 				title="Relative" 		coords="606,393,678,428" shape="rect">
-          <area id="CursorLeft2000" 	alt="CursorLeft" 			title="CursorLeft" 		coords="786,393,712,428" shape="rect">
-          <area id="CursorRight2000" 	alt="CursorRight" 			title="CursorRight" 	coords="789,393,859,428" shape="rect">
-          <area id="Open" 		alt="Open" 				title="Open" 		coords="238,460,163,496" shape="rect">
-          <area id="Close" 	alt="Close" 				title="Close" 		coords="242,460,314,496" shape="rect">
-          <area id="Step" 		alt="Step" 				title="Step" 		coords="420,460,346,496" shape="rect">
-          <area id="Scan" 	alt="Scan" 			title="Scan" 		coords="423,460,495,496" shape="rect">
-          <area id="Digits2000" 		alt="Digits" 				title="Digits" 		coords="603,460,529,497" shape="rect">
-          <area id="Rate2000" 	alt="Rate" 				title="Rate" 		coords="606,460,678,497" shape="rect">
-          <area id="Exit2000" 		alt="Exit" 				title="Exit" 			coords="786,460,712,498" shape="rect">
-          <area id="Enter2000" 		alt="Enter" 				title="Enter" 		coords="789,460,863,498" shape="rect">
-          <area id="UpRange2000" 	alt="UpRange" 			title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-          <area id="DownRange2000" 	alt="DownRange" 			title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-          <area id="AutoRange2000" 	alt="AutoRange" 			title="AutoRange" 	coords="908,381,1007,418" shape="rect">
+          <area id="Shift2000" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Shift" 		  coords="102,331,17" shape="circle">
+          <area id="Local2000" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Local" 		  coords="102,399,17" shape="circle">
+          <area id="Power2000" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Power" 		  coords="99,479,17" shape="circle">
+          <area id="DCvoltage" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="DCvoltage" 	coords="200,331,29" shape="circle">
+          <area id="ACvoltage" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="ACvoltage" 	coords="285,331,29" shape="circle">
+          <area id="DCcurrent" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="DCcurrent" 	coords="381,331,29" shape="circle">
+          <area id="ACcurrent" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="ACcurrent" 	coords="466,331,29" shape="circle">
+          <area id="2wireResistance"  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="2wireResistance"coords="562,331,29" shape="circle">
+          <area id="4wireResistance" 	onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="4wireResistance"coords="647,331,29" shape="circle">
+          <area id="Frequency" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Frequency" 	coords="743,331,29" shape="circle">
+          <area id="Temperature" 		  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Temperature" coords="828,331,29" shape="circle">
+          <area id="ExternalTrigger" 	onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="ExternalTrigger"coords="166,428,238,393" shape="rect">
+          <area id="Trigger2000" 		  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Trigger" 		coords="242,393,316,428" shape="rect">
+          <area id="Store2000" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Store" 	  	coords="420,393,346,428" shape="rect">
+          <area id="Recall2000" 		  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Recall" 		  coords="423,393,499,428" shape="rect">
+          <area id="Filter" 		      onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Filter" 		  coords="603,393,529,428" shape="rect">
+          <area id="Relative" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Relative" 		coords="606,393,678,428" shape="rect">
+          <area id="CursorLeft2000" 	onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="CursorLeft" 	coords="786,393,712,428" shape="rect">
+          <area id="CursorRight2000" 	onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="CursorRight" coords="789,393,859,428" shape="rect">
+          <area id="Open" 		        onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Open" 		    coords="238,460,163,496" shape="rect">
+          <area id="Close" 		        onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Close" 		  coords="242,460,314,496" shape="rect">
+          <area id="Step" 		        onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Step" 		    coords="420,460,346,496" shape="rect">
+          <area id="Scan" 		        onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Scan" 		    coords="423,460,495,496" shape="rect">
+          <area id="Digits2000" 		  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Digits" 		  coords="603,460,529,497" shape="rect">
+          <area id="Rate2000" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Rate" 		    coords="606,460,678,497" shape="rect">
+          <area id="Exit2000" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Exit" 			  coords="786,460,712,498" shape="rect">
+          <area id="Enter2000" 		    onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="Enter" 		  coords="789,460,863,498" shape="rect">
+          <area id="UpRange2000" 		  onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
+          <area id="DownRange2000" 		onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
+          <area id="AutoRange2000" 		onMouseOver="mouseOver()" onMouseOut="mouseOut()"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
         </map>
       </div>
     </div>
   </div>
-
-  
   <!-- End your project here-->
   <!-- <script src="{{  url_for('static', filename='js/uv4l.js')  }}"></script> -->
   <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script> -->

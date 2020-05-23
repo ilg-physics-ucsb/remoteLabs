@@ -3,6 +3,8 @@ import sys
 import os
 import time
 from signal import signal, SIGINT
+import json
+
 
 class NoDeviceError(Exception):
 
@@ -14,16 +16,34 @@ class NoDeviceError(Exception):
 
 class Experiment(object):
 
-    def __init__(self):
+    def __init__(self, name):
         self.devices = {}
+        self.allStates = {}
         self.socket_path = ''
         self.socket = None
         self.connection = None
         self.client_address = None
+        self.name = name
+        self.initializedStates = False
 
     def add_device(self, device):
+        device.experiment = self
         self.devices[device.name] = device
+
+    def recallState(self):
+        with open(self.name + ".json", "r") as f:
+            self.allStates = json.load(f)
+        for name, device in self.devices.items():
+            device.setState(self.allStates[name])
+        self.initializedStates = True
     
+    def getControllerStates(self):
+        for name, device in self.devices.items():
+            self.allStates[name] = device.getState()
+        with open(self.name + ".json", "w") as f:
+            json.dump(self.allStates, f)
+        self.initializedStates = True
+        
     def set_socket_path(self, path):
         self.socket_path = path
     
@@ -70,7 +90,9 @@ class Experiment(object):
         if device_name not in self.devices:
             raise NoDeviceError(device_name)
         self.devices[device_name].cmd_handler(command, params)
-        
+        self.allStates[device_name] = self.devices[device_name].getState()
+        with open(self.name + ".json", "w") as f:
+            json.dump(self.allStates, f)        
 
     def exit_handler(self, signal_received, frame):
         print("\r\nAttempting to exit")
@@ -91,6 +113,8 @@ class Experiment(object):
 
     def setup(self):
         try:
+            if not self.initializedStates:   #if no historical state is being loaded
+                self.getControllerStates()   #read states of controllers and write to json file
             if not os.path.exists(self.socket_path):
                 f = open(self.socket_path, 'w')
                 f.close()
@@ -111,6 +135,8 @@ class Experiment(object):
                 raise
         except socket.error as err:
             print("socket error: {0}".format(err))
+
+
 
 
 

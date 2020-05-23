@@ -74,7 +74,7 @@
         justify-self: center;
     }
     .lamp_img {
-        width: 80%;
+        /* width: 80%; */
         object-fit: contain;
         justify-self: center;
     }.filter_img {
@@ -124,15 +124,46 @@
 .Photo {
     justify-items: center;
 }
+.Warning {
+    padding-right: 50px;
+    padding-left: 50px;
+    justify-content: center;
+    font-size: 18pt;
+}
+.text-block {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+/* .video {
+    position: relative;
+    z-index: 0; 
+    top: -70px;
+    overflow: hidden;
+  } */
+#lightSwitch {
+    width:50% ;  
+    transform: rotate(0deg);
+    float: center;
+}
+#toggleSwitch {
+    width:50% ;  
+    /* transform: scaleY(-1); */
+    float: center;
+}
 #filterwheel {
     width:50% ;  
+    /* transform: scaleX(-1); */
     transform: rotate(0deg);
     float: center;
    }
  #v {
+    /* position: relative;
+    overflow: hidden;
+    top: -100px;
+    z-index: 0; */
     width:100%
 }
-   #knob {
+#knob {
     width:40%;
     height:100%;
 }

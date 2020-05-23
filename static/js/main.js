@@ -59,8 +59,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
-    var video2 = document.getElementById('v2');
-     // var abort = document.getElementById('abort');
+    // var video2 = document.getElementById('v2');
     
     // for Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
     var f577 = document.getElementById('f577');
@@ -72,6 +71,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // for Keithley 6514 Electrometer
     var shift6514Button = document.getElementById('Shift6514');
     var local6514Button = document.getElementById('Local6514');
+    var power6514Button = document.getElementById('Power6514');
     var voltageButton = document.getElementById('Voltage');
     var currentButton = document.getElementById('Current');
     var resistanceButton = document.getElementById('Resistance');
@@ -99,10 +99,17 @@ window.addEventListener('DOMContentLoaded', function () {
     var upRange6514Button = document.getElementById('UpRange6514');
     var downRange6514Button = document.getElementById('DownRange6514');
     var autoRange6514Button = document.getElementById('AutoRange6514');
+    function mouseOver() {
+        // document.getElementById("demo").style.color = "red";
+      }
+    function mouseOut() {
+        // document.getElementById("demo").style.color = "black";
+      }
 
     //for Keithley 2000 Multimeter
     var shift2000Button = document.getElementById('Shift2000');
     var local2000Button = document.getElementById('Local2000');
+    var power2000Button = document.getElementById('Power2000');
     var dcVoltageButton = document.getElementById('DCvoltage');
     var acVoltageButton = document.getElementById('ACvoltage');
     var dcCurrentButton = document.getElementById('DCcurrent');
@@ -133,9 +140,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
     //for LiveFeed
-    // var mainCamSignal = setupWebRTC(8081, video, 50);
-    var mainCamSignal = setupWebRTC(5002, video, 50);
-    window.setTimeout(timeOutHandler,300000)
+    var mainCamSignal = setupWebRTC(8081, video, 50);
+    // var mainCamSignal = setupWebRTC(5002, video, 50);
+    window.setTimeout(timeOutHandler,1500000)
 
     function timeOutHandler(){
         mainCamSignal.hangup()
@@ -160,14 +167,24 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     
     window.onload = function () {
-        var fiveMinutes = 60 * 5,
+        var twentyfiveMinutes = 60 * 25,
             display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
-    };
-    // video.addEventListener("playing", function(event){
-    //     console.log("Ready For Video 2");
-    //     secondaryCamSignal = setupWebRTC(8082, video2, 5);
-    // })
+        startTimer(twentyfiveMinutes, display);
+    }
+
+    //for HgNe Lamp
+    // var HgNeOFF = document.getElementById('HgNeLampOFF');
+    // var HgNeON = document.getElementById('HgNeLampON');
+    var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
+    HgNeTOGGLE.style.transform='scaleY(1)';
+    var HgNeState = false;
+
+
+    //for Ambient Light
+    // var ambientOFF = document.getElementById('ambientOFF');
+    // var ambientON = document.getElementById('ambientON');
+    var ambientTOGGLE = document.getElementById('ambientTOGGLE');
+    var ambientState = false;
 
     //for Potentiometer
     var leftPot = document.getElementById('leftPot');
@@ -175,17 +192,85 @@ window.addEventListener('DOMContentLoaded', function () {
     var threeDegree = document.getElementById('3.6_degree');
     var thirtySixDegree = document.getElementById('36_degree');
     var threeSixtyDegree = document.getElementById('360_degree');
-    var potSteps=20;
+    var potSteps=23;
   
-    //BEGIN Potentiometer Buttons 
+    //BEGIN Light Switches 
+    // HgNeOFF.addEventListener('click', function(){
+    //     console.log("HgNe lamp switch was switched OFF");
+    //     if(HgNeState){
+    //         toggleSwitch.style.transform='scaleY(-1)';
+    //         dataChannel.send("HgNeLamp/state/OFF");
+    //         HgNeState=false;
+    //                  }
+    // })
+    // HgNeON.addEventListener('click', function(){
+    //     console.log("HgNe lamp switch was switched ON");
+    //     if(!HgNeState){
+    //         toggleSwitch.style.transform='scaleY(1)';
+    //         dataChannel.send("HgNeLamp/state/ON");
+    //         HgNeState=true;
+    //                  }
+    // })
+    // ambientOFF.addEventListener('click', function(){
+    //     console.log("Ambient light was switched OFF");
+    //     if(ambientState){
+    //         lightSwitch.style.transform='rotate(0deg)';
+    //         dataChannel.send("ambientLight/state/OFF");
+    //         ambientState=false;
+    //                  }
+    // })
+    // ambientON.addEventListener('click', function(){
+    //     console.log("Ambient light was switched ON");
+    //     if(!ambientState){
+    //         lightSwitch.style.transform='rotate(180deg)';
+    //         dataChannel.send("ambientLight/state/ON");
+    //         ambientState=true;
+    //                  }
+    // })
+    ambientTOGGLE.addEventListener('click', function(){
+        console.log("Ambient light was switched");
+        if(ambientState){
+            dataChannel.send("ambientLight/state/OFF");
+            ambientState=false;
+            ambientTOGGLE.title="Click here to turn ON";
+            lightSwitch.style.transform='rotate(0deg)';
+                     }
+        else{
+            dataChannel.send("ambientLight/state/ON");
+            ambientState=true;
+            ambientTOGGLE.title="Click here to turn OFF";
+            lightSwitch.style.transform='rotate(180deg)';
+        }
+    })
+    HgNeTOGGLE.addEventListener('click', function(){
+        console.log("HgNe lamp was switched");
+        if(HgNeState){
+            dataChannel.send("HgNeLamp/state/OFF");
+            HgNeState=false;
+            HgNeTOGGLE.title="Click here to turn ON";
+            lampSwitch.style.transform='scaleY(1)';
+                     }
+        else{
+            dataChannel.send("HgNeLamp/state/ON");
+            HgNeState=true;
+            HgNeTOGGLE.title="Click here to turn OFF";
+            lampSwitch.style.transform='scaleY(-1)';
+        }
+    })
+    // END Light Switches
+   
+    var ElectrometerState=false;
+    var MultimeterState=false;
+
+ //BEGIN Potentiometer Buttons 
     threeDegree.addEventListener('click', function(){
         potSteps=2;
     })
     thirtySixDegree.addEventListener('click', function(){
-        potSteps=20;
+        potSteps=21;
     })
     threeSixtyDegree.addEventListener('click', function(){
-        potSteps=200;
+        potSteps=210;
     })
 
     leftPot.addEventListener('click', function() {
@@ -226,19 +311,19 @@ window.addEventListener('DOMContentLoaded', function () {
     f546.addEventListener('click', function(event) {
         event.stopPropagation();
         dataChannel.send("Wheel/goto/120deg");
-        // filterwheel.style.transform='rotate(-60deg)';
+        // filterwheel.style.transform='rotate(-30deg)';
         return false
     })
     f436.addEventListener('click', function(event) {
         event.stopPropagation();
         dataChannel.send("Wheel/goto/60deg");
-        // filterwheel.style.transform='rotate(-120deg)';
+        // filterwheel.style.transform='rotate(-60deg)';
         return false
     })
     f365.addEventListener('click', function(event) {
         event.stopPropagation();
         dataChannel.send("Wheel/goto/0deg");
-        // filterwheel.style.transform='rotate(-180deg)';
+        // filterwheel.style.transform='rotate(-90deg)';
         return false
     })
 //END Filter Wheel Buttons
@@ -259,6 +344,17 @@ window.addEventListener('DOMContentLoaded', function () {
         dataChannel.send("Electrometer/press/SYST:LOC");
         //Ensure it doesn't reload
         return false
+    })
+    power6514Button.addEventListener('click', function(){
+        console.log("Electrometer was switched");
+        if(ElectrometerState){
+            dataChannel.send("electrometerPower/state/OFF");
+            ElectrometerState=false;
+                     }
+        else{
+            dataChannel.send("electrometerPower/state/ON");
+            ElectrometerState=true;
+        }
     })
     voltageButton.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -412,6 +508,17 @@ window.addEventListener('DOMContentLoaded', function () {
         event.stopPropagation();
         dataChannel.send("Multimeter/press/SYST:LOC");
         return false
+    })
+    power2000Button.addEventListener('click', function(){
+        console.log("Multimeter was switched");
+        if(MultimeterState){
+            dataChannel.send("multimeterPower/state/OFF");
+            MultimeterState=false;
+                     }
+        else{
+            dataChannel.send("multimeterPower/state/ON");
+            MultimeterState=true;
+        }
     })
     dcVoltageButton.addEventListener('click', function(event) {
         event.stopPropagation();
