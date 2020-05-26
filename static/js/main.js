@@ -230,13 +230,15 @@ window.addEventListener('DOMContentLoaded', function () {
     ambientTOGGLE.addEventListener('click', function(){
         console.log("Ambient light was switched");
         if(ambientState){
-            dataChannel.send("ambientLight/state/OFF");
+            // dataChannel.send("ambientLight/state/OFF");
+            dataChannel.send("ambientLight/off/5")
             ambientState=false;
             ambientTOGGLE.title="Click here to turn ON";
             lightSwitch.style.transform='rotate(0deg)';
                      }
         else{
-            dataChannel.send("ambientLight/state/ON");
+            // dataChannel.send("ambientLight/state/ON");
+            dataChannel.send("ambientLight/on/5");
             ambientState=true;
             ambientTOGGLE.title="Click here to turn OFF";
             lightSwitch.style.transform='rotate(180deg)';

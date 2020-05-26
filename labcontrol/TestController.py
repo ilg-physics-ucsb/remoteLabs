@@ -9,6 +9,8 @@ class BaseController(object):
     
     def cmd_handler(self, cmd, params):
         # Make the parser name, it should follow the naming convention <cmd>_parser. If there is no parser return None.
+        print(cmd, params)
+        print(self.__dir__)
         parser = getattr(self, cmd+"_parser", None)
 
         # If parser exists, use it to parse the params.
@@ -24,10 +26,6 @@ class BaseController(object):
         if callable(method):
             method(params)
         
-        # if cmd not in self.commands:
-        #     raise CommandError(cmd)
-        # parsed_argument = self.commands[cmd]["parser"](params)
-        # self.commands[cmd]["method"](parsed_argument)
 
     def cleanup(self):
         pass
@@ -80,53 +78,25 @@ class Stepper(stp.Motor, BaseController):
         return int(params[0])
 
 
-# class PDUoutlet(dlipower.PowerSwitch(hostname, userid)):
-#     def __init__(self, name, host, port=9999, timeout=10, connect=True):
-#         # self, userid=None, password=None, hostname=None, timeout=None, cycletime=None, retries=None, use_https=False
-#         print(host, port, timeout, connect)
-#         super().__init__(host=host, port=port, connect=connect)
-#         self.commands={
-#             "state":{"method": self.setRelay, 
-#                      "parser": self.__setRelay_parser
-#                     }
-#                       }   
-#         self.name = name
-#         self.device_type = "controller"
-#         self.experiment = None
-#         self.state = {"relayState": "OFF"}
+class PDUOutlet(dlipower.PowerSwitch, BaseController):
+    def __init__(self, name, hostname, userid, password):
+        # self, userid=None, password=None, hostname=None, timeout=None, cycletime=None, retries=None, use_https=False
+        super().__init__(hostname=hostname, userid=userid, password=password)
+        self.name = name
+        self.device_type = "controller"
+        self.experiment = None
+        self.state = {}
 
-        
-#     def cmd_handler(self, cmd, params):
-#         if cmd not in self.commands:
-#             raise CommandError(cmd)
-#         parsed_argument = self.commands[cmd]["parser"](params)
-#         self.commands[cmd]["method"](parsed_argument)
+    def on_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "on")
+        return int(params[0])
     
-#     def setRelay(self,newRelay):
-#         print(newRelay)
-#         if newRelay=="OFF":
-#             super().send({'system': {'set_relay_state': {'state': 0}}})
-#         elif newRelay=="ON":
-#             super().send({'system': {'set_relay_state': {'state': 1}}})
-#         self.state["relayState"] = newRelay
-        
-#     def __setRelay_parser(self, params):
-#         if len(params) != 1:
-#             raise ArgumentNumberError(len(params), 1, "setRelay")
-#         return params[0]
+    def off_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "off")
+        return int(params[0])
 
-#     def getState(self):
-#         return self.state
-        
-#     def setState(self, state):
-#         self.state = state
-
-#     def cleanup(self):
-#         super().close()
-    
-#     def reset(self):
-#         super().send({'system': {'set_relay_state': {'state': 0}}})
-#         super().close()
 
 class Plug(tp.TPLinkSmartDevice, BaseController):
     def __init__(self, name, host, port=9999, timeout=10, connect=True):
@@ -204,9 +174,11 @@ class StepperI2C(MotorKit, BaseController):
 
     def __init__(self, name, terminal, bounds, delay=0.01, refPoints={}):
         super().__init__()
-        self.terminal_options = {1: super().stepper1, 2: super().stepper2}
         self.name = name
         self.device_type = "controller"
+        self.experiment = None
+        
+        self.terminal_options = {1: super().stepper1, 2: super().stepper2}
         self.refPoints = refPoints
         self.currentPosition = 0
         self.device = self.terminal_options[terminal]
@@ -214,8 +186,9 @@ class StepperI2C(MotorKit, BaseController):
         self.style = stepper.DOUBLE
         self.lowerBound = bounds[0]
         self.upperBound = bounds[1]
-        self.experiment = None
+
         self.state = {"position": self.currentPosition}
+    
 
            
     def setup(self, style):
@@ -264,9 +237,10 @@ class Keithley6514Electrometer(BaseController):
     def __init__(self, name, visa_resource):
         self.name = name
         self.device_type = "measurement"
-        self.inst = visa_resource
         self.experiment = None
         self.state = {"setting": ""}
+
+        self.inst = visa_resource
 
     def press(self, params):
         self.inst.write("SYST:REM")
@@ -284,12 +258,12 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
     def __init__(self, name, visa_resource):
         self.name = name
         self.device_type = "measurement"
-        self.inst = visa_resource
         self.experiment = None
         self.state = {"setting": ""}
+
+        self.inst = visa_resource
     
 
-    
     def press(self, params):
         self.inst.write("SYST:REM")
         self.inst.write(params)

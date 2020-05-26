@@ -1,4 +1,4 @@
-from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug
+from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet
 import visa
 import pickle
 
@@ -28,6 +28,9 @@ potentiometer = StepperI2C("Pot", 2,bounds=(0,2100))
 filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
 
 # ambientLight = Plug("ambientLight", "192.168.0.3")
+ambientLight = PDUOutlet("ambientLight", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
+ambientLight.login()
+print(ambientLight.verify())
 # HgNeLamp = Plug("HgNeLamp", "192.168.0.18")
 
 electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
@@ -39,7 +42,7 @@ multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 # whether the instrument has been serviced and reinitialized since last shutdown? (y/n) (default y)
 
 exp = Experiment("PhotoElectric")
-# exp.add_device(ambientLight)
+exp.add_device(ambientLight)
 # exp.add_device(HgNeLamp)
 exp.add_device(potentiometer)
 exp.add_device(filterWheel)
