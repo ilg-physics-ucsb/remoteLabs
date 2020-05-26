@@ -35,21 +35,21 @@ You can make the file in any simple text editor on your computer and then drag a
 ```bash
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
-country=**<Insert 2 letter ISO 3166-1 country code here>**
+country=<Insert 2 letter ISO 3166-1 country code here>
 
 network={
  ssid="<Name of your WiFi>"
  psk="<Password for your WiFi>"
 }
 ```
-Replacing the three things between < > with your information.
+Replacing the three entries between angle brackets < > with your information.
 
 Now you can plug in your SD card into the Pi and boot. You should then be able to SSH into your Pi.
 
 ### SSH
 
 #### Getting the IP Address
-You will first need to know the IP Address of your Raspberry Pi. To do that, typically I will log onto my router and look and the DHCP leases. This I can't specifically tell you how to do, but it typically starts by opening a browser and in the adress bar typing "192.168.1.1" without the quotes. If that doesn't work try "192.168.0.1" and if that doesn't work try "10.0.0.1". If none of those work try thing following commands in terminal/command prompt/Powershell:
+In order to connect to your Raspberry Pi, you will need to know its IP Address. To figure that out, typically log onto your router and look and the DHCP leases. How to do this varies from router to router, but it typically starts by opening a browser and typing "192.168.1.1" in the adress bar (without the quotes). If that doesn't work try "192.168.0.1" and if that doesn't work try "10.0.0.1". If none of those work try the following commands in terminal/command prompt/Powershell:
 
 OSX/Linux
 ```bash
@@ -60,13 +60,13 @@ Windows
 ```
 ipconfig \all
 ```
-And look for somthing labeled "gateway" that should be the IP address of your router. Type that set of numbers into yoru browser's address bar.
+And look for somthing labeled "gateway" that should be the IP address of your router. Type that set of numbers into your browser's address bar.
 
-Finally if that doesn't work, google your make and model of your router.
+Finally, if that doesn't work, google the make and model of your router.
 
-You will typically need a username and password. Most routers have a default that you can google or is often time written on the bottom of the router. If you haven't changed anything then that should be the log in information.
+To access your router's information typically requires a username and password. Most routers have a default that is written on the bottom of the router or available via google. If you haven't changed anything then that should be the log in information.
 
-You will have to look around your routers website to find a list of connected devices. One of them should be names "raspberrypi" and it should have the IP address listed. Again it should look like 192.168.1.61 or something similar. You want the IPV4 address not the IPV6. 
+You will have to look around your router's website to find a list of connected devices and their IP addresses. One of them should be named "raspberrypi". Again it should look like 192.168.1.61 or something similar. (Note: you want the IPV4 address not the IPV6.)
 
 #### Getting into the Pi
 
