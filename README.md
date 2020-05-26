@@ -1,19 +1,19 @@
 # UCSB Physics Remote Labs
-This is code base used to server our students who need to take physics labs but can't come onto campus during quarentine 2020.
+This is the code base for remote-controlling apparatus used for laboratory instruction in modern physics labs.  It was created to serve our students who can't come onto campus during quarantine 2020.
 
 ## Installation and Setup
 
-At the time of writing we are using Raspbery Pi 4 4GB model with Raspbian Lite Buster installed. Raspbian Lite was chosen so that we would have less overhead on the CPU while still using a distro design for use with UV4L.
+At the time of writing we are using the Raspbery Pi 4 (4GB model) with Raspbian Lite Buster installed. Raspbian Lite was chosen to minimize overhead on the CPU while still using a distro design for use with UV4L.
 
 ### Raspbian Lite
 
-The most simple way to get Raspbian Lite is to go to the  [Raspberry Pi downloads](https://www.raspberrypi.org/downloads/) page and follow on of the first three links to download the imager. Choose the link based on the operating system you are running on your own computer, not the Raspberry Pi.
+The simplest way to get Raspbian Lite is to go to the [Raspberry Pi downloads](https://www.raspberrypi.org/downloads/) page and follow one of the first three links to download the imager. Choose the link based on the operating system you are running on your own computer, not the Raspberry Pi.
 
 Once you have the imager installed simply ask it to flash Raspbian Lite onto the SD Card. 
 
 #### Making SSH work
 
-Before you put it in the Pi, you will need put an empty file named ssh onto the root folder of the sd card. You can do this is terminal/command prompt.
+Before you put the SD card in the Pi, you will need put an empty file named ssh onto the root folder of the sd card. You can do this is terminal/command prompt.
 
 In terminal `cd` to the SD card. On OSX that is usually uner /Volumes/boot. On Linux I think it is in /mnt/boot (but I don't know for sure). then run the command
 
@@ -31,7 +31,7 @@ echo "" > ssh
 
 We are almost ready to plug in the SD Card. But since we are going headless we need to give the Pi access to your WiFi when it boots. To do that you need to add a file named [wpa_supplicant.conf](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) to root of the SD card as well. 
 
-This time you can make the file in Notepad, or some other simple text editor on your computer and drag and drop it onto the SD card. Teh contents of the file should look like the following:
+This time you can make the file in Notepad, or some other simple text editor on your computer and drag and drop it onto the SD card. The contents of the file should look like the following:
 ```
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
