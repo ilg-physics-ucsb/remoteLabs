@@ -76,9 +76,9 @@ To SSH into your Pi use Terminal or Powershell *(not command prompt)*. Simply ty
 ssh pi@<ip_address>
 ```
 
-Replacing <ip_address> with the address you found from before. You Pi should be on for about a minute before you try this command on your computer.
+Replacing <ip_address> with the address you found one your router's website. (Note: Make sure your Pi has been on for about a minute before you try this command.  It won't work if the Pi is still booting up.)
 
-It will ask you for a password. The default password for raspberry pi's is the word "raspberry" without the quotes.
+You will be asked for a password. The default password for raspberry pi's is the word "raspberry" without the quotes.
 
 The terminal should then look somthing like 
 ```
@@ -91,30 +91,30 @@ Now run the command
 ```bash
 sudo raspi-config
 ```
-This will open a colorful window that you can use the arrow keys and enter to navigate.
+This will open a colorful window that you can navigate using the tab, enter and arrow keys.
 
-Start by changing your password to something that you will remember. Just press Enter on yoru keyboard.
+Start by changing your password to something that you will remember. (Just press Enter on your keyboard.)
 
 Then arrow down to "5 Interfacing Options"
 
-You will want to do a few things int hat window, but each down you make a selection it kicks you back out to the main screen. Just go back to interfacing options.
+You will want to do a few things in that window, but be aware that each time you make a selection it kicks you back out to the main screen and you have to go back to "5 Interfacing Options".
 
-- Make sure the SSH is eneabled.
+- Make sure the SSH is enabled.
 - Then enable Remote GPIO
 
-Finally arrow down to update and hit Enter. 
+Finally arrow down to "8 Update" and hit Enter. 
 
 ### Installing Dependencies
 
-The remote labs needs some programs to be installed before it can run. Mostly UV4L, but a couple of other things as well.
+The remote lab software needs some programs installed in order to run. 
 
-Start by running the commands
+Start by updating the package manager and upgrading all the elements therein by running the commands
 ```bash
 sudo apt update
 sudo apt upgrade
 ```
 
-Once that is done want to follow the (UV4l ARM Installation)[https://www.linux-projects.org/uv4l/installation/].
+Once that is done, follow the (UV4l ARM Installation)[https://www.linux-projects.org/uv4l/installation/].
 
 The summary of commands is the following. First run
 ```bash
