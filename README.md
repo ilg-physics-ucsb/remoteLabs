@@ -114,13 +114,13 @@ sudo apt update
 sudo apt upgrade
 ```
 
-Once that is done, follow the (UV4l ARM Installation)[https://www.linux-projects.org/uv4l/installation/].
+Once that is done, perform the UV4L ARM Installation [https://www.linux-projects.org/uv4l/installation/].
 
-The summary of commands is the following. First run
+First run
 ```bash
 curl http://www.linux-projects.org/listing/uv4l_repo/lpkey.asc | sudo apt-key add -
 ```
-Then you will need to add a line to file. To do this simply run:
+Then add a line to the ```sources.list``` file. To do this simply run:
 
 ```bash
 sudo nano /etc/apt/sources.list
