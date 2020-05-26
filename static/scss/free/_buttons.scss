@@ -13,7 +13,7 @@
   @include button-size($btn-padding-y-basic, $btn-padding-x-basic, $btn-font-size-basic);
 
   @include hover-focus-active {
-    outline: 0;
+    outline: 10;
     box-shadow: $z-depth-1-half;
   }
 
