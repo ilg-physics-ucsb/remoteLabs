@@ -27,29 +27,25 @@ potentiometer = StepperI2C("Pot", 2,bounds=(0,2100))
 
 filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
 
+PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
+PEpdu.login()
+print(PEpdu.verify())
 # ambientLight = Plug("ambientLight", "192.168.0.3")
-ambientLight = PDUOutlet("ambientLight", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
-ambientLight.login()
-print(ambientLight.verify())
 # HgNeLamp = Plug("HgNeLamp", "192.168.0.18")
 
 electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
 # electrometerPower = Plug("electrometerPower","192.168.0.19")
+
 multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 # multimeterPower = Plug("multimeterPower","192.168.0.20")
 
-# code here (that could eventually become its own object) that queries the person launching the program
-# whether the instrument has been serviced and reinitialized since last shutdown? (y/n) (default y)
 
 exp = Experiment("PhotoElectric")
-exp.add_device(ambientLight)
-# exp.add_device(HgNeLamp)
+exp.add_device(PEpdu)
 exp.add_device(potentiometer)
 exp.add_device(filterWheel)
 exp.add_device(electrometer)
 exp.add_device(multimeter)
-# exp.add_device(electrometerPower)
-# exp.add_device(multimeterPower)
 exp.set_socket_path(socket_path)
 
 

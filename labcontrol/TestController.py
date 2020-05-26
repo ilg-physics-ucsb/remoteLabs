@@ -9,8 +9,6 @@ class BaseController(object):
     
     def cmd_handler(self, cmd, params):
         # Make the parser name, it should follow the naming convention <cmd>_parser. If there is no parser return None.
-        print(cmd, params)
-        print(self.__dir__)
         parser = getattr(self, cmd+"_parser", None)
 
         # If parser exists, use it to parse the params.
@@ -85,7 +83,15 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
-        self.state = {}
+        self.state = {1:"Off", 2:"Off", 3:"Off", 4:"Off", 5:"Off", 6:"Off", 7:"Off", 8:"Off" }
+        
+    def on(self, outletNumber):
+        super().on(outletNumber)
+        self.state[outletNumber] = "On"
+
+    def off(self, outletNumber):
+        super().off(outletNumber)
+        self.state[outletNumber] = "Off"
 
     def on_parser(self, params):
         if len(params) != 1:
@@ -96,6 +102,10 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "off")
         return int(params[0])
+    
+    def reset(self):
+        for outletNumber, state in self.state.items():
+            self.off(outletNumber)
 
 
 class Plug(tp.TPLinkSmartDevice, BaseController):
