@@ -32,14 +32,14 @@ echo "" > ssh
 You are almost ready to plug in the SD Card.  The final step is to enable ``headless'' operation of the Pi (i.e., without its own keyboard/mouse/monitor) by giving the Pi access to your WiFi when it boots. To do that you need to add one more file to the root directory of the SD card.  This file must be named [wpa_supplicant.conf](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) 
 
 You can make the file in any simple text editor on your computer and then drag and drop it onto the SD card. The contents of the file should look like the following:
-```
+```bash
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
 country=**<Insert 2 letter ISO 3166-1 country code here>**
 
 network={
- ssid=**"<Name of your WiFi>"**
- psk=**"<Password for your WiFi>"**
+ ssid="<Name of your WiFi>"
+ psk="<Password for your WiFi>"
 }
 ```
 Replacing the three things between < > with your information.
