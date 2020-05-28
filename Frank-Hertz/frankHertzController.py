@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet
 import visa
 import pickle
@@ -29,7 +30,6 @@ filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
 
 PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
 PEpdu.login()
-print(PEpdu.verify())
 # ambientLight = Plug("ambientLight", "192.168.0.3")
 # HgNeLamp = Plug("HgNeLamp", "192.168.0.18")
 

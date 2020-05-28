@@ -1,0 +1,22 @@
+h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 32px;
+  line-height: 36px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.column {
+  display: block;
+  margin-bottom: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+  text-align: center;
+}
+
+.pagecontainer {
+  height: 100vh;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
