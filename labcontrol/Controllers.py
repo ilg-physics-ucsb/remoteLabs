@@ -7,81 +7,79 @@ import dlipower
 
 class BaseController(object):
     
-    def __init__(self, commands=[]):
-        self.commands = commands
+    def cmd_handler(self, cmd, params):
+        # Make the parser name, it should follow the naming convention <cmd>_parser. If there is no parser return None.
+        parser = getattr(self, cmd+"_parser", None)
+
+        # If parser exists, use it to parse the params.
+        if parser is not None:
+            params = parser(params)
+        # If there is no parser print this statement for user. 
+        else:
+            print("No Parser Found. Will just pass params to command.")
+
+        # No get the command method. If there isn't a method, it should through an AttributeError.
+        method = getattr(self, cmd)
+        
+        if callable(method):
+            method(params)
+        
+
+    def cleanup(self):
+        pass
     
-    def cmd_handler(self, cmd, *params):
+    def reset(self):
         pass
 
-class PDUoutlet(dlipower.PowerSwitch(hostname, userid)):
-    def __init__(self, name, host, port=9999, timeout=10, connect=True):
+    def getState(self):
+        return self.state
+        
+    def setState(self, state):
+        self.state = state
+
+
+
+class PDUOutlet(dlipower.PowerSwitch, BaseController):
+    def __init__(self, name, hostname, userid, password):
         # self, userid=None, password=None, hostname=None, timeout=None, cycletime=None, retries=None, use_https=False
-        print(host, port, timeout, connect)
-        super().__init__(host=host, port=port, connect=connect)
-        self.commands={
-            "state":{"method": self.setRelay, 
-                     "parser": self.__setRelay_parser
-                    }
-                      }   
+        super().__init__(hostname=hostname, userid=userid, password=password)
         self.name = name
         self.device_type = "controller"
         self.experiment = None
-        self.state = {"relayState": "OFF"}
+        self.state = {1:"Off", 2:"Off", 3:"Off", 4:"Off", 5:"Off", 6:"Off", 7:"Off", 8:"Off" }
+        
+    def on(self, outletNumber):
+        super().on(outletNumber)
+        self.state[outletNumber] = "On"
 
-        
-    def cmd_handler(self, cmd, params):
-        if cmd not in self.commands:
-            raise CommandError(cmd)
-        parsed_argument = self.commands[cmd]["parser"](params)
-        self.commands[cmd]["method"](parsed_argument)
-    
-    def setRelay(self,newRelay):
-        print(newRelay)
-        if newRelay=="OFF":
-            super().send({'system': {'set_relay_state': {'state': 0}}})
-        elif newRelay=="ON":
-            super().send({'system': {'set_relay_state': {'state': 1}}})
-        self.state["relayState"] = newRelay
-        
-    def __setRelay_parser(self, params):
+    def off(self, outletNumber):
+        super().off(outletNumber)
+        self.state[outletNumber] = "Off"
+
+    def on_parser(self, params):
         if len(params) != 1:
-            raise ArgumentNumberError(len(params), 1, "setRelay")
-        return params[0]
-
-    def getState(self):
-        return self.state
-        
-    def setState(self, state):
-        self.state = state
-
-    def cleanup(self):
-        super().close()
+            raise ArgumentNumberError(len(params), 1, "on")
+        return int(params[0])
+    
+    def off_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "off")
+        return int(params[0])
     
     def reset(self):
-        super().send({'system': {'set_relay_state': {'state': 0}}})
-        super().close()
+        for outletNumber, state in self.state.items():
+            self.off(outletNumber)
 
-class Plug(tp.TPLinkSmartDevice):
+
+class Plug(tp.TPLinkSmartDevice, BaseController):
     def __init__(self, name, host, port=9999, timeout=10, connect=True):
         print(host, port, timeout, connect)
         super().__init__(host=host, port=port, connect=connect)
-        self.commands={
-            "state":{"method": self.setRelay, 
-                     "parser": self.__setRelay_parser
-                    }
-                      }   
         self.name = name
         self.device_type = "controller"
         self.experiment = None
         self.state = {"relayState": "OFF"}
 
-        
-    def cmd_handler(self, cmd, params):
-        if cmd not in self.commands:
-            raise CommandError(cmd)
-        parsed_argument = self.commands[cmd]["parser"](params)
-        self.commands[cmd]["method"](parsed_argument)
-    
     def setRelay(self,newRelay):
         print(newRelay)
         if newRelay=="OFF":
@@ -90,16 +88,10 @@ class Plug(tp.TPLinkSmartDevice):
             super().send({'system': {'set_relay_state': {'state': 1}}})
         self.state["relayState"] = newRelay
         
-    def __setRelay_parser(self, params):
+    def setRelay_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "setRelay")
         return params[0]
-
-    def getState(self):
-        return self.state
-        
-    def setState(self, state):
-        self.state = state
 
     def cleanup(self):
         super().close()
@@ -109,30 +101,16 @@ class Plug(tp.TPLinkSmartDevice):
         super().close()
 
 
-class StepperSimple(stp.Motor):
+class StepperSimple(stp.Motor, BaseController):
 
     def __init__(self, name, pins, delay=0.01, refPoints={}):
         super().__init__(pins, delay)
-        self.commands = {
-            "move": {"method": self.move, 
-                     "parser": self.__move_parser
-                    },
-            "goto": {"method": self.goto, 
-                     "parser": self.__goto_parser
-                    }
-                        }
         self.name = name
         self.device_type = "controller"
         self.refPoints = refPoints
         self.currentPosition = 0
         self.experiment = None
         self.state = {"position": self.currentPosition}
-    
-    def cmd_handler(self, cmd, params):
-        if cmd not in self.commands:
-            raise CommandError(cmd)
-        parsed_argument = self.commands[cmd]["parser"](params)
-        self.commands[cmd]["method"](parsed_argument)
     
     def move(self, steps):
         print(steps)
@@ -142,7 +120,7 @@ class StepperSimple(stp.Motor):
         self.state["position"] = self.currentPosition
         self.device.release()
         
-    def __move_parser(self, params):
+    def move_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
         return int(params[0])
@@ -152,17 +130,11 @@ class StepperSimple(stp.Motor):
         endPoint=self.refPoints[position]   
         self.move(endPoint-self.currentPosition)
 
-    def __goto_parser(self, params):
+    def goto_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
         
-    def getState(self):
-        return self.state
-        
-    def setState(self, state):
-        self.state = state
-
     def cleanup(self):
         super().cleanup()
     
@@ -171,21 +143,15 @@ class StepperSimple(stp.Motor):
     
     
 
-class StepperI2C(MotorKit):
+class StepperI2C(MotorKit, BaseController):
 
     def __init__(self, name, terminal, bounds, delay=0.01, refPoints={}):
         super().__init__()
-        self.commands = {
-            "move": {"method": self.move, 
-                     "parser": self.__move_parser
-                    },
-            "goto": {"method": self.goto, 
-                     "parser": self.__goto_parser
-                    }
-                        }
-        self.terminal_options = {1: super().stepper1, 2: super().stepper2}
         self.name = name
         self.device_type = "controller"
+        self.experiment = None
+        
+        self.terminal_options = {1: super().stepper1, 2: super().stepper2}
         self.refPoints = refPoints
         self.currentPosition = 0
         self.device = self.terminal_options[terminal]
@@ -193,17 +159,11 @@ class StepperI2C(MotorKit):
         self.style = stepper.DOUBLE
         self.lowerBound = bounds[0]
         self.upperBound = bounds[1]
-        self.experiment = None
+
         self.state = {"position": self.currentPosition}
+    
 
            
-    def cmd_handler(self, cmd, params):
-        if cmd not in self.commands:
-            raise CommandError(cmd)
-        parsed_argument = self.commands[cmd]["parser"](params)
-        self.commands[cmd]["method"](parsed_argument)
-
-
     def setup(self, style):
         pass
 
@@ -224,7 +184,7 @@ class StepperI2C(MotorKit):
         self.state["position"] = self.currentPosition
         self.device.release()
         
-    def __move_parser(self, params):
+    def move_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
         return int(params[0])
@@ -234,113 +194,59 @@ class StepperI2C(MotorKit):
         endPoint=self.refPoints[position]   
         self.move(endPoint-self.currentPosition)
 
-    def __goto_parser(self, params):
+    def goto_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
          
-    def getState(self):
-        return self.state
-        
-    def setState(self, state):
-        self.state = state
-          
-    def cleanup(self):
-        # super().cleanup(
-        pass
     
     def reset(self):
         self.move(-self.currentPosition)
         # pass
   
 
-class Keithley6514Electrometer:
+class Keithley6514Electrometer(BaseController):
 
     def __init__(self, name, visa_resource):
         self.name = name
         self.device_type = "measurement"
-        self.commands = {
-            "press": {"method": self.press_key, 
-                      "parser": self.__press_key_parser
-                    }
-        }
-        self.inst = visa_resource
         self.experiment = None
         self.state = {"setting": ""}
-        # self.inst.write("SYST:INIT")
-        # self.inst.write("DISP:ENAB 1")
-    
-    def cleanup(self):
-        pass
-    
-    def reset(self):
-        pass
-        
-    def cmd_handler(self, cmd, params):
-        if cmd not in self.commands:
-            raise CommandError(cmd)
-        parsed_argument = self.commands[cmd]["parser"](params)
-        self.commands[cmd]["method"](parsed_argument)
 
-    
-    def press_key(self, params):
+        self.inst = visa_resource
+
+    def press(self, params):
         self.inst.write("SYST:REM")
         self.inst.write(params)
         # self.inst.write("SYST:LOC")
 
-    def __press_key_parser(self, params):
+    def press_parser(self, params):
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
         return params[0]
         
-    def getState(self):
-        return self.state
-        
-    def setState(self, state):
-        self.state = state
         
     
-class Keithley2000Multimeter: #copied unaltered from Electrometer on 200423
+class Keithley2000Multimeter(BaseController): #copied unaltered from Electrometer on 200423
 
     def __init__(self, name, visa_resource):
         self.name = name
         self.device_type = "measurement"
-        self.commands = {
-            "press": {"method": self.press_key, 
-                      "parser": self.__press_key_parser
-                    }
-        }
-        self.inst = visa_resource
         self.experiment = None
         self.state = {"setting": ""}
-        # self.inst.write("SYST:INIT")
+
+        self.inst = visa_resource
     
-    def cleanup(self):
-        pass
-    
-    def reset(self):
-        pass
-        
-    def cmd_handler(self, cmd, params):
-        if cmd not in self.commands:
-            raise CommandError(cmd)
-        parsed_argument = self.commands[cmd]["parser"](params)
-        self.commands[cmd]["method"](parsed_argument)
-    
-    def press_key(self, params):
+
+    def press(self, params):
         self.inst.write("SYST:REM")
         self.inst.write(params)
     
-    def __press_key_parser(self, params):
+    def press_parser(self, params):
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
         return params[0]
         
-    def getState(self):
-        return self.state
-        
-    def setState(self, state):
-        self.state = state
-        
-    
+
+   
 class CommandError(Exception):
 
     def __init__(self, command, *args):
