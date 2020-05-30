@@ -97,7 +97,15 @@
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-
+.image-27 {
+  overflow: visible;
+  max-width: none;
+  margin-top: -96px;
+  margin-left: -57px;
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
 .image-10 {
   margin-top: -34px;
   -webkit-transform: rotate(180deg);
@@ -290,15 +298,7 @@
   transform: rotate(0deg);
 }
 
-.image-27 {
-  overflow: visible;
-  max-width: none;
-  margin-top: -96px;
-  margin-left: -57px;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
+
 
 .image-28 {
   margin-top: 0px;
@@ -318,4 +318,9 @@
 
 .text-block-8 {
   text-align: center;
+}
+.lrhShift {
+  position: relative;
+  margin-top: 50%;
+  margin-left: -10%;
 }

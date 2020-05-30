@@ -61,13 +61,6 @@ window.addEventListener('DOMContentLoaded', function () {
     var video = document.getElementById('v');
     // var video2 = document.getElementById('v2');
     
-    // for Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
-    var f577 = document.getElementById('f577');
-    var f546 = document.getElementById('f546');
-    var f436 = document.getElementById('f436');
-    var f365 = document.getElementById('f365');
-    var filterwheel = document.getElementById('filterwheel')
-
     // for Keithley 6514 Electrometer
     var shift6514Button = document.getElementById('Shift6514');
     var local6514Button = document.getElementById('Local6514');
@@ -99,46 +92,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var upRange6514Button = document.getElementById('UpRange6514');
     var downRange6514Button = document.getElementById('DownRange6514');
     var autoRange6514Button = document.getElementById('AutoRange6514');
-    function mouseOver() {
-        // document.getElementById("demo").style.color = "red";
-      }
-    function mouseOut() {
-        // document.getElementById("demo").style.color = "black";
-      }
-
-    //for Keithley 2000 Multimeter
-    var shift2000Button = document.getElementById('Shift2000');
-    var local2000Button = document.getElementById('Local2000');
-    var power2000Button = document.getElementById('Power2000');
-    var dcVoltageButton = document.getElementById('DCvoltage');
-    var acVoltageButton = document.getElementById('ACvoltage');
-    var dcCurrentButton = document.getElementById('DCcurrent');
-    var acCurrentButton = document.getElementById('ACcurrent');
-    var TWOwireResistanceButton = document.getElementById('2wireResistance');
-    var FOURwireResistanceButton = document.getElementById('4wireResistance');
-    var frequencyButton = document.getElementById('Frequency');
-    var temperatureButton = document.getElementById('Temperature');
-    var externalTriggerButton = document.getElementById('ExternalTrigger');
-    var trigger2000Button = document.getElementById('Trigger2000');
-    var store2000Button = document.getElementById('Store2000');
-    var recall2000Button = document.getElementById('Recall2000');
-    var filterButton = document.getElementById('Filter');
-    var relativeButton = document.getElementById('Relative');
-    var cursorLeft2000Button = document.getElementById('CursorLeft2000');
-    var cursorRight2000Button = document.getElementById('CursorRight2000');
-    var openButton = document.getElementById('Open');
-    var closeButton = document.getElementById('Close');
-    var stepButton = document.getElementById('Step');
-    var scanButton = document.getElementById('Scan');
-    var digits2000Button = document.getElementById('Digits2000');
-    var rate2000Button = document.getElementById('Rate2000');
-    var exit2000Button = document.getElementById('Exit2000');
-    var enter2000Button = document.getElementById('Enter2000');
-    var upRange2000Button = document.getElementById('UpRange2000');
-    var downRange2000Button = document.getElementById('DownRange2000');
-    var autoRange2000Button = document.getElementById('AutoRange2000');
-
-
+ 
     //for LiveFeed
     var mainCamSignal = setupWebRTC(8081, video, 50);
     // var mainCamSignal = setupWebRTC(5002, video, 50);
@@ -172,12 +126,10 @@ window.addEventListener('DOMContentLoaded', function () {
         startTimer(twentyfiveMinutes, display);
     }
 
-    //for HgNe Lamp
-    // var HgNeOFF = document.getElementById('HgNeLampOFF');
-    // var HgNeON = document.getElementById('HgNeLampON');
-    var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
-    HgNeTOGGLE.style.transform='scaleY(1)';
-    var HgNeState = false;
+    //for Oven Variac
+    var OvenTOGGLE = document.getElementById('ovenSwitch');
+    // OvenTOGGLE.style.transform='rotate(90deg)';
+    var OvenState = false;
 
 
     //for Ambient Light
@@ -244,19 +196,19 @@ window.addEventListener('DOMContentLoaded', function () {
             lightSwitch.style.transform='rotate(180deg)';
         }
     })
-    HgNeTOGGLE.addEventListener('click', function(){
-        console.log("HgNe lamp was switched");
-        if(HgNeState){
-            dataChannel.send("PEpdu/off/6");
-            HgNeState=false;
-            HgNeTOGGLE.title="Click here to turn ON";
-            toggleSwitch.style.transform='scaleY(1)';
+    OvenTOGGLE.addEventListener('click', function(){
+        console.log("Oven power was switched");
+        if(OvenState){
+            // dataChannel.send("PEpdu/off/6");
+            OvenState=false;
+            OvenTOGGLE.title="Click here to turn ON";
+            OvenTOGGLE.src="static/images/VariacSwitchOFF.jpg";
                      }
         else{
-            dataChannel.send("PEpdu/on/6");
-            HgNeState=true;
-            HgNeTOGGLE.title="Click here to turn OFF";
-            toggleSwitch.style.transform='scaleY(-1)';
+            // dataChannel.send("PEpdu/on/6");
+            OvenState=true;
+            OvenTOGGLE.title="Click here to turn OFF";
+            OvenTOGGLE.src="static/images/VariacSwitchON.jpg";
         }
     })
     // END Light Switches
