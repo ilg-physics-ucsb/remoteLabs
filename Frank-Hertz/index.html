@@ -45,16 +45,16 @@
       </div> 
       <!-- <div class="w-row"> -->
         <div id="TopTextLeft" class="column w-col w-col-6">
-          <h2 class="heading-4">Set-Up</h2>
+          <h2 class="SubTitle">Set-Up</h2>
           <div class="text-block">
             Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
             as well as to equipment manuals and manufacturer websites.</div>
         </div>
         <div id="TopTextRight" class="column w-col w-col-6">
-          <h2 class="heading-4">Get Help</h2>
+          <h2 class="SubTitle">Get Help</h2>
           <div class="text-block">
             Here students will be advised of options for synchronous and asynchronous assistance. 
-            Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
+            <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
             so they can use the various Zoom features to request help in real time. 
             There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.</div>
         </div>
@@ -62,16 +62,26 @@
     </div>
     <div id="PageMiddle Oven" class="w-row">
       <div id="SideImages BigVariacDial" class="column w-col w-col-3">
-        <img src="static/images/clockwise.png" width="87" alt="" class="image-23">
-        <img src="static/images/bigVariac.png" width="188" alt="" class="image-25">
-        <img src="static/images/counterclockwise.png" width="89" alt="" class="image-24">
-        <div class="text-block">(click arrows to increaes/decrease AC voltage to oven heater)</div>
+        <figure>
+          (click arrows to increaes/decrease AC voltage to oven heater)
+          <img src="static/images/bigVariacWarrows.png" usemap="#image-map-bV">
+          <map name="image-map-bV">
+            <area id="bVccw" alt="CCW" title="increase AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
+            <area id="bVcw" alt="CW" title="decrease AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
+        </map>
+        </figure>
       </div>
-      <div class="w-col w-col-8">
-        <div class="video-5 w-video w-embed"></div>
+      <div id="DialThermometer" class="column w-col w-col-8">
+        <div class="video-1 w-video w-embed">
+          <video id='v' data-playing="false" autoplay="" muted></video>
+        </div>
       </div>
-      <div class="w-col w-col-1"><img src="static/images/VariacSwitchOFF.jpg" width="165" alt="" class="image-9"><img src="static/images/VariacSwitchON.jpg" width="165" alt="" class="image-27">
-        <div class="text-block-2">(click to toggle oven power)</div>
+      <div id="SideImages VariacSwitch" class="w-col w-col-1">
+        <figure>
+          (click to toggle oven power)
+          <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" width="165" alt="" class="image-9">
+          <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" width="165" alt="" class="image-27">
+        </figure>
       </div>
     </div>
     <div class="w-row">
