@@ -127,7 +127,9 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     //for Oven Variac
-    var OvenTOGGLE = document.getElementById('ovenSwitch');
+    var OvenTOGGLE = document.getElementById('toggleVariac');
+    var OvenON = 'static/images/VariacSwitchON';
+    var OvenOFF = 'static/images/VariacSwitchOFF';
     // OvenTOGGLE.style.transform='rotate(90deg)';
     var OvenState = false;
 
@@ -196,19 +198,20 @@ window.addEventListener('DOMContentLoaded', function () {
             lightSwitch.style.transform='rotate(180deg)';
         }
     })
+    
     OvenTOGGLE.addEventListener('click', function(){
         console.log("Oven power was switched");
         if(OvenState){
             // dataChannel.send("PEpdu/off/6");
             OvenState=false;
             OvenTOGGLE.title="Click here to turn ON";
-            OvenTOGGLE.src="static/images/VariacSwitchOFF.jpg";
+            OvenTOGGLE.src=OvenOFF;
                      }
         else{
             // dataChannel.send("PEpdu/on/6");
             OvenState=true;
             OvenTOGGLE.title="Click here to turn OFF";
-            OvenTOGGLE.src="static/images/VariacSwitchON.jpg";
+            OvenTOGGLE.src=OvenON;
         }
     })
     // END Light Switches

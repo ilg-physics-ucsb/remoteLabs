@@ -60,15 +60,15 @@
         </div>
       <!-- </div> -->
     </div>
-    <div id="PageMiddle Oven" class="w-row">
+    <div id="PageMiddle Oven" class="column w-row">
       <div id="LeftSideImages Oven" class="column w-col w-col-3">
         <figure>
           <div class="click-note">(click arrows to raise / lower AC voltage to oven heater)</div>
           <div id="BigVariacDial" class="column w-col w-col-11">
             <img src="static/images/bigVariacWarrows.png" usemap="#image-map-bV">
             <map name="image-map-bV">
-              <area id="bVccw" alt="CCW" title="increase AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
-              <area id="bVcw" alt="CW" title="decrease AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
+              <area id="bVccw" alt="CCW" title="decrease AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
+              <area id="bVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
             </map>
           </div>  
           <div id="radioButtonsOven" class="column w-col w-col-1 lrhShift">
@@ -80,57 +80,84 @@
           </div>
         </figure>
       </div>
-      <div id="DialThermometer" class="column w-col w-col-7">
+      <div id="LiveStream DialThermometer" class="column w-col w-col-7">
         <div class="video-1 w-video w-embed">
-          <video id='v' data-playing="false" autoplay="" muted></video>
+          <video id='vThermometer' data-playing="false" autoplay="" muted></video>
         </div>
       </div>
       <div id="RightSideImages Oven" class="column w-col w-col-2">
         <figure style="vertical-align:middle">
           <div class="click-note">(click to toggle oven power)</div>
-          <img id="ovenSwitch" src="static/images/VariacSwitchOFF.jpg" style="width: 165px">
+          <img id="toggleVariac" src="static/images/VariacSwitchOFF.jpg">
+          <!-- <img id="toggleVariac" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-Vpower"> -->
           <!-- <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" width="165" alt="image-9" class=""> -->
           <!-- <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" width="165" alt="image-27" class=""> -->
+          <!-- <map name="image-map-Vpower">
+            <area id="ovenSwitch"  alt="" title="Oven Power" href="#" coords="74,16,443,181" shape="rect">
+          </map> -->
         </figure>
       </div>
     </div>
-    <div class="w-row">
-      <div class="w-col w-col-2"><img src="static/images/FHbwIcon.jpg" width="125" alt="" class="image-8">
-        <div class="text-block">(click for circuit illustration)</div>
+    <div id="PageMiddle Tube" class="column w-row">
+      <div id="LeftSideImages Tube" class="column w-col w-col-2">
+        <img src="static/images/FHbwIcon.jpg" width="125" alt="" class="image-8">
+        <div class="click-note">(click for circuit diagram)</div>
       </div>
-      <div class="w-col w-col-8">
-        <div class="video-2 w-video w-embed"></div><img src="static/images/counterclockwise.png" width="88" alt="" class="image-18"><img src="static/images/filament_knob.png" width="150" srcset="static/images/filament_knob.png 500w, images/filament_knob.png 800w, images/filament_knob.png 921w" sizes="(max-width: 479px) 86vw, 150px" alt="" class="image-11"><img src="static/images/clockwise.png" width="89" alt="" class="image-19"><img src="static/images/toggleSwitch.png" width="135" alt="" class="image-26">
-        <div class="w-row">
-          <div class="w-col w-col-9">
-            <div class="text-block-6 sub6">(click arrows to increase/decrease <br>AC voltage to the filament)</div>
-          </div>
-          <div class="w-col w-col-3">
-            <div class="text-block-6">(click to toggle<br>filament power)</div>
-          </div>
+      <div id="LiveStream FilamentMeshCollector" class="column w-col w-col-8">
+        <div class="video-2 w-video w-embed">
+          <video id='vTube' data-playing="false" autoplay="" muted></video>
         </div>
       </div>
-      <div class="w-col w-col-2"><img src="static/images/closeUp.jpg" width="140" srcset="static/images/closeUp.jpg 800w, images/closeUp.jpg 1080w, images/closeUp.jpg 1600w, images/closeUp.jpg 2000w, images/closeUp.jpg 2600w, images/closeUp.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt="" class="image-7"></div>
+      <div id="RightSideImages Tube"class="column w-col w-col-2">
+        <img src="static/images/closeUp.jpg" width="140" srcset="static/images/closeUp.jpg 800w, images/closeUp.jpg 1080w, images/closeUp.jpg 1600w, images/closeUp.jpg 2000w, images/closeUp.jpg 2600w, images/closeUp.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt="" class="image-7">
+      </div>
     </div>
-    <div class="w-row">
-      <div class="w-col w-col-2">
+    
+    <div id="CenterBar FilamentControls"  class="column w-row">
+      <figure>
+        <div id="LeftSide" class="column w-col w-col-2">
+        </div>
+        <div id="Filament Variac" class="column w-col w-col-8">
+          <div class="click-note">(click arrows to raise/lower the filament potential)</div>
+          <img src="static/images/filament_knob.png" width="300" alt="image-11" class="" usemap="#image-map-sV">
+          <map name="image-map-sV">
+            <area id="sVccw" alt="CCW" title="lower V" href="#" coords="140,9,96,44,52,97,20,163,4,232,5,292,17,347,47,409,70,439,20,473,230,578,219,339,162,378,128,332,115,280,115,235,130,187,158,141,201,100,175,57,158,31" shape="poly">
+            <area id="sVcw" alt="CW" title="raise V" href="#" coords="718,580,928,470,880,436,903,409,920,370,939,323,945,267,941,212,928,154,901,103,873,63,842,32,809,11,750,95,773,119,802,150,821,184,833,227,836,273,825,317,812,347,789,377,730,338" shape="poly">
+          </map>
+        </div>
+        <div id="Filament Toggle" class="column w-col w-col-2">
+          <div class="click-note">(click to toggle filament power)</div>
+          <img src="static/images/toggleSwitch.png" width="200" alt="image-26" class="">
+        </div>
+      </figure>
+    </div>
+    <div id="PageMiddle VoltageControls" class="column w-row">
+      <div id="LeftSideImages VoltageControls" class="column w-col w-col-2">
         <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1><img src="static/images/clockwise.png" width="68" alt="" class="image-12"><img src="static/images/Va_knob.png" srcset="static/images/Va_knob.png 500w, images/Va_knob.png 708w" sizes="(max-width: 479px) 96vw, (max-width: 729px) 97vw, (max-width: 767px) 708px, (max-width: 991px) 104.65625px, 139.984375px" alt="" class="image-10"><img src="static/images/counterclockwise.png" width="68" alt="" class="image-14">
         <div class="text-block-5">(click arrows to adjust accelerating voltage)</div>
       </div>
-      <div class="w-col w-col-8">
-        <div class="video w-video w-embed"></div>
+      <div id="LiveStream VoltageControls" class="column w-col w-col-8">
+        <div class="video-3 w-video w-embed">
+          <video id='vVoltageControls' data-playing="false" autoplay="" muted></video>
+        </div>
       </div>
-      <div class="w-col w-col-2">
+      <div id="RightSideImages VoltageControls" class="column w-col w-col-2">
         <h1 class="heading-3"><em>V</em>(<em>r</em>)</h1><img src="static/images/clockwise.png" width="68" alt="" class="image-15"><img src="static/images/Va_knob.png" srcset="static/images/Va_knob.png 500w, images/Va_knob.png 708w" sizes="(max-width: 479px) 96vw, (max-width: 729px) 97vw, (max-width: 767px) 708px, (max-width: 991px) 104.65625px, 139.984375px" alt="" class="image-16"><img src="static/images/counterclockwise.png" width="68" alt="" class="image-17">
         <div class="text-block-5">(click arrows to adjust retarding voltage)</div>
       </div>
     </div>
-    <div class="w-clearfix">
-      <div class="video-4 w-video w-embed"></div>
-      <img src="static/images/Keithley6514ElectrometerTXTcropped.jpg" width="466" srcset="static/images/Keithley6514ElectrometerTXTcropped.jpg 500w, images/Keithley6514ElectrometerTXTcropped.jpg 1031w" sizes="(max-width: 479px) 100vw, 466px" alt="" class="image-20">
+    <div id="PageBottom" class="column w-clearfix">
+      <div id="LiveStream Readouts" class="column">
+        <div class="video-4 w-video w-embed">
+          <video id='vReadouts' data-playing="false" autoplay="" muted></video>
+        </div>
+      </div>
+      <img id="PowerSupply" src="static/images/PowerSupplyOFF.jpg" width="474" srcset="static/images/PowerSupplyOFF.jpg 500w, static/images/PowerSupplyOFF.jpg 1168w" sizes="(max-width: 479px) 100vw, 474px" alt="image-21" class="">
+      <img src="static/images/Keithley6514ElectrometerTXTcropped.jpg" width="466" srcset="static/images/Keithley6514ElectrometerTXTcropped.jpg 500w, static/images/Keithley6514ElectrometerTXTcropped.jpg 1031w" sizes="(max-width: 479px) 100vw, 466px" alt="image-20" class="">
       <!-- <img src="static/images/PowerSupplyON.jpg" width="474" srcset="static/images/PowerSupplyON.jpg 500w, images/PowerSupplyON.jpg 1168w" sizes="(max-width: 479px) 100vw, 474px" alt="" class="image-28"> -->
       <!-- <img src="static/images/PowerSupplyOFF.jpg" width="474" srcset="static/images/PowerSupplyOFF.jpg 500w, images/PowerSupplyOFF.jpg 1168w" sizes="(max-width: 479px) 100vw, 474px" alt="" class="image-21"> -->
-      <img id="PowerSupply" src="static/images/PowerSupplyOFF.jpg" width="474" srcset="static/images/PowerSupplyOFF.jpg 500w, images/PowerSupplyOFF.jpg 1168w" sizes="(max-width: 479px) 100vw, 474px" alt="" class="image-21">
     </div>
+
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5eb6bca98205003949dff5f5" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="static/js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
