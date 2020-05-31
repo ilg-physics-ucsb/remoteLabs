@@ -139,8 +139,8 @@
         <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1>
         <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
         <map name="image-map-Va">
-          <area target="" alt="" title="" href="" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
-          <area target="" alt="" title="" href="" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+          <area id="aCW" alt="" title="increase Va" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
+          <area id="aCCW" alt="" title="decrease Va" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
         </map>
         <div class="click-note">(click arrows to adjust accelerating voltage)</div>
       </div>
@@ -152,9 +152,9 @@
       <div id="RightSideImages VoltageControls" class="column w-col w-col-2">
         <h1 class="heading-3"><em>V</em>(<em>r</em>)</h1>
         <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
-        <map name="image-map-Va">
-          <area target="" alt="" title="" href="" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
-          <area target="" alt="" title="" href="" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+        <map name="image-map-Vr">
+          <area id="rCW" alt="" title="increase Vr" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
+          <area id="rCCW" alt="" title="decrease Vr" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
         </map>
         <div class="click-note">(click arrows to adjust retarding voltage)</div>
       </div>
@@ -209,10 +209,13 @@
           </div>
         </figure>
     </div>
-    <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
+  <!-- jQuery - These are all the scripts to do all the styling -->
+  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+   <!-- imagemapster - These are scripts that styling canvases atop imagemaps -->
+  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
     <script type="text/javascript">
           $(document).ready(function () {
-            $('#ovenKnow').mapster({
+            $('#ovenKnob').mapster({
               mapKey:'id',
               fillColor: 'f5f5b5',
               fillOpacity: 0.6,
