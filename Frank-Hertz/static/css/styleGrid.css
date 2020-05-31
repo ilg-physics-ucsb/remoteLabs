@@ -95,8 +95,8 @@
     justify-items: center;
 }
 .Warning {
-    padding-right: 50px;
-    padding-left: 50px;
+    /* padding-right: 50px;
+    padding-left: 50px; */
     justify-content: center;
     font-size: 18pt;
 }
@@ -121,9 +121,20 @@
     /* transform: scaleY(-1); */
     justify-self: center;
 }
-/* #PowerSupply{
-    width:50%;
-}
-#electrometer {
+#SmallKnob{
     width:100%;
-} */
+}
+#radioButtonsVa {
+    justify-self:right;
+    position: relative;
+    top:-100%;
+    overflow: visible;
+}
+.variable{
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+}
+.math{
+    font-family: 'Times New Roman', Times, serif;
+    font-style: normal;
+}

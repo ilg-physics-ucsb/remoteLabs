@@ -62,25 +62,30 @@
     </div>
     <div id="PageMiddle Oven" class="column w-row">
       <div id="LeftSideImages Oven" class="column w-col w-col-3">
-        <figure>
-          <div class="click-note">(click arrows to raise / lower AC voltage to oven heater)</div>
-          <div id="BigVariacDial" class="column w-col w-col-11">
-            <img id="ovenKnob" src="static/images/bigVariacWarrows.png" usemap="#image-map-bV">
-            <map name="image-map-bV">
-              <area id="bVccw" alt="CCW" title="decrease AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
-              <area id="bVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
-            </map>
-          </div>  
-          <div id="radioButtonsOven" class="column w-col w-col-1 lrhShift">
-            <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
+        <div class="click-note" style="margin-bottom: -50px;">
+          (choose increment and click arrows to turn variac knob and adjust oven power)
+        </div>
+        <div id="radioButtonsVo" class="w-row">
+          <div class="column w-col w-col-3" style="top: 75px;">
+            <input type="radio" id="3.6_deg_Vo" name="angleStepVo" value="3.6">
             <label for="3.6_degree">3.6&#176;</label>
-             <!-- &nbsp;&nbsp;&nbsp; -->
-            <input type="radio" id="36_degree" name="angleStep" value="36" checked>
+          </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+          <div class="column w-col w-col-3" style="top: 75px;">
+            <input type="radio" id="36_deg_Vo" name="angleStepVo" value="36" checked>
             <label for="36_degree">36&#176;</label>
           </div>
-        </figure>
+          <div class="column w-col w-col-6" style="top: 75px;"></div>
+        </div>
+        <img id="ovenKnob" src="static/images/bigVariacWarrows.png" usemap="#image-map-bV">
+        <map name="image-map-bV">
+          <area id="bVccw" alt="CCW" title="decrease AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
+          <area id="bVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
+        </map>            
       </div>
       <div id="LiveStream DialThermometer" class="column w-col w-col-7">
+        <div class="click-note" style="margin-bottom: -50px;">
+          (read oven thermometer in live-stream below)
+        </div>
         <div class="video-1 w-video w-embed">
           <video id='vThermometer' data-playing="false" autoplay="" muted></video>
         </div>
@@ -104,7 +109,9 @@
         <div class="click-note">(click for circuit diagram)</div>
       </div>
       <div id="LiveStream FilamentMeshCollector" class="column w-col w-col-8">
-        <div class="video-2 w-video w-embed">
+        <div class="click-note" >
+          (monitor filament glow in live-stream below)
+        </div><div class="video-2 w-video w-embed">
           <video id='vTube' data-playing="false" autoplay="" muted></video>
         </div>
       </div>
@@ -115,52 +122,102 @@
     
     <div id="CenterBar FilamentControls"  class="column w-row">
       <figure>
-        <div id="LeftSide" class="column w-col w-col-3">
+        <div id="LeftSide" class="column w-col w-col-2">
         </div>
-        <div id="Filament Variac" class="column w-col w-col-6">
-          <div class="click-note">(click arrows to adjust filament potential)</div>
+        <div id="Filament Variac" class="column w-col w-col-8">
+          <div class="click-note" style="margin-bottom: -20px;">(choose increment and click arrows to adjust filament potential)</div>
+          <div id="radioButtonsVf" class="w-row">
+            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
+            <div class="column w-col w-col-1" style=" bottom: -30px;">
+              <input type="radio" id="3.6_deg_Vf" name="angleStepVf" value="3.6">
+              <label for="3.6_degree">3.6&#176;</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-1" style="bottom: -30px;">
+              <input type="radio" id="36_deg_Vf" name="angleStepVf" value="36" checked>
+              <label for="36_degree">36&#176;</label>
+            </div>
+            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
+          </div>
           <img id="fKnob" src="static/images/filament_knob.png" width="300" alt="image-11" class="" usemap="#image-map-sV">
           <map name="image-map-sV">
             <area id="sVccw" alt="CCW" title="lower V" href="#" coords="140,9,96,44,52,97,20,163,4,232,5,292,17,347,47,409,70,439,20,473,230,578,219,339,162,378,128,332,115,280,115,235,130,187,158,141,201,100,175,57,158,31" shape="poly">
             <area id="sVcw" alt="CW" title="raise V" href="#" coords="718,580,928,470,880,436,903,409,920,370,939,323,945,267,941,212,928,154,901,103,873,63,842,32,809,11,750,95,773,119,802,150,821,184,833,227,836,273,825,317,812,347,789,377,730,338" shape="poly">
           </map>
+          <div class="Warning">
+            This session will end and the system will reset in 
+            <span id="time" style="color:red;font-weight:bold">45:00</span> 
+            minutes.
+          </div>
         </div>
-        <div id="Filament Toggle" class="column w-col w-col-3">
+        
+        <div id="Filament Toggle" class="column w-col w-col-2">
           <div class="click-note">(click to toggle filament power)</div>
           <img id="toggleSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-ts">
           <map name="image-map-ts">
             <area id="filamentTOGGLE" title="Click here to turn ON" coords="0,65,71,122" shape="rect">
           </map>
         </div>
+ 
       </figure>
     </div>
     <div id="PageMiddle VoltageControls" class="column w-row">
-      <div id="LeftSideImages VoltageControls" class="column w-col w-col-2">
+      <div id="LeftSideImages ControlVa" class="column w-col w-col-2">
         <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1>
         <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
         <map name="image-map-Va">
           <area id="aCW" alt="" title="increase Va" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
           <area id="aCCW" alt="" title="decrease Va" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
         </map>
-        <div class="click-note">(click arrows to adjust accelerating voltage)</div>
+        <div id="radioButtonsVa" class="w-row">
+          <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+            <input type="radio" id="3.6_deg_Va" name="angleStepVa" value="3.6">
+            <label for="3.6_degree">3.6&#176;</label>
+          </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+          <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+            <input type="radio" id="36_deg_Va" name="angleStepVa" value="36" checked>
+            <label for="36_degree">36&#176;</label>
+          </div>
+        </div>  
+        <div class="click-note">
+          (choose increment and click arrows to adjust accelerating voltage)
+        </div>          
       </div>
+
       <div id="LiveStream VoltageControls" class="column w-col w-col-8">
         <div class="video-3 w-video w-embed">
           <video id='vVoltageControls' data-playing="false" autoplay="" muted></video>
         </div>
       </div>
-      <div id="RightSideImages VoltageControls" class="column w-col w-col-2">
-        <h1 class="heading-3"><em>V</em>(<em>r</em>)</h1>
+
+      <div id="RightSideImages ControlVr" class="column w-col w-col-2">
+        <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1>
         <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
         <map name="image-map-Vr">
           <area id="rCW" alt="" title="increase Vr" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
           <area id="rCCW" alt="" title="decrease Vr" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
         </map>
-        <div class="click-note">(click arrows to adjust retarding voltage)</div>
+        <div id="radioButtonsVr" class="w-row">
+          <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+            <input type="radio" id="3.6_deg_Vr" name="angleStepVr" value="3.6">
+            <label for="3.6_degree">3.6&#176;</label>
+          </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+          <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+            <input type="radio" id="36_deg_Vr" name="angleStepVr" value="36" checked>
+            <label for="36_degree">36&#176;</label>
+          </div>
+        </div>  
+        <div class="click-note">
+          (choose increment and click arrows to adjust retarding voltage)
+        </div>          
       </div>
     </div>
     <div id="PageBottom" class="column w-row">
       <div id="LiveStream Readouts" class="column w-row">
+        <div class="Warning" style="margin-bottom: -50px;">
+          (Readout 
+          <span class="variable">V</span>(<span class="variable">r</span>) and <span class="variable">I</span> 
+          in live-stream below.)
+        </div>
         <div class="video-4 w-video w-embed">
           <video id='vReadouts' data-playing="false" autoplay="" muted></video>
         </div>

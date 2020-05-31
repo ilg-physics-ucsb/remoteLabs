@@ -96,7 +96,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //for LiveFeed
     var mainCamSignal = setupWebRTC(8081, video, 50);
     // var mainCamSignal = setupWebRTC(5002, video, 50);
-    window.setTimeout(timeOutHandler,1500000)
+    window.setTimeout(timeOutHandler,2700000)
 
     function timeOutHandler(){
         mainCamSignal.hangup()
@@ -121,9 +121,9 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     
     window.onload = function () {
-        var twentyfiveMinutes = 60 * 25,
+        var fortyfiveMinutes = 60 * 45,
             display = document.querySelector('#time');
-        startTimer(twentyfiveMinutes, display);
+        startTimer(fortyfiveMinutes, display);
     }
 
     //for Oven Variac

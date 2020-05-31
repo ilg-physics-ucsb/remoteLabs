@@ -320,7 +320,23 @@
   text-align: center;
 }
 .lrhShift {
+  /* align-self: left; */
+  /* vertical-align: middle; */
+  margin-top: 5%;
+  margin-right: 10%;
+}
+.leftShift {
   position: relative;
-  margin-top: 50%;
-  margin-left: -10%;
+  margin-top: 14%;
+  margin-left: -5%;
+}
+.rightShift {
+  position: relative;
+  /* margin-top: 14%; */
+  /* margin-left: 7%; */
+}
+.vAngleStepButtons {
+  position: relative;
+  margin-top: -145%;
+  margin-left: 90%;
 }
