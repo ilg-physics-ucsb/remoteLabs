@@ -91,36 +91,6 @@
         /* align-self: center; */
         justify-self: center; 
     }
-.Video {
-    grid-column-start: 5;
-    grid-column-end: 9;
-    grid-row-start: 3;
-    grid-row-end: 7;
-    /* display: block; */
-    /* object-fit: contain; */
-    /* justify-self: center; */
-}
-.Pot {
-    grid-column-start: 9;
-    grid-column-end: 13;
-    grid-row-start: 3;
-    grid-row-end: 7;
-    display: block;
-    text-align: center;
-    /* justify-self: flex-end; */
-}
-.PowerSupply {
-    grid-column-start: 1;
-    grid-column-end: 6;
-    grid-row-start: 7;
-    justify-self: center;
-}
-.Ammeter {
-    grid-column-start: 7;
-    grid-column-end: 13;
-    grid-row-start: 7;
-    justify-self: center;
-}
 .Photo {
     justify-items: center;
 }
@@ -146,9 +116,6 @@
     overflow: hidden;
   } */
 
-#CenterBarFilamentControls {
-    vertical-align: middle;
-}
 #toggleSwitch {
     width:50% ;  
     /* transform: scaleY(-1); */
