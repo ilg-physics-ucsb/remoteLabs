@@ -115,30 +115,34 @@
     
     <div id="CenterBar FilamentControls"  class="column w-row">
       <figure>
-        <div id="LeftSide" class="column w-col w-col-2">
+        <div id="LeftSide" class="column w-col w-col-3">
         </div>
-        <div id="Filament Variac" class="column w-col w-col-8">
-          <div class="click-note">(click arrows to raise/lower the filament potential)</div>
+        <div id="Filament Variac" class="column w-col w-col-6">
+          <div class="click-note">(click arrows to adjust filament potential)</div>
           <img src="static/images/filament_knob.png" width="300" alt="image-11" class="" usemap="#image-map-sV">
           <map name="image-map-sV">
             <area id="sVccw" alt="CCW" title="lower V" href="#" coords="140,9,96,44,52,97,20,163,4,232,5,292,17,347,47,409,70,439,20,473,230,578,219,339,162,378,128,332,115,280,115,235,130,187,158,141,201,100,175,57,158,31" shape="poly">
             <area id="sVcw" alt="CW" title="raise V" href="#" coords="718,580,928,470,880,436,903,409,920,370,939,323,945,267,941,212,928,154,901,103,873,63,842,32,809,11,750,95,773,119,802,150,821,184,833,227,836,273,825,317,812,347,789,377,730,338" shape="poly">
           </map>
         </div>
-        <div id="Filament Toggle" class="column w-col w-col-2">
+        <div id="Filament Toggle" class="column w-col w-col-3">
           <div class="click-note">(click to toggle filament power)</div>
           <img id="toggleSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-ts">
           <map name="image-map-ts">
-            <!-- <area id="HgNeLampOFF" alt="Click here to turn OFF" title="Click here to turn OFF" coords="0,0,200,100" shape="rect"> -->
-            <area id="HgNeTOGGLE" alt="Click here to turn ON" title="Click here to turn ON" coords="0,0,200,200" shape="rect">
-        </map>
+            <area id="filamentTOGGLE" title="Click here to turn ON" coords="0,65,71,122" shape="rect">
+          </map>
         </div>
       </figure>
     </div>
     <div id="PageMiddle VoltageControls" class="column w-row">
       <div id="LeftSideImages VoltageControls" class="column w-col w-col-2">
-        <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1><img src="static/images/clockwise.png" width="68" alt="" class="image-12"><img src="static/images/Va_knob.png" srcset="static/images/Va_knob.png 500w, images/Va_knob.png 708w" sizes="(max-width: 479px) 96vw, (max-width: 729px) 97vw, (max-width: 767px) 708px, (max-width: 991px) 104.65625px, 139.984375px" alt="" class="image-10"><img src="static/images/counterclockwise.png" width="68" alt="" class="image-14">
-        <div class="text-block-5">(click arrows to adjust accelerating voltage)</div>
+        <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1>
+        <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
+        <map name="image-map-Va">
+          <area target="" alt="" title="" href="" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
+          <area target="" alt="" title="" href="" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+        </map>
+        <div class="click-note">(click arrows to adjust accelerating voltage)</div>
       </div>
       <div id="LiveStream VoltageControls" class="column w-col w-col-8">
         <div class="video-3 w-video w-embed">
@@ -146,8 +150,13 @@
         </div>
       </div>
       <div id="RightSideImages VoltageControls" class="column w-col w-col-2">
-        <h1 class="heading-3"><em>V</em>(<em>r</em>)</h1><img src="static/images/clockwise.png" width="68" alt="" class="image-15"><img src="static/images/Va_knob.png" srcset="static/images/Va_knob.png 500w, images/Va_knob.png 708w" sizes="(max-width: 479px) 96vw, (max-width: 729px) 97vw, (max-width: 767px) 708px, (max-width: 991px) 104.65625px, 139.984375px" alt="" class="image-16"><img src="static/images/counterclockwise.png" width="68" alt="" class="image-17">
-        <div class="text-block-5">(click arrows to adjust retarding voltage)</div>
+        <h1 class="heading-3"><em>V</em>(<em>r</em>)</h1>
+        <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
+        <map name="image-map-Va">
+          <area target="" alt="" title="" href="" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
+          <area target="" alt="" title="" href="" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+        </map>
+        <div class="click-note">(click arrows to adjust retarding voltage)</div>
       </div>
     </div>
     <div id="PageBottom" class="column w-clearfix">
@@ -157,9 +166,42 @@
         </div>
       </div>
       <img id="PowerSupply" src="static/images/PowerSupplyOFF.jpg" width="474" srcset="static/images/PowerSupplyOFF.jpg 500w, static/images/PowerSupplyOFF.jpg 1168w" sizes="(max-width: 479px) 100vw, 474px" alt="image-21" class="">
-      <img src="static/images/Keithley6514ElectrometerTXTcropped.jpg" width="466" srcset="static/images/Keithley6514ElectrometerTXTcropped.jpg 500w, static/images/Keithley6514ElectrometerTXTcropped.jpg 1031w" sizes="(max-width: 479px) 100vw, 466px" alt="image-20" class="">
+      <!-- <img src="static/images/Keithley6514ElectrometerTXTcropped.jpg" width="466" srcset="static/images/Keithley6514ElectrometerTXTcropped.jpg 500w, static/images/Keithley6514ElectrometerTXTcropped.jpg 1031w" sizes="(max-width: 479px) 100vw, 466px" alt="image-20" class=""> -->
       <!-- <img src="static/images/PowerSupplyON.jpg" width="474" srcset="static/images/PowerSupplyON.jpg 500w, images/PowerSupplyON.jpg 1168w" sizes="(max-width: 479px) 100vw, 474px" alt="" class="image-28"> -->
       <!-- <img src="static/images/PowerSupplyOFF.jpg" width="474" srcset="static/images/PowerSupplyOFF.jpg 500w, images/PowerSupplyOFF.jpg 1168w" sizes="(max-width: 479px) 100vw, 474px" alt="" class="image-21"> -->
+      <img id="electrometer" src="static/images/Keithley6514ElectrometerTXTcropped.jpg" usemap="#image-map-6514"> 
+        <map name="image-map-6514">
+          <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,218,17" shape="circle">
+          <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,285,17" shape="circle">
+          <area id="Power6514" 		    href="#"	title="Power" 		  coords="99,365,17" shape="circle">
+          <area id="Voltage" 		      href="#"	title="Voltage" 		coords="200,217,29" shape="circle">
+          <area id="Current" 		      href="#"	title="Current" 		coords="285,217,29" shape="circle">
+          <area id="Resistance" 	    href="#"	title="Resistance"  coords="381,217,29" shape="circle">
+          <area id="Charge" 		      href="#"	title="Charge" 		  coords="466,217,29" shape="circle">
+          <area id="ExternalFeedback" href="#"	title="ExternalFeedback" coords="562,217,29" shape="circle">
+          <area id="ZeroCheck" 		    href="#"	title="ZeroCheck" 	coords="647,217,29" shape="circle">
+          <area id="ZeroCorrect" 	    href="#"	title="ZeroCorrect" coords="743,217,29" shape="circle">
+          <area id="Ground" 		      href="#"	title="Ground" 		  coords="828,217,29" shape="circle">
+          <area id="Average" 		      href="#"	title="Average" 		coords="166,314,238,279" shape="rect">
+          <area id="Median" 		      href="#"	title="Median" 		  coords="242,279,316,314" shape="rect">
+          <area id="Relative" 		    href="#"	title="Relative" 	  coords="420,279,346,314" shape="rect">
+          <area id="Limit" 		        href="#"	title="Limit" 		  coords="423,279,499,314" shape="rect">
+          <area id="Digits6514" 	    href="#"	title="Digits"      coords="603,279,529,314" shape="rect">
+          <area id="Rate6514" 		    href="#"	title="Rate" 		    coords="606,279,678,314" shape="rect">
+          <area id="CursorLeft6514" 	href="#"	title="CursorLeft"  coords="786,279,712,314" shape="rect">
+          <area id="CursorRight6514" 	href="#"	title="CursorRight" coords="789,279,859,314" shape="rect">
+          <area id="Store6514" 		    href="#" title="Store" 		    coords="238,346,163,382" shape="rect">
+          <area id="Recall6514"		    href="#"	title="Recall" 		  coords="242,346,314,382" shape="rect">
+          <area id="Delay" 		        href="#"	title="Delay" 		  coords="420,346,346,382" shape="rect">
+          <area id="Damping" 		      href="#"	title="Damping" 		coords="423,346,495,382" shape="rect">
+          <area id="Halt" 		        href="#"	title="Halt" 		    coords="603,346,529,383" shape="rect">
+          <area id="Trigger6514" 	    href="#"	title="Trigger" 		coords="606,346,678,383" shape="rect">
+          <area id="Exit6514" 		    href="#"	title="Exit" 			  coords="786,346,712,384" shape="rect">
+          <area id="Enter6514" 		    href="#"	title="Enter" 		  coords="789,346,863,384" shape="rect">
+          <area id="UpRange6514" 	    href="#"	title="UpRange" 		coords="957,187,935,222,976,224" shape="poly">
+          <area id="DownRange6514" 	  href="#"	title="DownRange" 	coords="957,384,978,347,935,347" shape="poly">
+          <area id="AutoRange6514"	  href="#"	title="AutoRange" 	coords="908,267,1007,304" shape="rect">
+        </map>
     </div>
 
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5eb6bca98205003949dff5f5" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
