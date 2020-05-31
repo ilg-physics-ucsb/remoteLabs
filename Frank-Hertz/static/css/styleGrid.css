@@ -109,13 +109,13 @@
     text-align: center;
     /* justify-self: flex-end; */
 }
-.Ammeter {
+.PowerSupply {
     grid-column-start: 1;
     grid-column-end: 6;
     grid-row-start: 7;
     justify-self: center;
 }
-.Voltmeter {
+.Ammeter {
     grid-column-start: 7;
     grid-column-end: 13;
     grid-row-start: 7;
@@ -145,42 +145,18 @@
     top: -70px;
     overflow: hidden;
   } */
-#lightSwitch {
-    width:50% ;  
-    transform: rotate(0deg);
-    float: center;
+
+#CenterBarFilamentControls {
+    vertical-align: middle;
 }
 #toggleSwitch {
     width:50% ;  
     /* transform: scaleY(-1); */
-    float: center;
+    justify-self: center;
 }
-#filterwheel {
-    width:50% ;  
-    /* transform: scaleX(-1); */
-    transform: rotate(0deg);
-    float: center;
-   }
- #v {
-    /* position: relative;
-    overflow: hidden;
-    top: -100px;
-    z-index: 0; */
-    width:100%
-}
-#knob {
-    width:40%;
-    height:100%;
-}
-#leftPot{
-    width:25%;
-}
-#rightPot{
-    width:25%;
+/* #PowerSupply{
+    width:50%;
 }
 #electrometer {
-    width:95%;
-}
-#multimeter {
-    width:95%;
-}
+    width:100%;
+} */
