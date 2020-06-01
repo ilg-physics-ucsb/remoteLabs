@@ -10,7 +10,7 @@ function connectStream(stream, videoElement) {
     }
 }
 
-//This function runs if there is an error returned from teh websocket connecting to the stream.
+//This function runs if there is an error returned from the websocket connecting to the stream.
 function errorStream(error){
     alert(error);
 }
@@ -62,10 +62,10 @@ window.addEventListener('DOMContentLoaded', function () {
     // var video2 = document.getElementById('v2');
     
     // for Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
-    var f577 = document.getElementById('f577');
-    var f546 = document.getElementById('f546');
-    var f436 = document.getElementById('f436');
     var f365 = document.getElementById('f365');
+    var f436 = document.getElementById('f436');
+    var f546 = document.getElementById('f546');
+    var f577 = document.getElementById('f577');
     var filterwheel = document.getElementById('filterwheel')
 
     // for Keithley 6514 Electrometer
@@ -99,12 +99,6 @@ window.addEventListener('DOMContentLoaded', function () {
     var upRange6514Button = document.getElementById('UpRange6514');
     var downRange6514Button = document.getElementById('DownRange6514');
     var autoRange6514Button = document.getElementById('AutoRange6514');
-    function mouseOver() {
-        // document.getElementById("demo").style.color = "red";
-      }
-    function mouseOut() {
-        // document.getElementById("demo").style.color = "black";
-      }
 
     //for Keithley 2000 Multimeter
     var shift2000Button = document.getElementById('Shift2000');
@@ -142,7 +136,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //for LiveFeed
     var mainCamSignal = setupWebRTC(8081, video, 50);
     // var mainCamSignal = setupWebRTC(5002, video, 50);
-    window.setTimeout(timeOutHandler,1500000)
+    window.setTimeout(timeOutHandler,2700000)
 
     function timeOutHandler(){
         mainCamSignal.hangup()
@@ -167,9 +161,9 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     
     window.onload = function () {
-        var twentyfiveMinutes = 60 * 25,
+        var fortyfiveMinutes = 60 * 45,
             display = document.querySelector('#time');
-        startTimer(twentyfiveMinutes, display);
+        startTimer(fortyfiveMinutes, display);
     }
 
     //for HgNe Lamp
@@ -184,6 +178,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // var ambientOFF = document.getElementById('ambientOFF');
     // var ambientON = document.getElementById('ambientON');
     var ambientTOGGLE = document.getElementById('ambientTOGGLE');
+    ambientTOGGLE.style.transform='scaleY(1)';
     var ambientState = false;
 
     //for Potentiometer
@@ -305,24 +300,28 @@ window.addEventListener('DOMContentLoaded', function () {
     //     return false
     // })
     f577.addEventListener('click', function(event) {
+        console.log("f577 was clicked");
         event.stopPropagation();
         dataChannel.send("Wheel/goto/180deg");
         // filterwheel.style.transform='rotate(0deg)';
         return false
     })
     f546.addEventListener('click', function(event) {
+        console.log("f546 was clicked");
         event.stopPropagation();
         dataChannel.send("Wheel/goto/120deg");
         // filterwheel.style.transform='rotate(-30deg)';
         return false
     })
     f436.addEventListener('click', function(event) {
+        console.log("f436 was clicked");
         event.stopPropagation();
         dataChannel.send("Wheel/goto/60deg");
         // filterwheel.style.transform='rotate(-60deg)';
         return false
     })
     f365.addEventListener('click', function(event) {
+        console.log("f365 was clicked");
         event.stopPropagation();
         dataChannel.send("Wheel/goto/0deg");
         // filterwheel.style.transform='rotate(-90deg)';
