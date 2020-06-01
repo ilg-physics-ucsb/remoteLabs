@@ -21,7 +21,6 @@ function closeStream(videoElement) {
         videoElement.srcObject = null;
         videoElement.setAttribute("data-playing", "false");
         console.log("websocket closed. bye bye!");
-
     }
 }
 
@@ -44,11 +43,8 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     if (videoElement && videoElement.getAttribute('data-playing') == "false") {
         var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
     }
-
     return signalObj
 }
-
-
 
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -58,16 +54,43 @@ window.addEventListener('DOMContentLoaded', function () {
     var currentPosition = 0;
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
-    var video = document.getElementById('v');
-    // var video2 = document.getElementById('v2');
-    
-    // for Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
-    var f577 = document.getElementById('f577');
-    var f546 = document.getElementById('f546');
-    var f436 = document.getElementById('f436');
-    var f365 = document.getElementById('f365');
-    var filterwheel = document.getElementById('filterwheel')
-
+    var vTemperature = document.getElementById('vThermometer');
+    var vCloseup = document.getElementById('vTube');
+    var vPots = document.getElementById('vVoltageControls');
+    var vMeters = document.getElementById('vReadouts');
+    //for LiveFeed  -- 200601 figure out which is the main camera and set up port numbers
+     var mainCamSignal = setupWebRTC(8081, video, 50);
+    // var mainCamSignal = setupWebRTC(5002, video, 50);
+     window.setTimeout(timeOutHandler,2700000)
+ 
+     function timeOutHandler(){
+         mainCamSignal.hangup()
+         alert("Your session has timed out.")
+     }
+ 
+     function startTimer(duration, display) {
+         var timer = duration, minutes, seconds;
+         setInterval(function () {
+             minutes = parseInt(timer / 60, 10);
+             seconds = parseInt(timer % 60, 10);
+     
+             minutes = minutes < 10 ? "0" + minutes : minutes;
+             seconds = seconds < 10 ? "0" + seconds : seconds;
+     
+             display.textContent = minutes + ":" + seconds;
+     
+             if (--timer < 0) {
+                 timer = duration;
+             }
+         }, 1000);
+     }
+     
+     window.onload = function () {
+         var fortyfiveMinutes = 60 * 45,
+             display = document.querySelector('#time');
+         startTimer(fortyfiveMinutes, display);
+     }
+ 
     // for Keithley 6514 Electrometer
     var shift6514Button = document.getElementById('Shift6514');
     var local6514Button = document.getElementById('Local6514');
@@ -99,238 +122,165 @@ window.addEventListener('DOMContentLoaded', function () {
     var upRange6514Button = document.getElementById('UpRange6514');
     var downRange6514Button = document.getElementById('DownRange6514');
     var autoRange6514Button = document.getElementById('AutoRange6514');
-    function mouseOver() {
-        // document.getElementById("demo").style.color = "red";
-      }
-    function mouseOut() {
-        // document.getElementById("demo").style.color = "black";
-      }
-
-    //for Keithley 2000 Multimeter
-    var shift2000Button = document.getElementById('Shift2000');
-    var local2000Button = document.getElementById('Local2000');
-    var power2000Button = document.getElementById('Power2000');
-    var dcVoltageButton = document.getElementById('DCvoltage');
-    var acVoltageButton = document.getElementById('ACvoltage');
-    var dcCurrentButton = document.getElementById('DCcurrent');
-    var acCurrentButton = document.getElementById('ACcurrent');
-    var TWOwireResistanceButton = document.getElementById('2wireResistance');
-    var FOURwireResistanceButton = document.getElementById('4wireResistance');
-    var frequencyButton = document.getElementById('Frequency');
-    var temperatureButton = document.getElementById('Temperature');
-    var externalTriggerButton = document.getElementById('ExternalTrigger');
-    var trigger2000Button = document.getElementById('Trigger2000');
-    var store2000Button = document.getElementById('Store2000');
-    var recall2000Button = document.getElementById('Recall2000');
-    var filterButton = document.getElementById('Filter');
-    var relativeButton = document.getElementById('Relative');
-    var cursorLeft2000Button = document.getElementById('CursorLeft2000');
-    var cursorRight2000Button = document.getElementById('CursorRight2000');
-    var openButton = document.getElementById('Open');
-    var closeButton = document.getElementById('Close');
-    var stepButton = document.getElementById('Step');
-    var scanButton = document.getElementById('Scan');
-    var digits2000Button = document.getElementById('Digits2000');
-    var rate2000Button = document.getElementById('Rate2000');
-    var exit2000Button = document.getElementById('Exit2000');
-    var enter2000Button = document.getElementById('Enter2000');
-    var upRange2000Button = document.getElementById('UpRange2000');
-    var downRange2000Button = document.getElementById('DownRange2000');
-    var autoRange2000Button = document.getElementById('AutoRange2000');
-
-
-    //for LiveFeed
-    var mainCamSignal = setupWebRTC(8081, video, 50);
-    // var mainCamSignal = setupWebRTC(5002, video, 50);
-    window.setTimeout(timeOutHandler,1500000)
-
-    function timeOutHandler(){
-        mainCamSignal.hangup()
-        alert("Your session has timed out.")
-    }
-
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-    
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-    
-            display.textContent = minutes + ":" + seconds;
-    
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
-    }
-    
-    window.onload = function () {
-        var twentyfiveMinutes = 60 * 25,
-            display = document.querySelector('#time');
-        startTimer(twentyfiveMinutes, display);
-    }
-
-    //for HgNe Lamp
-    // var HgNeOFF = document.getElementById('HgNeLampOFF');
-    // var HgNeON = document.getElementById('HgNeLampON');
-    var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
-    HgNeTOGGLE.style.transform='scaleY(1)';
-    var HgNeState = false;
-
-
-    //for Ambient Light
-    // var ambientOFF = document.getElementById('ambientOFF');
-    // var ambientON = document.getElementById('ambientON');
-    var ambientTOGGLE = document.getElementById('ambientTOGGLE');
-    var ambientState = false;
-
-    //for Potentiometer
-    var leftPot = document.getElementById('leftPot');
-    var rightPot = document.getElementById('rightPot');
-    var threeDegree = document.getElementById('3.6_degree');
-    var thirtySixDegree = document.getElementById('36_degree');
-    var threeSixtyDegree = document.getElementById('360_degree');
-    var potSteps=23;
-  
-    //BEGIN Light Switches 
-    // HgNeOFF.addEventListener('click', function(){
-    //     console.log("HgNe lamp switch was switched OFF");
-    //     if(HgNeState){
-    //         toggleSwitch.style.transform='scaleY(-1)';
-    //         dataChannel.send("HgNeLamp/state/OFF");
-    //         HgNeState=false;
-    //                  }
-    // })
-    // HgNeON.addEventListener('click', function(){
-    //     console.log("HgNe lamp switch was switched ON");
-    //     if(!HgNeState){
-    //         toggleSwitch.style.transform='scaleY(1)';
-    //         dataChannel.send("HgNeLamp/state/ON");
-    //         HgNeState=true;
-    //                  }
-    // })
-    // ambientOFF.addEventListener('click', function(){
-    //     console.log("Ambient light was switched OFF");
-    //     if(ambientState){
-    //         lightSwitch.style.transform='rotate(0deg)';
-    //         dataChannel.send("ambientLight/state/OFF");
-    //         ambientState=false;
-    //                  }
-    // })
-    // ambientON.addEventListener('click', function(){
-    //     console.log("Ambient light was switched ON");
-    //     if(!ambientState){
-    //         lightSwitch.style.transform='rotate(180deg)';
-    //         dataChannel.send("ambientLight/state/ON");
-    //         ambientState=true;
-    //                  }
-    // })
-    ambientTOGGLE.addEventListener('click', function(){
-        console.log("Ambient light was switched");
-        if(ambientState){
-            // dataChannel.send("ambientLight/state/OFF");
-            dataChannel.send("PEpdu/off/5")
-            ambientState=false;
-            ambientTOGGLE.title="Click here to turn ON";
-            lightSwitch.style.transform='rotate(0deg)';
-                     }
-        else{
-            // dataChannel.send("ambientLight/state/ON");
-            dataChannel.send("PEpdu/on/5");
-            ambientState=true;
-            ambientTOGGLE.title="Click here to turn OFF";
-            lightSwitch.style.transform='rotate(180deg)';
-        }
-    })
-    HgNeTOGGLE.addEventListener('click', function(){
-        console.log("HgNe lamp was switched");
-        if(HgNeState){
-            dataChannel.send("PEpdu/off/6");
-            HgNeState=false;
-            HgNeTOGGLE.title="Click here to turn ON";
-            toggleSwitch.style.transform='scaleY(1)';
-                     }
-        else{
-            dataChannel.send("PEpdu/on/6");
-            HgNeState=true;
-            HgNeTOGGLE.title="Click here to turn OFF";
-            toggleSwitch.style.transform='scaleY(-1)';
-        }
-    })
-    // END Light Switches
+ 
    
-    var ElectrometerState=false;
-    var MultimeterState=false;
+    //for Oven Variac Power
+    var OvenSwitch = document.getElementById('ovenVariacSwitch');
+    var OvenOFF = document.getElementById('ovenOFF');
+    var OvenON = document.getElementById('ovenON');
+    var OvenONimg = 'static/images/VariacSwitchON';
+    var OvenOFFimg = 'static/images/VariacSwitchOFF';
+    var OvenState = false;
 
- //BEGIN Potentiometer Buttons 
-    threeDegree.addEventListener('click', function(){
-        potSteps=2;
-    })
-    thirtySixDegree.addEventListener('click', function(){
-        potSteps=21;
-    })
-    threeSixtyDegree.addEventListener('click', function(){
-        potSteps=210;
-    })
+    //for Filament Variac Power
+    var filamentTOGGLE = document.getElementById('filamentTOGGLE');
+    var filamentState = false;
 
-    leftPot.addEventListener('click', function() {
-        console.log("leftPot was clicked");
-        dataChannel.send("Pot/move/"+(-potSteps));
-    })
+    //for Power Supply Power
+    var powerSupplySwitch = document.getElementById('powerSupplySwitch');
+    var powerSupplyOFF = document.getElementById('psOFF');
+    var powerSupplyON = document.getElementById('psON');
+    var powerSupplyONimg = 'static/images/PowerSupplyON';
+    var powerSupplyOFFimg = 'static/images/PowerSupplyOFF';
+    var powerSupplyState = false;
 
-    rightPot.addEventListener('click', function() {
-        console.log("rightPot was clicked");
-        dataChannel.send("Pot/move/"+potSteps);
+    //for Oven Variac Settings
+    var lowerOvenV = document.getElementById('oVccw');
+    var raiseOvenV = document.getElementById('oVcw');
+    var threeDegOvenV = document.getElementById('3.6_deg_Vo');
+    var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
+    var ovenSteps=23;
+    //for Filament Variac Settings
+    var lowerFilamentV = document.getElementById('sVccw');
+    var raiseFilamentV = document.getElementById('sVcw');
+    var threeDegFilamentV = document.getElementById('3.6_deg_Vf');
+    var thirtySixDegFilamentV = document.getElementById('36_deg_Vf');
+    var filamentSteps=23;
+    //for Accelerating Voltage Potentiometer Settings
+    var raiseVa = document.getElementById('aCW');
+    var lowerVa = document.getElementById('aCCW');
+    var threeDegVa = document.getElementById('3.6_deg_Va');
+    var thirtySixDegVa = document.getElementById('36_deg_Va');
+    var threeSixtyDegVa = document.getElementById('360_deg_Va');
+    var VaSteps=23;
+    //for Retarding Voltage Potentiometer Settings
+    var raiseVr = document.getElementById('rCW');
+    var lowerVr = document.getElementById('rCCW');
+    var threeDegVr = document.getElementById('3.6_deg_Vr');
+    var thirtySixDegVr = document.getElementById('36_deg_Vr');
+    var VrSteps=23;
+  
+    //BEGIN Power Switches 
+    OvenOFF.addEventListener('click', function(){
+        console.log("Oven power was turned off");
+        if(OvenState){
+                //--------choose one of the following
+            // dataChannel.send("Oven/state/OFF");          //use this command with HS105
+            dataChannel.send("FHpdu/off/6");                //use this command with PDU
+                //---------
+            OvenState=false;
+            OvenSwitch.src=OvenOFFimg;                      //maybe have both images loaded and change visibility? 
+                     }
     })
-//END Potentiometer Buttons
-
-//BEGIN Filter Wheel Buttons 
-    function calculateWheelSteps(currentPosition, desiredPosition) {
-        //Math to be implimented
-        let motorSteps = 0;
-        motorSteps = (desiredPosition - currentPosition) * stepsPerDegree;
-        //Last thing to do:
-        currentPosition = desiredPosition;
-        return motorSteps
-    }   
-    // f577.addEventListener('click', function(event) {
-    //     event.stopPropagation();
-    //     motoreSteps = calculateFilterSteps(currentPosition, 0);
-    //     if (motorSteps!=0) {
-    //         dataChannel.send("Wheel/move/"+motorSteps);
-    //         filterwheel.style.transform='rotate(0deg)';
-    //     }
-    //     return false
-    // })
-    f577.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Wheel/goto/180deg");
-        // filterwheel.style.transform='rotate(0deg)';
-        return false
+    OvenON.addEventListener('click', function(){
+        console.log("Oven power was turned on");
+        if(OvenState){
+                //--------choose one of the following
+            // dataChannel.send("Oven/state/ON");           //use this command with HS105
+            dataChannel.send("FHpdu/on/6");                //use this command with PDU
+                //---------
+            OvenState=true;
+            OvenSwitch.src=OvenONimg;                      //maybe have both images loaded and change visibility?
+                     }
     })
-    f546.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Wheel/goto/120deg");
-        // filterwheel.style.transform='rotate(-30deg)';
-        return false
-    })
-    f436.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Wheel/goto/60deg");
-        // filterwheel.style.transform='rotate(-60deg)';
-        return false
-    })
-    f365.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Wheel/goto/0deg");
-        // filterwheel.style.transform='rotate(-90deg)';
-        return false
-    })
-//END Filter Wheel Buttons
     
-//BEGIN Keithley 6514 Electrometer Buttons
+    filamentTOGGLE.addEventListener('click', function(){
+        console.log("Filament power was switched");
+        if(filamentState){
+                //--------choose one of the following
+            // dataChannel.send("Filament/state/OFF");  //use this command with HS105
+            dataChannel.send("FHpdu/off/5");                //use this command with PDU
+                //---------
+            filamentState=false;
+            filamentTOGGLE.title="Click here to turn ON";
+            filamentTOGGLE.style.transform='scaleY(1)';
+                     }
+        else{
+                //--------choose one of the following
+            // dataChannel.send("Filament/state/ON");   //use this command with HS105
+            dataChannel.send("FHpdu/on/5");                 //use this command with PDU
+                //---------
+            filamentState=true;
+            filamentTOGGLE.title="Click here to turn OFF";
+            lightSwitch.style.transform='scaleY(-1)';
+        }
+    })
+    
+    powerSupplyOFF.addEventListener('click', function(){
+        console.log("Power Supply was turned off");
+        if(powerSupplyState){
+                //--------choose one of the following
+            // dataChannel.send("powerSupply/state/OFF");   //use this command with HS105
+            dataChannel.send("FHpdu/off/7");                //use this command with PDU
+                //---------
+            powerSupplyState=false;
+            powerSupplySwitch.src=powerSupplyOFFimg;        //maybe have both images loaded and change visibility?
+                     }
+    })
+    powerSupplyON.addEventListener('click', function(){
+        console.log("Power Supply was turned on");
+        if(powerSupplyState){
+                //--------choose one of the following
+            // dataChannel.send("powerSupply/state/ON");  //use this command with HS105
+            dataChannel.send("FHpdu/on/7");                //use this command with PDU
+                //---------
+            powerSupplyState=true;
+            powerSupplySwitch.src=powerSupplyONimg;        //maybe have both images loaded and change visibility?
+                     }
+    })
+    // END Power Switches
+
+    //BEGIN Oven Variac Buttons 
+    threeDegOvenV.addEventListener('click', function(){ovenSteps=2;})
+    thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=21;})
+    
+    lowerOvenV.addEventListener('click', function() {
+        console.log("Oven Variac was turned down"); dataChannel.send("Oven/move/"+(-ovenSteps));})
+    raiseOvenV.addEventListener('click', function() {
+        console.log("Oven Variac was turned up");dataChannel.send("Oven/move/"+ovenSteps);})
+    //END Oven Variac Buttons
+   //BEGIN Filament Variac Buttons 
+   threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
+   thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=21;})
+   
+   lowerFilamentV.addEventListener('click', function() {
+       console.log("Filament Variac was turned down"); dataChannel.send("Filament/move/"+(-filamentSteps));})
+   raiseFilamentV.addEventListener('click', function() {
+       console.log("Filament Variac was turned up");dataChannel.send("Filament/move/"+filamentSteps);})
+   //END Filament Variac Buttons
+   //BEGIN Accelerating Voltage Buttons 
+   threeDegVa.addEventListener('click', function(){VaSteps=2;})
+   thirtySixDegVa.addEventListener('click', function(){VaSteps=21;})
+   threeSixtyDegVa.addEventListener('click', function(){VaSteps=210;})
+
+   lowerVa.addEventListener('click', function() {
+       console.log("Accelerating voltage was turned down"); dataChannel.send("Va/move/"+(-VaSteps));})
+   raiseVa.addEventListener('click', function() {
+       console.log("Accelerating voltage was turned up");dataChannel.send("Va/move/"+VaSteps);})
+   //END Accelerating Voltage Buttons
+   //BEGIN Retarding Voltage Buttons 
+   threeDegVr.addEventListener('click', function(){VrSteps=2;})
+   thirtySixDegVr.addEventListener('click', function(){VrSteps=21;})
+   
+   lowerVr.addEventListener('click', function() {
+       console.log("Retarding voltage was turned down"); dataChannel.send("Vr/move/"+(-VrSteps));})
+   raiseVr.addEventListener('click', function() {
+       console.log("Retarding voltage was turned up");dataChannel.send("Vr/move/"+VrSteps);})
+   //END Retarding Voltage Buttons
+ 
+    var ElectrometerState=false;
+
+    //BEGIN Keithley 6514 Electrometer Buttons
     shift6514Button.addEventListener('click', function(event) {
         //Prevent it from reloading
         event.stopPropagation();
@@ -499,165 +449,6 @@ window.addEventListener('DOMContentLoaded', function () {
     //     dataChannel.send("Electrometer/press/ABOR")
     // })
 //END Keithley 6514 Electrometer Buttons
-
-//BEGIN Keithley 2000 Multimeter Buttons
-    shift2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 1");
-        return false
-    })
-    local2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:LOC");
-        return false
-    })
-    power2000Button.addEventListener('click', function(){
-        console.log("Multimeter was switched");
-        if(MultimeterState){
-            dataChannel.send("PEpdu/off/2");
-            MultimeterState=false;
-                     }
-        else{
-            dataChannel.send("PEpdu/on/2");
-            MultimeterState=true;
-        }
-    })
-    dcVoltageButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 2");
-        return false
-    })
-    acVoltageButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 3");
-        return false
-    })
-    dcCurrentButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 4");
-        return false
-    })
-    acCurrentButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 5");
-        return false
-    })
-    TWOwireResistanceButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 6");
-        return false
-    })
-    FOURwireResistanceButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 7");
-        return false
-    })
-    frequencyButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 8");
-        return false
-    })
-    temperatureButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 16");
-        return false
-    })
-    externalTriggerButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 18");
-        return false
-    })
-    trigger2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 19");
-        return false
-    })
-    store2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 20");
-        return false
-    })
-    recall2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 21");
-        return false
-    })
-    filterButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 22");
-        return false
-    })
-    relativeButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 23");
-        return false
-    })
-    cursorLeft2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 24");
-        return false
-    })
-    cursorRight2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 15");
-        return false
-    })
-    openButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 26");
-        return false
-    })
-    closeButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 27");
-        return false
-    })
-    stepButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 28");
-        return false
-    })
-    scanButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 29");
-        return false
-    })
-    digits2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 30");
-        return false
-    })
-    rate2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 31");
-        return false
-    })
-    exit2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 32");
-        return false
-    })
-    enter2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 14");
-        return false
-    })
-    upRange2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 11");
-        return false
-    })
-    downRange2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 13");
-        return false
-    })
-    autoRange2000Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Multimeter/press/SYST:KEY 12");
-        return false
-    })
-//END Keithley 2000 Multimeter Buttons
 
 });
 
