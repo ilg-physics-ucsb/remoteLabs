@@ -21,7 +21,6 @@ function closeStream(videoElement) {
         videoElement.srcObject = null;
         videoElement.setAttribute("data-playing", "false");
         console.log("websocket closed. bye bye!");
-
     }
 }
 
@@ -44,7 +43,6 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     if (videoElement && videoElement.getAttribute('data-playing') == "false") {
         var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
     }
-
     return signalObj
 }
 
@@ -151,26 +149,26 @@ window.addEventListener('DOMContentLoaded', function () {
     var raiseOvenV = document.getElementById('oVcw');
     var threeDegOvenV = document.getElementById('3.6_deg_Vo');
     var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
-    var potSteps=23;
+    var ovenSteps=23;
     //for Filament Variac Settings
     var lowerFilamentV = document.getElementById('sVccw');
     var raiseFilamentV = document.getElementById('sVcw');
     var threeDegFilamentV = document.getElementById('3.6_deg_Vf');
     var thirtySixDegFilamentV = document.getElementById('36_deg_Vf');
-    var potSteps=23;
+    var filamentSteps=23;
     //for Accelerating Voltage Potentiometer Settings
     var raiseVa = document.getElementById('aCW');
     var lowerVa = document.getElementById('aCCW');
     var threeDegVa = document.getElementById('3.6_deg_Va');
     var thirtySixDegVa = document.getElementById('36_deg_Va');
     var threeSixtyDegVa = document.getElementById('360_deg_Va');
-    var potSteps=23;
+    var VaSteps=23;
     //for Retarding Voltage Potentiometer Settings
     var raiseVr = document.getElementById('rCW');
     var lowerVr = document.getElementById('rCCW');
     var threeDegVr = document.getElementById('3.6_deg_Vr');
     var thirtySixDegVr = document.getElementById('36_deg_Vr');
-    var potSteps=23;
+    var VrSteps=23;
   
     //BEGIN Power Switches 
     OvenOFF.addEventListener('click', function(){
@@ -217,6 +215,7 @@ window.addEventListener('DOMContentLoaded', function () {
             lightSwitch.style.transform='scaleY(-1)';
         }
     })
+    
     powerSupplyOFF.addEventListener('click', function(){
         console.log("Power Supply was turned off");
         if(powerSupplyState){
@@ -240,33 +239,48 @@ window.addEventListener('DOMContentLoaded', function () {
                      }
     })
     // END Power Switches
-   
-    var ElectrometerState=false;
-    var MultimeterState=false;
 
- //BEGIN Potentiometer Buttons 
-    threeDegree.addEventListener('click', function(){
-        potSteps=2;
-    })
-    thirtySixDegree.addEventListener('click', function(){
-        potSteps=21;
-    })
-    threeSixtyDegree.addEventListener('click', function(){
-        potSteps=210;
-    })
-
-    leftPot.addEventListener('click', function() {
-        console.log("leftPot was clicked");
-        dataChannel.send("Pot/move/"+(-potSteps));
-    })
-
-    rightPot.addEventListener('click', function() {
-        console.log("rightPot was clicked");
-        dataChannel.send("Pot/move/"+potSteps);
-    })
-//END Potentiometer Buttons
+    //BEGIN Oven Variac Buttons 
+    threeDegOvenV.addEventListener('click', function(){ovenSteps=2;})
+    thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=21;})
     
-//BEGIN Keithley 6514 Electrometer Buttons
+    lowerOvenV.addEventListener('click', function() {
+        console.log("Oven Variac was turned down"); dataChannel.send("Oven/move/"+(-ovenSteps));})
+    raiseOvenV.addEventListener('click', function() {
+        console.log("Oven Variac was turned up");dataChannel.send("Oven/move/"+ovenSteps);})
+    //END Oven Variac Buttons
+   //BEGIN Filament Variac Buttons 
+   threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
+   thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=21;})
+   
+   lowerFilamentV.addEventListener('click', function() {
+       console.log("Filament Variac was turned down"); dataChannel.send("Filament/move/"+(-filamentSteps));})
+   raiseFilamentV.addEventListener('click', function() {
+       console.log("Filament Variac was turned up");dataChannel.send("Filament/move/"+filamentSteps);})
+   //END Filament Variac Buttons
+   //BEGIN Accelerating Voltage Buttons 
+   threeDegVa.addEventListener('click', function(){VaSteps=2;})
+   thirtySixDegVa.addEventListener('click', function(){VaSteps=21;})
+   threeSixtyDegVa.addEventListener('click', function(){VaSteps=210;})
+
+   lowerVa.addEventListener('click', function() {
+       console.log("Accelerating voltage was turned down"); dataChannel.send("Va/move/"+(-VaSteps));})
+   raiseVa.addEventListener('click', function() {
+       console.log("Accelerating voltage was turned up");dataChannel.send("Va/move/"+VaSteps);})
+   //END Accelerating Voltage Buttons
+   //BEGIN Retarding Voltage Buttons 
+   threeDegVr.addEventListener('click', function(){VrSteps=2;})
+   thirtySixDegVr.addEventListener('click', function(){VrSteps=21;})
+   
+   lowerVr.addEventListener('click', function() {
+       console.log("Retarding voltage was turned down"); dataChannel.send("Vr/move/"+(-VrSteps));})
+   raiseVr.addEventListener('click', function() {
+       console.log("Retarding voltage was turned up");dataChannel.send("Vr/move/"+VrSteps);})
+   //END Retarding Voltage Buttons
+ 
+    var ElectrometerState=false;
+
+    //BEGIN Keithley 6514 Electrometer Buttons
     shift6514Button.addEventListener('click', function(event) {
         //Prevent it from reloading
         event.stopPropagation();
