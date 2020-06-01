@@ -1,9 +1,13 @@
-import RPistepper as stp
-from adafruit_motorkit import MotorKit 
-from adafruit_motor import stepper
 import time
 import tplink_smarthome as tp
 import dlipower
+import RPistepper as stp
+from adafruit_motorkit import MotorKit 
+# Initialise the first hat on the default address
+lowerBoard = MotorKit()
+# Initialise the second hat on a different address
+upperBoard = MotorKit(address=0x61)
+from adafruit_motor import stepper
 
 class BaseController(object):
     
