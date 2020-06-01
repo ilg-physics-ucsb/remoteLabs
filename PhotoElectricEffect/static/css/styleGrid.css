@@ -141,17 +141,17 @@
     overflow: hidden;
   } */
 #lightSwitch {
-    width:50% ;  
+    /* width:100% ;   */
     transform: rotate(0deg);
     float: center;
 }
 #toggleSwitch {
-    width:50% ;  
+    /* width:100% ;   */
     /* transform: scaleY(-1); */
     float: center;
 }
 #filterwheel {
-    width:50% ;  
+    /* width:100% ;   */
     /* transform: scaleX(-1); */
     transform: rotate(0deg);
     float: center;
@@ -173,9 +173,9 @@
 #rightPot{
     width:25%;
 }
-#electrometer {
+/* #electrometer {
     width:95%;
 }
 #multimeter {
     width:95%;
-}
+} */

@@ -284,12 +284,11 @@ ol {
 .w-video iframe,
 .w-video object,
 .w-video embed {
-  position: relative;
-  top: -70px;
+  position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 fieldset {
   padding: 0;
