@@ -3,10 +3,6 @@ import tplink_smarthome as tp
 import dlipower
 import RPistepper as stp
 from adafruit_motorkit import MotorKit 
-# Initialise the first hat on the default address
-lowerBoard = MotorKit()
-# Initialise the second hat on a different address
-upperBoard = MotorKit(address=0x61)
 from adafruit_motor import stepper
 
 class BaseController(object):
@@ -145,7 +141,10 @@ class StepperSimple(stp.Motor, BaseController):
     def reset(self):
         super().reset()
     
-    
+# Initialise the first hat on the default address
+lowerBoard = MotorKit()
+# Initialise the second hat on a different address
+upperBoard = MotorKit(address=0x61)
 
 class StepperI2C(MotorKit, BaseController):
 
@@ -155,7 +154,11 @@ class StepperI2C(MotorKit, BaseController):
         self.device_type = "controller"
         self.experiment = None
         
-        self.terminal_options = {1: super().stepper1, 2: super().stepper2}
+        if teminal > 2: 
+            self.address=0x61
+        else:
+            self.address=0x60
+        self.terminal_options = {1: super().stepper1, 2: super().stepper2, 3:super().stepper1, 4:super().stepper2}
         self.refPoints = refPoints
         self.currentPosition = 0
         self.device = self.terminal_options[terminal]

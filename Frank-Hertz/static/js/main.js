@@ -58,7 +58,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var vCloseup = document.getElementById('vTube');
     var vPots = document.getElementById('vVoltageControls');
     var vMeters = document.getElementById('vReadouts');
-    //for LiveFeed
+    //for LiveFeed  -- 200601 figure out which is the main camera and set up port numbers
      var mainCamSignal = setupWebRTC(8081, video, 50);
     // var mainCamSignal = setupWebRTC(5002, video, 50);
      window.setTimeout(timeOutHandler,2700000)
@@ -175,22 +175,22 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Oven power was turned off");
         if(OvenState){
                 //--------choose one of the following
-            // dataChannel.send("Oven/state/OFF");  //use this command with HS105
+            // dataChannel.send("Oven/state/OFF");          //use this command with HS105
             dataChannel.send("FHpdu/off/6");                //use this command with PDU
                 //---------
             OvenState=false;
-            OvenSwitch.src=OvenOFFimg;
+            OvenSwitch.src=OvenOFFimg;                      //maybe have both images loaded and change visibility? 
                      }
     })
     OvenON.addEventListener('click', function(){
         console.log("Oven power was turned on");
         if(OvenState){
                 //--------choose one of the following
-            // dataChannel.send("Oven/state/ON");  //use this command with HS105
+            // dataChannel.send("Oven/state/ON");           //use this command with HS105
             dataChannel.send("FHpdu/on/6");                //use this command with PDU
                 //---------
             OvenState=true;
-            OvenSwitch.src=OvenONimg;
+            OvenSwitch.src=OvenONimg;                      //maybe have both images loaded and change visibility?
                      }
     })
     
@@ -220,11 +220,11 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Power Supply was turned off");
         if(powerSupplyState){
                 //--------choose one of the following
-            // dataChannel.send("powerSupply/state/OFF");  //use this command with HS105
+            // dataChannel.send("powerSupply/state/OFF");   //use this command with HS105
             dataChannel.send("FHpdu/off/7");                //use this command with PDU
                 //---------
             powerSupplyState=false;
-            powerSupplySwitch.src=powerSupplyOFFimg;
+            powerSupplySwitch.src=powerSupplyOFFimg;        //maybe have both images loaded and change visibility?
                      }
     })
     powerSupplyON.addEventListener('click', function(){
@@ -235,7 +235,7 @@ window.addEventListener('DOMContentLoaded', function () {
             dataChannel.send("FHpdu/on/7");                //use this command with PDU
                 //---------
             powerSupplyState=true;
-            powerSupplySwitch.src=powerSupplyONimg;
+            powerSupplySwitch.src=powerSupplyONimg;        //maybe have both images loaded and change visibility?
                      }
     })
     // END Power Switches

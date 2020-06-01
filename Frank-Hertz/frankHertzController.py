@@ -21,11 +21,10 @@ socket_path = "/tmp/uv4l.socket"
 # Vr_pins = [5,6,12,13]
 
     
-
-oven = StepperI2C("Oven", 1,bounds=(0,2100))
-filament = StepperI2C("Filament", 2,bounds=(0,2100))
-Va = StepperI2C("Va", 3,bounds=(0,2100))
-Vr = StepperI2C("Vr", 4,bounds=(0,2100))
+oven = StepperI2C("Oven", 4,bounds=(0,2100))
+filament = StepperI2C("Filament", 3,bounds=(0,2100))
+Va = StepperI2C("Va", 1,bounds=(0,2100))
+Vr = StepperI2C("Vr", 2,bounds=(0,2100))
 
 PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
 PEpdu.login()
