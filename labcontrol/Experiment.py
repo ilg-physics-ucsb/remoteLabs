@@ -60,7 +60,7 @@ class Experiment(object):
     
     def __wait_to_connect(self):
 
-        # print("Awaiting Connection...")
+        print("Experiment running... connect when ready")
         logging.info("Awaiting connection...")
         while True:
             try:
