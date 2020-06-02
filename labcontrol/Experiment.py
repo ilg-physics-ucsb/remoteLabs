@@ -4,6 +4,7 @@ import os
 import time
 from signal import signal, SIGINT
 import json
+import logging
 
 
 class NoDeviceError(Exception):
@@ -25,12 +26,20 @@ class Experiment(object):
         self.client_address = None
         self.name = name
         self.initializedStates = False
+        logging.basicConfig(filename=self.name+".log", level=logging.DEBUG, format="%(levelname)s - %(asctime)s - %(filename)s - %(funcname)s \r\n %(message)s \r\n")
+        logging.info("""
+        ##############################################################
+        ####                Starting New Log                      ####
+        ##############################################################    
+        """)
 
     def add_device(self, device):
         device.experiment = self
+        logging.info("Adding Device - " + device)
         self.devices[device.name] = device
 
     def recallState(self):
+        logging.info("Recalling State")
         with open(self.name + ".json", "r") as f:
             self.allStates = json.load(f)
         for name, device in self.devices.items():
@@ -38,6 +47,7 @@ class Experiment(object):
         self.initializedStates = True
     
     def getControllerStates(self):
+        logging.ingo("Getting Controller States")
         for name, device in self.devices.items():
             self.allStates[name] = device.getState()
         with open(self.name + ".json", "w") as f:
@@ -45,20 +55,26 @@ class Experiment(object):
         self.initializedStates = True
         
     def set_socket_path(self, path):
+        logging.info("Setting Socket Path to " + str(path) )
         self.socket_path = path
     
     def __wait_to_connect(self):
-        print("Awaiting Connection...")
+
+        # print("Awaiting Connection...")
+        logging.info("Awaiting connection...")
         while True:
             try:
                 self.connection, self.client_address = self.socket.accept()
-                print("Client Address is {0}".format(self.client_address))
+                # print("Client Address is {0}".format(self.client_address))
+                logging.info("Client Connected")
                 self.__data_connection(self.connection)
                 time.sleep(0.01)
             except socket.timeout:
+                logging.debug("Socket Timeout")
                 continue
             except socket.error as err:
-                print("Socket Error: {0}".format(err))
+                # print("Socket Error: {0}".format(err))
+                logging.error("Socket Error!" exc_infro=True)
                 break
 
     def __data_connection(self, connection):
@@ -72,7 +88,8 @@ class Experiment(object):
                         break
                     time.sleep(0.01)
             except socket.error as err:
-                print("Connected Socket Error: {0}".format(err))
+                logging.error("Connected Socket Error!", exc_info=True)
+                # print("Connected Socket Error: {0}".format(err))
                 return
             finally:
                 self.close_handler()
@@ -85,6 +102,7 @@ class Experiment(object):
 
     def command_handler(self, data):
         data = data.decode('utf-8')
+        logging.info("Handling Command - " + data)
         device_name, command, params = data.strip().split("/")
         params = params.split(",")
         if device_name not in self.devices:
@@ -95,19 +113,27 @@ class Experiment(object):
             json.dump(self.allStates, f)        
 
     def exit_handler(self, signal_received, frame):
-        print("\r\nAttempting to exit")
+        # print("\r\nAttempting to exit")
+        logging.info("Attempting to exit")
         if self.socket is not None:
             self.socket.close()
+            logging.info("Socket is closed")
+        logging.info("Looping through devices shutting them down.")
         for device_name, device in self.devices.items():
+            logging.info("Running reset and cleanup on device " + device_name)
             device.reset()
             device.cleanup()
-        print("Everything shutdown properly. Exiting.")
+        # print("Everything shutdown properly. Exiting.")
+        logging.info("Everything shutdown properly. Exiting")
         exit(0)
     
     def close_handler(self):
+        logging.info("Client Disconnected. Handling Close.")
         if self.connection is not None:
             self.connection.close()
+            logging.info("Connection to client closed.")
         for device_name, device in self.devices.items():
+            logging.info("Renning reset on device " + device_name)
             device.reset()
 
 
@@ -134,6 +160,7 @@ class Experiment(object):
                 print("Socket file not found. Did you configure uv4l-uvc.conf to use {0}?".format(self.socket_path))
                 raise
         except socket.error as err:
+            logging.error("Socket Error!", exc_info=True)
             print("socket error: {0}".format(err))
 
 
