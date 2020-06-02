@@ -4,6 +4,7 @@ import os
 import time
 from signal import signal, SIGINT
 import json
+import logging
 
 
 class NoDeviceError(Exception):
@@ -25,6 +26,13 @@ class Experiment(object):
         self.client_address = None
         self.name = name
         self.initializedStates = False
+        logging.basicConfig(filename=self.name+".log", level=logging.DEBUG)
+        logging.info("""
+        ##############################################################
+        ####                Starting New Log                      ####
+        ##############################################################    
+        """)
+        logging.
 
     def add_device(self, device):
         device.experiment = self
@@ -48,6 +56,7 @@ class Experiment(object):
         self.socket_path = path
     
     def __wait_to_connect(self):
+
         print("Awaiting Connection...")
         while True:
             try:
