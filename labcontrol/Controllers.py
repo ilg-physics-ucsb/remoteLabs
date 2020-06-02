@@ -149,15 +149,15 @@ class StepperSimple(stp.Motor, BaseController):
 class StepperI2C(MotorKit, BaseController):
 
     def __init__(self, name, terminal, bounds, delay=0.01, refPoints={}):
-        super().__init__()
-        self.name = name
-        self.device_type = "controller"
-        self.experiment = None
-        
         if terminal > 2: 
             self.address=0x61
         else:
             self.address=0x60
+        super().__init__(address=self.address)
+        self.name = name
+        self.device_type = "controller"
+        self.experiment = None
+        
         self.terminal_options = {1: super().stepper1, 2: super().stepper2, 3:super().stepper1, 4:super().stepper2}
         self.refPoints = refPoints
         self.currentPosition = 0

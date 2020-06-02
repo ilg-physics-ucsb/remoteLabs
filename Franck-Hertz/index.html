@@ -68,11 +68,11 @@
         <div id="radioButtonsVo" class="w-row">
           <div class="column w-col w-col-3" style="top: 75px;">
             <input type="radio" id="3.6_deg_Vo" name="angleStepVo" value="3.6">
-            <label for="3.6_degree">3.6&#176;</label>
+            <label for="3.6_deg_Vo">3.6&#176;</label>
           </div>  <!-- &nbsp;&nbsp;&nbsp; -->
           <div class="column w-col w-col-3" style="top: 75px;">
             <input type="radio" id="36_deg_Vo" name="angleStepVo" value="36" checked>
-            <label for="36_degree">36&#176;</label>
+            <label for="36_deg_Vo">36&#176;</label>
           </div>
           <div class="column w-col w-col-6" style="top: 75px;"></div>
         </div>
@@ -127,25 +127,25 @@
             <div class="column w-col w-col-5" style="bottom: -30px;"></div>
             <div class="column w-col w-col-1" style=" bottom: -30px;">
               <input type="radio" id="3.6_deg_Vf" name="angleStepVf" value="3.6">
-              <label for="3.6_degree">3.6&#176;</label>
+              <label for="3.6_deg_Vf">3.6&#176;</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-1" style="bottom: -30px;">
               <input type="radio" id="36_deg_Vf" name="angleStepVf" value="36" checked>
-              <label for="36_degree">36&#176;</label>
+              <label for="36_deg_Vf">36&#176;</label>
             </div>
             <div class="column w-col w-col-5" style="bottom: -30px;"></div>
           </div>
-          <img id="filamentKnob" src="static/images/filament_knob.png" width="300" alt="image-11" class="" usemap="#image-map-filamentV">
+          <img id="filamentKnob" src="static/images/filament_knob.png" width="" alt="image-11" class="" usemap="#image-map-filamentV">
           <map name="image-map-filamentV">
-            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="140,9,96,44,52,97,20,163,4,232,5,292,17,347,47,409,70,439,20,473,230,578,219,339,162,378,128,332,115,280,115,235,130,187,158,141,201,100,175,57,158,31" shape="poly">
-            <area id="fVcw" alt="CW" title="raise V" href="#" coords="718,580,928,470,880,436,903,409,920,370,939,323,945,267,941,212,928,154,901,103,873,63,842,32,809,11,750,95,773,119,802,150,821,184,833,227,836,273,825,317,812,347,789,377,730,338" shape="poly">
+            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="44,6,33,13,22,27,15,40,7,58,3,74,2,89,7,105,12,119,18,132,25,138,7,149,73,182,68,109,52,121,46,112,40,102,35,91,35,76,40,61,47,45,57,36,64,31" shape="poly">
+            <area id="fVcw" alt="CW" title="raise V" href="#" coords="236,30,246,38,255,49,261,62,264,80,263,95,258,107,250,120,231,107,227,182,294,149,277,138,284,128,292,112,297,93,297,74,295,57,288,41,280,28,271,18,261,9,254,3" shape="poly">
           </map>
-          <div class="Warning">
+           <div class="Warning">
             This session will end and the system will reset in 
             <span id="time" style="color:red;font-weight:bold">45:00</span> 
             minutes.
           </div>
-        </div>       
+        </div>    
         <div id="Filament Toggle" class="column w-col w-col-2">
           <div class="click-note">(click to toggle filament power)</div>
           <img id="filamentSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-fTOGGLE">
@@ -164,13 +164,17 @@
           <area id="aCCW" alt="" title="decrease Va" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
         </map>
         <div id="radioButtonsVa" class="w-row">
-          <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+          <div class="column w-col w-col-4" style="margin-bottom: 0px;">
             <input type="radio" id="3.6_deg_Va" name="angleStepVa" value="3.6">
-            <label for="3.6_degree">3.6&#176;</label>
+            <label for="3.6_deg_Va">3.6&#176;</label>
           </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-          <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+          <div class="column w-col w-col-4" style="margin-bottom: 0px;">
             <input type="radio" id="36_deg_Va" name="angleStepVa" value="36" checked>
-            <label for="36_degree">36&#176;</label>
+            <label for="36_deg_Va">36&#176;</label>
+          </div>
+          <div class="column w-col w-col-4" style="margin-bottom: 0px;">
+            <input type="radio" id="360_deg_Va" name="angleStepVa" value="360" checked>
+            <label for="360_deg_Va">360&#176;</label>
           </div>
         </div>  
         <div class="click-note">
@@ -194,11 +198,11 @@
         <div id="radioButtonsVr" class="w-row">
           <div class="column w-col w-col-6" style="margin-bottom: 0px;">
             <input type="radio" id="3.6_deg_Vr" name="angleStepVr" value="3.6">
-            <label for="3.6_degree">3.6&#176;</label>
+            <label for="3.6_deg_Vr">3.6&#176;</label>
           </div>  <!-- &nbsp;&nbsp;&nbsp; -->
           <div class="column w-col w-col-6" style="margin-bottom: 0px;">
             <input type="radio" id="36_deg_Vr" name="angleStepVr" value="36" checked>
-            <label for="36_degree">36&#176;</label>
+            <label for="36_deg_Vr">36&#176;</label>
           </div>
         </div>  
         <div class="click-note">
@@ -220,8 +224,8 @@
       <div id="BottomLeft" class="column w-col w-col-6">
         <img id="powerSupplySwitch" src="static/images/PowerSupplyOFF.jpg" usemap="#image-map-psTOGGLE">
         <map name="image-map-psTOGGLE">
-          <area id="powerSupplyON" title="ON" href="#" coords="73,78,132,117" shape="rect">
-          <area id="powerSupplyOFF" title="OFF" href="#" coords="73,118,132,156" shape="rect">
+          <area id="psON" title="ON" href="#" coords="73,78,132,117" shape="rect">
+          <area id="psOFF" title="OFF" href="#" coords="73,118,132,156" shape="rect">
       </map>
       </div>
       <div id="BottomRight" class="column w-col w-col-6">

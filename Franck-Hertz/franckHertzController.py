@@ -4,7 +4,7 @@ import visa
 import pickle
 
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB1::INSTR', baud_rate=57600)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=57600)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
@@ -21,28 +21,33 @@ socket_path = "/tmp/uv4l.socket"
 # Vr_pins = [5,6,12,13]
 
     
-oven = StepperI2C("Oven", 4,bounds=(0,2100))
-filament = StepperI2C("Filament", 3,bounds=(0,2100))
 Va = StepperI2C("Va", 1,bounds=(0,2100))
 Vr = StepperI2C("Vr", 2,bounds=(0,2100))
+filament = StepperI2C("Filament", 3,bounds=(0,2100))
+oven = StepperI2C("Oven", 4,bounds=(0,2100))
 
-PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
-PEpdu.login()
-# Oven = Plug("OvenPower", "192.168.0.X")
-# Filament = Plug("FilamentPower", "192.168.0.X")
-# PowerSupply = Plug("PowerSupplyPower", "192.168.0.X")
 
-electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
-# electrometerPower = Plug("electrometerPower","192.168.0.19")
+
+# PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
+# PEpdu.login()
+OvenPower = Plug("OvenPower", "192.168.0.18")
+FilamentPower = Plug("FilamentPower", "192.168.0.19")
+PowerSupplyPower = Plug("PowerSupplyPower", "192.168.0.03")
+
+# electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
+ElectrometerPower = Plug("ElectrometerPower","192.168.0.20")
 
 
 exp = Experiment("FranckHertz")
-exp.add_device(PEpdu)
+# exp.add_device(PEpdu)
 exp.add_device(oven)
+exp.add_device(OvenPower)
 exp.add_device(filament)
+exp.add_device(FilamentPower)
+exp.add_device(PowerSupplyPower)
 exp.add_device(Va)
 exp.add_device(Vr)
-exp.add_device(electrometer)
+exp.add_device(ElectrometerPower)
 exp.set_socket_path(socket_path)
 
 
