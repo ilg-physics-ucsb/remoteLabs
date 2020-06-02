@@ -47,7 +47,7 @@ class Experiment(object):
         self.initializedStates = True
     
     def getControllerStates(self):
-        logging.ingo("Getting Controller States")
+        logging.info("Getting Controller States")
         for name, device in self.devices.items():
             self.allStates[name] = device.getState()
         with open(self.name + ".json", "w") as f:

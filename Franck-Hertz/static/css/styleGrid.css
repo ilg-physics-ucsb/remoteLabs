@@ -130,6 +130,9 @@
     top:-100%;
     overflow: visible;
 }
+#vTube {
+    transform: rotate(180deg);
+}
 .variable{
     font-family: 'Times New Roman', Times, serif;
     font-style: italic;
