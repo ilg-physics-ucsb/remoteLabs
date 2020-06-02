@@ -101,6 +101,8 @@ You will want to do a few things in that window, but be aware that each time you
 
 - Make sure the SSH is enabled.
 - Then enable Remote GPIO
+- Then enable I2C
+- Then enable Pi Camera
 
 Finally arrow down to "8 Update" and hit Enter. 
 
