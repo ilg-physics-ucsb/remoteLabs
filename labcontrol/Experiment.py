@@ -26,7 +26,7 @@ class Experiment(object):
         self.client_address = None
         self.name = name
         self.initializedStates = False
-        logging.basicConfig(filename=self.name+".log", level=logging.DEBUG, format="%(levelname)s - %(asctime)s - %(filename)s - %(funcname)s \r\n %(message)s \r\n")
+        logging.basicConfig(filename=self.name+".log", level=logging.INFO, format="%(levelname)s - %(asctime)s - %(filename)s - %(funcName)s \r\n %(message)s \r\n")
         logging.info("""
         ##############################################################
         ####                Starting New Log                      ####
@@ -35,7 +35,7 @@ class Experiment(object):
 
     def add_device(self, device):
         device.experiment = self
-        logging.info("Adding Device - " + device)
+        logging.info("Adding Device - " + device.name)
         self.devices[device.name] = device
 
     def recallState(self):
@@ -60,7 +60,7 @@ class Experiment(object):
     
     def __wait_to_connect(self):
 
-        # print("Awaiting Connection...")
+        print("Experiment running... connect when ready")
         logging.info("Awaiting connection...")
         while True:
             try:
@@ -74,7 +74,7 @@ class Experiment(object):
                 continue
             except socket.error as err:
                 # print("Socket Error: {0}".format(err))
-                logging.error("Socket Error!" exc_infro=True)
+                logging.error("Socket Error!", exc_info=True)
                 break
 
     def __data_connection(self, connection):
@@ -133,7 +133,7 @@ class Experiment(object):
             self.connection.close()
             logging.info("Connection to client closed.")
         for device_name, device in self.devices.items():
-            logging.info("Renning reset on device " + device_name)
+            logging.info("Running reset on device " + device_name)
             device.reset()
 
 

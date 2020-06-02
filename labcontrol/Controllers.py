@@ -142,9 +142,9 @@ class StepperSimple(stp.Motor, BaseController):
         super().reset()
     
 # Initialise the first hat on the default address
-lowerBoard = MotorKit()
+# lowerBoard = MotorKit()
 # Initialise the second hat on a different address
-upperBoard = MotorKit(address=0x61)
+# upperBoard = MotorKit(address=0x61)
 
 class StepperI2C(MotorKit, BaseController):
 
@@ -154,7 +154,7 @@ class StepperI2C(MotorKit, BaseController):
         self.device_type = "controller"
         self.experiment = None
         
-        if teminal > 2: 
+        if terminal > 2: 
             self.address=0x61
         else:
             self.address=0x60
