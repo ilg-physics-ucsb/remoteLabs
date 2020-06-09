@@ -28,26 +28,26 @@ oven = StepperI2C("Oven", 4,bounds=(0,2100))
 
 
 
-# PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry")
-# PEpdu.login()
-OvenPower = Plug("OvenPower", "192.168.0.18")
-FilamentPower = Plug("FilamentPower", "192.168.0.19")
-PowerSupplyPower = Plug("PowerSupplyPower", "192.168.0.03")
+FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "raspberry")
+FHpdu.login()
+# OvenPower = Plug("OvenPower", "192.168.0.18")
+# FilamentPower = Plug("FilamentPower", "192.168.0.19")
+# PowerSupplyPower = Plug("PowerSupplyPower", "192.168.0.03")
 
-# electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
-ElectrometerPower = Plug("ElectrometerPower","192.168.0.20")
+electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
+# ElectrometerPower = Plug("ElectrometerPower","192.168.0.20")
 
 
 exp = Experiment("FranckHertz")
-# exp.add_device(PEpdu)
+exp.add_device(FHpdu)
 exp.add_device(oven)
-exp.add_device(OvenPower)
+# exp.add_device(OvenPower)
 exp.add_device(filament)
-exp.add_device(FilamentPower)
-exp.add_device(PowerSupplyPower)
+# exp.add_device(FilamentPower)
+# exp.add_device(PowerSupplyPower)
 exp.add_device(Va)
 exp.add_device(Vr)
-exp.add_device(ElectrometerPower)
+exp.add_device(electrometer)
 exp.set_socket_path(socket_path)
 
 

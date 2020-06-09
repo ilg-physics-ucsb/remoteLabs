@@ -91,14 +91,14 @@
         </div>
       </div>
       <div id="RightSideImages Oven" class="column w-col w-col-2">
-        <figure style="vertical-align:middle">
+        <!-- <figure style="vertical-align:middle"> -->
           <div class="click-note">(click to toggle oven power)</div>
-          <img id="ovenVariacSwitch" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLE">
+          <img id="ovenSwitch" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLE">
           <map name="image-map-oTOGGLE">
             <area id="ovenOFF" title="OFF" href="#" coords="69,15,259,192" shape="rect">
             <area id="ovenON" title="ON" href="#" coords="260,15,450,192" shape="rect">
           </map>
-        </figure>
+        <!-- </figure> -->
       </div>
     </div>
     <div id="PageMiddle Tube" class="column w-row">
@@ -135,10 +135,10 @@
             </div>
             <div class="column w-col w-col-5" style="bottom: -30px;"></div>
           </div>
-          <img id="filamentKnob" src="static/images/filament_knob.png" width="" alt="image-11" class="" usemap="#image-map-filamentV">
+          <img id="fKnob" src="static/images/filament_knob.png" width="" alt="image-11" class="" usemap="#image-map-filamentV">
           <map name="image-map-filamentV">
-            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="44,6,33,13,22,27,15,40,7,58,3,74,2,89,7,105,12,119,18,132,25,138,7,149,73,182,68,109,52,121,46,112,40,102,35,91,35,76,40,61,47,45,57,36,64,31" shape="poly">
-            <area id="fVcw" alt="CW" title="raise V" href="#" coords="236,30,246,38,255,49,261,62,264,80,263,95,258,107,250,120,231,107,227,182,294,149,277,138,284,128,292,112,297,93,297,74,295,57,288,41,280,28,271,18,261,9,254,3" shape="poly">
+            <area id="fVcw" alt="CW" title="raise V" href="#" coords="73,3,7,36,21,47,15,61,7,77,3,95,2,109,4,125,10,143,18,157,27,169,38,177,46,182,64,155,55,146,47,138,40,125,37,108,39,93,44,79,51,68,68,75" shape="poly">
+            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="226,2,231,76,249,67,256,74,261,83,264,99,264,115,260,129,254,140,247,149,238,155,245,166,252,175,256,181,270,171,280,160,287,147,293,135,296,119,298,103,295,87,292,72,286,60,278,47,292,36" shape="poly">
           </map>
            <div class="Warning">
             This session will end and the system will reset in 
@@ -287,6 +287,17 @@
               },
               singleSelect: true
             }).parent().css({"margin":"0 auto"});
+
+            $('#ovenSwitch').mapster({
+              mapKey:'id',
+              fillColor: 'f5f5b5',
+              fillOpacity: 0,
+              render_select: { 
+                  fillOpacity: 0
+              },
+              singleSelect: true
+            }).parent().css({"margin":"0 auto"});
+
 
             $('#fKnob').mapster({
               mapKey:'id',
