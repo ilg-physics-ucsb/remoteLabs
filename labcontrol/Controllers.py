@@ -44,9 +44,9 @@ class BaseController(object):
 
 
 class PDUOutlet(dlipower.PowerSwitch, BaseController):
-    def __init__(self, name, hostname, userid, password):
+    def __init__(self, name, hostname, userid, password, timeout=None):
         # self, userid=None, password=None, hostname=None, timeout=None, cycletime=None, retries=None, use_https=False
-        super().__init__(hostname=hostname, userid=userid, password=password)
+        super().__init__(hostname=hostname, userid=userid, password=password, timeout=timeout)
         self.name = name
         self.device_type = "controller"
         self.experiment = None
