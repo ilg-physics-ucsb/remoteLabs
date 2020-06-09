@@ -28,7 +28,7 @@ oven = StepperI2C("Oven", 4,bounds=(0,2100))
 
 
 
-FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "raspberry")
+FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "raspberry", 60)
 FHpdu.login()
 # OvenPower = Plug("OvenPower", "192.168.0.18")
 # FilamentPower = Plug("FilamentPower", "192.168.0.19")
