@@ -28,7 +28,7 @@ potentiometer = StepperI2C("Pot", 2,bounds=(0,2100))
 
 filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
 
-PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry", 60)
+PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry", 2)
 PEpdu.login()
 # ambientLight = Plug("ambientLight", "192.168.0.3")
 # HgNeLamp = Plug("HgNeLamp", "192.168.0.18")
