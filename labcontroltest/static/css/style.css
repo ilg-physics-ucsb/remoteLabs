@@ -1,0 +1,30 @@
+#electrometer {
+    width:80%;
+}
+#multimeter {
+    width:80%;
+}
+#filterwheel {
+ width:40% ;  
+ transform: rotate(0deg);
+}
+#v{
+
+}
+#knob {
+    width:50%;
+    height:50%;
+}
+#leftPot{
+    width:50%;
+}
+#rightPot{
+    width:50%;
+}
+#potButtons{
+    /* padding:10%; */
+}
+#filters {
+    width:50 pixels;
+     height:50 pixels;
+}
