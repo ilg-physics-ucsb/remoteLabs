@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from labcontrol import Experiment, ArduCamMultiCamera
 
-camera = ArduCamMultiCamera("Camera")
+camera = ArduCamMultiCamera("Camera", 1)
 
 socket_path = "/tmp/uv4l.socket"
 

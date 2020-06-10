@@ -20,6 +20,7 @@
   <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="static/css/bootstrap-slider.css">
  
 </head>
 <body>
@@ -111,8 +112,32 @@
           <button id="DCam" type="button" class="btn btn-primary">D</button>
           <button id="OffCam" type="button" class="btn btn-primary">Off</button>
         </div>
-        <!-- <img id="webcam" src="" alt="" srcset=""> -->
-        <!-- <img src="http://192.168.0.2:8082/stream/video.mjpeg" alt="" srcset=""> -->
+
+        <!-- <label for="BrightnessControl">Brightness</label>
+        <input type="range" class="custom-range" id="BrightnessControl">
+
+        <label for="ContrastControl">Contrast</label>
+        <input type="range" class="custom-range" min=-100 max=100 id="ContrastControl">
+
+        <label for="ExposureControl">Exposure</label>
+        <input type="range" class="custom-range" min=1 max=11 id="ExposureControl">
+
+        <label for="ZoomControl">Zoom</label>
+        <input type="range" class="custom-range" min=1 max=8 id="ZoomControl"> -->
+
+        <p>
+          <b>Brightness</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50" data-slider-id="BrC" id="BrightnessControl" data-slider-tooltip="visible" data-slider-handle="round" />
+          </p>
+          <p>
+          <b>Contrast</b> <input type="text" class="span2" value="" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-id="CoC" id="ContrastControl" data-slider-tooltip="visible" data-slider-handle="round" />
+          </p>
+          <p>
+          <b>Exposure</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="11" data-slider-step="1" data-slider-value="1" data-slider-id="ExC" id="ExposureControl" data-slider-tooltip="visible" data-slider-handle="round" />
+          <p>
+          <b>Zoom</b> <input type="text" class="span2" value="" data-slider-min="1" data-slider-max="8" data-slider-step="1" data-slider-value="1" data-slider-id="ZoC" id="ZoomControl" data-slider-tooltip="visible" data-slider-handle="round" />
+        </p>
+   
+
         <div class="Warning">
           This session will end and the motors will reset in 
           <span id="time" style="color:red;font-weight:bold">45:00</span> 
@@ -239,6 +264,7 @@
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="static/js/mdb.min.js"></script>
   <!-- Your custom scripts (optional) -->
+  <script src="static/js/bootstrap-slider.js"></script>
   <!-- <script type="text/javascript" src="static/js/imageMapResizer.min.js"></script> -->
  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
   <script type="text/javascript">
