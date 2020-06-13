@@ -169,6 +169,43 @@ window.addEventListener('DOMContentLoaded', function () {
         dataChannel.send("Camera/camera/off")
     })
 
+    // var brightnessSlider = document.getElementById("BrightnessControl")
+    // var contrastSlider = document.getElementById("ContrastControl")
+    // var exposureSlider = document.getElementById("ExposureControl")
+    // var zoomSlider = document.getElementById("ZoomControl")
+
+    
+    var brightnessSlider = $("#BrightnessControl").slider().on("slide", function(){
+        console.log("Changed Brightness")
+        //This is the command structure to modify the image.
+        //It goes <Device Name>/imageMod/<modification type>,<value to set>
+        //You should be able to fill in <modification type> with anything you see when you run
+        // v4l2-ctl -d <number> -l
+        // Where <number> is replaced by the number UV4L assigned to the camera i.e. /dev/video1 would have number=1
+        // That command will also give you what are the allowed values for each <modification type> 
+        dataChannel.send("Camera/imageMod/brightness,"+ brightnessSlider.getValue())
+    }).data('slider')
+
+    var contrastSlider = $("#ContrastControl").slider().on("slide", function(){
+        console.log("Changed Contrast")
+        dataChannel.send("Camera/imageMod/contrast,"+ contrastSlider.getValue())
+    }).data('slider')
+
+    var exposureSlider = $("#ExposureControl").slider().on("slide", function(){
+        console.log("Changed Exposure")
+        dataChannel.send("Camera/imageMod/exposure_mode,"+ exposureSlider.getValue())
+    }).data('slider')
+
+    var zoomSlider = $("#ZoomControl").slider().on("slide", function(){
+        console.log("Changed Zoom")
+        dataChannel.send("Camera/imageMod/zoom_factor,"+ zoomSlider.getValue())
+    }).data('slider')
+
+    // brightnessSlider.on('change', function() {
+    //     console.log("Brightness Changed")
+    //     dataChannel.send("Camera/imageMod/brightness," + brightnessSlider.value)
+    // })
+
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
         setInterval(function () {
