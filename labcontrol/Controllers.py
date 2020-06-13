@@ -4,6 +4,11 @@ import dlipower
 import RPistepper as stp
 from adafruit_motorkit import MotorKit 
 from adafruit_motor import stepper
+import RPi.GPIO as gpio
+import os
+import subprocess
+
+gpio.setmode(gpio.BCM)
 
 class BaseController(object):
     
@@ -40,9 +45,9 @@ class BaseController(object):
 
 
 class PDUOutlet(dlipower.PowerSwitch, BaseController):
-    def __init__(self, name, hostname, userid, password):
+    def __init__(self, name, hostname, userid, password, timeout=None):
         # self, userid=None, password=None, hostname=None, timeout=None, cycletime=None, retries=None, use_https=False
-        super().__init__(hostname=hostname, userid=userid, password=password)
+        super().__init__(hostname=hostname, userid=userid, password=password, timeout=timeout)
         self.name = name
         self.device_type = "controller"
         self.experiment = None
@@ -249,10 +254,74 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
         self.inst.write(params)
     
     def press_parser(self, params):
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
+        print(">>", params)
         return params[0]
         
 
+class ArduCamMultiCamera(BaseController):
+
+    def __init__(self, name, videoNumber=0):
+        self.name = name
+        self.videoNumber = videoNumber
+        self.device_type = "measurement"
+        self.experiment = None
+        self.state = {}
+
+
+
+        # Define Pins
+        # Board Pin 7 = BCM Pin 4 = Selection
+        # Board Pin 11 = BCM Pin 17 = Enable 1
+        # Board Pin 12 = BCM Pin 18 = Enable 2
+        # See Arducam User Guide https://www.uctronics.com/download/Amazon/B0120.pdf
+        self.selection = 4
+        self.enable1 = 17
+        self.enable2 = 18
+        self.channels = [self.selection, self.enable1, self.enable2]
+        gpio.setup(self.channels, gpio.OUT)
+
+        self.cameraDict = {
+            "a": (gpio.LOW, gpio.LOW, gpio.HIGH),
+            "b": (gpio.HIGH, gpio.LOW, gpio.HIGH),
+            "c": (gpio.LOW, gpio.HIGH, gpio.LOW),
+            "d": (gpio.HIGH, gpio.HIGH, gpio.LOW),
+            "off":(gpio.LOW, gpio.HIGH, gpio.HIGH)
+        }
+
+        self.camerai2c = {
+            'a': "i2cset -y 1 0x70 0x00 0x04",
+            'b': "i2cset -y 1 0x70 0x00 0x05",
+            'c': "i2cset -y 1 0x70 0x00 0x06",
+            'd': "i2cset -y 1 0x70 0x00 0x07",
+        }
+
+        # Set camera for A
+        self.camera("a")
+
+    def camera(self, param):
+        #Param should be a, b, c, d, or off
+        print("Switching to camera "+param)
+        os.system(self.camerai2c[param])
+        gpio.output(self.channels, self.cameraDict[param])
+    
+    def camera_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "camera")
+        param = params[0].lower()
+        if param not in self.cameraDict:
+            raise ArgumentErrpr(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
+        return params[0].lower()
+    
+    def imageMod(self, params):
+        imageControl = params[0]
+        controlValue = params[1]
+        subprocess.run('v4l2-ctl -d /dev/video{0} -c {1}={2}'.format(self.videoNumber, imageControl, controlValue),
+                    shell=True)
+
+    def imageMod_parser(self, params):
+        if len(params) != 2:
+            raise ArgumentNumberError(len(params), 2, "imageMod")
+        return params
    
 class CommandError(Exception):
 
@@ -278,3 +347,16 @@ class ArgumentNumberError(Exception):
         else:
             return "ArgumentNumberError, command '{0}' received {1} when {2} was expected.".format(self.command,
              self.total_args, self.allowed)
+
+class ArgumentError(Exception):
+    def __init__(self, device_name, command, received, allowed=None):
+        self.device_name = device_name
+        self.command
+        self.allowed = allowed
+        self.received = received
+    
+    def __str__(self):
+        if self.allowed is None:
+            return "ArgumentError, Device, {0}, can't process command argument {1} by command {2}.".format(self.device_name, self.received, self.command)
+        else:
+            return "ArgumentError, Argument {0}, is not one of the allowed commands, {1}, for device, {2}, running command {3}.".format(self. received, self.allwoed, self.device_name, self.command)
