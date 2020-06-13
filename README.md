@@ -156,23 +156,30 @@ git clone https://github.com/ilg-physics-ucsb/remoteLabs.git
 
 Then run `cd remoteLabs`
 
-From this folder you will want to run
+From this folder you will want to run the two commands
 
 ```bash
 sudo mv uv4l-uvc.conf /etc/uv4l
+sudo mv uv4l-raspicam.conf /etc/uv4l
 ```
 
 ### Running the Remote Labs
-In order to run UV4L you need to do the following:
+In order to run UV4L you need to do the following if you are using a USB camera:
 
 ```bash
 sudo pkill uv4l
 sudo uv4l --config-file=/etc/uv4l/uv4l-uvc.conf -d uvc --driver-config-file=/etc/uv4l/uv4l-uvc.conf --enable-server yes
 ```
 
-Then you need to run our python controller. 
+```bash
+sudo pkill uv4l
+sudo uv4l --config-file=/etc/uv4l/uv4l-raspicam.conf -d raspicam --driver-config-file=/etc/uv4l/uv4l-raspicam.conf --enable-server yes
+```
+
+Then you need to run our python controller. For example, for the photo-electric controller lab
 
 ```bash
+cd PhotoElectric
 python3 photoElectricController.py
 ```
 
