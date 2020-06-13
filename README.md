@@ -137,7 +137,7 @@ Then update agian to update the list of packages, and finally run the command to
 
 ```bash
 sudo apt update
-sudo apt install uv4l uv4l-uvc uv4l-server uv4l-webrtc uv4l-raspicam uv4l-raspicam-extras python3-pip git
+sudo apt install uv4l uv4l-uvc uv4l-server uv4l-webrtc uv4l-raspicam uv4l-raspicam-extras python3-pip git i2c-tools
 ```
 
 Once everything is done installing we will now need to install some Python Packages that are required. Run the following command.
