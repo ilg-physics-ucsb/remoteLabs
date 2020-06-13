@@ -171,6 +171,7 @@ sudo pkill uv4l
 sudo uv4l --config-file=/etc/uv4l/uv4l-uvc.conf -d uvc --driver-config-file=/etc/uv4l/uv4l-uvc.conf --enable-server yes
 ```
 
+And if you are using one of the CSI Raspicams run the following:
 ```bash
 sudo pkill uv4l
 sudo uv4l --config-file=/etc/uv4l/uv4l-raspicam.conf -d raspicam --driver-config-file=/etc/uv4l/uv4l-raspicam.conf --enable-server yes
