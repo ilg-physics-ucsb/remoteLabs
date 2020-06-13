@@ -6,6 +6,7 @@ from adafruit_motorkit import MotorKit
 from adafruit_motor import stepper
 import RPi.GPIO as gpio
 import os
+import subprocess
 
 gpio.setmode(gpio.BCM)
 
@@ -259,8 +260,9 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
 
 class ArduCamMultiCamera(BaseController):
 
-    def __init__(self, name):
+    def __init__(self, name, videoNumber=0):
         self.name = name
+        self.videoNumber = videoNumber
         self.device_type = "measurement"
         self.experiment = None
         self.state = {}
@@ -309,6 +311,17 @@ class ArduCamMultiCamera(BaseController):
         if param not in self.cameraDict:
             raise ArgumentErrpr(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
         return params[0].lower()
+    
+    def imageMod(self, params):
+        imageControl = params[0]
+        controlValue = params[1]
+        subprocess.run('v4l2-ctl -d /dev/video{0} -c {1}={2}'.format(self.videoNumber, imageControl, controlValue),
+                    shell=True)
+
+    def imageMod_parser(self, params):
+        if len(params) != 2:
+            raise ArgumentNumberError(len(params), 2, "imageMod")
+        return params
    
 class CommandError(Exception):
 
