@@ -191,6 +191,16 @@ window.addEventListener('DOMContentLoaded', function () {
         dataChannel.send("Camera/imageMod/contrast,"+ contrastSlider.getValue())
     }).data('slider')
 
+    var redbalanceSlider = $("#RedBalanceControl").slider().on("slide", function(){
+        console.log("Changed Red Balance")
+        dataChannel.send("Camera/imageMod/red_balance,"+ redbalanceSlider.getValue())
+    }).data('slider')
+
+    var bluebalanceSlider = $("#BlueBalanceControl").slider().on("slide", function(){
+        console.log("Changed Blue Balance")
+        dataChannel.send("Camera/imageMod/blue_balance,"+ bluebalanceSlider.getValue())
+    }).data('slider')
+
     var exposureSlider = $("#ExposureControl").slider().on("slide", function(){
         console.log("Changed Exposure")
         dataChannel.send("Camera/imageMod/exposure_mode,"+ exposureSlider.getValue())
@@ -199,6 +209,21 @@ window.addEventListener('DOMContentLoaded', function () {
     var zoomSlider = $("#ZoomControl").slider().on("slide", function(){
         console.log("Changed Zoom")
         dataChannel.send("Camera/imageMod/zoom_factor,"+ zoomSlider.getValue())
+    }).data('slider')
+
+    var isoSlider = $("#ISOControl").slider().on("slide", function(){
+        console.log("Changed ISO Sensitivity")
+        dataChannel.send("Camera/imageMod/iso_sensitivity,"+ isoSlider.getValue())
+    }).data('slider')
+
+    var saturationSlider = $("#SaturationControl").slider().on("slide", function(){
+        console.log("Changed Saturation")
+        dataChannel.send("Camera/imageMod/saturation,"+ saturationSlider.getValue())
+    }).data('slider')
+
+    var shutterSlider = $("#ShutterSpeedControl").slider().on("slide", function(){
+        console.log("Changed Shutter Speed")
+        dataChannel.send("Camera/imageMod/shutter_speed,"+ shutterSlider.getValue())
     }).data('slider')
 
     // brightnessSlider.on('change', function() {
