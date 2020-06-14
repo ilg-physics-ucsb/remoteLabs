@@ -10,6 +10,7 @@ At the time of writing we are using the Raspbery Pi 4 (4GB model) with Raspbian 
 The simplest way to get Raspbian Lite is to go to the [Raspberry Pi downloads](https://www.raspberrypi.org/downloads/) page and follow one of the first three links to download the imager. Choose the link based on the operating system you are running on your own computer, not the Raspberry Pi.
 
 Once you have the imager installed simply ask it to flash Raspbian Lite onto the SD Card. You do this by clicking the select OS button and then selection other Raspbian OS's. Then select Raspbian Lite 32-Bit. 
+
 ---
 #### Making SSH work
 
@@ -45,6 +46,7 @@ network={
 Replacing the three entries between angle brackets < > with your information.
 
 Now you can plug in your SD card into the Pi and boot. You should then be able to SSH into your Pi.
+
 ---
 ### SSH
 
@@ -67,6 +69,7 @@ Finally, if that doesn't work, google the make and model of your router.
 To access your router's information typically requires a username and password. Most routers have a default that is written on the bottom of the router or available via google. If you haven't changed anything then that should be the log in information.
 
 You will have to look around your router's website to find a list of connected devices and their IP addresses. One of them should be named "raspberrypi". Again it should look like 192.168.1.61 or something similar. (Note: you want the IPV4 address not the IPV6.)
+
 ---
 #### Getting into the Pi
 
@@ -85,6 +88,7 @@ The terminal should then look somthing like
 pi@raspberrypi:~$
 ```
 If everything went seccussfully.
+
 ---
 ### Configuring the Pi
 Now run the command
