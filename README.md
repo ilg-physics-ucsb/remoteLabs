@@ -208,7 +208,7 @@ sudo uv4l --config-file=/etc/uv4l/uv4l-raspicam.conf -d raspicam --driver-config
 Then you need to run our python controller. For example, for the photo-electric controller lab
 
 ```bash
-cd ~/remoteLabs/PhotoElectric
+cd ~/remoteLabs/PhotoElectricEffect
 python3 photoElectricController.py
 ```
 
