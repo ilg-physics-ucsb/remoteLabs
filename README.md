@@ -111,6 +111,7 @@ You will want to do a few things in that window, but be aware that each time you
 You may want to change the Hostname of the raspberry pi so that you can identify it more easily. To do that, select "Networking" from the raspi-config page and change the hostname. It will show you a list of rules the hostname must follow. You will have to reboot the raspberry pi in order for the name change to take effect.
 
 Finally arrow down to "8 Update" and hit Enter. 
+
 ---
 ### Installing Dependencies
 
