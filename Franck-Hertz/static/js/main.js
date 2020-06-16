@@ -58,9 +58,13 @@ window.addEventListener('DOMContentLoaded', function () {
     var vCloseup = document.getElementById('vTube');
     var vPots = document.getElementById('vVoltageControls');
     var vMeters = document.getElementById('vReadouts');
-    //for LiveFeed  -- 200601 figure out which is the main camera and set up port numbers
-     var mainCamSignal = setupWebRTC(8081, vCloseup, 50);
-    // var mainCamSignal = setupWebRTC(5002, video, 50);
+
+    //for LiveFeed  
+    // var TemperatureCamSignal = setupWebRTC(8084, vTemperature, 5);
+    // var CloseupCamSignal = setupWebRTC(8083, vCloseup, 5);
+    // var PotsCamSignal = setupWebRTC(8082, vPots, 5);
+    var mainCamSignal = setupWebRTC(8081, vMeters, 10);
+ 
      window.setTimeout(timeOutHandler,2700000)
  
      function timeOutHandler(){
@@ -125,11 +129,11 @@ window.addEventListener('DOMContentLoaded', function () {
  
    
     //for Oven Variac Power
-    var OvenSwitch = document.getElementById('ovenVariacSwitch');
+    var OvenSwitch = document.getElementById('ovenSwitch');
     var OvenOFF = document.getElementById('ovenOFF');
     var OvenON = document.getElementById('ovenON');
-    var OvenONimg = 'static/images/VariacSwitchON';
-    var OvenOFFimg = 'static/images/VariacSwitchOFF';
+    var OvenONimg = 'static/images/VariacSwitchON.jpg';
+    var OvenOFFimg = 'static/images/VariacSwitchOFF.jpg';
     var OvenState = false;
 
     //for Filament Variac Power
@@ -176,8 +180,8 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Oven power was turned off");
         if(OvenState){
                 //--------choose one of the following
-             dataChannel.send("OvenPower/setRelay/OFF");          //use this command with HS105
-            //dataChannel.send("FHpdu/off/6");                //use this command with PDU
+            //dataChannel.send("OvenPower/setRelay/OFF");          //use this command with HS105
+            dataChannel.send("FHpdu/off/3");                //use this command with PDU
                 //---------
             OvenState=false;
             OvenSwitch.src=OvenOFFimg;                      //maybe have both images loaded and change visibility? 
@@ -187,8 +191,8 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Oven power was turned on");
         if(OvenState){
                 //--------choose one of the following
-            dataChannel.send("OvenPower/setRelay/ON");           //use this command with HS105
-            //dataChannel.send("FHpdu/on/6");                //use this command with PDU
+            //dataChannel.send("OvenPower/setRelay/ON");           //use this command with HS105
+            dataChannel.send("FHpdu/on/3");                //use this command with PDU
                 //---------
             OvenState=true;
             OvenSwitch.src=OvenONimg;                      //maybe have both images loaded and change visibility?
@@ -199,8 +203,8 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Filament power was switched");
         if(filamentState){
                 //--------choose one of the following
-            dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            //dataChannel.send("FHpdu/off/5");                //use this command with PDU
+            //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
+            dataChannel.send("FHpdu/off/4");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -208,8 +212,8 @@ window.addEventListener('DOMContentLoaded', function () {
                      }
         else{
                 //--------choose one of the following
-            dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            //dataChannel.send("FHpdu/on/5");                 //use this command with PDU
+            //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
+            dataChannel.send("FHpdu/on/4");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -221,8 +225,8 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Power Supply was turned off");
         if(powerSupplyState){
                 //--------choose one of the following
-            dataChannel.send("PowerSupplyPower/setRelay/OFF");   //use this command with HS105
-            //dataChannel.send("FHpdu/off/7");                //use this command with PDU
+            //dataChannel.send("PowerSupplyPower/setRelay/OFF");   //use this command with HS105
+            dataChannel.send("FHpdu/off/1");                //use this command with PDU
                 //---------
             powerSupplyState=false;
             powerSupplySwitch.src=powerSupplyOFFimg;        //maybe have both images loaded and change visibility?
@@ -232,8 +236,8 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Power Supply was turned on");
         if(powerSupplyState){
                 //--------choose one of the following
-            dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            //dataChannel.send("FHpdu/on/7");                //use this command with PDU
+            //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
+            dataChannel.send("FHpdu/on/1");                //use this command with PDU
                 //---------
             powerSupplyState=true;
             powerSupplySwitch.src=powerSupplyONimg;        //maybe have both images loaded and change visibility?
@@ -298,28 +302,28 @@ window.addEventListener('DOMContentLoaded', function () {
         //Ensure it doesn't reload
         return false
     })
-    // power6514Button.addEventListener('click', function(){
-    //     console.log("Electrometer was switched");
-    //     if(ElectrometerState){
-    //         dataChannel.send("PEpdu/off/1");
-    //         ElectrometerState=false;
-    //                  }
-    //     else{
-    //         dataChannel.send("PEpdu/on/1");
-    //         ElectrometerState=true;
-    //     }
-    // })
     power6514Button.addEventListener('click', function(){
         console.log("Electrometer was switched");
         if(ElectrometerState){
-            dataChannel.send("ElectrometerPower/setRelay/OFF");
+            dataChannel.send("FHpdu/off/2");
             ElectrometerState=false;
                      }
         else{
-            dataChannel.send("ElectrometerPower/setRelay/ON");
+            dataChannel.send("FHpdu/on/2");
             ElectrometerState=true;
         }
     })
+    // power6514Button.addEventListener('click', function(){
+    //     console.log("Electrometer was switched");
+    //     if(ElectrometerState){
+    //         dataChannel.send("ElectrometerPower/setRelay/OFF");
+    //         ElectrometerState=false;
+    //                  }
+    //     else{
+    //         dataChannel.send("ElectrometerPower/setRelay/ON");
+    //         ElectrometerState=true;
+    //     }
+    // })
     voltageButton.addEventListener('click', function(event) {
         event.stopPropagation();
         dataChannel.send("Electrometer/press/SYST:KEY 2");

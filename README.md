@@ -9,13 +9,14 @@ At the time of writing we are using the Raspbery Pi 4 (4GB model) with Raspbian 
 
 The simplest way to get Raspbian Lite is to go to the [Raspberry Pi downloads](https://www.raspberrypi.org/downloads/) page and follow one of the first three links to download the imager. Choose the link based on the operating system you are running on your own computer, not the Raspberry Pi.
 
-Once you have the imager installed simply ask it to flash Raspbian Lite onto the SD Card. 
+Once you have the imager installed simply ask it to flash Raspbian Lite onto the SD Card. You do this by clicking the select OS button and then selection other Raspbian OS's. Then select Raspbian Lite 32-Bit. 
 
+---
 #### Making SSH work
 
 Before you put the SD card in the Pi, you will need put an empty file named ssh in the root directory of the sd card. You can do this is terminal/command prompt.
 
-In terminal `cd` to the SD card. On OSX that is usually uner /Volumes/boot. On Linux I think it is in /mnt/boot (but I don't know for sure), then run the command
+In terminal `cd` to the SD card. On OSX that is usually under /Volumes/boot. On Linux I think it is in /mnt/boot (but I don't know for sure), then run the command
 
 ```bash
 touch ssh
@@ -46,6 +47,7 @@ Replacing the three entries between angle brackets < > with your information.
 
 Now you can plug in your SD card into the Pi and boot. You should then be able to SSH into your Pi.
 
+---
 ### SSH
 
 #### Getting the IP Address
@@ -68,6 +70,7 @@ To access your router's information typically requires a username and password. 
 
 You will have to look around your router's website to find a list of connected devices and their IP addresses. One of them should be named "raspberrypi". Again it should look like 192.168.1.61 or something similar. (Note: you want the IPV4 address not the IPV6.)
 
+---
 #### Getting into the Pi
 
 To SSH into your Pi use Terminal or Powershell *(not command prompt)*. Simply type the command
@@ -86,6 +89,7 @@ pi@raspberrypi:~$
 ```
 If everything went seccussfully.
 
+---
 ### Configuring the Pi
 Now run the command
 ```bash
@@ -101,11 +105,14 @@ You will want to do a few things in that window, but be aware that each time you
 
 - Make sure the SSH is enabled.
 - Then enable Remote GPIO
+- Next enable the Camera
 - Then enable I2C
-- Then enable Pi Camera
+
+You may want to change the Hostname of the raspberry pi so that you can identify it more easily. To do that, select "Networking" from the raspi-config page and change the hostname. It will show you a list of rules the hostname must follow. You will have to reboot the raspberry pi in order for the name change to take effect.
 
 Finally arrow down to "8 Update" and hit Enter. 
 
+---
 ### Installing Dependencies
 
 The remote lab software needs some programs installed in order to run. 
@@ -137,7 +144,7 @@ Then update agian to update the list of packages, and finally run the command to
 
 ```bash
 sudo apt update
-sudo apt install uv4l uv4l-uvc uv4l-server uv4l-webrtc uv4l-raspicam uv4l-raspicam-extras python3-pip git
+sudo apt install uv4l uv4l-uvc uv4l-server uv4l-webrtc uv4l-raspicam uv4l-raspicam-extras python3-pip git i2c-tools
 ```
 
 Once everything is done installing we will now need to install some Python Packages that are required. Run the following command.
@@ -145,7 +152,7 @@ Once everything is done installing we will now need to install some Python Packa
 ```bash
 pip3 install RPistepper pyvisa pyvisa-py adafruit-circuitpython-motorkit python-tplink-smarthome dlipower
 ```
-
+---
 ### Getting Remote Labs files.
 
 Now we need to get this repo onto your Pi. Just run the following command:
@@ -156,23 +163,52 @@ git clone https://github.com/ilg-physics-ucsb/remoteLabs.git
 
 Then run `cd remoteLabs`
 
-From this folder you will want to run
+From this folder you will want to run the two commands
 
 ```bash
 sudo mv uv4l-uvc.conf /etc/uv4l
+sudo mv uv4l-raspicam.conf /etc/uv4l
+```
+---
+### Running the Remote Labs
+
+To get the controllers to run you will need to add the labcontrol directory to your PYTHONPATH. To do this first run the command:
+
+```bash
+sudo nano ~/.bashrc
 ```
 
-### Running the Remote Labs
-In order to run UV4L you need to do the following:
+Then add to the top of the file the following:
+
+```
+# prepend the local file containing modules to the path that PYTHON searches for imports
+export PYTHONPATH="/home/pi/remoteLabs":$PYTHONPATH
+```
+Press Ctrl+X, then "y" then Enter/Return.
+
+Now run the command
+
+```bash
+source ~/.bashrc
+```
+
+In order to run UV4L you need to do the following if you are using a USB camera:
 
 ```bash
 sudo pkill uv4l
 sudo uv4l --config-file=/etc/uv4l/uv4l-uvc.conf -d uvc --driver-config-file=/etc/uv4l/uv4l-uvc.conf --enable-server yes
 ```
 
-Then you need to run our python controller. 
+And if you are using one of the CSI Raspicams run the following:
+```bash
+sudo pkill uv4l
+sudo uv4l --config-file=/etc/uv4l/uv4l-raspicam.conf -d raspicam --driver-config-file=/etc/uv4l/uv4l-raspicam.conf --enable-server yes
+```
+
+Then you need to run our python controller. For example, for the photo-electric controller lab
 
 ```bash
+cd ~/remoteLabs/PhotoElectricEffect
 python3 photoElectricController.py
 ```
 
