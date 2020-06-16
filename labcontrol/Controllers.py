@@ -153,7 +153,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.01, refPoints={}):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}):
         if terminal > 2: 
             self.address=0x61
         else:
