@@ -48,23 +48,40 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 
 
 window.addEventListener('DOMContentLoaded', function () {
-    var isStreaming = false;
-    var isStreaming2 = false;
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    var start = document.getElementById('start');
-    var stop = document.getElementById('stop');
-    var vTemperature = document.getElementById('vThermometer');
-    var vCloseup = document.getElementById('vTube');
-    var vPots = document.getElementById('vVoltageControls');
-    var vMeters = document.getElementById('vReadouts');
+
+    //for multi-camera switching
+    var ACam = document.getElementById("TempCam")
+    var BCam = document.getElementById("TubeCam")
+    var CCam = document.getElementById("PotsCam")
+    var DCam = document.getElementById("DataCam")
+    // var OffCam = document.getElementById("OffCam")
+
+    ACam.addEventListener('click', function() {
+        dataChannel.send("Camera/camera/a")
+    })
+
+    BCam.addEventListener('click', function() {
+        dataChannel.send("Camera/camera/b")
+    })
+
+    CCam.addEventListener('click', function() {
+        dataChannel.send("Camera/camera/c")
+    })
+
+    DCam.addEventListener('click', function() {
+        dataChannel.send("Camera/camera/d")
+    })
+
+    // OffCam.addEventListener('click', function() {
+    //     dataChannel.send("Camera/camera/off")
+    // })
 
     //for LiveFeed  
-    // var TemperatureCamSignal = setupWebRTC(8084, vTemperature, 5);
-    // var CloseupCamSignal = setupWebRTC(8083, vCloseup, 5);
-    // var PotsCamSignal = setupWebRTC(8082, vPots, 5);
-    var mainCamSignal = setupWebRTC(8081, vMeters, 10);
+     var mainCamSignal = setupWebRTC(8081, vMeters, 10);
  
+    //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
  
      function timeOutHandler(){
@@ -155,12 +172,14 @@ window.addEventListener('DOMContentLoaded', function () {
     var threeDegOvenV = document.getElementById('3.6_deg_Vo');
     var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
     var ovenSteps=23;
+   
     //for Filament Variac Settings
     var lowerFilamentV = document.getElementById('fVccw');
     var raiseFilamentV = document.getElementById('fVcw');
     var threeDegFilamentV = document.getElementById('3.6_deg_Vf');
     var thirtySixDegFilamentV = document.getElementById('36_deg_Vf');
     var filamentSteps=23;
+    
     //for Accelerating Voltage Potentiometer Settings
     var raiseVa = document.getElementById('aCW');
     var lowerVa = document.getElementById('aCCW');
@@ -168,6 +187,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var thirtySixDegVa = document.getElementById('36_deg_Va');
     var threeSixtyDegVa = document.getElementById('360_deg_Va');
     var VaSteps=23;
+   
     //for Retarding Voltage Potentiometer Settings
     var raiseVr = document.getElementById('rCW');
     var lowerVr = document.getElementById('rCCW');
