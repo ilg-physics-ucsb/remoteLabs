@@ -108,7 +108,7 @@ class Plug(tp.TPLinkSmartDevice, BaseController):
 
 class StepperSimple(stp.Motor, BaseController):
 
-    def __init__(self, name, pins, delay=0.01, refPoints={}):
+    def __init__(self, name, pins, delay=0.02, refPoints={}):
         super().__init__(pins, delay)
         self.name = name
         self.device_type = "controller"
@@ -153,7 +153,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.01, refPoints={}):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -168,7 +168,7 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition = 0
         self.device = self.terminal_options[terminal]
         self.delay = delay
-        self.style = stepper.DOUBLE
+        self.style = stepper.SINGLE
         self.lowerBound = bounds[0]
         self.upperBound = bounds[1]
 

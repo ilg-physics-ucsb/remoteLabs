@@ -264,10 +264,10 @@ window.addEventListener('DOMContentLoaded', function () {
         potSteps=2;
     })
     thirtySixDegree.addEventListener('click', function(){
-        potSteps=21;
+        potSteps=20;
     })
     threeSixtyDegree.addEventListener('click', function(){
-        potSteps=210;
+        potSteps=200;
     })
 
     leftPot.addEventListener('click', function() {
