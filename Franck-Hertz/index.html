@@ -32,6 +32,12 @@
 </head>
 <body>
   <script src="static/js/signalling.js"></script>
+  <!-- jQuery - These are all the scripts to do all the styling -->
+  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <script src="static/js/webflow.js" type="text/javascript"></script>
+  <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
+  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
+
   <script src="static/js/main.js"></script>
   <!-- Start your project here--> 
   <div class="pagecontainer w-row">
@@ -63,7 +69,7 @@
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
-        <div id="OvenLeft">
+        <div id="OvenLeft" >
           <div class="click-note" style="margin-bottom: -50px;">
             (choose increment and click arrows to turn variac knob and adjust oven power)
           </div>
@@ -78,17 +84,17 @@
             </div>
             <div class="column w-col w-col-6" style="top: 75px;"></div>
           </div>
-          <img id="ovenKnob" src="static/images/bigVariacWarrows.png" usemap="#image-map-bigVariac">
+          <img id="ovenKnob" src="static/images/bigVariacWarrows.png" usemap="#image-map-bigVariac"> <!--  -->
           <map name="image-map-bigVariac">
             <area id="oVccw" alt="CCW" title="decrease AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
             <area id="oVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
           </map>  
         </div>
-        <div id="TubeLeft">
+        <div id="TubeLeft" >
           <img src="static/images/FHbwIcon.jpg" width="125" alt="" class="image-8">
           <div class="click-note">(click for circuit diagram)</div>
         </div>
-        <div id="ControlsLeft">
+        <div id="ControlsLeft" >
           <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1>
           <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
           <map name="image-map-Va">
@@ -132,18 +138,19 @@
         </div>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
-        <div id="OvenRight">
+        <div id="OvenRight" >
           <div class="click-note">(click to toggle oven power)</div>
-          <img id="ovenSwitch" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLE">
+          <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLE">
+          <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" usemap="#image-map-oTOGGLE">
           <map name="image-map-oTOGGLE">
             <area id="ovenOFF" title="OFF" href="#" coords="69,15,259,192" shape="rect">
             <area id="ovenON" title="ON" href="#" coords="260,15,450,192" shape="rect">
           </map>
         </div>
-        <div id="TubeRight">
+        <div id="TubeRight" >
           <img src="static/images/closeUp.jpg" width="140" srcset="static/images/closeUp.jpg 800w, images/closeUp.jpg 1080w, images/closeUp.jpg 1600w, images/closeUp.jpg 2000w, images/closeUp.jpg 2600w, images/closeUp.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt="" class="image-7">
         </div>
-        <div id="ControlsRight">
+        <div id="ControlsRight" >
           <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1>
           <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
           <map name="image-map-Vr">
@@ -167,7 +174,7 @@
       </div>
     </div>
     <div id="PageBottom" class="column w-row">
-      <div id="ControlsBottom" class="column w-row">
+      <div id="ControlsBottom" class="column w-row" >
         <div id="LeftSide" class="column w-col w-col-2">
         </div>
         <div id="Filament Variac" class="column w-col w-col-8">
@@ -198,7 +205,7 @@
           </map>
         </div>
       </div>
-      <div id="MetersBottom" class="column w-row">
+      <div id="MetersBottom" class="column w-row" >
         <div id="MetersLeft" class="column w-col w-col-6">
           <img id="powerSupplySwitch" src="static/images/PowerSupplyOFF.jpg" usemap="#image-map-psTOGGLE">
           <map name="image-map-psTOGGLE">
@@ -243,82 +250,5 @@
         </div>
       </div>
     </div>
-
-
-  <!-- jQuery - These are all the scripts to do all the styling -->
-  <script type="text/javascript" src="static/js/jquery.min.js"></script>
-   <!-- <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5eb6bca98205003949dff5f5" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
-   <script src="static/js/webflow.js" type="text/javascript"></script>
-   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
- 
-  <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
-  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
-  
-  <!-- map highlights - This is the script that styles effect of mouseOver and clicks on image maps -->
-    <script type="text/javascript">
-          $(document).ready(function () {
-            $('#ovenKnob').mapster({
-              mapKey:'id',
-              fillColor: 'f5f5b5',
-              fillOpacity: 0.6,
-              render_select: { 
-                  fillOpacity: 0.3
-              },
-              singleSelect: true
-            }).parent().css({"margin":"0 auto"});
-
-            $('#ovenSwitch').mapster({
-              mapKey:'id',
-              fillColor: 'f5f5b5',
-              fillOpacity: 0,
-              render_select: { 
-                  fillOpacity: 0
-              },
-              singleSelect: true
-            }).parent().css({"margin":"0 auto"});
-
-
-            $('#fKnob').mapster({
-              mapKey:'id',
-              fillColor: 'f5f5b5',
-              fillOpacity: 0.6,
-              render_select: { 
-                  fillOpacity: 0.3
-              },
-              singleSelect: true
-            }).parent().css({"margin":"0 auto"});
-
-            $('#Va').mapster({
-              mapKey:'id',
-              fillColor: 'f5f5b5',
-              fillOpacity: 0.6,
-              render_select: { 
-                  fillOpacity: 0.3
-              },
-              singleSelect: true
-            }).parent().css({"margin":"0 auto"});
-            
-            $('#Vr').mapster({
-              mapKey:'id',
-              fillColor: 'f5f5b5',
-              fillOpacity: 0.6,
-              render_select: { 
-                  fillOpacity: 0.3
-              },
-              singleSelect: true
-            }).parent().css({"margin":"0 auto"});
-  
-            $('#electrometer').mapster({
-              mapKey:'id',
-              fillColor: 'f5f5b5',
-              fillOpacity: 0.6,
-              render_select: { 
-                  fillOpacity: 0.3
-              },
-              singleSelect: true
-            }).parent().css({"margin":"0 auto"});
-  
-          });   
-    </script>
  </body>
 </html>
