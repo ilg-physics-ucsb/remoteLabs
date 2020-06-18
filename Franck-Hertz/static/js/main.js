@@ -48,23 +48,83 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 
 
 window.addEventListener('DOMContentLoaded', function () {
-    var isStreaming = false;
-    var isStreaming2 = false;
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    var start = document.getElementById('start');
-    var stop = document.getElementById('stop');
-    var vTemperature = document.getElementById('vThermometer');
-    var vCloseup = document.getElementById('vTube');
-    var vPots = document.getElementById('vVoltageControls');
-    var vMeters = document.getElementById('vReadouts');
+    var liveStream = document.getElementById("v")
+
+    //for multi-camera switching
+    var TempCam = document.getElementById("TempCam")
+    var TubeCam = document.getElementById("TubeCam")
+    var PotsCam = document.getElementById("PotsCam")
+    var DataCam = document.getElementById("DataCam")
+    // var OffCam = document.getElementById("OffCam")
+
+    //for div display switching
+    var OvenLeft = document.getElementById("OvenLeft")
+    var OvenRight = document.getElementById("OvenRight")
+    var TubeLeft = document.getElementById("TubeLeft")
+    var TubeRight = document.getElementById("TubeRight")
+    var PotsLeft = document.getElementById("ControlsLeft")
+    var PotsRight = document.getElementById("ControlsRight")
+    var PotsBottom = document.getElementById("ControlsBottom")
+    var MetersBottom = document.getElementById("MetersBottom")
+
+    TempCam.addEventListener('click', function() {
+        // dataChannel.send("Camera/camera/a");
+        OvenLeft.style.display = "block";
+        OvenRight.style.display = "block";
+        TubeLeft.style.display = "none";
+        TubeRight.style.display = "none";
+        PotsLeft.style.display = "none";
+        PotsRight.style.display = "none";
+        PotsBottom.style.display = "none";
+        MetersBottom.style.display = "none";
+    })
+
+    TubeCam.addEventListener('click', function() {
+        // dataChannel.send("Camera/camera/b");
+        OvenLeft.style.display = "none";
+        OvenRight.style.display = "none";
+        TubeLeft.style.display = "block";
+        TubeRight.style.display = "block";
+        PotsLeft.style.display = "none";
+        PotsRight.style.display = "none";
+        PotsBottom.style.display = "none";
+        MetersBottom.style.display = "none";
+    })
+
+    PotsCam.addEventListener('click', function() {
+        // dataChannel.send("Camera/camera/c");
+        OvenLeft.style.display = "none";
+        OvenRight.style.display = "none";
+        TubeLeft.style.display = "none";
+        TubeRight.style.display = "none";
+        PotsLeft.style.display = "block";
+        PotsRight.style.display = "block";
+        PotsBottom.style.display = "block";
+        MetersBottom.style.display = "none";
+    })
+
+    DataCam.addEventListener('click', function() {
+        // dataChannel.send("Camera/camera/d");
+        OvenLeft.style.display = "none";
+        OvenRight.style.display = "none";
+        TubeLeft.style.display = "none";
+        TubeRight.style.display = "none";
+        PotsLeft.style.display = "block";
+        PotsRight.style.display = "none";
+        PotsBottom.style.display = "none";
+        MetersBottom.style.display = "block";
+    })
+
+    // OffCam.addEventListener('click', function() {
+    //     dataChannel.send("Camera/camera/off")
+    // })
 
     //for LiveFeed  
-    // var TemperatureCamSignal = setupWebRTC(8084, vTemperature, 5);
-    // var CloseupCamSignal = setupWebRTC(8083, vCloseup, 5);
-    // var PotsCamSignal = setupWebRTC(8082, vPots, 5);
-    var mainCamSignal = setupWebRTC(8081, vMeters, 10);
+    //  var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
+    //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
  
      function timeOutHandler(){
@@ -130,10 +190,10 @@ window.addEventListener('DOMContentLoaded', function () {
    
     //for Oven Variac Power
     var OvenSwitch = document.getElementById('ovenSwitch');
-    var OvenOFF = document.getElementById('ovenOFF');
-    var OvenON = document.getElementById('ovenON');
-    var OvenONimg = 'static/images/VariacSwitchON.jpg';
-    var OvenOFFimg = 'static/images/VariacSwitchOFF.jpg';
+    var OvenOFF = document.getElementById('ovenSwitchOFF');
+    var OvenON = document.getElementById('ovenSwitchON');
+    // var OvenONimg = 'static/images/VariacSwitchON.jpg';
+    // var OvenOFFimg = 'static/images/VariacSwitchOFF.jpg';
     var OvenState = false;
 
     //for Filament Variac Power
@@ -155,12 +215,14 @@ window.addEventListener('DOMContentLoaded', function () {
     var threeDegOvenV = document.getElementById('3.6_deg_Vo');
     var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
     var ovenSteps=23;
+   
     //for Filament Variac Settings
     var lowerFilamentV = document.getElementById('fVccw');
     var raiseFilamentV = document.getElementById('fVcw');
     var threeDegFilamentV = document.getElementById('3.6_deg_Vf');
     var thirtySixDegFilamentV = document.getElementById('36_deg_Vf');
     var filamentSteps=23;
+    
     //for Accelerating Voltage Potentiometer Settings
     var raiseVa = document.getElementById('aCW');
     var lowerVa = document.getElementById('aCCW');
@@ -168,35 +230,38 @@ window.addEventListener('DOMContentLoaded', function () {
     var thirtySixDegVa = document.getElementById('36_deg_Va');
     var threeSixtyDegVa = document.getElementById('360_deg_Va');
     var VaSteps=23;
+   
     //for Retarding Voltage Potentiometer Settings
     var raiseVr = document.getElementById('rCW');
     var lowerVr = document.getElementById('rCCW');
     var threeDegVr = document.getElementById('3.6_deg_Vr');
     var thirtySixDegVr = document.getElementById('36_deg_Vr');
     var VrSteps=23;
-  
+
     //BEGIN Power Switches 
     OvenOFF.addEventListener('click', function(){
         console.log("Oven power was turned off");
         if(OvenState){
                 //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");          //use this command with HS105
-            dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            //dataChannel.send("FHpdu/off/3");                //use this command with PDU
                 //---------
             OvenState=false;
-            OvenSwitch.src=OvenOFFimg;                      //maybe have both images loaded and change visibility? 
-                     }
+            OvenOFF.style.display = "inline";                      
+            OvenON.style.display = "none"; 
+        }
     })
     OvenON.addEventListener('click', function(){
         console.log("Oven power was turned on");
-        if(OvenState){
+        if(!OvenState){
                 //--------choose one of the following
-            //dataChannel.send("OvenPower/setRelay/ON");           //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                //use this command with PDU
+            //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
+            //dataChannel.send("FHpdu/on/3");                //use this command with PDU
                 //---------
             OvenState=true;
-            OvenSwitch.src=OvenONimg;                      //maybe have both images loaded and change visibility?
-                     }
+            OvenON.style.display = "block";                      
+            OvenOFF.style.display = "none"; 
+        }
     })
     
     filamentTOGGLE.addEventListener('click', function(){
@@ -466,12 +531,116 @@ window.addEventListener('DOMContentLoaded', function () {
     // })
 //END Keithley 6514 Electrometer Buttons
 
+
+//map highlights - This is the script that styles effect of mouseOver and clicks on image maps
+$('#ovenKnob').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
+  $('#ovenSwitch').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0,
+    render_select: { 
+        fillOpacity: 0
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
+
+  $('#fKnob').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
+  $('#Va').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+  
+  $('#Vr').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
+  $('#electrometer').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
+//   var image = $('#themap');  <- need one of these for each map
+
+//   image.mapster({
+//       mapKey: 'data-state',  <- have this above, so may not need to repoeat here
+//   });
+  
+//   var resizing,
+//       body= $(body),
+//       win=$(window),
+//       diffW=win.width() - image.width(),
+//       lastw=win.innerWidth(),
+//       lasth=win.innerHeight();
+  
+//   var resize = function() {
+//       var win= $(window),
+//           width=win.width(), height=win.height();
+//       // only try to resize every 200 ms 
+//       if (resizing) {
+//           return;
+//       }
+//       if (lastw !== width || lasth !== height) {
+//           resizing=true;
+//           image.mapster('resize',width-diffW,0,200);     
+//           lastw=width;
+//           lasth=height;
+//           setTimeout(function() {
+//               resizing=false;
+//               resize();
+//           },200);
+//       } else {
+  
+//       }
+//   };
+//   $(window).bind('resize',resize);
 });
 
+
 window.addEventListener('beforeunload', function(e) {
+    mainCamSignal.hangup();
     dataChannel.close();
 })
-    
+
+
+
+
+
+//THIS SERVES HELP INTERPRET VCODEC CASE NUMBERS
 // function select_remote_hw_vcodec() {
 //     document.getElementById('remote_hw_vcodec').checked = true;
 //     var vformat = document.getElementById('remote_vformat').value;
