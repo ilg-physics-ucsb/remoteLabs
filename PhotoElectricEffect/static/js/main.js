@@ -134,7 +134,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
     //for LiveFeed
-    var mainCamSignal = setupWebRTC(8081, video, 50);
+    var mainCamSignal = setupWebRTC(8081, video, 100);
     // var mainCamSignal = setupWebRTC(5002, video, 50);
     window.setTimeout(timeOutHandler,2700000)
 
@@ -661,6 +661,7 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 window.addEventListener('beforeunload', function(e) {
+    mainCamSignal.hangup();
     dataChannel.close();
 })
     
