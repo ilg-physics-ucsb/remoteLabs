@@ -50,25 +50,25 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 window.addEventListener('DOMContentLoaded', function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    var liveStream = document.getElementById("v")
+    var liveStream = document.getElementById("v");
     var FirstTime = true;
 
     //for multi-camera switching
-    var TempCam = document.getElementById("TempCam")
-    var TubeCam = document.getElementById("TubeCam")
-    var PotsCam = document.getElementById("PotsCam")
-    var DataCam = document.getElementById("DataCam")
-    // var OffCam = document.getElementById("OffCam")
+    var TempCam = document.getElementById("TempCam");
+    var TubeCam = document.getElementById("TubeCam");
+    var PotsCam = document.getElementById("PotsCam");
+    var DataCam = document.getElementById("DataCam");
+    // var OffCam = document.getElementById("OffCam");
 
     //for div display switching
-    var OvenLeft = document.getElementById("OvenLeft")
-    var OvenRight = document.getElementById("OvenRight")
-    var TubeLeft = document.getElementById("TubeLeft")
-    var TubeRight = document.getElementById("TubeRight")
-    var PotsLeft = document.getElementById("ControlsLeft")
-    var PotsRight = document.getElementById("ControlsRight")
-    var PotsBottom = document.getElementById("ControlsBottom")
-    var MetersBottom = document.getElementById("MetersBottom")
+    var OvenLeft = document.getElementById("OvenLeft");
+    var OvenRight = document.getElementById("OvenRight");
+    var TubeLeft = document.getElementById("TubeLeft");
+    var TubeRight = document.getElementById("TubeRight");
+    var PotsLeft = document.getElementById("ControlsLeft");
+    var PotsRight = document.getElementById("ControlsRight");
+    var PotsBottom = document.getElementById("ControlsBottom");
+    var MetersBottom = document.getElementById("MetersBottom");
 
     TempCam.addEventListener('click', function() {
         // dataChannel.send("Camera/camera/a");
@@ -123,7 +123,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // })
 
     //for LiveFeed  
-    //  var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
