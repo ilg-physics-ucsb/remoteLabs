@@ -244,7 +244,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if(!FirstTime){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            //dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            dataChannel.send("FHpdu/off/3");                //use this command with PDU
             }
             OvenState=false;
             mWrap1.style.display = "block";                      
@@ -259,7 +259,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if(!FirstTime){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            //dataChannel.send("FHpdu/on/3");                 //use this command with PDU
+            dataChannel.send("FHpdu/on/3");                 //use this command with PDU
             }
             OvenState=true;
             mWrap2.style.display = "block";                      
@@ -274,7 +274,7 @@ window.addEventListener('DOMContentLoaded', function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            //dataChannel.send("FHpdu/off/4");                //use this command with PDU
+            dataChannel.send("FHpdu/off/4");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -283,7 +283,7 @@ window.addEventListener('DOMContentLoaded', function () {
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            //dataChannel.send("FHpdu/on/4");                 //use this command with PDU
+            dataChannel.send("FHpdu/on/4");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -297,7 +297,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if(!FirstTime){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            //dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            dataChannel.send("FHpdu/off/1");                //use this command with PDU
             }
             powerSupplyState=false;
             mWrap6.style.display = "block";                      
@@ -312,7 +312,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if(!FirstTime){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            //dataChannel.send("FHpdu/on/1");                //use this command with PDU
+            dataChannel.send("FHpdu/on/1");                //use this command with PDU
             }
             powerSupplyState=true;
             mWrap7.style.display = "block";                      
