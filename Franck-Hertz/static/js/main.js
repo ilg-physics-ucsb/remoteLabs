@@ -51,6 +51,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v")
+    var FirstTime = true;
 
     //for multi-camera switching
     var TempCam = document.getElementById("TempCam")
@@ -189,11 +190,10 @@ window.addEventListener('DOMContentLoaded', function () {
  
    
     //for Oven Variac Power
-    var OvenSwitch = document.getElementById('ovenSwitch');
-    var OvenOFF = document.getElementById('ovenSwitchOFF');
-    var OvenON = document.getElementById('ovenSwitchON');
-    // var OvenONimg = 'static/images/VariacSwitchON.jpg';
-    // var OvenOFFimg = 'static/images/VariacSwitchOFF.jpg';
+    var OvenOFFpress = document.getElementById('ovenOFF');
+    var OvenONpress = document.getElementById('ovenON');
+    var OvenOFFpic = document.getElementById('ovenSwitchOFF');
+    var OvenONpic = document.getElementById('ovenSwitchON');
     var OvenState = false;
 
     //for Filament Variac Power
@@ -202,11 +202,10 @@ window.addEventListener('DOMContentLoaded', function () {
     var filamentState = false;
 
     //for Power Supply Power
-    var powerSupplySwitch = document.getElementById('powerSupplySwitch');
     var powerSupplyOFF = document.getElementById('psOFF');
     var powerSupplyON = document.getElementById('psON');
-    var powerSupplyONimg = 'static/images/PowerSupplyON';
-    var powerSupplyOFFimg = 'static/images/PowerSupplyOFF';
+    var psOFFpic = document.getElementById('powerSupplySwitchOFF');
+    var psONpic = document.getElementById('powerSupplySwitchON');
     var powerSupplyState = false;
 
     //for Oven Variac Settings
@@ -239,28 +238,34 @@ window.addEventListener('DOMContentLoaded', function () {
     var VrSteps=23;
 
     //BEGIN Power Switches 
-    OvenOFF.addEventListener('click', function(){
+    OvenOFFpress.addEventListener('click', function(){
         console.log("Oven power was turned off");
         if(OvenState){
-                //--------choose one of the following
-            //dataChannel.send("OvenPower/setRelay/OFF");          //use this command with HS105
+            if(!FirstTime){
+            //--------choose one of the following
+            //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
             //dataChannel.send("FHpdu/off/3");                //use this command with PDU
-                //---------
+            }
             OvenState=false;
-            OvenOFF.style.display = "inline";                      
-            OvenON.style.display = "none"; 
+            mWrap1.style.display = "block";                      
+            mWrap2.style.display = "none"; 
+            OvenOFFpic.style.display = "block";                      
+            OvenONpic.style.display = "none"; 
         }
     })
-    OvenON.addEventListener('click', function(){
+    OvenONpress.addEventListener('click', function(){
         console.log("Oven power was turned on");
         if(!OvenState){
-                //--------choose one of the following
+            if(!FirstTime){
+            //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            //dataChannel.send("FHpdu/on/3");                //use this command with PDU
-                //---------
+            //dataChannel.send("FHpdu/on/3");                 //use this command with PDU
+            }
             OvenState=true;
-            OvenON.style.display = "block";                      
-            OvenOFF.style.display = "none"; 
+            mWrap2.style.display = "block";                      
+            mWrap1.style.display = "none"; 
+            OvenONpic.style.display = "block";                      
+            OvenOFFpic.style.display = "none"; 
         }
     })
     
@@ -269,16 +274,16 @@ window.addEventListener('DOMContentLoaded', function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("FHpdu/off/4");                //use this command with PDU
+            //dataChannel.send("FHpdu/off/4");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
-            filamentTOGGLE.style.transform='scaleY(1)';
+            filamentSwitch.style.transform='scaleY(1)';
                      }
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("FHpdu/on/4");                 //use this command with PDU
+            //dataChannel.send("FHpdu/on/4");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -289,24 +294,32 @@ window.addEventListener('DOMContentLoaded', function () {
     powerSupplyOFF.addEventListener('click', function(){
         console.log("Power Supply was turned off");
         if(powerSupplyState){
-                //--------choose one of the following
-            //dataChannel.send("PowerSupplyPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("FHpdu/off/1");                //use this command with PDU
-                //---------
+            if(!FirstTime){
+            //--------choose one of the following
+            //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
+            //dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            }
             powerSupplyState=false;
-            powerSupplySwitch.src=powerSupplyOFFimg;        //maybe have both images loaded and change visibility?
-                     }
+            mWrap6.style.display = "block";                      
+            mWrap7.style.display = "none"; 
+            psOFFpic.style.display = "block";                      
+            psONpic.style.display = "none"; 
+                             }
     })
     powerSupplyON.addEventListener('click', function(){
         console.log("Power Supply was turned on");
-        if(powerSupplyState){
-                //--------choose one of the following
+        if(!powerSupplyState){
+            if(!FirstTime){
+            //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("FHpdu/on/1");                //use this command with PDU
-                //---------
+            //dataChannel.send("FHpdu/on/1");                //use this command with PDU
+            }
             powerSupplyState=true;
-            powerSupplySwitch.src=powerSupplyONimg;        //maybe have both images loaded and change visibility?
-                     }
+            mWrap7.style.display = "block";                      
+            mWrap6.style.display = "none"; 
+            psONpic.style.display = "block";                      
+            psOFFpic.style.display = "none"; 
+                            }
     })
     // END Power Switches
 
@@ -315,9 +328,11 @@ window.addEventListener('DOMContentLoaded', function () {
     thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=21;})
     
     lowerOvenV.addEventListener('click', function() {
-        console.log("Oven Variac was turned down"); dataChannel.send("Oven/move/"+(-ovenSteps));})
+        console.log("Oven Variac was turned down"); 
+        dataChannel.send("Oven/move/"+(-ovenSteps));})
     raiseOvenV.addEventListener('click', function() {
-        console.log("Oven Variac was turned up");dataChannel.send("Oven/move/"+ovenSteps);})
+        console.log("Oven Variac was turned up");
+        dataChannel.send("Oven/move/"+ovenSteps);})
     //END Oven Variac Buttons
    //BEGIN Filament Variac Buttons 
    threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
@@ -541,9 +556,20 @@ $('#ovenKnob').mapster({
         fillOpacity: 0.3
     },
     singleSelect: true
+    // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#ovenSwitch').mapster({
+  $('#ovenSwitchOFF').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0,
+    render_select: { 
+        fillOpacity: 0
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
+  $('#ovenSwitchON').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0,
@@ -584,6 +610,26 @@ $('#ovenKnob').mapster({
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
+  $('#powerSupplySwitchOFF').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0,
+    render_select: { 
+        fillOpacity: 0
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
+  $('#powerSupplySwitchON').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0,
+    render_select: { 
+        fillOpacity: 0
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"});
+
   $('#electrometer').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
@@ -594,11 +640,28 @@ $('#ovenKnob').mapster({
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
+var mWrap0 = document.getElementById('mapster_wrap_0');
+var mWrap1 = document.getElementById('mapster_wrap_1');
+var mWrap2 = document.getElementById('mapster_wrap_2');
+var mWrap3 = document.getElementById('mapster_wrap_3');
+var mWrap4 = document.getElementById('mapster_wrap_4');
+var mWrap5 = document.getElementById('mapster_wrap_5');
+var mWrap6 = document.getElementById('mapster_wrap_6');
+var mWrap7 = document.getElementById('mapster_wrap_7');
+var mWrap8 = document.getElementById('mapster_wrap_8');
+
+OvenONpress.click();
+OvenOFFpress.click();
+powerSupplyON.click();
+powerSupplyOFF.click();
+TempCam.click();
+console.log('on/off cycle was performed');
+FirstTime=false;
+
+
+
 //   var image = $('#themap');  <- need one of these for each map
 
-//   image.mapster({
-//       mapKey: 'data-state',  <- have this above, so may not need to repoeat here
-//   });
   
 //   var resizing,
 //       body= $(body),
@@ -642,98 +705,98 @@ window.addEventListener('beforeunload', function(e) {
 
 //THIS SERVES HELP INTERPRET VCODEC CASE NUMBERS
 // function select_remote_hw_vcodec() {
-//     document.getElementById('remote_hw_vcodec').checked = true;
-//     var vformat = document.getElementById('remote_vformat').value;
-//     switch (vformat) {
-//         case '5':
-//             document.getElementById('remote-video').style.width = "320px";
-//             document.getElementById('remote-video').style.height = "240px";
-//             break;
-//         case '10':
-//             document.getElementById('remote-video').style.width = "320px";
-//             document.getElementById('remote-video').style.height = "240px";
-//             break;
-//         case '20':
-//             document.getElementById('remote-video').style.width = "352px";
-//             document.getElementById('remote-video').style.height = "288px";
-//             break;
-//         case '25':
-//             document.getElementById('remote-video').style.width = "640px";
-//             document.getElementById('remote-video').style.height = "480px";
-//             break;
-//         case '30':
-//             document.getElementById('remote-video').style.width = "640px";
-//             document.getElementById('remote-video').style.height = "480px";
-//             break;
-//         case '35':
-//             document.getElementById('remote-video').style.width = "800px";
-//             document.getElementById('remote-video').style.height = "480px";
-//             break;
-//         case '40':
-//             document.getElementById('remote-video').style.width = "960px";
-//             document.getElementById('remote-video').style.height = "720px";
-//             break;
-//         case '50':
-//             document.getElementById('remote-video').style.width = "1024px";
-//             document.getElementById('remote-video').style.height = "768px";
-//             break;
-//         case '55':
-//             document.getElementById('remote-video').style.width = "1280px";
-//             document.getElementById('remote-video').style.height = "720px";
-//             break;
-//         case '60':
-//             document.getElementById('remote-video').style.width = "1280px";
-//             document.getElementById('remote-video').style.height = "720px";
-//             break;
-//         case '63':
-//             document.getElementById('remote-video').style.width = "1280px";
-//             document.getElementById('remote-video').style.height = "720px";
-//             break;
-//         case '65':
-//             document.getElementById('remote-video').style.width = "1280px";
-//             document.getElementById('remote-video').style.height = "768px";
-//             break;
-//         case '70':
-//             document.getElementById('remote-video').style.width = "1280px";
-//             document.getElementById('remote-video').style.height = "768px";
-//             break;
-//         case '75':
-//             document.getElementById('remote-video').style.width = "1536px";
-//             document.getElementById('remote-video').style.height = "768px";
-//             break;
-//         case '80':
-//             document.getElementById('remote-video').style.width = "1280px";
-//             document.getElementById('remote-video').style.height = "960px";
-//             break;
-//         case '90':
-//             document.getElementById('remote-video').style.width = "1600px";
-//             document.getElementById('remote-video').style.height = "768px";
-//             break;
-//         case '95':
-//             document.getElementById('remote-video').style.width = "1640px";
-//             document.getElementById('remote-video').style.height = "1232px";
-//             break;
-//         case '97':
-//             document.getElementById('remote-video').style.width = "1640px";
-//             document.getElementById('remote-video').style.height = "1232px";
-//             break;
-//         case '98':
-//             document.getElementById('remote-video').style.width = "1792px";
-//             document.getElementById('remote-video').style.height = "896px";
-//             break;
-//         case '99':
-//             document.getElementById('remote-video').style.width = "1792px";
-//             document.getElementById('remote-video').style.height = "896px";
-//             break;
-//         case '100':
-//             document.getElementById('remote-video').style.width = "1920px";
-//             document.getElementById('remote-video').style.height = "1080px";
-//             break;
-//         case '105':
-//             document.getElementById('remote-video').style.width = "1920px";
-//             document.getElementById('remote-video').style.height = "1080px";
-//             break;
-//         default:
-//             document.getElementById('remote-video').style.width = "1280px";
-//             document.getElementById('remote-video').style.height = "720px";
+// document.getElementById('remote_hw_vcodec').checked = true;
+// var vformat = document.getElementById('remote_vformat').value;
+// switch (vformat) {
+//     case '5':
+//         document.getElementById('remote-video').style.width = "320px";
+//         document.getElementById('remote-video').style.height = "240px";
+//         break;
+//     case '10':
+//         document.getElementById('remote-video').style.width = "320px";
+//         document.getElementById('remote-video').style.height = "240px";
+//         break;
+//     case '20':
+//         document.getElementById('remote-video').style.width = "352px";
+//         document.getElementById('remote-video').style.height = "288px";
+//         break;
+//     case '25':
+//         document.getElementById('remote-video').style.width = "640px";
+//         document.getElementById('remote-video').style.height = "480px";
+//         break;
+//     case '30':
+//         document.getElementById('remote-video').style.width = "640px";
+//         document.getElementById('remote-video').style.height = "480px";
+//         break;
+//     case '35':
+//         document.getElementById('remote-video').style.width = "800px";
+//         document.getElementById('remote-video').style.height = "480px";
+//         break;
+//     case '40':
+//         document.getElementById('remote-video').style.width = "960px";
+//         document.getElementById('remote-video').style.height = "720px";
+//         break;
+//     case '50':
+//         document.getElementById('remote-video').style.width = "1024px";
+//         document.getElementById('remote-video').style.height = "768px";
+//         break;
+//     case '55':
+//         document.getElementById('remote-video').style.width = "1280px";
+//         document.getElementById('remote-video').style.height = "720px";
+//         break;
+//     case '60':
+//         document.getElementById('remote-video').style.width = "1280px";
+//         document.getElementById('remote-video').style.height = "720px";
+//         break;
+//     case '63':
+//         document.getElementById('remote-video').style.width = "1280px";
+//         document.getElementById('remote-video').style.height = "720px";
+//         break;
+//     case '65':
+//         document.getElementById('remote-video').style.width = "1280px";
+//         document.getElementById('remote-video').style.height = "768px";
+//         break;
+//     case '70':
+//         document.getElementById('remote-video').style.width = "1280px";
+//         document.getElementById('remote-video').style.height = "768px";
+//         break;
+//     case '75':
+//         document.getElementById('remote-video').style.width = "1536px";
+//         document.getElementById('remote-video').style.height = "768px";
+//         break;
+//     case '80':
+//         document.getElementById('remote-video').style.width = "1280px";
+//         document.getElementById('remote-video').style.height = "960px";
+//         break;
+//     case '90':
+//         document.getElementById('remote-video').style.width = "1600px";
+//         document.getElementById('remote-video').style.height = "768px";
+//         break;
+//     case '95':
+//         document.getElementById('remote-video').style.width = "1640px";
+//         document.getElementById('remote-video').style.height = "1232px";
+//         break;
+//     case '97':
+//         document.getElementById('remote-video').style.width = "1640px";
+//         document.getElementById('remote-video').style.height = "1232px";
+//         break;
+//     case '98':
+//         document.getElementById('remote-video').style.width = "1792px";
+//         document.getElementById('remote-video').style.height = "896px";
+//         break;
+//     case '99':
+//         document.getElementById('remote-video').style.width = "1792px";
+//         document.getElementById('remote-video').style.height = "896px";
+//         break;
+//     case '100':
+//         document.getElementById('remote-video').style.width = "1920px";
+//         document.getElementById('remote-video').style.height = "1080px";
+//         break;
+//     case '105':
+//         document.getElementById('remote-video').style.width = "1920px";
+//         document.getElementById('remote-video').style.height = "1080px";
+//         break;
+//     default:
+//         document.getElementById('remote-video').style.width = "1280px";
+//         document.getElementById('remote-video').style.height = "720px";
 //     }
