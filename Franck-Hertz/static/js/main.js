@@ -47,7 +47,7 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 }
 
 
-window.addEventListener('DOMContentLoaded', function () {
+$("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
@@ -640,8 +640,12 @@ window.addEventListener('DOMContentLoaded', function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
+    $("#ovenSwitchOFF").ready(function () {
+        var mWrap1 = document.getElementById('mapster_wrap_1');
+        console.log("PRINTING THE MWRAP 1")
+        console.log(mWrap1);
+    });
     var mWrap0 = document.getElementById('mapster_wrap_0');
-    var mWrap1 = document.getElementById('mapster_wrap_1');
     var mWrap2 = document.getElementById('mapster_wrap_2');
     var mWrap3 = document.getElementById('mapster_wrap_3');
     var mWrap4 = document.getElementById('mapster_wrap_4');
@@ -649,6 +653,10 @@ window.addEventListener('DOMContentLoaded', function () {
     var mWrap6 = document.getElementById('mapster_wrap_6');
     var mWrap7 = document.getElementById('mapster_wrap_7');
     var mWrap8 = document.getElementById('mapster_wrap_8');
+
+    console.log("PRINTING THE MWRAP2")
+    // console.log(mWrap1);
+    console.log(mWrap2);
 
     OvenONpress.click();
     OvenOFFpress.click();
