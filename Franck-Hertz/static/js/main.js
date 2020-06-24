@@ -123,7 +123,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // })
 
     //for LiveFeed  
-     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
@@ -245,10 +245,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
             dataChannel.send("FHpdu/off/3");                //use this command with PDU
-            mWrap1.style.display = "block";                      
-            mWrap2.style.display = "none";
             }
             OvenState=false; 
+            mWrap1.style.display = "block";                      
+            mWrap2.style.display = "none";
             OvenOFFpic.style.display = "block";                      
             OvenONpic.style.display = "none"; 
         }
@@ -260,10 +260,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
             dataChannel.send("FHpdu/on/3");                 //use this command with PDU
-            mWrap2.style.display = "block";                      
-            mWrap1.style.display = "none"; 
             }
             OvenState=true;   
+            mWrap2.style.display = "block";                      
+            mWrap1.style.display = "none"; 
             OvenONpic.style.display = "block";                      
             OvenOFFpic.style.display = "none"; 
         }
@@ -298,10 +298,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
             dataChannel.send("FHpdu/off/1");                //use this command with PDU
-            mWrap6.style.display = "block";                      
-            mWrap7.style.display = "none";
             }
-            powerSupplyState=false; 
+            powerSupplyState=false;
+            mWrap6.style.display = "block";                      
+            mWrap7.style.display = "none"; 
             psOFFpic.style.display = "block";                      
             psONpic.style.display = "none"; 
                              }
@@ -313,10 +313,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
             dataChannel.send("FHpdu/on/1");                //use this command with PDU
-            mWrap7.style.display = "block";                      
-            mWrap6.style.display = "none"; 
             }
             powerSupplyState=true;
+            mWrap7.style.display = "block";                      
+            mWrap6.style.display = "none"; 
             psONpic.style.display = "block";                      
             psOFFpic.style.display = "none"; 
                             }
@@ -544,11 +544,11 @@ window.addEventListener('DOMContentLoaded', function () {
     // abort.addEventListener('click', function() {
     //     dataChannel.send("Electrometer/press/ABOR")
     // })
-//END Keithley 6514 Electrometer Buttons
+ //END Keithley 6514 Electrometer Buttons
 
 
-//map highlights - This is the script that styles effect of mouseOver and clicks on image maps
-$('#ovenKnob').mapster({
+ //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
+  $('#ovenKnob').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -640,23 +640,23 @@ $('#ovenKnob').mapster({
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-var mWrap0 = document.getElementById('mapster_wrap_0');
-var mWrap1 = document.getElementById('mapster_wrap_1');
-var mWrap2 = document.getElementById('mapster_wrap_2');
-var mWrap3 = document.getElementById('mapster_wrap_3');
-var mWrap4 = document.getElementById('mapster_wrap_4');
-var mWrap5 = document.getElementById('mapster_wrap_5');
-var mWrap6 = document.getElementById('mapster_wrap_6');
-var mWrap7 = document.getElementById('mapster_wrap_7');
-var mWrap8 = document.getElementById('mapster_wrap_8');
+    var mWrap0 = document.getElementById('mapster_wrap_0');
+    var mWrap1 = document.getElementById('mapster_wrap_1');
+    var mWrap2 = document.getElementById('mapster_wrap_2');
+    var mWrap3 = document.getElementById('mapster_wrap_3');
+    var mWrap4 = document.getElementById('mapster_wrap_4');
+    var mWrap5 = document.getElementById('mapster_wrap_5');
+    var mWrap6 = document.getElementById('mapster_wrap_6');
+    var mWrap7 = document.getElementById('mapster_wrap_7');
+    var mWrap8 = document.getElementById('mapster_wrap_8');
 
-OvenONpress.click();
-OvenOFFpress.click();
-powerSupplyON.click();
-powerSupplyOFF.click();
-TempCam.click();
-console.log('on/off cycle was performed');
-FirstTime=false;
+    OvenONpress.click();
+    OvenOFFpress.click();
+    powerSupplyON.click();
+    powerSupplyOFF.click();
+    TempCam.click();
+    console.log('on/off cycle was performed');
+    FirstTime=false;
 
 
 
