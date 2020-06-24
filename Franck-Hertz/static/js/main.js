@@ -642,21 +642,21 @@ $("document").ready(function () {
 
     $("#ovenSwitchOFF").ready(function () {
         var mWrap1 = document.getElementById('mapster_wrap_1');
-        console.log("PRINTING THE MWRAP 1")
-        console.log(mWrap1);
+    });
+    $("#ovenSwitchON").ready(function () {
+        var mWrap1 = document.getElementById('mapster_wrap_2');
+    });
+    $("#powerSupplySwitchOFF").ready(function () {
+        var mWrap1 = document.getElementById('mapster_wrap_6');
+    });
+    $("#powerSupplySwitchON").ready(function () {
+        var mWrap1 = document.getElementById('mapster_wrap_7');
     });
     var mWrap0 = document.getElementById('mapster_wrap_0');
-    var mWrap2 = document.getElementById('mapster_wrap_2');
     var mWrap3 = document.getElementById('mapster_wrap_3');
     var mWrap4 = document.getElementById('mapster_wrap_4');
     var mWrap5 = document.getElementById('mapster_wrap_5');
-    var mWrap6 = document.getElementById('mapster_wrap_6');
-    var mWrap7 = document.getElementById('mapster_wrap_7');
     var mWrap8 = document.getElementById('mapster_wrap_8');
-
-    console.log("PRINTING THE MWRAP2")
-    // console.log(mWrap1);
-    console.log(mWrap2);
 
     OvenONpress.click();
     OvenOFFpress.click();
