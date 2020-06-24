@@ -245,10 +245,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
             dataChannel.send("FHpdu/off/3");                //use this command with PDU
-            }
-            OvenState=false;
             mWrap1.style.display = "block";                      
-            mWrap2.style.display = "none"; 
+            mWrap2.style.display = "none";
+            }
+            OvenState=false; 
             OvenOFFpic.style.display = "block";                      
             OvenONpic.style.display = "none"; 
         }
@@ -260,10 +260,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
             dataChannel.send("FHpdu/on/3");                 //use this command with PDU
-            }
-            OvenState=true;
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
+            }
+            OvenState=true;   
             OvenONpic.style.display = "block";                      
             OvenOFFpic.style.display = "none"; 
         }
@@ -298,10 +298,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
             dataChannel.send("FHpdu/off/1");                //use this command with PDU
-            }
-            powerSupplyState=false;
             mWrap6.style.display = "block";                      
-            mWrap7.style.display = "none"; 
+            mWrap7.style.display = "none";
+            }
+            powerSupplyState=false; 
             psOFFpic.style.display = "block";                      
             psONpic.style.display = "none"; 
                              }
@@ -313,10 +313,10 @@ window.addEventListener('DOMContentLoaded', function () {
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
             dataChannel.send("FHpdu/on/1");                //use this command with PDU
-            }
-            powerSupplyState=true;
             mWrap7.style.display = "block";                      
             mWrap6.style.display = "none"; 
+            }
+            powerSupplyState=true;
             psONpic.style.display = "block";                      
             psOFFpic.style.display = "none"; 
                             }
