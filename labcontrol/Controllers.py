@@ -153,7 +153,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE"):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -168,9 +168,15 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition = 0
         self.device = self.terminal_options[terminal]
         self.delay = delay
-        self.style = stepper.SINGLE
         self.lowerBound = bounds[0]
         self.upperBound = bounds[1]
+        self.styles = {
+            "SINGLE": stepper.SINGLE,
+            "DOUBLE": stepper.DOUBLE,
+            "INTERLEAVED": stepper.INTERLEAVED,
+            "MICROSTEP": stepper.MICROSTEP
+        }
+        self.style = self.styles[style]
 
         self.state = {"position": self.currentPosition}
     
