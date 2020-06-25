@@ -71,7 +71,7 @@ $("document").ready(function () {
     var MetersBottom = document.getElementById("MetersBottom");
 
     TempCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/a");
+        dataChannel.send("Camera/camera/c");
         OvenLeft.style.display = "block";
         OvenRight.style.display = "block";
         TubeLeft.style.display = "none";
@@ -83,7 +83,7 @@ $("document").ready(function () {
     })
 
     TubeCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+        dataChannel.send("Camera/camera/d");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "block";
@@ -95,7 +95,7 @@ $("document").ready(function () {
     })
 
     PotsCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/c");
+        dataChannel.send("Camera/camera/a");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "none";
@@ -107,7 +107,7 @@ $("document").ready(function () {
     })
 
     DataCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/d");
+        dataChannel.send("Camera/camera/b");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "none";
