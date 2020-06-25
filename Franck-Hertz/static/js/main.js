@@ -71,7 +71,7 @@ $("document").ready(function () {
     var MetersBottom = document.getElementById("MetersBottom");
 
     TempCam.addEventListener('click', function() {
-        // dataChannel.send("Camera/camera/a");
+        dataChannel.send("Camera/camera/a");
         OvenLeft.style.display = "block";
         OvenRight.style.display = "block";
         TubeLeft.style.display = "none";
@@ -83,7 +83,7 @@ $("document").ready(function () {
     })
 
     TubeCam.addEventListener('click', function() {
-        // dataChannel.send("Camera/camera/b");
+        dataChannel.send("Camera/camera/b");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "block";
@@ -95,7 +95,7 @@ $("document").ready(function () {
     })
 
     PotsCam.addEventListener('click', function() {
-        // dataChannel.send("Camera/camera/c");
+        dataChannel.send("Camera/camera/c");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "none";
@@ -107,7 +107,7 @@ $("document").ready(function () {
     })
 
     DataCam.addEventListener('click', function() {
-        // dataChannel.send("Camera/camera/d");
+        dataChannel.send("Camera/camera/d");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "none";
@@ -123,7 +123,7 @@ $("document").ready(function () {
     // })
 
     //for LiveFeed  
-    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
@@ -579,7 +579,6 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-
   $('#fKnob').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
@@ -640,31 +639,37 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-    $("#ovenSwitchOFF").ready(function () {
-        var mWrap1 = document.getElementById('mapster_wrap_1');
+    $("#mapster_wrap_2").ready(function () {
+        var mWrap2 = document.getElementById('mapster_wrap_2');
+        $("#mapster_wrap_1").ready(function () {
+            OvenONpress.click();
+            var mWrap1 = document.getElementById('mapster_wrap_1');
+            $("#mapster_wrap_7").ready(function () {
+                OvenOFFpress.click();
+                var mWrap7 = document.getElementById('mapster_wrap_7');
+                $("#mapster_wrap_6").ready(function () {
+                    powerSupplyON.click();
+                    $("#mapster_wrap_6").ready(function() {
+                        var mWrap6 = document.getElementById('mapster_wrap_6');
+                        powerSupplyOFF.click();
+                        TempCam.click();
+                        console.log('on/off cycle was performed');
+                        FirstTime=false;
+                    })
+                });
+            });
+        });
+
     });
-    $("#ovenSwitchON").ready(function () {
-        var mWrap1 = document.getElementById('mapster_wrap_2');
-    });
-    $("#powerSupplySwitchOFF").ready(function () {
-        var mWrap1 = document.getElementById('mapster_wrap_6');
-    });
-    $("#powerSupplySwitchON").ready(function () {
-        var mWrap1 = document.getElementById('mapster_wrap_7');
-    });
+    
     var mWrap0 = document.getElementById('mapster_wrap_0');
     var mWrap3 = document.getElementById('mapster_wrap_3');
     var mWrap4 = document.getElementById('mapster_wrap_4');
     var mWrap5 = document.getElementById('mapster_wrap_5');
     var mWrap8 = document.getElementById('mapster_wrap_8');
 
-    OvenONpress.click();
-    OvenOFFpress.click();
-    powerSupplyON.click();
-    powerSupplyOFF.click();
-    TempCam.click();
-    console.log('on/off cycle was performed');
-    FirstTime=false;
+    
+
 
 
 
