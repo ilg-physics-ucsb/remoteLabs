@@ -287,27 +287,23 @@ $("document").ready(function () {
     var VrSteps=23;
 
     //BEGIN Power Switches 
-    var mWrap1
-    var mWrap2
-    var mWrap6
-    var mWrap7
+ 
     OvenOFFpress.addEventListener('click', function(){
         console.log("Oven power was turned off");
         if(OvenState){
             if(FirstTimeOvenOff){
-                mWrap2 = document.getElementById('mapster_wrap_2');
+                // mWrap2 = document.getElementById('mapster_wrap_2');
                 console.log("for the first time");
             }
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
             dataChannel.send("FHpdu/off/3");                //use this command with PDU
-            
+            }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
             OvenOFFpic.style.display = "block";                      
             OvenONpic.style.display = "none"; 
-            }
             OvenState=false; 
             FirstTimeOvenOff=false;
         }
@@ -316,19 +312,18 @@ $("document").ready(function () {
         console.log("Oven power was turned on");
         if(!OvenState){
             if(FirstTimeOvenOn){  //initialize mapster wrap for OvenOn
-                mWrap1 = document.getElementById('mapster_wrap_1');
+                // mWrap1 = document.getElementById('mapster_wrap_1');
                 console.log("for the first time");
             }
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
             dataChannel.send("FHpdu/on/3");                 //use this command with PDU 
-             
+            }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
             OvenONpic.style.display = "block";                      
             OvenOFFpic.style.display = "none";
-            } 
             OvenState=true;  
             FirstTimeOvenOn=false;
         }
@@ -360,19 +355,19 @@ $("document").ready(function () {
         console.log("Power Supply was turned off");
         if(powerSupplyState){
             if(FirstTimePSoff){
-                mWrap6 = document.getElementById('mapster_wrap_6');    
+                // mWrap6 = document.getElementById('mapster_wrap_6');
                 console.log("for the first time");            
             }
             if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
             dataChannel.send("FHpdu/off/1");                //use this command with PDU
-        
+            }
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
             psOFFpic.style.display = "block";                      
             psONpic.style.display = "none"; 
-            }
+            
             powerSupplyState=false;
             FirstTimePSoff=false;
         }
@@ -381,7 +376,7 @@ $("document").ready(function () {
         console.log("Power Supply was turned on");
         if(!powerSupplyState){
             if(FirstTimePSon){
-                mWrap7 = document.getElementById('mapster_wrap_7');  
+                // mWrap7 = document.getElementById('mapster_wrap_7');  
                 console.log("for the first time");  
             }
             if(!FirstTimePSon){
@@ -389,12 +384,12 @@ $("document").ready(function () {
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
             dataChannel.send("FHpdu/on/1");                //use this command with PDU
             
-           
+            }   
             mWrap7.style.display = "block";                      
             mWrap6.style.display = "none"; 
             psONpic.style.display = "block";                      
             psOFFpic.style.display = "none"; 
-            }
+            
             powerSupplyState=true;
             FirstTimePSon=false;
             
