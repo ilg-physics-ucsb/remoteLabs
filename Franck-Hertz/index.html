@@ -34,13 +34,15 @@
   <script src="static/js/signalling.js"></script>
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="static/js/popper.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
   <script src="static/js/webflow.js" type="text/javascript"></script>
   <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
   <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
 
   <script src="static/js/main.js"></script>
   <!-- Start your project here--> 
-  <div id="FullPage" class="pagecontainer w-row">
+  <div class="pagecontainer w-row">
     <div id="PageHead" class="column w-row">
       <h1 class="Title">Franck-Hertz Experiment</h1>
       <div class="text-block">
@@ -150,7 +152,7 @@
           </map>
         </div>
         <div id="TubeRight" >
-          <img src="static/images/closeUpSmall.jpeg" width="140"  class="image-7"> <!--srcset="static/images/closeUp-p-2600.jpg 800w, images/closeUp-p-2600.jpg 1080w, images/closeUp-p-2600.jpg 1600w, images/closeUp-p-2600.jpg 2000w, images/closeUp-p-2600.jpg 2600w, images/closeUp-p-2600.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt=""-->
+          <img src="static/images/closeUp.jpg" width="140" srcset="static/images/closeUp.jpg 800w, images/closeUp.jpg 1080w, images/closeUp.jpg 1600w, images/closeUp.jpg 2000w, images/closeUp.jpg 2600w, images/closeUp.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt="" class="image-7">
         </div>
         <div id="ControlsRight" >
           <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1>
@@ -254,6 +256,19 @@
           </map>
         </div>
       </div>
+    </div>
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="loadingModalLabel">Page Loading</h5>
+                </div>
+                <div class="modal-body">
+                        <div class="loader"></div>
+                        <p>Please wait while the page finishes loading.</p>
+                </div>
+            </div>
+        </div>
     </div>
  </body>
 </html>
