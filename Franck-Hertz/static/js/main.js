@@ -6,7 +6,7 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
-        
+
         // videoElement.play();
     }
 }
@@ -57,6 +57,46 @@ $("document").ready(function () {
     var FirstTimePSon = true;
     var FirstTimePSoff = true;
 
+    // Define Variables that are MWRAPs for use inside of callbacks
+    var mWrap1, mWrap2, mWrap6, mWrap7
+    var intervalId
+
+    var loadingModal = $("#loadingModal")
+    loadingModal.on("shown.bs.modal", function(e){
+        intervalId = setInterval(function() {
+            for (mWrap of mWrapList) {
+                console.log("MWRAP")
+                console.log(mWrap)
+                console.log($(mWrap)[0])
+                if ($(mWrap).length == 0) {
+                    console.log("RUNNING BREAK")
+                    break
+                }
+            } 
+    
+            mWrap1 = $("#mapster_wrap_1")[0]
+            mWrap2 = $("#mapster_wrap_2")[0]
+            mWrap6 = $("#mapster_wrap_6")[0]
+            mWrap7 = $("#mapster_wrap_7")[0]
+    
+    
+            // Do clicks here
+            OvenONpress.click()
+            OvenOFFpress.click()
+            powerSupplyON.click()
+            powerSupplyOFF.click()
+            TempCam.click()
+            console.log("hiding modal")
+            loadingModal.modal("hide")
+            clearInterval(intervalId)
+    
+        }, 500)
+    })
+    loadingModal.modal('show')
+
+    var mWrapList = ["#mapster_wrap_2", "#mapster_wrap_1", "#mapster_wrap_6", "#mapster_wrap_7"]
+
+
     //for multi-camera switching
     var TempCam = document.getElementById("TempCam");
     var TubeCam = document.getElementById("TubeCam");
@@ -76,7 +116,8 @@ $("document").ready(function () {
     var MetersBottom = document.getElementById("MetersBottom");
 
     TempCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/c");
+        // TEMP CHANGE
+        // dataChannel.send("Camera/camera/c");
         OvenLeft.style.display = "block";
         OvenRight.style.display = "block";
         TubeLeft.style.display = "none";
@@ -128,13 +169,15 @@ $("document").ready(function () {
     // })
 
     //for LiveFeed  
-    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    // TEMP CHANGE
+    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
  
      function timeOutHandler(){
-         mainCamSignal.hangup()
+        //  TEMP CHANGE
+        //  mainCamSignal.hangup()
          alert("Your session has timed out.")
      }
  
@@ -743,8 +786,10 @@ window.addEventListener('loadeddata', (event)=>{
 
 
 window.addEventListener('beforeunload', function(e) {
-    mainCamSignal.hangup();
-    dataChannel.close();
+    // TEMP CHANGE
+    // mainCamSignal.hangup();
+    // TEMP CHANGE
+    // dataChannel.close();
 })
 
 
