@@ -6,6 +6,7 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
+        
         // videoElement.play();
     }
 }
@@ -51,7 +52,10 @@ $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
-    var FirstTime = true;
+    var FirstTimeOvenOn = true;
+    var FirstTimeOvenOff = true;
+    var FirstTimePSon = true;
+    var FirstTimePSoff = true;
 
     //for multi-camera switching
     var TempCam = document.getElementById("TempCam");
@@ -61,6 +65,7 @@ $("document").ready(function () {
     // var OffCam = document.getElementById("OffCam");
 
     //for div display switching
+    var FullPage = document.getElementById("FullPage");
     var OvenLeft = document.getElementById("OvenLeft");
     var OvenRight = document.getElementById("OvenRight");
     var TubeLeft = document.getElementById("TubeLeft");
@@ -238,34 +243,50 @@ $("document").ready(function () {
     var VrSteps=23;
 
     //BEGIN Power Switches 
+    var mWrap1
+    var mWrap2
+    var mWrap6
+    var mWrap7
     OvenOFFpress.addEventListener('click', function(){
         console.log("Oven power was turned off");
         if(OvenState){
-            if(!FirstTime){
+            if(FirstTimeOvenOff){
+                mWrap2 = document.getElementById('mapster_wrap_2');
+                console.log("for the first time");
+            }
+            if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
             dataChannel.send("FHpdu/off/3");                //use this command with PDU
-            }
-            OvenState=false; 
+            
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
             OvenOFFpic.style.display = "block";                      
             OvenONpic.style.display = "none"; 
+            }
+            OvenState=false; 
+            FirstTimeOvenOff=false;
         }
     })
     OvenONpress.addEventListener('click', function(){
         console.log("Oven power was turned on");
         if(!OvenState){
-            if(!FirstTime){
+            if(FirstTimeOvenOn){  //initialize mapster wrap for OvenOn
+                mWrap1 = document.getElementById('mapster_wrap_1');
+                console.log("for the first time");
+            }
+            if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                 //use this command with PDU
-            }
-            OvenState=true;   
+            dataChannel.send("FHpdu/on/3");                 //use this command with PDU 
+             
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
             OvenONpic.style.display = "block";                      
-            OvenOFFpic.style.display = "none"; 
+            OvenOFFpic.style.display = "none";
+            } 
+            OvenState=true;  
+            FirstTimeOvenOn=false;
         }
     })
     
@@ -294,32 +315,46 @@ $("document").ready(function () {
     powerSupplyOFF.addEventListener('click', function(){
         console.log("Power Supply was turned off");
         if(powerSupplyState){
-            if(!FirstTime){
+            if(FirstTimePSoff){
+                mWrap6 = document.getElementById('mapster_wrap_6');    
+                console.log("for the first time");            
+            }
+            if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
             dataChannel.send("FHpdu/off/1");                //use this command with PDU
-            }
-            powerSupplyState=false;
+        
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
             psOFFpic.style.display = "block";                      
             psONpic.style.display = "none"; 
-                             }
+            }
+            powerSupplyState=false;
+            FirstTimePSoff=false;
+        }
     })
     powerSupplyON.addEventListener('click', function(){
         console.log("Power Supply was turned on");
         if(!powerSupplyState){
-            if(!FirstTime){
+            if(FirstTimePSon){
+                mWrap7 = document.getElementById('mapster_wrap_7');  
+                console.log("for the first time");  
+            }
+            if(!FirstTimePSon){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
             dataChannel.send("FHpdu/on/1");                //use this command with PDU
-            }
-            powerSupplyState=true;
+            
+           
             mWrap7.style.display = "block";                      
             mWrap6.style.display = "none"; 
             psONpic.style.display = "block";                      
             psOFFpic.style.display = "none"; 
-                            }
+            }
+            powerSupplyState=true;
+            FirstTimePSon=false;
+            
+        }
     })
     // END Power Switches
 
@@ -546,9 +581,10 @@ $("document").ready(function () {
     // })
  //END Keithley 6514 Electrometer Buttons
 
-
+ 
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
-  $('#ovenKnob').mapster({
+    
+    $('#ovenKnob').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -638,40 +674,39 @@ $("document").ready(function () {
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
+  
+//   console.log('mapster calls have been made');
+  
 
-    $("#mapster_wrap_2").ready(function () {
-        var mWrap2 = document.getElementById('mapster_wrap_2');
-        $("#mapster_wrap_1").ready(function () {
-            OvenONpress.click();
-            var mWrap1 = document.getElementById('mapster_wrap_1');
-            $("#mapster_wrap_7").ready(function () {
-                OvenOFFpress.click();
-                var mWrap7 = document.getElementById('mapster_wrap_7');
-                $("#mapster_wrap_6").ready(function () {
-                    powerSupplyON.click();
-                    $("#mapster_wrap_6").ready(function() {
-                        var mWrap6 = document.getElementById('mapster_wrap_6');
-                        powerSupplyOFF.click();
-                        TempCam.click();
-                        console.log('on/off cycle was performed');
-                        FirstTime=false;
-                    })
-                });
-            });
-        });
 
-    });
+window.addEventListener('load', (event) => {
+    console.log('page is fully loaded');
+    OvenONpress.click();
+    OvenOFFpress.click();
+    powerSupplyON.click();
+    powerSupplyOFF.click();
+    console.log('clicks were made to initialize mapster wraps'); 
+})
+
+window.addEventListener('loadeddata', (event)=>{
+    OvenONpress.click();
+    OvenOFFpress.click();
+    powerSupplyON.click();
+    powerSupplyOFF.click();
+    TempCam.click();
+    console.log('clicks were made to initialize surroundings');
+})
+
+    // var mWrap0 = document.getElementById('mapster_wrap_0');
+    // var mWrap1 = document.getElementById('mapster_wrap_1');
+    // var mWrap2 = document.getElementById('mapster_wrap_2');
+    // var mWrap3 = document.getElementById('mapster_wrap_3');
+    // var mWrap4 = document.getElementById('mapster_wrap_4');
+    // var mWrap5 = document.getElementById('mapster_wrap_5');
+    // var mWrap6 = document.getElementById('mapster_wrap_6');
+    // var mWrap7 = document.getElementById('mapster_wrap_7');
+    // var mWrap8 = document.getElementById('mapster_wrap_8');
     
-    var mWrap0 = document.getElementById('mapster_wrap_0');
-    var mWrap3 = document.getElementById('mapster_wrap_3');
-    var mWrap4 = document.getElementById('mapster_wrap_4');
-    var mWrap5 = document.getElementById('mapster_wrap_5');
-    var mWrap8 = document.getElementById('mapster_wrap_8');
-
-    
-
-
-
 
 //   var image = $('#themap');  <- need one of these for each map
 

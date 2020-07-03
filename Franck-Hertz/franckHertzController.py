@@ -12,7 +12,7 @@ visa_electrometer.write_termination = "\r\n"
 # visa_multimeter.read_termination = "\r\n"
 # visa_multimeter.write_termination = "\r\n"
 
-camera = ArduCamMultiCamera("Camera", 1)
+# camera = ArduCamMultiCamera("Camera", 1)
 
 socket_path = "/tmp/uv4l.socket"
 
@@ -41,7 +41,7 @@ electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
 
 
 exp = Experiment("FranckHertz")
-exp.add_device(camera)
+# exp.add_device(camera)
 exp.add_device(FHpdu)
 exp.add_device(oven)
 # exp.add_device(OvenPower)
