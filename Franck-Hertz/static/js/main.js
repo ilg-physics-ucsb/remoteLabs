@@ -60,20 +60,19 @@ $("document").ready(function () {
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7
     var intervalId
+    var mWrapList = ["#mapster_wrap_2", "#mapster_wrap_1", "#mapster_wrap_6", "#mapster_wrap_7"]
 
     var loadingModal = $("#loadingModal")
+
     loadingModal.on("shown.bs.modal", function(e){
         intervalId = setInterval(function() {
             for (mWrap of mWrapList) {
-                console.log("MWRAP")
-                console.log(mWrap)
-                console.log($(mWrap)[0])
                 if ($(mWrap).length == 0) {
-                    console.log("RUNNING BREAK")
-                    break
+                    return
                 }
             } 
-    
+            
+            //Run when all mwraps exist.
             mWrap1 = $("#mapster_wrap_1")[0]
             mWrap2 = $("#mapster_wrap_2")[0]
             mWrap6 = $("#mapster_wrap_6")[0]
@@ -87,14 +86,16 @@ $("document").ready(function () {
             powerSupplyOFF.click()
             TempCam.click()
             console.log("hiding modal")
+            //Hide Loading Screen
             loadingModal.modal("hide")
+            //Stop repeating check
             clearInterval(intervalId)
     
         }, 500)
     })
     loadingModal.modal('show')
 
-    var mWrapList = ["#mapster_wrap_2", "#mapster_wrap_1", "#mapster_wrap_6", "#mapster_wrap_7"]
+    
 
 
     //for multi-camera switching
