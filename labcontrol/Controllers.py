@@ -8,6 +8,7 @@ import RPi.GPIO as gpio
 import os
 import subprocess
 
+
 gpio.setmode(gpio.BCM)
 
 class BaseController(object):
@@ -307,7 +308,7 @@ class ArduCamMultiCamera(BaseController):
     def camera(self, param):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
-        os.system(self.camerai2c[param])
+        # os.system(self.camerai2c[param])
         gpio.output(self.channels, self.cameraDict[param])
     
     def camera_parser(self, params):

@@ -78,7 +78,6 @@ $("document").ready(function () {
             mWrap6 = $("#mapster_wrap_6")[0]
             mWrap7 = $("#mapster_wrap_7")[0]
     
-    
             // Do clicks here
             OvenONpress.click()
             OvenOFFpress.click()
@@ -118,7 +117,8 @@ $("document").ready(function () {
 
     TempCam.addEventListener('click', function() {
         // TEMP CHANGE
-        // dataChannel.send("Camera/camera/c");
+        dataChannel.send("Camera/camera/c");
+        //
         OvenLeft.style.display = "block";
         OvenRight.style.display = "block";
         TubeLeft.style.display = "none";
@@ -171,14 +171,14 @@ $("document").ready(function () {
 
     //for LiveFeed  
     // TEMP CHANGE
-    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
  
      function timeOutHandler(){
         //  TEMP CHANGE
-        //  mainCamSignal.hangup()
+         mainCamSignal.hangup()
          alert("Your session has timed out.")
      }
  
@@ -298,7 +298,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            // dataChannel.send("FHpdu/off/3");                //use this command with PDU
             }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
@@ -318,7 +318,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                 //use this command with PDU 
+            // dataChannel.send("FHpdu/on/3");                 //use this command with PDU 
             }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
@@ -334,7 +334,7 @@ $("document").ready(function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("FHpdu/off/4");                //use this command with PDU
+            // dataChannel.send("FHpdu/off/4");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -343,7 +343,7 @@ $("document").ready(function () {
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("FHpdu/on/4");                 //use this command with PDU
+            // dataChannel.send("FHpdu/on/4");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -361,7 +361,7 @@ $("document").ready(function () {
             if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            // dataChannel.send("FHpdu/off/1");                //use this command with PDU
             }
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
@@ -382,7 +382,7 @@ $("document").ready(function () {
             if(!FirstTimePSon){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("FHpdu/on/1");                //use this command with PDU
+            // dataChannel.send("FHpdu/on/1");                //use this command with PDU
             
             }   
             mWrap7.style.display = "block";                      
@@ -783,16 +783,16 @@ window.addEventListener('loadeddata', (event)=>{
 
 window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
-    // mainCamSignal.hangup();
+    mainCamSignal.hangup();
     // TEMP CHANGE
-    // dataChannel.close();
+    dataChannel.close();
 })
 
 
 
 
 
-//THIS SERVES HELP INTERPRET VCODEC CASE NUMBERS
+//THIS SERVES TO HELP INTERPRET VCODEC CASE NUMBERS
 // function select_remote_hw_vcodec() {
 // document.getElementById('remote_hw_vcodec').checked = true;
 // var vformat = document.getElementById('remote_vformat').value;
