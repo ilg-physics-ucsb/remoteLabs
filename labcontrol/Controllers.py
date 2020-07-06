@@ -7,7 +7,9 @@ from adafruit_motor import stepper
 import RPi.GPIO as gpio
 import os
 import subprocess
-
+import busio
+import board
+from adafruit_bus_device.i2c_device import I2CDevice
 
 gpio.setmode(gpio.BCM)
 
@@ -286,6 +288,11 @@ class ArduCamMultiCamera(BaseController):
         self.enable2 = 18
         self.channels = [self.selection, self.enable1, self.enable2]
         gpio.setup(self.channels, gpio.OUT)
+        self.address = 0x70
+        self.comm_port = busio.I2C(board.SCL, board.SCA)
+        self.i2c = I2CDevice(self.comm_port, self.address)
+
+
 
         self.cameraDict = {
             "a": (gpio.LOW, gpio.LOW, gpio.HIGH),
@@ -295,11 +302,18 @@ class ArduCamMultiCamera(BaseController):
             "off":(gpio.LOW, gpio.HIGH, gpio.HIGH)
         }
 
+        # self.camerai2c = {
+        #     'a': "i2cset -y 1 0x70 0x00 0x04",
+        #     'b': "i2cset -y 1 0x70 0x00 0x05",
+        #     'c': "i2cset -y 1 0x70 0x00 0x06",
+        #     'd': "i2cset -y 1 0x70 0x00 0x07",
+        # }
+
         self.camerai2c = {
-            'a': "i2cset -y 1 0x70 0x00 0x04",
-            'b': "i2cset -y 1 0x70 0x00 0x05",
-            'c': "i2cset -y 1 0x70 0x00 0x06",
-            'd': "i2cset -y 1 0x70 0x00 0x07",
+            'a': "04",
+            'b': "05",
+            'c': "06",
+            'd': "07",
         }
 
         # Set camera for A
@@ -309,6 +323,8 @@ class ArduCamMultiCamera(BaseController):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
         # os.system(self.camerai2c[param])
+        hexString = "00{0}".format(self.camerai2c[param])
+        self.i2c.write(bytearray.fromhex(hexString))
         gpio.output(self.channels, self.cameraDict[param])
     
     def camera_parser(self, params):
