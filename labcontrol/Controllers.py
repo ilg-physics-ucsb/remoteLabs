@@ -11,7 +11,7 @@ import busio
 import board
 from adafruit_bus_device.i2c_device import I2CDevice
 
-gpio.setmode(gpio.BCM)
+gpio.setmode(gpio.BOARD)
 
 class BaseController(object):
     
@@ -283,15 +283,25 @@ class ArduCamMultiCamera(BaseController):
         # Board Pin 11 = BCM Pin 17 = Enable 1
         # Board Pin 12 = BCM Pin 18 = Enable 2
         # See Arducam User Guide https://www.uctronics.com/download/Amazon/B0120.pdf
-        self.selection = 4
-        self.enable1 = 10
-        self.enable2 = 7
+        self.selection = 7
+        self.enable1 = 11
+        self.enable2 = 12
         self.channels = [self.selection, self.enable1, self.enable2]
         gpio.setup(self.channels, gpio.OUT)
         self.address = 0x70
         # self.comm_port = busio.I2C(board.SCL, board.SDA)
         # self.i2c = I2CDevice(self.comm_port, self.address)
 
+        gp.setup(15, gp.OUT)
+        gp.setup(16, gp.OUT)
+        gp.setup(21, gp.OUT)
+        gp.setup(22, gp.OUT)
+
+
+        gp.output(15, True)
+        gp.output(16, True)
+        gp.output(21, True)
+        gp.output(22, True)
 
 
         self.cameraDict = {
