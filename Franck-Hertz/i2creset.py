@@ -7,7 +7,7 @@ import time
 # import RPi.GPIO as gpio
 # gpio.setmode(gpio.BCM)
 
-# freqeuncy = 50000
+# frequency = 50000
 # clock_cycles = 16
 # delay = 1/(2*frequency)
 
@@ -30,21 +30,23 @@ import time
 
 import pigpio
 
+pi = pigpio.pi()
+
 freqeuncy = 50000
 clock_cycles = 16
 delay = 1/(2*frequency)
 
 # pigpio uses BCM by default
-pigpio.start()
-pigpio.set_mode(3, pigpio.OUTPUT)
-pigpio.write(3, 1)
+pi.start()
+pi.set_mode(3, pigpio.OUTPUT)
+pi.write(3, 1)
 
 for i in range(clock_cycles):
-    pigpio.write(3, 0)
+    pi.write(3, 0)
     time.sleep(delay)
-    pigpio.write(3, 1)
+    pi.write(3, 1)
     time.sleep(delay)
 
 # Modes can include: INPUT, OUTPUT, ALT0, ALT1, ALT2, ALT3, ALT4, ALT5
-pigpio.set_mode(3, pigpio.ALT0)
-pigpio.stop()
+pi.set_mode(3, pigpio.ALT0)
+pi.stop()
