@@ -147,6 +147,8 @@ ls /dev
 
 Then look for something i2c-11 or i2c-3. You should already have i2c-1 by default, so if that is the only one something went wrong.
 
+**NOTE:** In order for your new pins 16 & 18 to behave properly you will need to add a pull up resistor to each pin. That is, you will need a 1.8 kOhm resistor going from pin 16 to 3.3 V rail and another 1.8 kOhm resistor going from pin 18 to the 3.3 V rail.
+
 ---
 ### Installing Dependencies
 
