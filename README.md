@@ -113,6 +113,41 @@ You may want to change the Hostname of the raspberry pi so that you can identify
 Finally arrow down to "8 Update" and hit Enter. 
 
 ---
+### Adding I2C Bus
+Many of our labs are using the Arducam Raspberry Pi Multi Camera Adapter Module V2.2 and the Adafruit DC & Stepper Motor HAT for Raspberry Pi - Mini Kit. The problem with using both of those kits is that both use I2C and have a hardware address of 0x70. Thus they conflict. To solve this we need to configure an additional I2C bus on the GPIO headers. At the time of writing (July 2020) there is an [issue](https://github.com/raspberrypi/firmware/issues/1401) with the firmware that comes on the Raspberry Pi 4B preventing us from doing this. So before you can add the code you need to run the command.
+
+```bash
+sudo rpi-update
+```
+This will update the firmware to solve teh boot issue. Then you need to do the following
+
+```bash
+sudo nano /boot/config.txt
+```
+
+Go down to an area referencing Additional Overlays (however it can be anywhere in the file) and the the following line:
+
+```
+dtoverlay=i2c-gpio
+```
+
+This will create a new I2C bus out of physical pins 16 & 18 (BCM 23 & 24) where 23=SDA and 24=SCL lines. For us this made it on bus 11. You can specify other pins or which bus number to use if you would like. To do this look at the /boot/overlays/README file. Ctrl-F "i2c-gpio" for instructions. You now need to reboot for changes to take effect.
+
+```bash
+sudo reboot
+```
+
+**If something should go wrong:** If you can't boot then you need take out the SD card and look at the config.txt file on another computer. You can comment out the line you added with #. If that doesn't work either than something may have gone wrong with the rpi-update. In which case it is best just to reflash the SD Card and start again. You won't want to run rpi-update, but find the file in the issue listed above and replace it in place.
+
+Once rebooted check which bus was added to your pi by running
+
+```bash
+ls /dev
+```
+
+Then look for something i2c-11 or i2c-3. You should already have i2c-1 by default, so if that is the only one something went wrong.
+
+---
 ### Installing Dependencies
 
 The remote lab software needs some programs installed in order to run. 
