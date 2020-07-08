@@ -288,7 +288,7 @@ class ArduCamMultiCamera(BaseController):
         self.enable2 = 18
         self.channels = [self.selection, self.enable1, self.enable2]
         gpio.setup(self.channels, gpio.OUT)
-        self.address = 0x70
+        # self.address = 0x70
         # self.comm_port = busio.I2C(board.SCL, board.SDA)
         # self.i2c = I2CDevice(self.comm_port, self.address)
 
@@ -313,10 +313,10 @@ class ArduCamMultiCamera(BaseController):
         }
 
         self.camerai2c = {
-            'a': "i2cset -y 1 0x70 0x00 0x04",
-            'b': "i2cset -y 1 0x70 0x00 0x05",
-            'c': "i2cset -y 1 0x70 0x00 0x06",
-            'd': "i2cset -y 1 0x70 0x00 0x07",
+            'a': "i2cset -y 11 0x70 0x00 0x04",
+            'b': "i2cset -y 11 0x70 0x00 0x05",
+            'c': "i2cset -y 11 0x70 0x00 0x06",
+            'd': "i2cset -y 11 0x70 0x00 0x07",
         }
 
         # self.camerai2c = {
