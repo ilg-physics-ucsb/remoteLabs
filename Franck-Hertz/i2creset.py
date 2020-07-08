@@ -32,7 +32,7 @@ import pigpio
 
 pi = pigpio.pi()
 
-freqeuncy = 50000
+frequency = 50000
 clock_cycles = 16
 delay = 1/(2*frequency)
 
