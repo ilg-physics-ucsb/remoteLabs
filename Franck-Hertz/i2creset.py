@@ -37,7 +37,7 @@ clock_cycles = 16
 delay = 1/(2*frequency)
 
 # pigpio uses BCM by default
-pi.start()
+# pi.start()
 pi.set_mode(3, pigpio.OUTPUT)
 pi.write(3, 1)
 
@@ -49,4 +49,4 @@ for i in range(clock_cycles):
 
 # Modes can include: INPUT, OUTPUT, ALT0, ALT1, ALT2, ALT3, ALT4, ALT5
 pi.set_mode(3, pigpio.ALT0)
-pi.stop()
+# pi.stop()
