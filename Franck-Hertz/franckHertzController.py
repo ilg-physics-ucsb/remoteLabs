@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet
+from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera
 import visa
 import pickle
 
@@ -12,6 +12,9 @@ visa_electrometer.write_termination = "\r\n"
 # visa_multimeter.read_termination = "\r\n"
 # visa_multimeter.write_termination = "\r\n"
 
+camera = ArduCamMultiCamera("Camera", 1)
+# camera.camera("b")
+
 socket_path = "/tmp/uv4l.socket"
 
 #this uses the broadcom pin numbering system
@@ -20,11 +23,11 @@ socket_path = "/tmp/uv4l.socket"
 # Va_pins = [5,6,12,13]
 # Vr_pins = [5,6,12,13]
 
-    
-Va = StepperI2C("Va", 1,bounds=(0,2100))
-Vr = StepperI2C("Vr", 2,bounds=(0,2100))
-filament = StepperI2C("Filament", 3,bounds=(0,2100))
-oven = StepperI2C("Oven", 4,bounds=(0,2100))
+filament = StepperI2C("Filament", 1,bounds=(0,2100), style="DOUBLE")  
+oven = StepperI2C("Oven", 2,bounds=(0,2100), style="DOUBLE")
+Va = StepperI2C("Va", 3,bounds=(0,2100))
+Vr = StepperI2C("Vr", 4,bounds=(0,2100))
+
 
 
 
@@ -39,6 +42,7 @@ electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
 
 
 exp = Experiment("FranckHertz")
+exp.add_device(camera)
 exp.add_device(FHpdu)
 exp.add_device(oven)
 # exp.add_device(OvenPower)

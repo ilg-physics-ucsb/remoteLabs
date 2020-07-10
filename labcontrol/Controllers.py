@@ -7,6 +7,9 @@ from adafruit_motor import stepper
 import RPi.GPIO as gpio
 import os
 import subprocess
+import busio
+import board
+from adafruit_bus_device.i2c_device import I2CDevice
 
 gpio.setmode(gpio.BCM)
 
@@ -153,7 +156,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE"):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -168,9 +171,15 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition = 0
         self.device = self.terminal_options[terminal]
         self.delay = delay
-        self.style = stepper.SINGLE
         self.lowerBound = bounds[0]
         self.upperBound = bounds[1]
+        self.styles = {
+            "SINGLE": stepper.SINGLE,
+            "DOUBLE": stepper.DOUBLE,
+            "MICROSTEP": stepper.MICROSTEP
+        }
+        # self.style = self.styles[style]
+        self.style = stepper.DOUBLE
 
         self.state = {"position": self.currentPosition}
     
@@ -279,6 +288,21 @@ class ArduCamMultiCamera(BaseController):
         self.enable2 = 18
         self.channels = [self.selection, self.enable1, self.enable2]
         gpio.setup(self.channels, gpio.OUT)
+        # self.address = 0x70
+        # self.comm_port = busio.I2C(board.SCL, board.SDA)
+        # self.i2c = I2CDevice(self.comm_port, self.address)
+
+        # gpio.setup(15, gpio.OUT)
+        # gpio.setup(16, gpio.OUT)
+        # gpio.setup(21, gpio.OUT)
+        # gpio.setup(22, gpio.OUT)
+
+
+        # gpio.output(15, True)
+        # gpio.output(16, True)
+        # gpio.output(21, True)
+        # gpio.output(22, True)
+
 
         self.cameraDict = {
             "a": (gpio.LOW, gpio.LOW, gpio.HIGH),
@@ -289,11 +313,18 @@ class ArduCamMultiCamera(BaseController):
         }
 
         self.camerai2c = {
-            'a': "i2cset -y 1 0x70 0x00 0x04",
-            'b': "i2cset -y 1 0x70 0x00 0x05",
-            'c': "i2cset -y 1 0x70 0x00 0x06",
-            'd': "i2cset -y 1 0x70 0x00 0x07",
+            'a': "i2cset -y 11 0x70 0x00 0x04",
+            'b': "i2cset -y 11 0x70 0x00 0x05",
+            'c': "i2cset -y 11 0x70 0x00 0x06",
+            'd': "i2cset -y 11 0x70 0x00 0x07",
         }
+
+        # self.camerai2c = {
+        #     'a': "04",
+        #     'b': "05",
+        #     'c': "06",
+        #     'd': "07",
+        # }
 
         # Set camera for A
         self.camera("a")
@@ -302,6 +333,8 @@ class ArduCamMultiCamera(BaseController):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
         os.system(self.camerai2c[param])
+        hexString = "00{0}".format(self.camerai2c[param])
+        # self.i2c.write(bytearray.fromhex(hexString))
         gpio.output(self.channels, self.cameraDict[param])
     
     def camera_parser(self, params):
