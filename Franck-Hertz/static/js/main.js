@@ -56,6 +56,7 @@ $("document").ready(function () {
     var FirstTimeOvenOff = true;
     var FirstTimePSon = true;
     var FirstTimePSoff = true;
+    var FirstTimeTempCam = true;
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7
@@ -116,9 +117,13 @@ $("document").ready(function () {
     var MetersBottom = document.getElementById("MetersBottom");
 
     TempCam.addEventListener('click', function() {
-        // TEMP CHANGE
-        dataChannel.send("Camera/camera/c");
-        //
+        if(FirstTimeTempCam){
+            console.log("Temp cam was clicked for the first time");
+            FirstTimeTempCam=false;
+        }
+        else{
+            dataChannel.send("Camera/camera/a");
+        }
         OvenLeft.style.display = "block";
         OvenRight.style.display = "block";
         TubeLeft.style.display = "none";
@@ -127,10 +132,11 @@ $("document").ready(function () {
         PotsRight.style.display = "none";
         PotsBottom.style.display = "none";
         MetersBottom.style.display = "none";
+        
     })
 
     TubeCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/d");
+        dataChannel.send("Camera/camera/b");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "block";
@@ -142,7 +148,7 @@ $("document").ready(function () {
     })
 
     PotsCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/a");
+        dataChannel.send("Camera/camera/c");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "none";
@@ -154,7 +160,7 @@ $("document").ready(function () {
     })
 
     DataCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+        dataChannel.send("Camera/camera/d");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
         TubeLeft.style.display = "none";
@@ -298,7 +304,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            // dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            dataChannel.send("FHpdu/off/1");                //use this command with PDU
             }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
@@ -318,7 +324,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            // dataChannel.send("FHpdu/on/3");                 //use this command with PDU 
+            dataChannel.send("FHpdu/on/1");                 //use this command with PDU 
             }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
@@ -334,7 +340,7 @@ $("document").ready(function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            // dataChannel.send("FHpdu/off/4");                //use this command with PDU
+            dataChannel.send("FHpdu/off/2");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -343,7 +349,7 @@ $("document").ready(function () {
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            // dataChannel.send("FHpdu/on/4");                 //use this command with PDU
+            dataChannel.send("FHpdu/on/2");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -361,7 +367,7 @@ $("document").ready(function () {
             if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            // dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            dataChannel.send("FHpdu/off/3");                //use this command with PDU
             }
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
@@ -382,7 +388,7 @@ $("document").ready(function () {
             if(!FirstTimePSon){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            // dataChannel.send("FHpdu/on/1");                //use this command with PDU
+            dataChannel.send("FHpdu/on/3");                //use this command with PDU
             
             }   
             mWrap7.style.display = "block";                      
@@ -459,11 +465,11 @@ $("document").ready(function () {
     power6514Button.addEventListener('click', function(){
         console.log("Electrometer was switched");
         if(ElectrometerState){
-            dataChannel.send("FHpdu/off/2");
+            dataChannel.send("FHpdu/off/4");
             ElectrometerState=false;
                      }
         else{
-            dataChannel.send("FHpdu/on/2");
+            dataChannel.send("FHpdu/on/4");
             ElectrometerState=true;
         }
     })
@@ -716,25 +722,6 @@ $("document").ready(function () {
   
 //   console.log('mapster calls have been made');
   
-
-
-window.addEventListener('load', (event) => {
-    console.log('page is fully loaded');
-    OvenONpress.click();
-    OvenOFFpress.click();
-    powerSupplyON.click();
-    powerSupplyOFF.click();
-    console.log('clicks were made to initialize mapster wraps'); 
-})
-
-window.addEventListener('loadeddata', (event)=>{
-    OvenONpress.click();
-    OvenOFFpress.click();
-    powerSupplyON.click();
-    powerSupplyOFF.click();
-    TempCam.click();
-    console.log('clicks were made to initialize surroundings');
-})
 
     // var mWrap0 = document.getElementById('mapster_wrap_0');
     // var mWrap1 = document.getElementById('mapster_wrap_1');
