@@ -32,7 +32,7 @@ echo "" > ssh
 
 You are almost ready to plug in the SD Card.  The final step is to enable ``headless'' operation of the Pi (i.e., without its own keyboard/mouse/monitor) by giving the Pi access to your WiFi when it boots. To do that you need to add one more file to the root directory of the SD card.  This file must be named [wpa_supplicant.conf](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md) 
 
-You can make the file in any simple text editor on your computer and then drag and drop it onto the SD card. The contents of the file should look like the following:
+On Windows, you can make the file in any simple text editor on your computer and then drag and drop it onto the SD card. On Mac, there can be issues when copying and pasting to a text editor and then moving it. It is best to type it out long form. The contents of the file should look like the following:
 ```bash
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
@@ -119,7 +119,7 @@ Many of our labs are using the Arducam Raspberry Pi Multi Camera Adapter Module 
 ```bash
 sudo rpi-update
 ```
-This will update the firmware to solve teh boot issue. Then you need to do the following
+This will update the firmware to solve the boot issue. Then you need to do the following
 
 ```bash
 sudo nano /boot/config.txt
