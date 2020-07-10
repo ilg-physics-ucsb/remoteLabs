@@ -19,7 +19,7 @@ Before you put the SD card in the Pi, you will need put an empty file named ssh 
 In terminal `cd` to the SD card. On OSX that is usually under /Volumes/boot. On Linux I think it is in /mnt/boot (but I don't know for sure), then run the command
 
 ```bash
-touch ssh
+sudo touch ssh
 ```
 
 On Windows open a command prompt and type `<letter>:` Replace <letter> by whatever capiatl letter windows assigned to the SD Card. (Typically D or E). Then run the command
