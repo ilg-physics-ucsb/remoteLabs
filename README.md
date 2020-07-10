@@ -157,7 +157,7 @@ The remote lab software needs some programs installed in order to run.
 Start by updating the package manager and upgrading all the elements therein by running the commands
 ```bash
 sudo apt update
-sudo apt upgrade
+sudo apt full-upgrade
 ```
 
 Once that is done, perform the UV4L ARM Installation [https://www.linux-projects.org/uv4l/installation/].
