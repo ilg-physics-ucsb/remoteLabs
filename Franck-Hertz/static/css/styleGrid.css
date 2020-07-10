@@ -130,17 +130,8 @@
     top:-100%;
     overflow: visible;
 }
-#vThermometer {
-    transform: rotate(0deg);
-}
-#vTube {
-    transform: rotate(180deg);
-}
-#vVoltageControls {
-    transform: rotate(180deg);
-}
-#vReadout {
-    transform: rotate(0deg);
+#v{
+    width: 100%;
 }
 .variable{
     font-family: 'Times New Roman', Times, serif;

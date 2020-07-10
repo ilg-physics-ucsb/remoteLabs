@@ -34,6 +34,8 @@
   <script src="static/js/signalling.js"></script>
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="static/js/popper.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
   <script src="static/js/webflow.js" type="text/javascript"></script>
   <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
   <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
@@ -140,11 +142,13 @@
       <div id="RightSideImages" class="column w-col w-col-2">
         <div id="OvenRight" >
           <div class="click-note">(click to toggle oven power)</div>
-          <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLE">
-          <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" usemap="#image-map-oTOGGLE">
-          <map name="image-map-oTOGGLE">
-            <area id="ovenOFF" title="OFF" href="#" coords="69,15,259,192" shape="rect">
+          <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLEon">
+          <map name="image-map-oTOGGLEon">
             <area id="ovenON" title="ON" href="#" coords="260,15,450,192" shape="rect">
+          </map>
+          <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" usemap="#image-map-oTOGGLEoff">
+          <map name="image-map-oTOGGLEoff">
+            <area id="ovenOFF" title="OFF" href="#" coords="69,15,259,192" shape="rect">
           </map>
         </div>
         <div id="TubeRight" >
@@ -207,11 +211,14 @@
       </div>
       <div id="MetersBottom" class="column w-row" >
         <div id="MetersLeft" class="column w-col w-col-6">
-          <img id="powerSupplySwitch" src="static/images/PowerSupplyOFF.jpg" usemap="#image-map-psTOGGLE">
-          <map name="image-map-psTOGGLE">
+          <img id="powerSupplySwitchOFF" src="static/images/PowerSupplyOFF.jpg" usemap="#image-map-psTOGGLEon">
+          <map name="image-map-psTOGGLEon">
             <area id="psON" title="ON" href="#" coords="73,78,132,117" shape="rect">
+           </map>
+          <img id="powerSupplySwitchON" src="static/images/PowerSupplyON.jpg" usemap="#image-map-psTOGGLEoff">
+          <map name="image-map-psTOGGLEoff">
             <area id="psOFF" title="OFF" href="#" coords="73,118,132,156" shape="rect">
-        </map>
+          </map>
         </div>
         <div id="MetersRight" class="column w-col w-col-6">
           <img id="electrometer" src="static/images/Keithley6514ElectrometerTXTcropped.jpg" usemap="#image-map-6514"> 
@@ -249,6 +256,19 @@
           </map>
         </div>
       </div>
+    </div>
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="loadingModalLabel">Page Loading</h5>
+                </div>
+                <div class="modal-body">
+                        <div class="loader"></div>
+                        <p>Please wait while the page finishes loading.</p>
+                </div>
+            </div>
+        </div>
     </div>
  </body>
 </html>
