@@ -178,8 +178,8 @@ class StepperI2C(MotorKit, BaseController):
             "DOUBLE": stepper.DOUBLE,
             "MICROSTEP": stepper.MICROSTEP
         }
-        # self.style = self.styles[style]
-        self.style = stepper.DOUBLE
+        self.style = self.styles[style]
+        # self.style = stepper.DOUBLE
 
         self.state = {"position": self.currentPosition}
     
