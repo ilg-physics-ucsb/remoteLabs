@@ -333,7 +333,7 @@ class ArduCamMultiCamera(BaseController):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
         os.system(self.camerai2c[param])
-        hexString = "00{0}".format(self.camerai2c[param])
+        # hexString = "00{0}".format(self.camerai2c[param])
         # self.i2c.write(bytearray.fromhex(hexString))
         gpio.output(self.channels, self.cameraDict[param])
     
