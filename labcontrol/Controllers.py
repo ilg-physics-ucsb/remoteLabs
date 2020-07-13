@@ -288,20 +288,7 @@ class ArduCamMultiCamera(BaseController):
         self.enable2 = 18
         self.channels = [self.selection, self.enable1, self.enable2]
         gpio.setup(self.channels, gpio.OUT)
-        # self.address = 0x70
-        # self.comm_port = busio.I2C(board.SCL, board.SDA)
-        # self.i2c = I2CDevice(self.comm_port, self.address)
 
-        # gpio.setup(15, gpio.OUT)
-        # gpio.setup(16, gpio.OUT)
-        # gpio.setup(21, gpio.OUT)
-        # gpio.setup(22, gpio.OUT)
-
-
-        # gpio.output(15, True)
-        # gpio.output(16, True)
-        # gpio.output(21, True)
-        # gpio.output(22, True)
 
 
         self.cameraDict = {
@@ -319,13 +306,6 @@ class ArduCamMultiCamera(BaseController):
             'd': "i2cset -y 11 0x70 0x00 0x07",
         }
 
-        # self.camerai2c = {
-        #     'a': "04",
-        #     'b': "05",
-        #     'c': "06",
-        #     'd': "07",
-        # }
-
         # Set camera for A
         self.camera("a")
 
@@ -333,8 +313,6 @@ class ArduCamMultiCamera(BaseController):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
         os.system(self.camerai2c[param])
-        # hexString = "00{0}".format(self.camerai2c[param])
-        # self.i2c.write(bytearray.fromhex(hexString))
         gpio.output(self.channels, self.cameraDict[param])
     
     def camera_parser(self, params):

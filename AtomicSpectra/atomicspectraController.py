@@ -23,10 +23,10 @@ socket_path = "/tmp/uv4l.socket"
 # Va_pins = [5,6,12,13]
 # Vr_pins = [5,6,12,13]
 
-filament = StepperI2C("Filament", 1,bounds=(0,2100), style="DOUBLE")  
-oven = StepperI2C("Oven", 2,bounds=(0,2100), style="DOUBLE")
-Va = StepperI2C("Va", 3,bounds=(0,2100))
-Vr = StepperI2C("Vr", 4,bounds=(0,2100))
+filament = StepperI2C("Filament", 1,bounds=(-2100,2100), style="DOUBLE")  
+oven = StepperI2C("Oven", 2,bounds=(-2100,2100), style="DOUBLE")
+Va = StepperI2C("Va", 3,bounds=(-2100,2100))
+Vr = StepperI2C("Vr", 4,bounds=(-2100,2100))
 
 
 
