@@ -99,10 +99,10 @@ $("document").ready(function () {
 
 
     //for multi-camera switching
-    var TempCam = document.getElementById("TempCam");
-    var TubeCam = document.getElementById("TubeCam");
-    var PotsCam = document.getElementById("PotsCam");
-    var DataCam = document.getElementById("DataCam");
+    var OverviewCam = document.getElementById("OverviewCam");
+    var ArmCam = document.getElementById("EyepieceCam");
+    var V1Cam = document.getElementById("V1Cam");
+    var V2Cam = document.getElementById("V2Cam");
     // var OffCam = document.getElementById("OffCam");
 
     //for div display switching
@@ -116,7 +116,7 @@ $("document").ready(function () {
     var PotsBottom = document.getElementById("ControlsBottom");
     var MetersBottom = document.getElementById("MetersBottom");
 
-    TempCam.addEventListener('click', function() {
+    OverviewCam.addEventListener('click', function() {
         if(FirstTimeTempCam){
             console.log("Temp cam was clicked for the first time");
             FirstTimeTempCam=false;
@@ -135,7 +135,7 @@ $("document").ready(function () {
         
     })
 
-    TubeCam.addEventListener('click', function() {
+    ArmCam.addEventListener('click', function() {
         dataChannel.send("Camera/camera/b");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
@@ -147,7 +147,7 @@ $("document").ready(function () {
         MetersBottom.style.display = "none";
     })
 
-    PotsCam.addEventListener('click', function() {
+    V1Cam.addEventListener('click', function() {
         dataChannel.send("Camera/camera/c");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
@@ -159,7 +159,7 @@ $("document").ready(function () {
         MetersBottom.style.display = "none";
     })
 
-    DataCam.addEventListener('click', function() {
+    V2Cam.addEventListener('click', function() {
         dataChannel.send("Camera/camera/d");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
@@ -210,38 +210,6 @@ $("document").ready(function () {
              display = document.querySelector('#time');
          startTimer(fortyfiveMinutes, display);
      }
- 
-    // for Keithley 6514 Electrometer
-    var shift6514Button = document.getElementById('Shift6514');
-    var local6514Button = document.getElementById('Local6514');
-    var power6514Button = document.getElementById('Power6514');
-    var voltageButton = document.getElementById('Voltage');
-    var currentButton = document.getElementById('Current');
-    var resistanceButton = document.getElementById('Resistance');
-    var chargeButton = document.getElementById('Charge');
-    var externalFeedbackButton = document.getElementById('ExternalFeedback');
-    var zeroCheckButton = document.getElementById('ZeroCheck');
-    var zeroCorrectButton = document.getElementById('ZeroCorrect');
-    var groundButton = document.getElementById('Ground');
-    var averageButton = document.getElementById('Average');
-    var medianButton = document.getElementById('Median');
-    var relativeButton = document.getElementById('Relative');
-    var limitButton = document.getElementById('Limit');
-    var digits6514Button = document.getElementById('Digits6514');
-    var rate6514Button = document.getElementById('Rate6514');
-    var cursorLeft6514Button = document.getElementById('CursorLeft6514');
-    var cursorRight6514Button = document.getElementById('CursorRight6514');
-    var store6514Button = document.getElementById('Store6514');
-    var recall6514Button = document.getElementById('Recall6514');
-    var delayButton = document.getElementById('Delay');
-    var dampingButton = document.getElementById('Damping');
-    var haltButton = document.getElementById('Halt');
-    var trigger6514Button = document.getElementById('Trigger6514');
-    var exit6514Button = document.getElementById('Exit6514');
-    var enter6514Button = document.getElementById('Enter6514');
-    var upRange6514Button = document.getElementById('UpRange6514');
-    var downRange6514Button = document.getElementById('DownRange6514');
-    var autoRange6514Button = document.getElementById('AutoRange6514');
  
    
     //for Oven Variac Power
@@ -442,189 +410,6 @@ $("document").ready(function () {
    raiseVr.addEventListener('click', function() {
        console.log("Retarding voltage was turned up");dataChannel.send("Vr/move/"+VrSteps);})
    //END Retarding Voltage Buttons
- 
-    var ElectrometerState=false;
-
-    //BEGIN Keithley 6514 Electrometer Buttons
-    shift6514Button.addEventListener('click', function(event) {
-        //Prevent it from reloading
-        event.stopPropagation();
-        //Run our command
-        dataChannel.send("Electrometer/press/SYST:KEY 1");
-        //Ensure it doesn't reload
-        return false
-    })
-    local6514Button.addEventListener('click', function(event) {
-        //Prevent it from reloading
-        event.stopPropagation();
-        //Run our command
-        dataChannel.send("Electrometer/press/SYST:LOC");
-        //Ensure it doesn't reload
-        return false
-    })
-    power6514Button.addEventListener('click', function(){
-        console.log("Electrometer was switched");
-        if(ElectrometerState){
-            dataChannel.send("FHpdu/off/4");
-            ElectrometerState=false;
-                     }
-        else{
-            dataChannel.send("FHpdu/on/4");
-            ElectrometerState=true;
-        }
-    })
-    // power6514Button.addEventListener('click', function(){
-    //     console.log("Electrometer was switched");
-    //     if(ElectrometerState){
-    //         dataChannel.send("ElectrometerPower/setRelay/OFF");
-    //         ElectrometerState=false;
-    //                  }
-    //     else{
-    //         dataChannel.send("ElectrometerPower/setRelay/ON");
-    //         ElectrometerState=true;
-    //     }
-    // })
-    voltageButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 2");
-        return false
-    })
-    currentButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 3");
-        return false
-    })
-    resistanceButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 4");
-        return false
-    })
-    chargeButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 5");
-        return false
-    })
-    externalFeedbackButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 6");
-        return false
-    })
-    zeroCheckButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 7");
-        return false
-    })
-    zeroCorrectButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 8");
-        return false
-    })
-    groundButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 16");
-        return false
-    })
-    averageButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 18");
-        return false
-    })
-    medianButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 19");
-        return false
-    })
-    relativeButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 20");
-        return false
-    })
-    limitButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 21");
-        return false
-    })
-    digits6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 22");
-        return false
-    })
-    rate6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 23");
-        return false
-    })
-    cursorLeft6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 24");
-        return false
-    })
-    cursorRight6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 15");
-        return false
-    })
-    store6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 26");
-        return false
-    })
-    recall6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 27");
-        return false
-    })
-    delayButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 28");
-        return false
-    })
-    dampingButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 29");
-        return false
-    })
-    haltButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 30");
-        // dataChannel.send("Electrometer/press/SYST:ABOR");
-        return false
-    })
-    trigger6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 31");
-        // dataChannel.send("Electrometer/press/TRIG:");
-        return false
-    })
-    exit6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 32");
-        return false
-    })
-    enter6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 14");
-        return false
-    })
-    upRange6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 11");
-        return false
-    })
-    downRange6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 13");
-        return false
-    })
-    autoRange6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 12");
-        return false
-    })
-    // abort.addEventListener('click', function() {
-    //     dataChannel.send("Electrometer/press/ABOR")
-    // })
- //END Keithley 6514 Electrometer Buttons
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
