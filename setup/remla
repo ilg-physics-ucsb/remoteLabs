@@ -59,7 +59,8 @@ def run(args):
         if args.foreground:
             os.system("python3 " + controllerFile)
         else:
-            os.system("nohup ./" + controllerFile)
+            controller_path = os.join.path(".", rl_path, lab, controllerFile )
+            os.system("nohup " + controller_path)
     
     else:
         print('No lab has been setup yet. Run "remla setup <lab>"')
