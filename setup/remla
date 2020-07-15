@@ -82,7 +82,7 @@ parser_setup.add_argument("-c", '--configfile', default=config_name)
 parser_run = subparsers.add_parser("run")
 parser_run.set_defaults(func=run)
 parser_run.add_argument('-f', "--foreground", action="store_true")
-parser_run.add_argument('-r, "--reset', action="store_true")
+parser_run.add_argument('-r', "--reset", action="store_true")
 
 args = parser.parse_args()
 args.func(args)
