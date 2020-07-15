@@ -23,6 +23,7 @@ def update_json(setting, value):
 def status(args):
     if settings["status"] == "None":
         print('No lab has been setup yet. Run "remla setup <lab>"')
+        return
     print("Current Lab is Setup to Run {0}".format(settings["status"]))
 
 def setup(args):
@@ -62,6 +63,7 @@ def run(args):
     
     else:
         print('No lab has been setup yet. Run "remla setup <lab>"')
+
 
 settings = read_json()
 parser = argparse.ArgumentParser(description="Tool to manage remote labs", prog="remla")
