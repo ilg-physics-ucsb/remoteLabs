@@ -8,9 +8,9 @@ sudo apt install uv4l uv4l-uvc uv4l-server uv4l-webrtc uv4l-raspicam uv4l-raspic
 pip3 install RPistepper pyvisa pyvisa-py adafruit-circuitpython-motorkit python-tplink-smarthome dlipower
 #git clone https://github.com/ilg-physics-ucsb/remoteLabs.git
 #sudo mv ~/remoteLabs/setup/uv4l-uvc.conf /etc/uv4l
-sudo mv ~/remoteLabs/setup/uv4l-raspicam.conf /etc/uv4l
+sudo mv /home/pi/remoteLabs/setup/uv4l-raspicam.conf /etc/uv4l
 sudo echo "# prepend the local file containing modules to the path that PYTHON searches for imports
 export PYTHONPATH="/home/pi/remoteLabs":$PYTHONPATH" >> ~/.bashrc
-source ~/.bashrc
-sudo mv ~/remoteLabs/setup/remla.py /usr/bin
+source /home/pi/.bashrc
+sudo mv /home/pi/remoteLabs/setup/remla.py /usr/bin
 sudo chmod +x /usr/bin/remla.py

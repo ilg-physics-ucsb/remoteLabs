@@ -4,7 +4,7 @@ import os, sys
 import argparse
 import json
 
-rl_path = os.path.expanduser(os.path.join("~", "remoteLabs"))
+rl_path = os.path.expanduser(os.path.join("home", "pi", "remoteLabs"))
 setup_path = os.path.join(rl_path, "setup")
 settings_path = os.path.join(setup_path, ".settings.json"))
 settings = {}
