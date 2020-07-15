@@ -10,7 +10,7 @@ pip3 install RPistepper pyvisa pyvisa-py adafruit-circuitpython-motorkit python-
 #sudo mv ~/remoteLabs/setup/uv4l-uvc.conf /etc/uv4l
 sudo mv /home/pi/remoteLabs/setup/uv4l-raspicam.conf /etc/uv4l
 sudo echo "# prepend the local file containing modules to the path that PYTHON searches for imports
-export PYTHONPATH=\"/home/pi/remoteLabs\":$PYTHONPATH" >> ~/.bashrc
+export PYTHONPATH=\"/home/pi/remoteLabs\":$PYTHONPATH" >> /home/pi/.bashrc
 source /home/pi/.bashrc
-sudo mv /home/pi/remoteLabs/setup/remla.py /usr/bin
-sudo chmod +x /usr/bin/remla.py
+sudo mv /home/pi/remoteLabs/setup/remla /usr/bin
+sudo chmod +x /usr/bin/remla
