@@ -40,7 +40,7 @@ def setup(args):
         f.write(config_contents)
     
     update_json("status", args.lab)
-    update_json("status", args.configfile)
+    update_json("configfile", args.configfile)
     
 
 def run(args):
