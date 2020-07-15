@@ -13,11 +13,11 @@ uv4l_path = os.path.join("etc", "uv4l", config_name)
 
 def read_json():
     with open(settings_path, "r") as f:
-        settings = json.load(f)
+        return json.load(f)
 
 def update_json(setting, value):
     settings[settings] = value
-    with open(settings_path "w") as f:
+    with open(settings_path, "w") as f:
         json.dump(settings, f)
 
 def status(args):
@@ -26,8 +26,8 @@ def status(args):
     print("Current Lab is Setup to Run {0}".format(settings["status"]))
 
 def setup(args):
-    if (! os.path.isdir(os.path.join(rl_path, args.lab))):
-        print("ERROR: " + arg.lab + " does not exist in the remoteLabs directory.")
+    if not os.path.isdir(os.path.join(rl_path, args.lab)):
+        print("ERROR: " + args.lab + " does not exist in the remoteLabs directory.")
         return
     with open(os.path.join(setup_path, args.configfile), "r") as f:
         config_contents = f.read()
@@ -63,7 +63,7 @@ def run(args):
     else:
         print('No lab has been setup yet. Run "remla setup <lab>"')
 
-
+settings = read_json()
 parser = argparse.ArgumentParser(description="Tool to manage remote labs", prog="remla")
 
 subparsers = parser.add_subparsers(title="commands")
