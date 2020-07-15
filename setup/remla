@@ -83,4 +83,5 @@ parser_run.add_argument('-f', "--foreground", action="store_true")
 parser_run.add_argument('-r, "--reset', action="store_true")
 
 args = parser.parse_args()
+args.func(args)
 
