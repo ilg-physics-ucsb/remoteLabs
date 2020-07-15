@@ -6,7 +6,7 @@ import json
 
 rl_path = os.path.expanduser(os.path.join("home", "pi", "remoteLabs"))
 setup_path = os.path.join(rl_path, "setup")
-settings_path = os.path.join(setup_path, ".settings.json"))
+settings_path = os.path.join(setup_path, ".settings.json")
 settings = {}
 config_name = "uv4l_raspicam.conf"
 uv4l_path = os.path.join("etc", "uv4l", config_name)
