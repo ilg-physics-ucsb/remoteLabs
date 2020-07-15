@@ -64,7 +64,7 @@ def run(args):
             os.system("python3 " + os.path.join(rl_path, lab, controllerFile))
         else:
             controller_path = os.path.join(".", rl_path, lab, controllerFile)
-            os.system("nohup " + controller_path " &")
+            os.system("nohup " + controller_path + " &")
     
     else:
         print('No lab has been setup yet. Run "remla setup <lab>"')
