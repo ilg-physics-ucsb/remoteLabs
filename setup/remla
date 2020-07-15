@@ -4,7 +4,7 @@ import os, sys
 import argparse
 import json
 
-rl_path = os.path.expanduser(os.path.join("home", "pi", "remoteLabs"))
+rl_path = os.path.abspath(os.path.expanduser(os.path.join("home", "pi", "remoteLabs")))
 setup_path = os.path.join(rl_path, "setup")
 settings_path = os.path.join(setup_path, ".settings.json")
 settings = {}
@@ -35,7 +35,7 @@ def setup(args):
     config_contents.replace("<rootPath>", os.path.join(rl_path, args.lab))
     config_contents.replace("<port>", args.port)
 
-    with open(os.path.join("etc", "uv4l", args.configfile), "w") as f:
+    with open(os.path.abspath(os.abspath(os.path.join("etc", "uv4l", args.configfile))), "w") as f:
         f.write(config_contents)
     
     update_json("status", args.lab)
