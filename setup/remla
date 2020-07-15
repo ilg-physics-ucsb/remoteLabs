@@ -38,7 +38,10 @@ def setup(args):
 
     with open(os.path.join("/etc", "uv4l", args.configfile), "w") as f:
         f.write(config_contents)
-    
+    controller_path = os.path.join(".", rl_path, lab, lab+"Controller.py" ) 
+    controller_path_reset = os.path.join(".", rl_path, lab, lab+"ControllerReset.py" ) 
+    os.system("sudo chmod +x " + controller_path)
+    os.system("sudo chmod +x " + controller_path_reset)
     update_json("status", args.lab)
     update_json("configfile", args.configfile)
     
