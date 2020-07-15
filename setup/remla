@@ -36,7 +36,7 @@ def setup(args):
     config_contents.replace("<rootPath>", os.path.join(rl_path, args.lab))
     config_contents.replace("<port>", args.port)
 
-    with open(os.path.abspath(os.abspath(os.path.join("etc", "uv4l", args.configfile))), "w") as f:
+    with open(os.path.join("/etc", "uv4l", args.configfile), "w") as f:
         f.write(config_contents)
     
     update_json("status", args.lab)
