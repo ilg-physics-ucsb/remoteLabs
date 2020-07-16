@@ -17,7 +17,7 @@ class NoDeviceError(Exception):
 
 class Experiment(object):
 
-    def __init__(self, name):
+    def __init__(self, name, root_directory="remoteLabs"):
         self.devices = {}
         self.allStates = {}
         self.socket_path = ''
@@ -26,7 +26,10 @@ class Experiment(object):
         self.client_address = None
         self.name = name
         self.initializedStates = False
-        logging.basicConfig(filename=self.name+".log", level=logging.INFO, format="%(levelname)s - %(asctime)s - %(filename)s - %(funcName)s \r\n %(message)s \r\n")
+        self.directory = os.path.join("/home", "pi", root_directory, name)
+        self.log_name = os.path.join(self.directory, self.name+".log")
+        self.json_file = os.path.join(self.directory, self.name+".json")
+        logging.basicConfig(filename=self.log_name, level=logging.INFO, format="%(levelname)s - %(asctime)s - %(filename)s - %(funcName)s \r\n %(message)s \r\n")
         logging.info("""
         ##############################################################
         ####                Starting New Log                      ####
@@ -40,7 +43,7 @@ class Experiment(object):
 
     def recallState(self):
         logging.info("Recalling State")
-        with open(self.name + ".json", "r") as f:
+        with open(self.json_file, "r") as f:
             self.allStates = json.load(f)
         for name, device in self.devices.items():
             device.setState(self.allStates[name])
@@ -50,7 +53,7 @@ class Experiment(object):
         logging.info("Getting Controller States")
         for name, device in self.devices.items():
             self.allStates[name] = device.getState()
-        with open(self.name + ".json", "w") as f:
+        with open(self.json_file, "w") as f:
             json.dump(self.allStates, f)
         self.initializedStates = True
         
@@ -109,7 +112,7 @@ class Experiment(object):
             raise NoDeviceError(device_name)
         self.devices[device_name].cmd_handler(command, params)
         self.allStates[device_name] = self.devices[device_name].getState()
-        with open(self.name + ".json", "w") as f:
+        with open(self.json_file, "w") as f:
             json.dump(self.allStates, f)        
 
     def exit_handler(self, signal_received, frame):
