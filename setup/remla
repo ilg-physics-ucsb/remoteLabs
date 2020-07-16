@@ -9,7 +9,9 @@ rl_path = os.path.join("/home", "pi", "remoteLabs")
 setup_path = os.path.join(rl_path, "setup")
 settings_path = os.path.join(setup_path, ".settings.json")
 settings = {}
-config_name = "uv4l-raspicam.conf"
+configs = {
+    "raspicam": "uv4l-raspicam.conf",
+    "uvc"L "uv4l-uvc.conf"} 
 uv4l_path = os.path.join("etc", "uv4l", config_name)
 
 def read_json():
@@ -26,7 +28,7 @@ def status(args):
         print('No lab has been setup yet. Run "remla setup <lab>"')
         return
     if args.verbose:
-        print("Current Lab is setup to run {0} on port {1}.".format(settings["status"], settings["port"]))
+        print("Current Lab is setup to run {0} on port {1} with {2} driver.".format(settings["status"], settings["port"], settings["driver"]))
     else:
         print("Current Lab is Setup to Run {0}".format(settings["status"]))
 
@@ -34,9 +36,9 @@ def setup(args):
     if not os.path.isdir(os.path.join(rl_path, args.lab)):
         print("ERROR: " + args.lab + " does not exist in the remoteLabs directory.")
         return
-    with open(os.path.join(setup_path, args.configfile), "r") as f:
-        config_contents = f.read()
     
+    with open(os.path.join(setup_path, configs[args.driver]), "r") as f:
+        config_contents = f.read()
     
     config_contents = config_contents.replace("<rootPath>", os.path.join(rl_path, args.lab))
     config_contents = config_contents.replace("<port>", args.port)
@@ -48,14 +50,15 @@ def setup(args):
     os.system("sudo chmod +x " + controller_path)
     os.system("sudo chmod +x " + controller_path_reset)
     update_json("status", args.lab)
-    update_json("configfile", args.configfile)
+    update_json("driver", args.driver)
     update_json("port", args.port)
     
 
 def run(args):
     if settings["status"] != "None":
         lab = settings["status"]
-        configfile = settings["configfile"]
+        driver = settings["driver"]
+        configfile = configs[driver]
         if args.reset:
             controllerFile = lab + "ControllerReset.py"
         else:
@@ -63,7 +66,7 @@ def run(args):
 
         os.system("sudo killall uv4l")
         time.sleep(1)
-        uv4l_cmd = "sudo uv4l --config-file=/etc/uv4l/" +configfile + " -d raspicam --driver-config-file=/etc/uv4l/" + configfile + " --enable-server yes"
+        uv4l_cmd = "sudo uv4l --config-file=/etc/uv4l/" +configfile + " -d " + driver + " --driver-config-file=/etc/uv4l/" + configfile + " --enable-server yes"
         os.system(uv4l_cmd)
 
         if args.foreground:
@@ -95,7 +98,7 @@ parser_setup = subparsers.add_parser("setup")
 parser_setup.set_defaults(func=setup)
 parser_setup.add_argument('lab')
 parser_setup.add_argument('-p', '--port', default="80")
-parser_setup.add_argument("-c", '--configfile', default=config_name)
+parser_setup.add_argument("-d", '--driver', default="raspicam")
 
 parser_run = subparsers.add_parser("run")
 parser_run.set_defaults(func=run)
