@@ -11,7 +11,7 @@ settings_path = os.path.join(setup_path, ".settings.json")
 settings = {}
 configs = {
     "raspicam": "uv4l-raspicam.conf",
-    "uvc"L "uv4l-uvc.conf"} 
+    "uvc": "uv4l-uvc.conf"} 
 uv4l_path = os.path.join("etc", "uv4l", config_name)
 
 def read_json():
