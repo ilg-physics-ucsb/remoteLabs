@@ -42,14 +42,14 @@ def setup(args):
     except KeyError:
         print("The only drivers that are allowed are raspicam and uvc")
         return
-        
+
     with open(os.path.join(setup_path, configs[args.driver]), "r") as f:
         config_contents = f.read()
     
     config_contents = config_contents.replace("<rootPath>", os.path.join(rl_path, args.lab))
     config_contents = config_contents.replace("<port>", args.port)
 
-    with open(os.path.join("/etc", "uv4l", args.configfile), "w") as f:
+    with open(os.path.join("/etc", "uv4l", configs[args.driver]), "w") as f:
         f.write(config_contents)
     controller_path = os.path.join(".", rl_path, args.lab, args.lab+"Controller.py" ) 
     controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
