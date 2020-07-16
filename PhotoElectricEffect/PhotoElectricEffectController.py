@@ -40,7 +40,7 @@ multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 # multimeterPower = Plug("multimeterPower","192.168.0.20")
 
 
-exp = Experiment("PhotoElectric")
+exp = Experiment("PhotoElectricEffect")
 exp.add_device(PEpdu)
 exp.add_device(potentiometer)
 exp.add_device(filterWheel)

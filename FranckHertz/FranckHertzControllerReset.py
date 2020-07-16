@@ -53,14 +53,6 @@ exp.add_device(Va)
 exp.add_device(Vr)
 exp.add_device(electrometer)
 exp.set_socket_path(socket_path)
-
-
-while True:
-    response = input("Has the apparatus been serviced and reset to the initial state since last shutdown? (y/N)")
-    if response.lower() == "n" or response.lower() == "":
-        exp.recallState()
-        exp.setup()
-    elif response.lower() == "y":
-        exp.setup()
+exp.setup()
         
     
