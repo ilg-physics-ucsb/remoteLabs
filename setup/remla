@@ -12,7 +12,7 @@ settings = {}
 configs = {
     "raspicam": "uv4l-raspicam.conf",
     "uvc": "uv4l-uvc.conf"} 
-uv4l_path = os.path.join("etc", "uv4l", config_name)
+
 
 def read_json():
     with open(settings_path, "r") as f:
