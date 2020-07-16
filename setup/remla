@@ -30,13 +30,19 @@ def status(args):
     if args.verbose:
         print("Current Lab is setup to run {0} on port {1} with {2} driver.".format(settings["status"], settings["port"], settings["driver"]))
     else:
-        print("Current Lab is Setup to Run {0}".format(settings["status"]))
+        print("Current Lab is setup to run {0}".format(settings["status"]))
 
 def setup(args):
     if not os.path.isdir(os.path.join(rl_path, args.lab)):
         print("ERROR: " + args.lab + " does not exist in the remoteLabs directory.")
         return
     
+    try:
+        configs[args.driver]
+    except KeyError:
+        print("The only drivers that are allowed are raspicam and uvc")
+        return
+        
     with open(os.path.join(setup_path, configs[args.driver]), "r") as f:
         config_contents = f.read()
     
