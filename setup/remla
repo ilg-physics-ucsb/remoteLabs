@@ -19,7 +19,6 @@ def read_json():
         return json.load(f)
 
 def update_json(settings):
-    settings[setting] = value
     with open(settings_path, "w") as f:
         json.dump(settings, f)
 
