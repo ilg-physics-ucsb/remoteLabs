@@ -1,0 +1,122 @@
+#!/usr/bin/python3
+
+import os, sys
+import argparse
+import json
+import time
+
+rl_path = os.path.join("/home", "pi", "remoteLabs")
+setup_path = os.path.join(rl_path, "setup")
+settings_path = os.path.join(setup_path, ".settings.json")
+settings = {}
+configs = {
+    "raspicam": "uv4l-raspicam.conf",
+    "uvc": "uv4l-uvc.conf"} 
+
+
+def read_json():
+    with open(settings_path, "r") as f:
+        return json.load(f)
+
+def update_json(settings):
+    with open(settings_path, "w") as f:
+        json.dump(settings, f)
+
+def status(args):
+    if settings["status"] == "None":
+        print('No lab has been setup yet. Run "remla setup <lab>"')
+        return
+    if args.verbose:
+        print("Current Lab is setup to run {0} on port {1} with {2} driver.".format(settings["status"], settings["port"], settings["driver"]))
+    else:
+        print("Current Lab is setup to run {0}".format(settings["status"]))
+
+def setup(args):
+    if not os.path.isdir(os.path.join(rl_path, args.lab)):
+        print("ERROR: " + args.lab + " does not exist in the remoteLabs directory.")
+        return
+    
+    try:
+        configs[args.driver]
+    except KeyError:
+        print("The only drivers that are allowed are raspicam and uvc")
+        return
+
+    with open(os.path.join(setup_path, configs[args.driver]), "r") as f:
+        config_contents = f.read()
+    
+    config_contents = config_contents.replace("<rootPath>", os.path.join(rl_path, args.lab))
+    config_contents = config_contents.replace("<port>", args.port)
+
+    with open(os.path.join("/etc", "uv4l", configs[args.driver]), "w") as f:
+        f.write(config_contents)
+    controller_path = os.path.join(".", rl_path, args.lab, args.lab+"Controller.py" ) 
+    controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
+    os.system("sudo chmod +x " + controller_path)
+    os.system("sudo chmod +x " + controller_path_reset)
+    settings["status"] = args.lab
+    settings["driver"] = args.driver
+    settings["port"] = args.port
+    update_json(settings)
+    
+
+def run(args):
+    if settings["status"] != "None":
+        lab = settings["status"]
+        driver = settings["driver"]
+        configfile = configs[driver]
+        if args.reset:
+            controllerFile = lab + "ControllerReset.py"
+        else:
+            controllerFile = lab + "Controller.py"
+
+        os.system("sudo killall uv4l")
+        time.sleep(1)
+        uv4l_cmd = "sudo uv4l --config-file=/etc/uv4l/" +configfile + " -d " + driver + " --driver-config-file=/etc/uv4l/" + configfile + " --enable-server yes"
+        os.system(uv4l_cmd)
+
+        if args.foreground:
+            os.system("python3 " + os.path.join(rl_path, lab, controllerFile))
+        else:
+            controller_path = os.path.join(".", rl_path, lab, controllerFile)
+            os.system("nohup " + controller_path + " &")
+    
+    else:
+        print('No lab has been setup yet. Run "remla setup <lab>"')
+
+
+def stop(args):
+    os.system("sudo pkill uv4l")
+    time.sleep(1)
+    os.system("sudo pkill python3")
+
+
+settings = read_json()
+parser = argparse.ArgumentParser(description="Tool to manage remote labs", prog="remla")
+
+subparsers = parser.add_subparsers(title="commands")
+
+parser_status = subparsers.add_parser("status")
+parser_status.set_defaults(func=status)
+parser_status.add_argument("-v", "--verbose", action="store_true")
+
+parser_setup = subparsers.add_parser("setup")
+parser_setup.set_defaults(func=setup)
+parser_setup.add_argument('lab')
+parser_setup.add_argument('-p', '--port', default="80")
+parser_setup.add_argument("-d", '--driver', default="raspicam")
+
+parser_run = subparsers.add_parser("run")
+parser_run.set_defaults(func=run)
+parser_run.add_argument('-f', "--foreground", action="store_true")
+parser_run.add_argument('-r', "--reset", action="store_true")
+
+parser_stop = subparsers.add_parser("stop")
+parser_stop.set_defaults(func=stop)
+
+args = parser.parse_args()
+try:
+    args.func(args)
+except AttributeError:
+    pass
+
