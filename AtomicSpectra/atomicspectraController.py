@@ -23,16 +23,16 @@ socket_path = "/tmp/uv4l.socket"
 # Va_pins = [5,6,12,13]
 # Vr_pins = [5,6,12,13]
 
-filament = StepperI2C("Filament", 1,bounds=(-2100,2100), style="DOUBLE")  
-oven = StepperI2C("Oven", 2,bounds=(-2100,2100), style="DOUBLE")
-Va = StepperI2C("Va", 3,bounds=(-2100,2100))
-Vr = StepperI2C("Vr", 4,bounds=(-2100,2100))
+slit = StepperI2C("Slit", 1,bounds=(-2100,2100), style="DOUBLE")  
+grating = StepperI2C("Grating", 2,bounds=(-2100,2100), style="DOUBLE")
+arm = StepperI2C("Arm", 3,bounds=(-2100,2100))
+carousel = StepperI2C("Carousel", 4,bounds=(-2100,2100))
 
 
 
 
-# FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "raspberry", 60)
-# FHpdu.login()
+ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "raspberry", 60)
+ASDIpdu.login()
 # OvenPower = Plug("OvenPower", "192.168.0.18")
 # FilamentPower = Plug("FilamentPower", "192.168.0.19")
 # PowerSupplyPower = Plug("PowerSupplyPower", "192.168.0.03")
@@ -43,14 +43,14 @@ Vr = StepperI2C("Vr", 4,bounds=(-2100,2100))
 
 exp = Experiment("FranckHertz")
 exp.add_device(camera)
-# exp.add_device(FHpdu)
-exp.add_device(oven)
+exp.add_device(ASDIpdu)
+exp.add_device(grating)
 # exp.add_device(OvenPower)
-exp.add_device(filament)
+exp.add_device(slit)
 # exp.add_device(FilamentPower)
 # exp.add_device(PowerSupplyPower)
-exp.add_device(Va)
-exp.add_device(Vr)
+exp.add_device(arm)
+exp.add_device(carousel)
 # exp.add_device(electrometer)
 exp.set_socket_path(socket_path)
 
