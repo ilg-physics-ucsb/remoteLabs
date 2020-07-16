@@ -25,7 +25,7 @@ ASDIpdu.login()
 # ElectrometerPower = Plug("ElectrometerPower","192.168.0.20")
 
 
-exp = Experiment("FranckHertz")
+exp = Experiment("AtomicSpectra")
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(grating)
@@ -37,15 +37,6 @@ exp.add_device(carousel)
 # exp.add_device(FilamentPower)
 # exp.add_device(PowerSupplyPower)
 exp.set_socket_path(socket_path)
-
-
-
-while True:
-    response = input("Has the apparatus been serviced and reset to the initial state since last shutdown? (y/N)")
-    if response.lower() == "n" or response.lower() == "":
-        exp.recallState()
-        exp.setup()
-    elif response.lower() == "y":
-        exp.setup()
+exp.setup()
         
     
