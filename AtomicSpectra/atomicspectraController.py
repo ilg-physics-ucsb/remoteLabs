@@ -33,9 +33,9 @@ exp.add_device(screen)
 exp.add_device(slit)
 exp.add_device(arm)
 exp.add_device(carousel)
+# exp.add_device(OvenPower)
 # exp.add_device(FilamentPower)
 # exp.add_device(PowerSupplyPower)
-# exp.add_device(OvenPower)
 exp.set_socket_path(socket_path)
 
 
