@@ -2,7 +2,7 @@
 sudo apt update
 sudo apt full-upgrade -y
 curl http://www.linux-projects.org/listing/uv4l_repo/lpkey.asc | sudo apt-key add -
-if grep -Fxq "deb http://www.linux-projects.org/listing/uv4l_repo/raspbian/stretch stretch main"  /etc/aptsources.list
+if grep -Fxq "deb http://www.linux-projects.org/listing/uv4l_repo/raspbian/stretch stretch main"  /etc/apt/sources.list
 then
     echo "UV4L Repo already found"
 else
