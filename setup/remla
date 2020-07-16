@@ -77,7 +77,7 @@ def run(args):
 
 
 def stop(args):
-    os.system("sudo kill uv4l")
+    os.system("sudo pkill uv4l")
     time.sleep(1)
     os.system("sudo pkill python3")
 
