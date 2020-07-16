@@ -242,7 +242,7 @@ class Keithley6514Electrometer(BaseController):
         # self.inst.write("SYST:LOC")
 
     def press_parser(self, params):
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
+        print(">>", params)
         return params[0]
         
         
@@ -275,8 +275,6 @@ class ArduCamMultiCamera(BaseController):
         self.device_type = "measurement"
         self.experiment = None
         self.state = {}
-
-
 
         # Define Pins
         # Board Pin 7 = BCM Pin 4 = Selection
@@ -333,7 +331,23 @@ class ArduCamMultiCamera(BaseController):
         if len(params) != 2:
             raise ArgumentNumberError(len(params), 2, "imageMod")
         return params
-   
+
+class ElectronicScreen(BaseController):
+
+    def __init__(self, pin):
+        self.pin = pin
+        gpio.setup(self.pin, gpio.OUTPUT)
+    
+    def on(self, params):
+        gpio.output(self.pin, gpio.HIGH)
+    
+    def off(self, params):
+        gpio.output(self.pin, gpio.LOW)
+
+    def reset(self):
+        gpio.output(self.pin, gpio.LOW)
+
+
 class CommandError(Exception):
 
     def __init__(self, command, *args):
@@ -371,3 +385,5 @@ class ArgumentError(Exception):
             return "ArgumentError, Device, {0}, can't process command argument {1} by command {2}.".format(self.device_name, self.received, self.command)
         else:
             return "ArgumentError, Argument {0}, is not one of the allowed commands, {1}, for device, {2}, running command {3}.".format(self. received, self.allwoed, self.device_name, self.command)
+
+
