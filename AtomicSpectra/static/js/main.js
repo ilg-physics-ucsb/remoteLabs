@@ -52,6 +52,8 @@ $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
+
+    // Do we need these still?
     var FirstTimeOvenOn = true;
     var FirstTimeOvenOff = true;
     var FirstTimePSon = true;
@@ -272,7 +274,9 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            
+            // This will control the carousel
+            dataChannel.send("ASDIpdu/off/6");                //use this command with PDU
             }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
@@ -292,7 +296,8 @@ $("document").ready(function () {
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("FHpdu/on/1");                 //use this command with PDU 
+            // This will control the carousel
+            dataChannel.send("ASDIpdu/on/6");                 //use this command with PDU 
             }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
@@ -308,7 +313,8 @@ $("document").ready(function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("FHpdu/off/2");                //use this command with PDU
+            // Commented line below - 20200716
+            // dataChannel.send("FHpdu/off/2");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -317,7 +323,8 @@ $("document").ready(function () {
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("FHpdu/on/2");                 //use this command with PDU
+            // Commented line below - 20200716
+            // dataChannel.send("FHpdu/on/2");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -335,7 +342,8 @@ $("document").ready(function () {
             if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            // Commented line below - 20200716
+            // dataChannel.send("FHpdu/off/3");                //use this command with PDU
             }
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
@@ -356,7 +364,8 @@ $("document").ready(function () {
             if(!FirstTimePSon){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                //use this command with PDU
+            // Commented line below - 20200716
+            // dataChannel.send("FHpdu/on/3");                //use this command with PDU
             
             }   
             mWrap7.style.display = "block";                      
@@ -371,45 +380,70 @@ $("document").ready(function () {
     })
     // END Power Switches
 
-    //BEGIN Oven Variac Buttons 
+    //BEGIN Grating buttons
     threeDegOvenV.addEventListener('click', function(){ovenSteps=2;})
     thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=21;})
     
     lowerOvenV.addEventListener('click', function() {
-        console.log("Oven Variac was turned down"); 
-        dataChannel.send("Oven/move/"+(-ovenSteps));})
+        console.log("Oven Variac was turned down");
+        // Changed for AS 
+        dataChannel.send("Grating/move/"+(-ovenSteps));
+    })
     raiseOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned up");
-        dataChannel.send("Oven/move/"+ovenSteps);})
-    //END Oven Variac Buttons
-   //BEGIN Filament Variac Buttons 
+        // Changed for AS 
+        dataChannel.send("Grating/move/"+ovenSteps);
+    })
+
+    //END  Grating Buttons
+
+
+   //BEGIN Carousel Buttons 
    threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
    thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=21;})
    
    lowerFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned down"); dataChannel.send("Filament/move/"+(-filamentSteps));})
+       // Changed for AS 
+       console.log("Filament Variac was turned down"); 
+       dataChannel.send("Carousel/move/"+(-filamentSteps));
+    })
    raiseFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned up");dataChannel.send("Filament/move/"+filamentSteps);})
-   //END Filament Variac Buttons
-   //BEGIN Accelerating Voltage Buttons 
+       // Changed for AS 
+       console.log("Filament Variac was turned up");
+       dataChannel.send("Carousel/move/"+filamentSteps);
+    })
+   //END Carousel Buttons
+
+   //BEGIN Arm Buttons 
    threeDegVa.addEventListener('click', function(){VaSteps=2;})
    thirtySixDegVa.addEventListener('click', function(){VaSteps=21;})
    threeSixtyDegVa.addEventListener('click', function(){VaSteps=210;})
 
    lowerVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned down"); dataChannel.send("Va/move/"+(-VaSteps));})
+       // Changed for AS 
+       console.log("Accelerating voltage was turned down");
+       dataChannel.send("Arm/move/"+(-VaSteps));
+    })
    raiseVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned up");dataChannel.send("Va/move/"+VaSteps);})
-   //END Accelerating Voltage Buttons
-   //BEGIN Retarding Voltage Buttons 
+       // Changed for AS 
+       console.log("Accelerating voltage was turned up");
+       dataChannel.send("Arm/move/"+VaSteps);
+    })
+   //END Arm Buttons
+
+   //BEGIN Slit Buttons 
    threeDegVr.addEventListener('click', function(){VrSteps=2;})
    thirtySixDegVr.addEventListener('click', function(){VrSteps=21;})
    
    lowerVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned down"); dataChannel.send("Vr/move/"+(-VrSteps));})
+       console.log("Retarding voltage was turned down");
+       dataChannel.send("Slit/move/"+(-VrSteps));
+    })
    raiseVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned up");dataChannel.send("Vr/move/"+VrSteps);})
-   //END Retarding Voltage Buttons
+       console.log("Retarding voltage was turned up");
+       dataChannel.send("Slit/move/"+VrSteps);
+    })
+   //END Slit Buttons
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
@@ -505,51 +539,6 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
   
-//   console.log('mapster calls have been made');
-  
-
-    // var mWrap0 = document.getElementById('mapster_wrap_0');
-    // var mWrap1 = document.getElementById('mapster_wrap_1');
-    // var mWrap2 = document.getElementById('mapster_wrap_2');
-    // var mWrap3 = document.getElementById('mapster_wrap_3');
-    // var mWrap4 = document.getElementById('mapster_wrap_4');
-    // var mWrap5 = document.getElementById('mapster_wrap_5');
-    // var mWrap6 = document.getElementById('mapster_wrap_6');
-    // var mWrap7 = document.getElementById('mapster_wrap_7');
-    // var mWrap8 = document.getElementById('mapster_wrap_8');
-    
-
-//   var image = $('#themap');  <- need one of these for each map
-
-  
-//   var resizing,
-//       body= $(body),
-//       win=$(window),
-//       diffW=win.width() - image.width(),
-//       lastw=win.innerWidth(),
-//       lasth=win.innerHeight();
-  
-//   var resize = function() {
-//       var win= $(window),
-//           width=win.width(), height=win.height();
-//       // only try to resize every 200 ms 
-//       if (resizing) {
-//           return;
-//       }
-//       if (lastw !== width || lasth !== height) {
-//           resizing=true;
-//           image.mapster('resize',width-diffW,0,200);     
-//           lastw=width;
-//           lasth=height;
-//           setTimeout(function() {
-//               resizing=false;
-//               resize();
-//           },200);
-//       } else {
-  
-//       }
-//   };
-//   $(window).bind('resize',resize);
 });
 
 

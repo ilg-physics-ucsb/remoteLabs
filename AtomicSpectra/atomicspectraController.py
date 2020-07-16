@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera
+from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera, ElectronicScreen
 import visa
 import pickle
 
@@ -9,13 +9,10 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 
-slit = StepperI2C("Slit", 1,bounds=(-2100,2100), style="DOUBLE")  
-grating = StepperI2C("Grating", 2,bounds=(-2100,2100), style="DOUBLE")
+slit = StepperI2C("Slit", 1,bounds=(-2100,2100))  
+grating = StepperI2C("Grating", 2,bounds=(-2100,2100))
 arm = StepperI2C("Arm", 3,bounds=(-2100,2100))
 carousel = StepperI2C("Carousel", 4,bounds=(-2100,2100))
-
-screen = ElectronicScreen
-
 
 
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60)
@@ -32,14 +29,15 @@ exp = Experiment("FranckHertz")
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(grating)
-# exp.add_device(OvenPower)
+exp.add_device(screen)
 exp.add_device(slit)
-# exp.add_device(FilamentPower)
-# exp.add_device(PowerSupplyPower)
 exp.add_device(arm)
 exp.add_device(carousel)
-# exp.add_device(electrometer)
+# exp.add_device(FilamentPower)
+# exp.add_device(PowerSupplyPower)
+# exp.add_device(OvenPower)
 exp.set_socket_path(socket_path)
+
 
 
 while True:
