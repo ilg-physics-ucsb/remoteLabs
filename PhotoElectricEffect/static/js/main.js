@@ -226,14 +226,14 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Ambient light was switched");
         if(ambientState){
             // dataChannel.send("ambientLight/state/OFF");
-            dataChannel.send("PEpdu/off/5")
+            dataChannel.send("PEpdu/off/4")
             ambientState=false;
             ambientTOGGLE.title="Click here to turn ON";
             lightSwitch.style.transform='rotate(0deg)';
                      }
         else{
             // dataChannel.send("ambientLight/state/ON");
-            dataChannel.send("PEpdu/on/5");
+            dataChannel.send("PEpdu/on/4");
             ambientState=true;
             ambientTOGGLE.title="Click here to turn OFF";
             lightSwitch.style.transform='rotate(180deg)';
@@ -242,13 +242,13 @@ window.addEventListener('DOMContentLoaded', function () {
     HgNeTOGGLE.addEventListener('click', function(){
         console.log("HgNe lamp was switched");
         if(HgNeState){
-            dataChannel.send("PEpdu/off/6");
+            dataChannel.send("PEpdu/off/3");
             HgNeState=false;
             HgNeTOGGLE.title="Click here to turn ON";
             toggleSwitch.style.transform='scaleY(1)';
                      }
         else{
-            dataChannel.send("PEpdu/on/6");
+            dataChannel.send("PEpdu/on/3");
             HgNeState=true;
             HgNeTOGGLE.title="Click here to turn OFF";
             toggleSwitch.style.transform='scaleY(-1)';
