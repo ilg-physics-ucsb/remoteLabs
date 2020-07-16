@@ -3,6 +3,7 @@
 import os, sys
 import argparse
 import json
+import time
 
 rl_path = os.path.join("/home", "pi", "remoteLabs")
 setup_path = os.path.join(rl_path, "setup")
@@ -24,7 +25,10 @@ def status(args):
     if settings["status"] == "None":
         print('No lab has been setup yet. Run "remla setup <lab>"')
         return
-    print("Current Lab is Setup to Run {0}".format(settings["status"]))
+    if args.verbose:
+        print("Current Lab is setup to run {0} on port {1}.".format(settings["status"], settings["port"]))
+    else:
+        print("Current Lab is Setup to Run {0}".format(settings["status"]))
 
 def setup(args):
     if not os.path.isdir(os.path.join(rl_path, args.lab)):
@@ -45,6 +49,7 @@ def setup(args):
     os.system("sudo chmod +x " + controller_path_reset)
     update_json("status", args.lab)
     update_json("configfile", args.configfile)
+    update_json("port", args.port)
     
 
 def run(args):
@@ -57,6 +62,7 @@ def run(args):
             controllerFile = lab + "Controller.py"
 
         os.system("sudo killall uv4l")
+        time.sleep(1)
         uv4l_cmd = "sudo uv4l --config-file=/etc/uv4l/" +configfile + " -d raspicam --driver-config-file=/etc/uv4l/" + configfile + " --enable-server yes"
         os.system(uv4l_cmd)
 
@@ -70,6 +76,12 @@ def run(args):
         print('No lab has been setup yet. Run "remla setup <lab>"')
 
 
+def stop(args):
+    os.system("sudo kill uv4l")
+    time.sleep(1)
+    os.system("sudo pkill python3")
+
+
 settings = read_json()
 parser = argparse.ArgumentParser(description="Tool to manage remote labs", prog="remla")
 
@@ -77,6 +89,7 @@ subparsers = parser.add_subparsers(title="commands")
 
 parser_status = subparsers.add_parser("status")
 parser_status.set_defaults(func=status)
+parser_status.add_argument("-v", "--verbose", action="store_true")
 
 parser_setup = subparsers.add_parser("setup")
 parser_setup.set_defaults(func=setup)
@@ -89,6 +102,12 @@ parser_run.set_defaults(func=run)
 parser_run.add_argument('-f', "--foreground", action="store_true")
 parser_run.add_argument('-r', "--reset", action="store_true")
 
+parser_stop = subparsers.add_parser("stop")
+parser_stop.set_defaults(func=stop)
+
 args = parser.parse_args()
-args.func(args)
+try:
+    args.func(args)
+except AttributeError:
+    pass
 
