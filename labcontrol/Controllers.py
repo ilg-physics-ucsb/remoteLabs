@@ -178,8 +178,8 @@ class StepperI2C(MotorKit, BaseController):
             "DOUBLE": stepper.DOUBLE,
             "MICROSTEP": stepper.MICROSTEP
         }
-        # self.style = self.styles[style]
-        self.style = stepper.DOUBLE
+        self.style = self.styles[style]
+        # self.style = stepper.DOUBLE
 
         self.state = {"position": self.currentPosition}
     
@@ -242,7 +242,7 @@ class Keithley6514Electrometer(BaseController):
         # self.inst.write("SYST:LOC")
 
     def press_parser(self, params):
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", params)
+        print(">>", params)
         return params[0]
         
         
@@ -276,8 +276,6 @@ class ArduCamMultiCamera(BaseController):
         self.experiment = None
         self.state = {}
 
-
-
         # Define Pins
         # Board Pin 7 = BCM Pin 4 = Selection
         # Board Pin 11 = BCM Pin 17 = Enable 1
@@ -288,20 +286,7 @@ class ArduCamMultiCamera(BaseController):
         self.enable2 = 18
         self.channels = [self.selection, self.enable1, self.enable2]
         gpio.setup(self.channels, gpio.OUT)
-        # self.address = 0x70
-        # self.comm_port = busio.I2C(board.SCL, board.SDA)
-        # self.i2c = I2CDevice(self.comm_port, self.address)
 
-        # gpio.setup(15, gpio.OUT)
-        # gpio.setup(16, gpio.OUT)
-        # gpio.setup(21, gpio.OUT)
-        # gpio.setup(22, gpio.OUT)
-
-
-        # gpio.output(15, True)
-        # gpio.output(16, True)
-        # gpio.output(21, True)
-        # gpio.output(22, True)
 
 
         self.cameraDict = {
@@ -355,7 +340,23 @@ class ArduCamMultiCamera(BaseController):
         if len(params) != 2:
             raise ArgumentNumberError(len(params), 2, "imageMod")
         return params
-   
+
+class ElectronicScreen(BaseController):
+
+    def __init__(self, pin):
+        self.pin = pin
+        gpio.setup(self.pin, gpio.OUTPUT)
+    
+    def on(self, params):
+        gpio.output(self.pin, gpio.HIGH)
+    
+    def off(self, params):
+        gpio.output(self.pin, gpio.LOW)
+
+    def reset(self):
+        gpio.output(self.pin, gpio.LOW)
+
+
 class CommandError(Exception):
 
     def __init__(self, command, *args):
@@ -393,3 +394,5 @@ class ArgumentError(Exception):
             return "ArgumentError, Device, {0}, can't process command argument {1} by command {2}.".format(self.device_name, self.received, self.command)
         else:
             return "ArgumentError, Argument {0}, is not one of the allowed commands, {1}, for device, {2}, running command {3}.".format(self. received, self.allwoed, self.device_name, self.command)
+
+
