@@ -4,11 +4,11 @@ import visa
 import pickle
 
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB1::INSTR', baud_rate=57600)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=57600)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
-visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=19200) #not sure if USB# is unique 2004234
+visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB1::INSTR', baud_rate=19200) #not sure if USB# is unique 2004234
 visa_multimeter.read_termination = "\r\n"
 visa_multimeter.write_termination = "\r\n"
 
