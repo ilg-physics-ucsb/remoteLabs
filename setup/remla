@@ -18,7 +18,7 @@ def read_json():
     with open(settings_path, "r") as f:
         return json.load(f)
 
-def update_json(setting, value):
+def update_json(settings):
     settings[setting] = value
     with open(settings_path, "w") as f:
         json.dump(settings, f)
@@ -49,9 +49,10 @@ def setup(args):
     controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
     os.system("sudo chmod +x " + controller_path)
     os.system("sudo chmod +x " + controller_path_reset)
-    update_json("status", args.lab)
-    update_json("driver", args.driver)
-    update_json("port", args.port)
+    settings["status"] = args.lab
+    settings["driver"] = args.driver
+    settings["port"] = args.port
+    update_json(settings)
     
 
 def run(args):
