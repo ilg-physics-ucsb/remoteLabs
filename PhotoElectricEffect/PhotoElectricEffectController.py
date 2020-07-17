@@ -4,7 +4,7 @@ import visa
 import pickle
 
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=57600)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=19200)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
@@ -28,7 +28,7 @@ potentiometer = StepperI2C("Pot", 2,bounds=(0,2100))
 
 filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
 
-PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "raspberry", 2)
+PEpdu = PDUOutlet("PEpdu", "photoelecpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb5", 2)
 PEpdu.login()
 # ambientLight = Plug("ambientLight", "192.168.0.3")
 # HgNeLamp = Plug("HgNeLamp", "192.168.0.18")
