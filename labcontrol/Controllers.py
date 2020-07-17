@@ -239,7 +239,8 @@ class Keithley6514Electrometer(BaseController):
     def press(self, params):
         self.inst.write("SYST:REM")
         self.inst.write(params)
-        # self.inst.write("SYST:LOC")
+        if params != "SYST:KEY 1":
+            self.inst.write("SYST:LOC")
 
     def press_parser(self, params):
         print(">>", params)
