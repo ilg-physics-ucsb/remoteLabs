@@ -4,7 +4,7 @@ import visa
 import pickle
 
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=57600)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=19200)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
@@ -31,7 +31,7 @@ Vr = StepperI2C("Vr", 4,bounds=(0,2100))
 
 
 
-FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "raspberry", 60)
+FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60)
 FHpdu.login()
 # OvenPower = Plug("OvenPower", "192.168.0.18")
 # FilamentPower = Plug("FilamentPower", "192.168.0.19")
