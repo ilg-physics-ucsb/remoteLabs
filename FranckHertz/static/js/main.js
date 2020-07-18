@@ -425,8 +425,8 @@ $("document").ready(function () {
    //END Filament Variac Buttons
    //BEGIN Accelerating Voltage Buttons 
    threeDegVa.addEventListener('click', function(){VaSteps=2;})
-   thirtySixDegVa.addEventListener('click', function(){VaSteps=21;})
-   threeSixtyDegVa.addEventListener('click', function(){VaSteps=210;})
+   thirtySixDegVa.addEventListener('click', function(){VaSteps=20;})
+   threeSixtyDegVa.addEventListener('click', function(){VaSteps=200;})
 
    lowerVa.addEventListener('click', function() {
        console.log("Accelerating voltage was turned down"); dataChannel.send("Va/move/"+(-VaSteps));})
@@ -435,7 +435,7 @@ $("document").ready(function () {
    //END Accelerating Voltage Buttons
    //BEGIN Retarding Voltage Buttons 
    threeDegVr.addEventListener('click', function(){VrSteps=2;})
-   thirtySixDegVr.addEventListener('click', function(){VrSteps=21;})
+   thirtySixDegVr.addEventListener('click', function(){VrSteps=20;})
    
    lowerVr.addEventListener('click', function() {
        console.log("Retarding voltage was turned down"); dataChannel.send("Vr/move/"+(-VrSteps));})
