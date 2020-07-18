@@ -136,13 +136,15 @@
         <input type="radio" id="360_degree" name="angleStep" value="360">
         <label for="360_degree">360&#176;</label>
            <br>
-        <figure class="Photo">
-          <img id="leftPot" src="static/imgs/counterclockwise.png"/> 
-          <img id="knob" src="static/imgs/knob.png"/> 
-          <img id="rightPot" src="static/imgs/clockwise.png"/> 
+        <div id="potentiometerKnob" style="width: 100%; height: 100%">
+          <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
+          <map name="image-map-knob">
+            <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
+            <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
+          </map>
           <br>
           (click on the arrows to rotate the potentiometer)
-        </figure>
+        </div>
         <br>
       </div>
     </div>
@@ -237,6 +239,16 @@
   <script type="text/javascript">
         $(document).ready(function () {
           $('#filterwheel').mapster({
+            mapKey:'id',
+            fillColor: 'f5f5b5',
+            fillOpacity: 0.6,
+            render_select: { 
+                fillOpacity: 0.3
+            },
+            singleSelect: true
+          }).parent().css({"margin":"0 auto"});
+
+          $('#knob').mapster({
             mapKey:'id',
             fillColor: 'f5f5b5',
             fillOpacity: 0.6,

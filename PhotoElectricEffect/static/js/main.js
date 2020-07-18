@@ -182,8 +182,8 @@ window.addEventListener('DOMContentLoaded', function () {
     var ambientState = false;
 
     //for Potentiometer
-    var leftPot = document.getElementById('leftPot');
-    var rightPot = document.getElementById('rightPot');
+    var leftPot = document.getElementById('turnLeft');
+    var rightPot = document.getElementById('turnRight');
     var threeDegree = document.getElementById('3.6_degree');
     var thirtySixDegree = document.getElementById('36_degree');
     var threeSixtyDegree = document.getElementById('360_degree');
