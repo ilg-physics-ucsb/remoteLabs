@@ -283,14 +283,14 @@ $("document").ready(function () {
     var threeDegVa = document.getElementById('3.6_deg_Va');
     var thirtySixDegVa = document.getElementById('36_deg_Va');
     var threeSixtyDegVa = document.getElementById('360_deg_Va');
-    var VaSteps=23;
+    var VaSteps=21;
    
     //for Retarding Voltage Potentiometer Settings
     var raiseVr = document.getElementById('rCW');
     var lowerVr = document.getElementById('rCCW');
     var threeDegVr = document.getElementById('3.6_deg_Vr');
     var thirtySixDegVr = document.getElementById('36_deg_Vr');
-    var VrSteps=23;
+    var VrSteps=21;
 
     //BEGIN Power Switches 
  
