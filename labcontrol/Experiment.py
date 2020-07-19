@@ -17,7 +17,7 @@ class NoDeviceError(Exception):
 
 class Experiment(object):
 
-    def __init__(self, name, root_directory="remoteLabs"):
+    def __init__(self, name, root_directory="remoteLabs", admin=False):
         self.devices = {}
         self.allStates = {}
         self.socket_path = ''
@@ -26,6 +26,7 @@ class Experiment(object):
         self.client_address = None
         self.name = name
         self.initializedStates = False
+        self.admin = admin
         self.directory = os.path.join("/home", "pi", root_directory, name)
         self.log_name = os.path.join(self.directory, self.name+".log")
         self.json_file = os.path.join(self.directory, self.name+".json")
@@ -135,9 +136,10 @@ class Experiment(object):
         if self.connection is not None:
             self.connection.close()
             logging.info("Connection to client closed.")
-        for device_name, device in self.devices.items():
-            logging.info("Running reset on device " + device_name)
-            device.reset()
+        if not self.admin:
+            for device_name, device in self.devices.items():
+                logging.info("Running reset on device " + device_name)
+                device.reset()
 
 
     def setup(self):

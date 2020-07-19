@@ -351,6 +351,7 @@ class ElectronicScreen(BaseController):
 
     def __init__(self, pin):
         self.pin = pin
+        self.state = "off"
         gpio.setup(self.pin, gpio.OUTPUT)
     
     def on(self, params):
