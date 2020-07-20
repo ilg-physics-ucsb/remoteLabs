@@ -71,7 +71,14 @@
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
-        <div id="OvenLeft" >
+        <figure class="Icon">
+          (click to toggle the Ambient Light)<br>
+          <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
+          </map>
+          <br>           
+        </figure><div id="Crosshairs" >
           <div class="click-note" style="margin-bottom: -50px;">
             (choose increment and click arrows to turn variac knob and adjust oven power)
           </div>
@@ -92,7 +99,7 @@
             <area id="oVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
           </map>  
         </div>
-        <div id="TubeLeft" >
+        <div id="Grating" >
           <img src="static/images/FHbwIcon.jpg" width="125" alt="" class="image-8">
           <div class="click-note">(click for circuit diagram)</div>
         </div>
@@ -140,39 +147,52 @@
         </div>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
-        <div id="OvenRight" >
-          <div class="click-note">(click to toggle oven power)</div>
-          <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLEon">
-          <map name="image-map-oTOGGLEon">
-            <area id="ovenON" title="ON" href="#" coords="260,15,450,192" shape="rect">
+        <div id="UpperRight" >
+          <div class="click-note">(click to toggle lamp power)</div>
+          <img id="lampSwitchOFF" src="static/images/rockerSwitchOff.png" usemap="#image-map-lampTOGGLEon">
+          <map name="image-map-lampTOGGLEon">
+            <area id="lampON" title="ON" href="#" coords="17,24,88,109" shape="rect">
           </map>
-          <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" usemap="#image-map-oTOGGLEoff">
-          <map name="image-map-oTOGGLEoff">
-            <area id="ovenOFF" title="OFF" href="#" coords="69,15,259,192" shape="rect">
+          <img id="ovenSwitchON" src="static/images/rockerSwitchOn.png" usemap="#image-map-lampTOGGLEoff">
+          <map name="image-map-lampTOGGLEoff">
+            <area id="lampOFF" title="OFF" href="#" coords="17,95,88,177" shape="rect">
           </map>
         </div>
-        <div id="TubeRight" >
-          <img src="static/images/closeUp.jpg" width="140" srcset="static/images/closeUp.jpg 800w, images/closeUp.jpg 1080w, images/closeUp.jpg 1600w, images/closeUp.jpg 2000w, images/closeUp.jpg 2600w, images/closeUp.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt="" class="image-7">
+        <div id="Lamps" >
+          <figure class="Photo">
+            <strong>Spectrum Tube Lamps</strong> <br> 
+            <img id="Lamps" src="static/images/LampMap.jpg" usemap="#image-map-Lamps">
+            <map name="image-map-Lamps">
+              <area id="H2" title="H2 Lamp" href="" coords="0,0,103,283" shape="rect">
+              <area id="SampleA" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <br>
+            (click on a lamp to rotate it into position)
+          </figure>
         </div>
-        <div id="ControlsRight" >
+        <div id="SlitControl" >
           <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1>
-          <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
-          <map name="image-map-Vr">
-            <area id="rCW" alt="" title="increase Vr" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
-            <area id="rCCW" alt="" title="decrease Vr" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+          <img id="Slit" src="static/images/SlitIcon2.png" usemap="#image-map-Slit">
+          <map name="image-map">
+            <area id="Open" title="Open Slit" href="#" coords="169,325,170,372,118,374,115,405,21,349,117,294,117,325" shape="poly">
+            <area id="Close" title="Close Slit" href="#" coords="171,326,172,373,225,373,226,406,323,350,226,293,225,324,198,325" shape="poly">
+            <area id="Close" title="Close Slit" href="#" coords="530,324,530,374,477,372,477,406,381,350,477,292,478,325" shape="poly">
+            <area id="Open" title="Open Slit" href="#" coords="532,326,587,326,587,293,684,350,588,406,585,374,532,375" shape="poly">
           </map>
-          <div id="radioButtonsVr" class="w-row">
+          
+          <div id="radioButtonsSlit" class="w-row">
             <div class="column w-col w-col-6" style="margin-bottom: 0px;">
-              <input type="radio" id="3.6_deg_Vr" name="angleStepVr" value="3.6">
-              <label for="3.6_deg_Vr">3.6&#176;</label>
+              <input type="radio" id="FineAdjustSlit" name="AdjustSlit" value="3.6">
+              <label for="3.6_deg_Vr">Fine&#176;</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-6" style="margin-bottom: 0px;">
-              <input type="radio" id="36_deg_Vr" name="angleStepVr" value="36" checked>
-              <label for="36_deg_Vr">36&#176;</label>
+              <input type="radio" id="CoarseAdjustSlit" name="AdjustSlit" value="36" checked>
+              <label for="CoarseAdjustSlit">Coarse&#176;</label>
             </div>
           </div>  
           <div class="click-note">
-            (choose increment and click arrows to adjust retarding voltage)
+            (choose increment and click arrows to adjust slit width)
           </div> 
         </div>
       </div>
@@ -201,7 +221,7 @@
             <area id="fVccw" alt="CCW" title="lower V" href="#" coords="226,2,231,76,249,67,256,74,261,83,264,99,264,115,260,129,254,140,247,149,238,155,245,166,252,175,256,181,270,171,280,160,287,147,293,135,296,119,298,103,295,87,292,72,286,60,278,47,292,36" shape="poly">
           </map>
         </div>    
-        <div id="Filament Toggle" class="column w-col w-col-2">
+        <div id="RightSide" class="column w-col w-col-2">
           <div class="click-note">(click to toggle filament power)</div>
           <img id="filamentSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-fTOGGLE">
           <map name="image-map-fTOGGLE">
@@ -211,49 +231,10 @@
       </div>
       <div id="MetersBottom" class="column w-row" >
         <div id="MetersLeft" class="column w-col w-col-6">
-          <img id="powerSupplySwitchOFF" src="static/images/PowerSupplyOFF.jpg" usemap="#image-map-psTOGGLEon">
-          <map name="image-map-psTOGGLEon">
-            <area id="psON" title="ON" href="#" coords="73,78,132,117" shape="rect">
-           </map>
-          <img id="powerSupplySwitchON" src="static/images/PowerSupplyON.jpg" usemap="#image-map-psTOGGLEoff">
-          <map name="image-map-psTOGGLEoff">
-            <area id="psOFF" title="OFF" href="#" coords="73,118,132,156" shape="rect">
-          </map>
+        <!-- Preserving 6-6 structure  -->
         </div>
         <div id="MetersRight" class="column w-col w-col-6">
-          <img id="electrometer" src="static/images/Keithley6514ElectrometerTXTcropped.jpg" usemap="#image-map-6514"> 
-          <map name="image-map-6514">
-            <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,218,17" shape="circle">
-            <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,285,17" shape="circle">
-            <area id="Power6514" 		    href="#"	title="Power" 		  coords="99,365,17" shape="circle">
-            <area id="Voltage" 		      href="#"	title="Voltage" 		coords="200,217,29" shape="circle">
-            <area id="Current" 		      href="#"	title="Current" 		coords="285,217,29" shape="circle">
-            <area id="Resistance" 	    href="#"	title="Resistance"  coords="381,217,29" shape="circle">
-            <area id="Charge" 		      href="#"	title="Charge" 		  coords="466,217,29" shape="circle">
-            <area id="ExternalFeedback" href="#"	title="ExternalFeedback" coords="562,217,29" shape="circle">
-            <area id="ZeroCheck" 		    href="#"	title="ZeroCheck" 	coords="647,217,29" shape="circle">
-            <area id="ZeroCorrect" 	    href="#"	title="ZeroCorrect" coords="743,217,29" shape="circle">
-            <area id="Ground" 		      href="#"	title="Ground" 		  coords="828,217,29" shape="circle">
-            <area id="Average" 		      href="#"	title="Average" 		coords="166,314,238,279" shape="rect">
-            <area id="Median" 		      href="#"	title="Median" 		  coords="242,279,316,314" shape="rect">
-            <area id="Relative" 		    href="#"	title="Relative" 	  coords="420,279,346,314" shape="rect">
-            <area id="Limit" 		        href="#"	title="Limit" 		  coords="423,279,499,314" shape="rect">
-            <area id="Digits6514" 	    href="#"	title="Digits"      coords="603,279,529,314" shape="rect">
-            <area id="Rate6514" 		    href="#"	title="Rate" 		    coords="606,279,678,314" shape="rect">
-            <area id="CursorLeft6514" 	href="#"	title="CursorLeft"  coords="786,279,712,314" shape="rect">
-            <area id="CursorRight6514" 	href="#"	title="CursorRight" coords="789,279,859,314" shape="rect">
-            <area id="Store6514" 		    href="#" title="Store" 		    coords="238,346,163,382" shape="rect">
-            <area id="Recall6514"		    href="#"	title="Recall" 		  coords="242,346,314,382" shape="rect">
-            <area id="Delay" 		        href="#"	title="Delay" 		  coords="420,346,346,382" shape="rect">
-            <area id="Damping" 		      href="#"	title="Damping" 		coords="423,346,495,382" shape="rect">
-            <area id="Halt" 		        href="#"	title="Halt" 		    coords="603,346,529,383" shape="rect">
-            <area id="Trigger6514" 	    href="#"	title="Trigger" 		coords="606,346,678,383" shape="rect">
-            <area id="Exit6514" 		    href="#"	title="Exit" 			  coords="786,346,712,384" shape="rect">
-            <area id="Enter6514" 		    href="#"	title="Enter" 		  coords="789,346,863,384" shape="rect">
-            <area id="UpRange6514" 	    href="#"	title="UpRange" 		coords="957,187,935,222,976,224" shape="poly">
-            <area id="DownRange6514" 	  href="#"	title="DownRange" 	coords="957,384,978,347,935,347" shape="poly">
-            <area id="AutoRange6514"	  href="#"	title="AutoRange" 	coords="908,267,1007,304" shape="rect">
-          </map>
+        <!-- Preserving 6-6 structure  -->
         </div>
       </div>
     </div>

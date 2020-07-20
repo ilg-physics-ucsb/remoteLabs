@@ -499,7 +499,7 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
   
-  $('#Vr').mapster({
+  $('#LightSwitch').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -509,7 +509,7 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#powerSupplySwitchOFF').mapster({
+  $('#Lamps').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0,
@@ -519,7 +519,7 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#powerSupplySwitchON').mapster({
+  $('#SlitControl').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0,
