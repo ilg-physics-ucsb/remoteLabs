@@ -115,6 +115,7 @@ $("document").ready(function () {
     var PotsRight = document.getElementById("ControlsRight");
     var FilaLeft = document.getElementById("FilamentVariac");
     var FilaRight = document.getElementById("FilamentPower");
+    var MetersManual = document.getElementById("Keithley6514Manual");
     var MetersBottom = document.getElementById("MetersBottom");
 
     TempCam.addEventListener('click', function() {
@@ -133,6 +134,7 @@ $("document").ready(function () {
         PotsRight.style.display = "none";
         FilaLeft.style.display = "none";
         FilaRight.style.display = "none";
+        MetersManual.style.display = "none";
         MetersBottom.style.display = "none";
         
     })
@@ -147,6 +149,7 @@ $("document").ready(function () {
         PotsRight.style.display = "none";
         FilaLeft.style.display = "block";
         FilaRight.style.display = "block";
+        MetersManual.style.display = "none";
         MetersBottom.style.display = "none";
     })
 
@@ -160,6 +163,7 @@ $("document").ready(function () {
         PotsRight.style.display = "block";
         FilaLeft.style.display = "block";
         FilaRight.style.display = "block";
+        MetersManual.style.display = "none";
         MetersBottom.style.display = "none";
     })
 
@@ -173,6 +177,7 @@ $("document").ready(function () {
         PotsRight.style.display = "none";
         FilaLeft.style.display = "none";
         FilaRight.style.display = "none";
+        MetersManual.style.display = "block";
         MetersBottom.style.display = "block";
     })
 
