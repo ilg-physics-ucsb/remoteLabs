@@ -129,7 +129,7 @@
             <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
           </map>
           <div id="radioButtonsSchematic" class="w-row">
-            <div class="column w-col w-col-2" style="bottom: -30px;"></div>
+            <div class="column w-col w-col-1" style="bottom: -30px;"></div>
             <div class="column w-col w-col-1" style="bottom: -30px; color:darkgreen" >Telescope:</div>
             <div class="column w-col w-col-1" style=" bottom: -30px; color:darkgreen">
               <input type="radio" id="fineArm" name="ArmStepSize" value="5">
@@ -142,11 +142,15 @@
             <div class="column w-col w-col-2" style="bottom: -30px;"></div>
             <div class="column w-col w-col-1" style="bottom: -30px; color:darkorchid">Grating:</div>
             <div class="column w-col w-col-1" style=" bottom: -30px; color:darkorchid">
-              <input type="radio" id="fineTable" name="TableStepSize" value="5">
+              <input type="radio" id="fineTable" name="TableStepSize" value="20">
               <label for="fineTable">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-1" style=" bottom: -30px; color:darkorchid">
+              <input type="radio" id="mediumTable" name="TableStepSize" value="200">
+              <label for="fineTable">Medium</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-1" style="bottom: -30px; color:darkorchid">
-              <input type="radio" id="coarseTable" name="TableStepSize" value="50" checked>
+              <input type="radio" id="coarseTable" name="TableStepSize" value="600" checked>
               <label for="coarseTable">Coarse</label>
             </div>
             <div class="column w-col w-col-2" style="bottom: -30px;"></div>

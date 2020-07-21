@@ -255,7 +255,31 @@ $("document").ready(function () {
 
 
     //BEGIN Lamp Toggling 
- 
+     
+    ambientTOGGLE.addEventListener('click', function(){
+        console.log("Ambient light was switched");
+        if(ambientState){
+                //--------choose one of the following
+            //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
+            // Commented line below - 20200716
+            // dataChannel.send("FHpdu/off/2");                //use this command with PDU
+                //---------
+            ambientState=false;
+            ambientTOGGLE.title="Click here to turn ON";
+            lightSwitch.style.transform='scaleY(1)';
+                     }
+        else{
+                //--------choose one of the following
+            //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
+            // Commented line below - 20200716
+            // dataChannel.send("FHpdu/on/2");                 //use this command with PDU
+                //---------
+            ambientState=true;
+            ambientTOGGLE.title="Click here to turn OFF";
+            lightSwitch.style.transform='scaleY(-1)';
+        }
+    })
+    
     OvenOFFpress.addEventListener('click', function(){
         console.log("Oven power was turned off");
         if(OvenState){
@@ -298,33 +322,7 @@ $("document").ready(function () {
             OvenState=true;  
             FirstTimeOvenOn=false;
         }
-    })
-    
-    filamentTOGGLE.addEventListener('click', function(){
-        console.log("Filament power was switched");
-        if(filamentState){
-                //--------choose one of the following
-            //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            // Commented line below - 20200716
-            // dataChannel.send("FHpdu/off/2");                //use this command with PDU
-                //---------
-            filamentState=false;
-            filamentTOGGLE.title="Click here to turn ON";
-            filamentSwitch.style.transform='scaleY(1)';
-                     }
-        else{
-                //--------choose one of the following
-            //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            // Commented line below - 20200716
-            // dataChannel.send("FHpdu/on/2");                 //use this command with PDU
-                //---------
-            filamentState=true;
-            filamentTOGGLE.title="Click here to turn OFF";
-            filamentSwitch.style.transform='scaleY(-1)';
-        }
-    })
-    
-    powerSupplyOFF.addEventListener('click', function(){
+    })powerSupplyOFF.addEventListener('click', function(){
         console.log("Power Supply was turned off");
         if(powerSupplyState){
             if(FirstTimePSoff){
