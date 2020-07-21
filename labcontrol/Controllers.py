@@ -181,15 +181,13 @@ class StepperI2C(MotorKit, BaseController):
         self.styles = {
             "SINGLE": stepper.SINGLE,
             "DOUBLE": stepper.DOUBLE,
-            "MICROSTEP": stepper.MICROSTEP
+            "MICROSTEP": stepper.MICROSTEP,
+            "INTERLEAVED": stepper.INTERLEAVED
         }
         self.style = self.styles[style]
-        # self.style = stepper.DOUBLE
 
         self.state = {"position": self.currentPosition}
-    
-
-           
+               
     def setup(self, style):
         pass
 
@@ -310,13 +308,6 @@ class ArduCamMultiCamera(BaseController):
             'd': "i2cset -y 11 0x70 0x00 0x07",
         }
 
-        # self.camerai2c = {
-        #     'a': "04",
-        #     'b': "05",
-        #     'c': "06",
-        #     'd': "07",
-        # }
-
         # Set camera for A
         self.camera("a")
 
@@ -324,8 +315,6 @@ class ArduCamMultiCamera(BaseController):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
         os.system(self.camerai2c[param])
-        hexString = "00{0}".format(self.camerai2c[param])
-        # self.i2c.write(bytearray.fromhex(hexString))
         gpio.output(self.channels, self.cameraDict[param])
     
     def camera_parser(self, params):
@@ -333,7 +322,7 @@ class ArduCamMultiCamera(BaseController):
             raise ArgumentNumberError(len(params), 1, "camera")
         param = params[0].lower()
         if param not in self.cameraDict:
-            raise ArgumentErrpr(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
+            raise ArgumentError(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
         return params[0].lower()
     
     def imageMod(self, params):
