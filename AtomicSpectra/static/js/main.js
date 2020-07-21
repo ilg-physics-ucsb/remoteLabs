@@ -244,14 +244,14 @@ $("document").ready(function () {
     var tCCW = document.getElementById('telescopeCCW');
     var tFine = document.getElementById('fineArm');
     var tCoarse = document.getElementById('coarseArm');
-    var telescopeSteps=23;
+    var telescopeSteps=100; ///unknown number of degrees
     
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
     var gCCW = document.getElementById('gratingCCW');
     var gFine = document.getElementById('fineTable');
     var gCoarse = document.getElementById('coarseTable');
-    var gratingSteps=23;
+    var gratingSteps=200; //roughly ten degrees
 
 
     //BEGIN Lamp Toggling 
@@ -266,7 +266,6 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            
             // This will control the carousel
             dataChannel.send("ASDIpdu/off/6");                //use this command with PDU
             }
