@@ -448,7 +448,7 @@ $("document").ready(function () {
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     
-    $('#ovenKnob').mapster({
+    $('#LampsAllOff').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -459,7 +459,7 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#ovenSwitchOFF').mapster({
+  $('#LampsAon').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0,
@@ -469,7 +469,7 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#ovenSwitchON').mapster({
+  $('#LampsBon').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0,
@@ -479,42 +479,12 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#fKnob').mapster({
+  $('#LampsH2on').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
     render_select: { 
         fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#Va').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-  
-  $('#LightSwitch').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#Lamps').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
@@ -529,12 +499,12 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#electrometer').mapster({
+  $('#Schematic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
+    fillOpacity: 0,
     render_select: { 
-        fillOpacity: 0.3
+        fillOpacity: 0
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
