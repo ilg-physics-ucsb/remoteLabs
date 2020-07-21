@@ -117,6 +117,7 @@ $("document").ready(function () {
     var PotsRight = document.getElementById("ControlsRight");
     var PotsBottom = document.getElementById("ControlsBottom");
     var MetersBottom = document.getElementById("MetersBottom");
+    var EPC= document.getElementById("EPcontrols")
 
     OverviewCam.addEventListener('click', function() {
         if(FirstTimeTempCam){
@@ -126,6 +127,11 @@ $("document").ready(function () {
         else{
             dataChannel.send("Camera/camera/a");
         }
+        EPC.style.visibility='hidden';
+        showruler.prop("checked",false)
+        track_mouse= false
+        document.getElementById("crosshair-v").style.visibility = "hidden";
+        document.getElementById("crosshair-h").style.visibility = "hidden";
         OvenLeft.style.display = "block";
         OvenRight.style.display = "block";
         TubeLeft.style.display = "none";
@@ -138,6 +144,8 @@ $("document").ready(function () {
     })
 
     ArmCam.addEventListener('click', function() {
+        EPC.style.visibility='visible';
+        track_mouse= false;
         dataChannel.send("Camera/camera/b");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
@@ -147,9 +155,15 @@ $("document").ready(function () {
         PotsRight.style.display = "none";
         PotsBottom.style.display = "none";
         MetersBottom.style.display = "none";
+       
     })
 
     V1Cam.addEventListener('click', function() {
+        EPC.style.visibility='hidden';
+        showruler.prop("checked",false)
+        track_mouse= false
+        document.getElementById("crosshair-v").style.visibility = "hidden";
+        document.getElementById("crosshair-h").style.visibility = "hidden";
         dataChannel.send("Camera/camera/c");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
@@ -159,9 +173,15 @@ $("document").ready(function () {
         PotsRight.style.display = "block";
         PotsBottom.style.display = "block";
         MetersBottom.style.display = "none";
+       
+  
     })
 
     V2Cam.addEventListener('click', function() {
+        EPC.style.visibility='hidden';
+        showruler.prop("checked",false)
+        track_mouse= falsedocument.getElementById("crosshair-v").style.visibility = "hidden";
+        document.getElementById("crosshair-h").style.visibility = "hidden";
         dataChannel.send("Camera/camera/d");
         OvenLeft.style.display = "none";
         OvenRight.style.display = "none";
@@ -171,6 +191,7 @@ $("document").ready(function () {
         PotsRight.style.display = "none";
         PotsBottom.style.display = "none";
         MetersBottom.style.display = "block";
+        
     })
 
     // OffCam.addEventListener('click', function() {

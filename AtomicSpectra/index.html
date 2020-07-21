@@ -22,6 +22,7 @@
   <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/skeleton-3df96e.webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/ruler.css" rel="stylesheet" type="text/css">
   
   <!-- Items below are from WebFlow, could make it easy to customize favicon and webclip icons -->
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
@@ -31,6 +32,9 @@
 
 </head>
 <body>
+
+
+
   <script src="static/js/signalling.js"></script>
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
@@ -93,6 +97,8 @@
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
+             
+        
         <div class="Warning">
           This session will end and the system will reset in 
           <span id="time" style="color:red;font-weight:bold">45:00</span> 
@@ -105,8 +111,16 @@
           <button id="V2Cam" type="button" class="btn btn-primary">Vernier 2</button>
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
-        <div class="video w-video w-embed">
-          <video id='v' data-playing="false" autoplay="" muted></video>
+        
+        <div  id="CrossContainer" >
+          <div class="video w-video w-embed">
+            <div id="crosshair-h" class="hair"></div>
+            <div id="crosshair-v" class="hair"></div>
+            <video id='v' data-playing="false" autoplay="" muted></video>
+          </div>
+         <div id="EPcontrols" >
+           <center>Show Crosshair: <input type="checkbox" id="showRuler"><div  id="Coordinates" ></div></center>
+           </div>
         </div>
         <div id="Schematic" >
           <img id="Schematic" src="static/images/spectroscope_schematic.png" alt="image-11" class="" usemap="#image-map-schematic">
@@ -218,5 +232,6 @@
             </div>
         </div>
     </div>
+<script src="static/js/jquery.ruler.js"></script>
  </body>
 </html>
