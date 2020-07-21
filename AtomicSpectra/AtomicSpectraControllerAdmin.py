@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera
+from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera, ElectronicScreen
 
 
 camera = ArduCamMultiCamera("Camera", 1)
@@ -17,8 +17,7 @@ ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb56
 ASDIpdu.login()
 
 
-
-exp = Experiment("AtomicSpectra")
+exp = Experiment("AtomicSpectra", admin=True)
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(grating)
