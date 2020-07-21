@@ -61,9 +61,9 @@ $("document").ready(function () {
     var FirstTimeTempCam = true;
 
     // Define Variables that are MWRAPs for use inside of callbacks
-    var mWrap1, mWrap2, mWrap6, mWrap7
+    var mWrap1, mWrap2, mWrap3, mWrap4
     var intervalId
-    var mWrapList = ["#mapster_wrap_2", "#mapster_wrap_1", "#mapster_wrap_6", "#mapster_wrap_7"]
+    var mWrapList = ["#mapster_wrap_1", "#mapster_wrap_2", "#mapster_wrap_3", "#mapster_wrap_4"]
 
     var loadingModal = $("#loadingModal")
 
@@ -78,28 +78,23 @@ $("document").ready(function () {
             //Run when all mwraps exist.
             mWrap1 = $("#mapster_wrap_1")[0]
             mWrap2 = $("#mapster_wrap_2")[0]
-            mWrap6 = $("#mapster_wrap_6")[0]
-            mWrap7 = $("#mapster_wrap_7")[0]
+            mWrap3 = $("#mapster_wrap_3")[0]
+            mWrap4 = $("#mapster_wrap_4")[0]
     
             // Do clicks here
-            OvenONpress.click()
-            OvenOFFpress.click()
-            powerSupplyON.click()
-            powerSupplyOFF.click()
-            TempCam.click()
+            Aonpress.click()
+            Bonpress.click()
+            H2onpress.click()
             console.log("hiding modal")
             //Hide Loading Screen
             loadingModal.modal("hide")
             //Stop repeating check
-            clearInterval(intervalId)
-    
+            clearInterval(intervalId)    
         }, 500)
     })
     loadingModal.modal('show')
 
     
-
-
     //for multi-camera switching
     var OverviewCam = document.getElementById("OverviewCam");
     var ArmCam = document.getElementById("EyepieceCam");
@@ -108,17 +103,19 @@ $("document").ready(function () {
     // var OffCam = document.getElementById("OffCam");
 
     //for div display switching
-    var FullPage = document.getElementById("FullPage");
-    var OvenLeft = document.getElementById("OvenLeft");
-    var OvenRight = document.getElementById("OvenRight");
-    var TubeLeft = document.getElementById("TubeLeft");
-    var TubeRight = document.getElementById("TubeRight");
-    var PotsLeft = document.getElementById("ControlsLeft");
-    var PotsRight = document.getElementById("ControlsRight");
-    var PotsBottom = document.getElementById("ControlsBottom");
-    var MetersBottom = document.getElementById("MetersBottom");
+    var Toggle = document.getElementById("Toggle");
+    var Grating = document.getElementById("Grating");
+    var Crosshairs = document.getElementById("Crosshairs");
+    var CrossContainer = document.getElementById("CrossContainer");
     var EPC= document.getElementById("EPcontrols")
-
+    var Schematic = document.getElementById("Schematic");
+    var Lamps = document.getElementById("Lamps");
+    var LampsAllOff = document.getElementById("LampsAllOff");
+    var LampsAon = document.getElementById("LampsAon");
+    var LampsBon = document.getElementById("LampsBon");
+    var LampsH2on = document.getElementById("LampsH2on");
+    var SlitControl = document.getElementById("SlitControl");
+    
     OverviewCam.addEventListener('click', function() {
         if(FirstTimeTempCam){
             console.log("Temp cam was clicked for the first time");
@@ -127,71 +124,56 @@ $("document").ready(function () {
         else{
             dataChannel.send("Camera/camera/a");
         }
+        
         EPC.style.visibility='hidden';
         showruler.prop("checked",false)
         track_mouse= false
         document.getElementById("crosshair-v").style.visibility = "hidden";
         document.getElementById("crosshair-h").style.visibility = "hidden";
-        OvenLeft.style.display = "block";
-        OvenRight.style.display = "block";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "none";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "none";
+        
+        Lamps.style.display = "block";
+        Crosshairs.style.display = "none";
+        SlitControl.style.display = "none";
         
     })
 
     ArmCam.addEventListener('click', function() {
+        dataChannel.send("Camera/camera/b");
+        
         EPC.style.visibility='visible';
         track_mouse= false;
-        dataChannel.send("Camera/camera/b");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "block";
-        TubeRight.style.display = "block";
-        PotsLeft.style.display = "none";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "none";
-       
+        
+        Lamps.style.display = "block";
+        Crosshairs.style.display = "block";
+        SlitControl.style.display = "block";       
     })
 
     V1Cam.addEventListener('click', function() {
+        dataChannel.send("Camera/camera/c");
+        
         EPC.style.visibility='hidden';
         showruler.prop("checked",false)
         track_mouse= false
         document.getElementById("crosshair-v").style.visibility = "hidden";
         document.getElementById("crosshair-h").style.visibility = "hidden";
-        dataChannel.send("Camera/camera/c");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "block";
-        PotsRight.style.display = "block";
-        PotsBottom.style.display = "block";
-        MetersBottom.style.display = "none";
-       
-  
+        
+        Lamps.style.display = "none";
+        Crosshairs.style.display = "none";
+        SlitControl.style.display = "none";
     })
 
     V2Cam.addEventListener('click', function() {
+        dataChannel.send("Camera/camera/d");
+        
         EPC.style.visibility='hidden';
         showruler.prop("checked",false)
-        track_mouse= falsedocument.getElementById("crosshair-v").style.visibility = "hidden";
+        track_mouse= false
+        document.getElementById("crosshair-v").style.visibility = "hidden";
         document.getElementById("crosshair-h").style.visibility = "hidden";
-        dataChannel.send("Camera/camera/d");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "block";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "block";
         
+        Lamps.style.display = "none";
+        Crosshairs.style.display = "none";
+        SlitControl.style.display = "none";
     })
 
     // OffCam.addEventListener('click', function() {
@@ -235,55 +217,44 @@ $("document").ready(function () {
      }
  
    
-    //for Oven Variac Power
-    var OvenOFFpress = document.getElementById('ovenOFF');
-    var OvenONpress = document.getElementById('ovenON');
-    var OvenOFFpic = document.getElementById('ovenSwitchOFF');
-    var OvenONpic = document.getElementById('ovenSwitchON');
-    var OvenState = false;
+    //for Ambient Light
+    var lightSwitch = document.getElementById('lightSwitch');
+    var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
+    var AmbientState = false;
 
-    //for Filament Variac Power
-    var filamentSwitch = document.getElementById('filamentSwitch');
-    var filamentTOGGLE = document.getElementById('filamentTOGGLE');
-    var filamentState = false;
+    //for Lamps
+    var H2press = document.getElementById('H2');
+    var Apress = document.getElementById('SampleA');
+    var Bpress = document.getElementById('SampleB');
+    var allOFFpic = document.getElementById('LampsAllOff');
+    var aONpic = document.getElementById('LampsAon');
+    var bONpic = document.getElementById('LampsBon');
+    var H2ONpic = document.getElementById('LampsH2on');
+    var lampSupplyState = false;
 
-    //for Power Supply Power
-    var powerSupplyOFF = document.getElementById('psOFF');
-    var powerSupplyON = document.getElementById('psON');
-    var psOFFpic = document.getElementById('powerSupplySwitchOFF');
-    var psONpic = document.getElementById('powerSupplySwitchON');
-    var powerSupplyState = false;
-
-    //for Oven Variac Settings
-    var lowerOvenV = document.getElementById('oVccw');
-    var raiseOvenV = document.getElementById('oVcw');
-    var threeDegOvenV = document.getElementById('3.6_deg_Vo');
-    var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
-    var ovenSteps=23;
+    //for Slit Settings
+    var openSlit = document.getElementById('Open');
+    var closeSlit = document.getElementById('Close');
+    var fineSlit = document.getElementById('FineAdjustSlit');
+    var coarseSlit = document.getElementById('CoarseAdjustSlit');
+    var slitSteps=200;
    
-    //for Filament Variac Settings
-    var lowerFilamentV = document.getElementById('fVccw');
-    var raiseFilamentV = document.getElementById('fVcw');
-    var threeDegFilamentV = document.getElementById('3.6_deg_Vf');
-    var thirtySixDegFilamentV = document.getElementById('36_deg_Vf');
-    var filamentSteps=23;
+    //for Telescope Settings
+    var tCW = document.getElementById('telescopeCW');
+    var tCCW = document.getElementById('telescopeCCW');
+    var tFine = document.getElementById('fineArm');
+    var tCoarse = document.getElementById('coarseArm');
+    var telescopeSteps=23;
     
-    //for Accelerating Voltage Potentiometer Settings
-    var raiseVa = document.getElementById('aCW');
-    var lowerVa = document.getElementById('aCCW');
-    var threeDegVa = document.getElementById('3.6_deg_Va');
-    var thirtySixDegVa = document.getElementById('36_deg_Va');
-    var threeSixtyDegVa = document.getElementById('360_deg_Va');
-    var VaSteps=23;
-   
-    //for Retarding Voltage Potentiometer Settings
-    var raiseVr = document.getElementById('rCW');
-    var lowerVr = document.getElementById('rCCW');
-    var threeDegVr = document.getElementById('3.6_deg_Vr');
-    var thirtySixDegVr = document.getElementById('36_deg_Vr');
-    var VrSteps=23;
+    //for Grating Settings
+    var gCW = document.getElementById('gratingCW');
+    var gCCW = document.getElementById('gratingCCW');
+    var gFine = document.getElementById('fineTable');
+    var gCoarse = document.getElementById('coarseTable');
+    var gratingSteps=23;
 
-    //BEGIN Power Switches 
+
+    //BEGIN Lamp Toggling 
  
     OvenOFFpress.addEventListener('click', function(){
         console.log("Oven power was turned off");

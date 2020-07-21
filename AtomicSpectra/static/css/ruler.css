@@ -28,21 +28,21 @@
 }
 
 
-#CrossContainer{
+/* #CrossContainer{
     position: absolute;
     margin:auto;  
     width: 86%!important;
     height: 500px!important;
     overflow: hidden!important;
-    z-index: 1000!important;
+    /* z-index: 1000!important; */
     background-color: white;
-}
+} */
 #Coordinates{
 
 }
 #v{
     margin:auto;    
-    background-color: black;
+    /* background-color: black; */
 }
 
 #EPcontrols{

@@ -75,14 +75,14 @@
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
-        <figure class="Icon">
+        <div id="Toggle">
           (click to toggle the Ambient Light)<br>
           <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
           <map name="image-map-ls">
              <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
           </map>
           <br>           
-        </figure>
+        </div>
         <div id="Grating" >
           <img src="static/images/DiffractionGratingActual582x442.jpg" alt="" class="image-8">
           <div class="click-note">(click for grating info)</div>
@@ -97,8 +97,6 @@
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
-             
-        
         <div class="Warning">
           This session will end and the system will reset in 
           <span id="time" style="color:red;font-weight:bold">45:00</span> 
@@ -111,7 +109,6 @@
           <button id="V2Cam" type="button" class="btn btn-primary">Vernier 2</button>
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
-        
         <div  id="CrossContainer" >
           <div class="video w-video w-embed">
             <div id="crosshair-h" class="hair"></div>
@@ -122,7 +119,8 @@
            <center>Show Crosshair: <input type="checkbox" id="showRuler"><div  id="Coordinates" ></div></center>
            </div>
         </div>
-        <div id="Schematic" >
+        <div id="SchematicLeft" class="column w-col w-col-2"></div>
+        <div id="Schematic" class="column w-col w-col-8">
           <img id="Schematic" src="static/images/spectroscope_schematic.png" alt="image-11" class="" usemap="#image-map-schematic">
           <map name="image-map-schematic">
             <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
@@ -130,37 +128,37 @@
             <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="405,135,412,145,424,135,431,139,444,113,414,113,421,123" shape="poly">
             <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
           </map>
-          <div id="radioButtonsArm" class="w-row">
-            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
-            <div class="column w-col w-col-1" style=" bottom: -30px;">
-              <input type="radio" id="fineArm" name="armStep" value="5">
+          <div id="radioButtonsSchematic" class="w-row">
+            <div class="column w-col w-col-2" style="bottom: -30px;"></div>
+            <div class="column w-col w-col-1" style="bottom: -30px; color:darkgreen" >Telescope:</div>
+            <div class="column w-col w-col-1" style=" bottom: -30px; color:darkgreen">
+              <input type="radio" id="fineArm" name="ArmStepSize" value="5">
               <label for="fineArm">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-1" style="bottom: -30px;">
-              <input type="radio" id="coarseArm" name="armStep" value="50" checked>
+            <div class="column w-col w-col-1" style="bottom: -30px; color:darkgreen">
+              <input type="radio" id="coarseArm" name="ArmStepSize" value="50" checked>
               <label for="coarseArm">Coarse</label>
             </div>
-            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
+            <div class="column w-col w-col-2" style="bottom: -30px;"></div>
+            <div class="column w-col w-col-1" style="bottom: -30px; color:darkorchid">Grating:</div>
+            <div class="column w-col w-col-1" style=" bottom: -30px; color:darkorchid">
+              <input type="radio" id="fineTable" name="TableStepSize" value="5">
+              <label for="fineTable">Fine</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-1" style="bottom: -30px; color:darkorchid">
+              <input type="radio" id="coarseTable" name="TableStepSize" value="50" checked>
+              <label for="coarseTable">Coarse</label>
+            </div>
+            <div class="column w-col w-col-2" style="bottom: -30px;"></div>
           </div>
           <div class="click-note" style="margin-bottom: -20px;">
             (choose Fine/Coarse and click arrows to move the telescope or the grating)
           </div>
-        </div>  
+        </div>
+        <div id="SchematicRight" class="column w-col w-col-2"></div>  
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
-        <!-- <div id="UpperRight" >
-          <div class="click-note">(click to toggle lamp power)</div>
-          <img id="lampSwitchOFF" src="static/images/rockerSwitchOff.png" usemap="#image-map-lampTOGGLEon">
-          <map name="image-map-lampTOGGLEon">
-            <area id="lampON" title="ON" href="#" coords="17,24,88,109" shape="rect">
-          </map>
-          <img id="lampSwitchON" src="static/images/rockerSwitchOn.png" usemap="#image-map-lampTOGGLEoff">
-          <map name="image-map-lampTOGGLEoff">
-            <area id="lampOFF" title="OFF" href="#" coords="17,95,88,177" shape="rect">
-          </map>
-        </div> -->
-        <div id="Lamps" >
-          <figure class="Photo">
+        <div id="Lamps">
             <strong>Spectrum Tube Lamps</strong> <br> 
             <img id="LampsAllOff" src="static/images/LampToggles/AllOff.jpg" usemap="#image-map-Lamps">
             <img id="LampsAon" src="static/images/LampToggles/Aon.jpg" usemap="#image-map-Lamps">
@@ -173,26 +171,23 @@
             </map>
             <br>
             (click on a lamp to rotate it into position or turn it on/off)
-          </figure>
         </div>
-        <div id="SlitControl" >
-          <!-- <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1> -->
+        <div id="SlitControl">
           <img id="Slit" src="static/images/SlitIcon2.png" usemap="#image-map-Slit">
-          <map name="image-map">
+          <map name="image-map-Slit">
             <area id="Open" title="Open Slit" href="#" coords="169,325,170,372,118,374,115,405,21,349,117,294,117,325" shape="poly">
             <area id="Close" title="Close Slit" href="#" coords="171,326,172,373,225,373,226,406,323,350,226,293,225,324,198,325" shape="poly">
             <area id="Close" title="Close Slit" href="#" coords="530,324,530,374,477,372,477,406,381,350,477,292,478,325" shape="poly">
             <area id="Open" title="Open Slit" href="#" coords="532,326,587,326,587,293,684,350,588,406,585,374,532,375" shape="poly">
-          </map>
-          
+          </map>      
           <div id="radioButtonsSlit" class="w-row">
             <div class="column w-col w-col-6" style="margin-bottom: 0px;">
               <input type="radio" id="FineAdjustSlit" name="AdjustSlit" value="3.6">
-              <label for="3.6_deg_Vr">Fine&#176;</label>
+              <label for="FineAdjustSlit">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-6" style="margin-bottom: 0px;">
               <input type="radio" id="CoarseAdjustSlit" name="AdjustSlit" value="36" checked>
-              <label for="CoarseAdjustSlit">Coarse&#176;</label>
+              <label for="CoarseAdjustSlit">Coarse</label>
             </div>
           </div>  
           <div class="click-note">
@@ -206,6 +201,12 @@
         <div id="LeftSide" class="column w-col w-col-2">
         </div>
         <div id="Center" class="column w-col w-col-8">
+          <strong>Instrument: AO Spencer Spectrometer</strong> <br> 
+            <a target="_blank" href="static/docs/AO Spencer Spectrometer User Manual copy.pdf">
+                <img id="Manual" src="static/images/SpencerSpectrometerPhoto.jpg" >
+            </a>
+            <br>
+            (click on image for a PDF of the Manual)
         </div>  
         <div id="RightSide" class="column w-col w-col-2">
         </div>
