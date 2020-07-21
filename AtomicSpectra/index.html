@@ -79,55 +79,17 @@
           </map>
           <br>           
         </figure>
-        <div id="Crosshairs" >
-          <div class="click-note" style="margin-bottom: -50px;">
-            (choose increment and click arrows to turn variac knob and adjust oven power)
-          </div>
-          <div id="radioButtonsVo" class="w-row">
-            <div class="column w-col w-col-3" style="top: 75px;">
-              <input type="radio" id="3.6_deg_Vo" name="angleStepVo" value="3.6">
-              <label for="3.6_deg_Vo">3.6&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-3" style="top: 75px;">
-              <input type="radio" id="36_deg_Vo" name="angleStepVo" value="36" checked>
-              <label for="36_deg_Vo">36&#176;</label>
-            </div>
-            <div class="column w-col w-col-6" style="top: 75px;"></div>
-          </div>
-          <img id="ovenKnob" src="static/images/bigVariacWarrows.png" usemap="#image-map-bigVariac"> <!--  -->
-          <map name="image-map-bigVariac">
-            <area id="oVccw" alt="CCW" title="decrease AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
-            <area id="oVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
-          </map>  
-        </div>
         <div id="Grating" >
-          <img src="static/images/DiffractionGratingActual582x442" alt="" class="image-8">
+          <img src="static/images/DiffractionGratingActual582x442.jpg" alt="" class="image-8">
           <div class="click-note">(click for grating info)</div>
+          <br>
         </div>
-        <div id="GratingControl" >
-          <!-- <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1> -->
-          <!-- <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
-          <map name="image-map-Va">
-            <area id="aCW" alt="" title="increase Va" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
-            <area id="aCCW" alt="" title="decrease Va" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
-          </map> -->
-          <div id="radioButtonsGrating" class="w-row">
-            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-              <input type="radio" id="1_deg_Grating" name="angleStepGrating" value="1">
-              <label for="1_deg_Grating">1&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-              <input type="radio" id="10_deg_Grating" name="angleStepGrating" value="10" checked>
-              <label for="10_deg_Grating">10&#176;</label>
-            </div>
-            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-              <input type="radio" id="30_deg_Grating" name="angleStepGrating" value="30" >
-              <label for="30_deg_Grating">30&#176;</label>
-            </div>
-          </div>  
-          <div class="click-note">
-            (choose increment and click arrows to adjust grating orientation)
-          </div>   
+        <div id="Crosshairs" >
+          <img id="crossHairs" src="static/images/crossHairsIcon.png">
+          <div class="click-note" style="margin-bottom: -50px;">
+            (click to toggle crosshairs visibility; move mouse over video to position crosshairs)
+          </div>\
+          <br>
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
@@ -146,19 +108,43 @@
         <div class="video w-video w-embed">
           <video id='v' data-playing="false" autoplay="" muted></video>
         </div>
+        <div id="Schematic" >
+          <img id="Schematic" src="static/images/spectroscope_schematic.png" alt="image-11" class="" usemap="#image-map-schematic">
+          <map name="image-map-schematic">
+            <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="" shape="poly">
+            <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="" shape="poly">
+            <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="" shape="poly">
+            <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="" shape="poly">
+          </map>
+          <div id="radioButtonsArm" class="w-row">
+            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
+            <div class="column w-col w-col-1" style=" bottom: -30px;">
+              <input type="radio" id="fineArm" name="armStep" value="5">
+              <label for="fineArm">Fine</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-1" style="bottom: -30px;">
+              <input type="radio" id="coarseArm" name="armStep" value="50" checked>
+              <label for="coarseArm">Coarse</label>
+            </div>
+            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
+          </div>
+          <div class="click-note" style="margin-bottom: -20px;">
+            (choose Fine/Coarse and click arrows to move the telescope or the grating)
+          </div>
+        </div>  
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
-        <div id="UpperRight" >
+        <!-- <div id="UpperRight" >
           <div class="click-note">(click to toggle lamp power)</div>
           <img id="lampSwitchOFF" src="static/images/rockerSwitchOff.png" usemap="#image-map-lampTOGGLEon">
           <map name="image-map-lampTOGGLEon">
             <area id="lampON" title="ON" href="#" coords="17,24,88,109" shape="rect">
           </map>
-          <img id="ovenSwitchON" src="static/images/rockerSwitchOn.png" usemap="#image-map-lampTOGGLEoff">
+          <img id="lampSwitchON" src="static/images/rockerSwitchOn.png" usemap="#image-map-lampTOGGLEoff">
           <map name="image-map-lampTOGGLEoff">
             <area id="lampOFF" title="OFF" href="#" coords="17,95,88,177" shape="rect">
           </map>
-        </div>
+        </div> -->
         <div id="Lamps" >
           <figure class="Photo">
             <strong>Spectrum Tube Lamps</strong> <br> 
@@ -169,11 +155,11 @@
               <area id="SampleB" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
             </map>
             <br>
-            (click on a lamp to rotate it into position)
+            (click on a lamp to rotate it into position or turn it off)
           </figure>
         </div>
         <div id="SlitControl" >
-          <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1>
+          <!-- <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1> -->
           <img id="Slit" src="static/images/SlitIcon2.png" usemap="#image-map-Slit">
           <map name="image-map">
             <area id="Open" title="Open Slit" href="#" coords="169,325,170,372,118,374,115,405,21,349,117,294,117,325" shape="poly">
@@ -202,32 +188,9 @@
       <div id="ControlsBottom" class="column w-row" >
         <div id="LeftSide" class="column w-col w-col-2">
         </div>
-        <div id="Filament Variac" class="column w-col w-col-8">
-          <div class="click-note" style="margin-bottom: -20px;">(choose increment and click arrows to adjust filament potential)</div>
-          <div id="radioButtonsVf" class="w-row">
-            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
-            <div class="column w-col w-col-1" style=" bottom: -30px;">
-              <input type="radio" id="3.6_deg_Vf" name="angleStepVf" value="3.6">
-              <label for="3.6_deg_Vf">3.6&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-1" style="bottom: -30px;">
-              <input type="radio" id="36_deg_Vf" name="angleStepVf" value="36" checked>
-              <label for="36_deg_Vf">36&#176;</label>
-            </div>
-            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
-          </div>
-          <img id="fKnob" src="static/images/filament_knob.png" width="" alt="image-11" class="" usemap="#image-map-filamentV">
-          <map name="image-map-filamentV">
-            <area id="fVcw" alt="CW" title="raise V" href="#" coords="73,3,7,36,21,47,15,61,7,77,3,95,2,109,4,125,10,143,18,157,27,169,38,177,46,182,64,155,55,146,47,138,40,125,37,108,39,93,44,79,51,68,68,75" shape="poly">
-            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="226,2,231,76,249,67,256,74,261,83,264,99,264,115,260,129,254,140,247,149,238,155,245,166,252,175,256,181,270,171,280,160,287,147,293,135,296,119,298,103,295,87,292,72,286,60,278,47,292,36" shape="poly">
-          </map>
-        </div>    
+        <div id="Center" class="column w-col w-col-8">
+        </div>  
         <div id="RightSide" class="column w-col w-col-2">
-          <div class="click-note">(click to toggle filament power)</div>
-          <img id="filamentSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-fTOGGLE">
-          <map name="image-map-fTOGGLE">
-            <area id="filamentTOGGLE" title="Click here to turn ON" coords="0,65,71,122" shape="rect">
-          </map>
         </div>
       </div>
       <div id="MetersBottom" class="column w-row" >
