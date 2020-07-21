@@ -181,15 +181,13 @@ class StepperI2C(MotorKit, BaseController):
         self.styles = {
             "SINGLE": stepper.SINGLE,
             "DOUBLE": stepper.DOUBLE,
-            "MICROSTEP": stepper.MICROSTEP
+            "MICROSTEP": stepper.MICROSTEP,
+            "INTERLEAVED": stepper.INTERLEAVED
         }
         self.style = self.styles[style]
-        # self.style = stepper.DOUBLE
 
         self.state = {"position": self.currentPosition}
-    
-
-           
+               
     def setup(self, style):
         pass
 
@@ -324,7 +322,7 @@ class ArduCamMultiCamera(BaseController):
             raise ArgumentNumberError(len(params), 1, "camera")
         param = params[0].lower()
         if param not in self.cameraDict:
-            raise ArgumentErrpr(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
+            raise ArgumentError(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
         return params[0].lower()
     
     def imageMod(self, params):
