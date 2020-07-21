@@ -7,9 +7,9 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 
-slit = StepperI2C("Slit", 1,bounds=(0,600), style="Double", delay=0.1)  
-grating = StepperI2C("Grating", 2,bounds=(-450, 450))
-arm = StepperI2C("Arm", 3,bounds=(-21000,21000))
+slit = StepperI2C("Slit", 1,bounds=(0,600), style="DOUBLE", delay=0.1)  
+grating = StepperI2C("Grating", 2, bounds=(-450, 450), style="DOUBLE")
+arm = StepperI2C("Arm", 3,bounds=(-21000,21000), style="DOUBLE")
 carousel = StepperI2C("Carousel", 4,bounds=(-60, 13204), style="MICROSTEP", delay=0.00002)
 
 
