@@ -1,18 +1,13 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera
+from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO
 
 
 
 camera = ArduCamMultiCamera("Camera", 1)
-# camera.camera("b")
 
 socket_path = "/tmp/uv4l.socket"
 
-#this uses the broadcom pin numbering system
-# oven_pins = [5,6,12,13]
-# filament_pins = [5,6,12,13]
-# Va_pins = [5,6,12,13]
-# Vr_pins = [5,6,12,13]
+
 
 filament = StepperI2C("Filament", 1,bounds=(-2100,2100), style="DOUBLE")  
 oven = StepperI2C("Oven", 2,bounds=(-2100,2100), style="DOUBLE")
