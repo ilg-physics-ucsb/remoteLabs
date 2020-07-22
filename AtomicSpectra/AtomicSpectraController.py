@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera
+from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO
 
 
 camera = ArduCamMultiCamera("Camera", 1)
