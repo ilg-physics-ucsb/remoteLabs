@@ -106,10 +106,6 @@ $("document").ready(function () {
     var EPC= document.getElementById("EPcontrols")
     var Schematic = document.getElementById("Schematic");
     var Lamps = document.getElementById("Lamps");
-    var LampsAllOff = document.getElementById("LampsAllOff");
-    var LampsAon = document.getElementById("LampsAon");
-    var LampsBon = document.getElementById("LampsBon");
-    var LampsH2on = document.getElementById("LampsH2on");
     var SlitControl = document.getElementById("SlitControl");
     
     OverviewCam.addEventListener('click', function() {
@@ -128,9 +124,9 @@ $("document").ready(function () {
         document.getElementById("crosshair-v").style.visibility = "hidden";
         document.getElementById("crosshair-h").style.visibility = "hidden";
         
-        Lamps.style.display = "block";
-        Crosshairs.style.display = "none";
-        SlitControl.style.display = "none";
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
         
     })
 
@@ -140,9 +136,9 @@ $("document").ready(function () {
         EPC.style.visibility='visible';
         track_mouse= false;
         
-        Lamps.style.display = "block";
-        Crosshairs.style.display = "block";
-        SlitControl.style.display = "block";
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility='visible';
+        SlitControl.style.visibility='visible';
         currentCam = "b"       
     })
 
@@ -155,9 +151,9 @@ $("document").ready(function () {
         document.getElementById("crosshair-v").style.visibility = "hidden";
         document.getElementById("crosshair-h").style.visibility = "hidden";
         
-        Lamps.style.display = "none";
-        Crosshairs.style.display = "none";
-        SlitControl.style.display = "none";
+        Lamps.style.visibility = "hidden";
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
 
         currentCam = "c"
     })
@@ -171,9 +167,9 @@ $("document").ready(function () {
         document.getElementById("crosshair-v").style.visibility = "hidden";
         document.getElementById("crosshair-h").style.visibility = "hidden";
         
-        Lamps.style.display = "none";
-        Crosshairs.style.display = "none";
-        SlitControl.style.display = "none";
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility='visible';
+        SlitControl.style.visibility='visible';
 
         currentCam = "d"
     })
@@ -237,19 +233,21 @@ $("document").ready(function () {
     var H2FirstTime = true;
 
     //for Slit Settings
+    var Slit = document.getElementById('Slit');
     var openSlit = document.getElementById('Open');
     var closeSlit = document.getElementById('Close');
     var fineSlit = document.getElementById('FineAdjustSlit');
     var coarseSlit = document.getElementById('CoarseAdjustSlit');
     var slitSteps=200;
    
+    //for Schematic
+    var SchemaPIC = document.getElementById('Schema')
     //for Telescope Settings
     var tCW = document.getElementById('telescopeCW');
     var tCCW = document.getElementById('telescopeCCW');
     var tFine = document.getElementById('fineArm');
     var tCoarse = document.getElementById('coarseArm');
     var telescopeSteps=100; ///unknown number of degrees
-    
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
     var gCCW = document.getElementById('gratingCCW');
@@ -494,11 +492,11 @@ $("document").ready(function () {
     
     gCW.addEventListener('click', function() {
         console.log("Grating turned CW");
-        dataChannel.send("Grating/move/"+(-gratingSteps));
+        dataChannel.send("Grating/move/"+gratingSteps);
     })
     gCCW.addEventListener('click', function() {
         console.log("Grating turned CCW");
-        dataChannel.send("Grating/move/"+gratingSteps);
+        dataChannel.send("Grating/move/"+(-gratingSteps));
     })
 
     //END  Grating Buttons
@@ -550,9 +548,9 @@ $("document").ready(function () {
   $('#LampsAon').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
-    fillOpacity: 0,
+    fillOpacity: 0.6,
     render_select: { 
-        fillOpacity: 0
+        fillOpacity: 0.3
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
@@ -560,9 +558,9 @@ $("document").ready(function () {
   $('#LampsBon').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
-    fillOpacity: 0,
+    fillOpacity: 0.6,
     render_select: { 
-        fillOpacity: 0
+        fillOpacity: 0.3
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
@@ -580,9 +578,9 @@ $("document").ready(function () {
   $('#Slit').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
-    fillOpacity: 0,
+    fillOpacity: 0.6,
     render_select: { 
-        fillOpacity: 0
+        fillOpacity: 0.3
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
@@ -590,9 +588,9 @@ $("document").ready(function () {
   $('#Schema').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
-    fillOpacity: 0,
+    fillOpacity: 0.6,
     render_select: { 
-        fillOpacity: 0
+        fillOpacity: 0.3
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
