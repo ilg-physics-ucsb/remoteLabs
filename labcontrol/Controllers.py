@@ -353,6 +353,22 @@ class ElectronicScreen(BaseController):
         gpio.output(self.pin, gpio.LOW)
 
 
+class SingleGPIO(BaseController):
+
+    def __init__(self, pin):
+        self.pin = pin
+        self.state = "off"
+        gpio.setup(self.pin, gpio.OUTPUT)
+    
+    def on(self, params):
+        gpio.output(self.pin, gpio.HIGH)
+    
+    def off(self, params):
+        gpio.output(self.pin, gpio.LOW)
+
+    def reset(self):
+        gpio.output(self.pin, gpio.LOW)
+
 class CommandError(Exception):
 
     def __init__(self, command, *args):
