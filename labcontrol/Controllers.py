@@ -338,8 +338,9 @@ class ArduCamMultiCamera(BaseController):
 
 class ElectronicScreen(BaseController):
 
-    def __init__(self, pin):
+    def __init__(self, name, pin):
         self.pin = pin
+        self.name = name
         self.state = "off"
         gpio.setup(self.pin, gpio.OUTPUT)
     
@@ -355,8 +356,9 @@ class ElectronicScreen(BaseController):
 
 class SingleGPIO(BaseController):
 
-    def __init__(self, pin):
+    def __init__(self, name, pin):
         self.pin = pin
+        self.name = name
         self.state = "off"
         gpio.setup(self.pin, gpio.OUTPUT)
     
