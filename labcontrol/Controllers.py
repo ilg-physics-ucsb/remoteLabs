@@ -48,13 +48,14 @@ class BaseController(object):
 
 
 class PDUOutlet(dlipower.PowerSwitch, BaseController):
-    def __init__(self, name, hostname, userid, password, timeout=None):
+    def __init__(self, name, hostname, userid, password, timeout=None, outlets=[1,2,3,4,5,6,7,8]):
         # self, userid=None, password=None, hostname=None, timeout=None, cycletime=None, retries=None, use_https=False
         super().__init__(hostname=hostname, userid=userid, password=password, timeout=timeout)
         self.name = name
         self.device_type = "controller"
         self.experiment = None
         self.state = {1:"Off", 2:"Off", 3:"Off", 4:"Off", 5:"Off", 6:"Off", 7:"Off", 8:"Off" }
+        self.outlets = outlets
         
     def on(self, outletNumber):
         super().on(outletNumber)
@@ -67,16 +68,20 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
     def on_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "on")
+        if int(params[0]) not in self.outlets:
+            raise ArgumentError(self.name, "On", "Outlet "+ params[0], allowed="Outlets " + str(self.outlets))
         return int(params[0])
     
     def off_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "off")
+        if int(params[0]) not in self.outlets:
+            raise ArgumentError(self.name, "Off", "Outlet "+ params[0], allowed="Outlets " + str(self.outlets))
         return int(params[0])
     
     def reset(self):
-        for outletNumber, state in self.state.items():
-            self.off(outletNumber)
+        for outlet in self.outlets:
+            self.off(outlet)
 
 
 class Plug(tp.TPLinkSmartDevice, BaseController):
@@ -176,15 +181,13 @@ class StepperI2C(MotorKit, BaseController):
         self.styles = {
             "SINGLE": stepper.SINGLE,
             "DOUBLE": stepper.DOUBLE,
-            "MICROSTEP": stepper.MICROSTEP
+            "MICROSTEP": stepper.MICROSTEP,
+            "INTERLEAVED": stepper.INTERLEAVED
         }
         self.style = self.styles[style]
-        # self.style = stepper.DOUBLE
 
         self.state = {"position": self.currentPosition}
-    
-
-           
+               
     def setup(self, style):
         pass
 
@@ -305,13 +308,6 @@ class ArduCamMultiCamera(BaseController):
             'd': "i2cset -y 11 0x70 0x00 0x07",
         }
 
-        # self.camerai2c = {
-        #     'a': "04",
-        #     'b': "05",
-        #     'c': "06",
-        #     'd': "07",
-        # }
-
         # Set camera for A
         self.camera("a")
 
@@ -319,8 +315,6 @@ class ArduCamMultiCamera(BaseController):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
         os.system(self.camerai2c[param])
-        hexString = "00{0}".format(self.camerai2c[param])
-        # self.i2c.write(bytearray.fromhex(hexString))
         gpio.output(self.channels, self.cameraDict[param])
     
     def camera_parser(self, params):
@@ -328,7 +322,7 @@ class ArduCamMultiCamera(BaseController):
             raise ArgumentNumberError(len(params), 1, "camera")
         param = params[0].lower()
         if param not in self.cameraDict:
-            raise ArgumentErrpr(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
+            raise ArgumentError(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
         return params[0].lower()
     
     def imageMod(self, params):
@@ -346,6 +340,7 @@ class ElectronicScreen(BaseController):
 
     def __init__(self, pin):
         self.pin = pin
+        self.state = "off"
         gpio.setup(self.pin, gpio.OUTPUT)
     
     def on(self, params):
@@ -386,7 +381,7 @@ class ArgumentNumberError(Exception):
 class ArgumentError(Exception):
     def __init__(self, device_name, command, received, allowed=None):
         self.device_name = device_name
-        self.command
+        self.command = command
         self.allowed = allowed
         self.received = received
     
@@ -394,6 +389,6 @@ class ArgumentError(Exception):
         if self.allowed is None:
             return "ArgumentError, Device, {0}, can't process command argument {1} by command {2}.".format(self.device_name, self.received, self.command)
         else:
-            return "ArgumentError, Argument {0}, is not one of the allowed commands, {1}, for device, {2}, running command {3}.".format(self. received, self.allwoed, self.device_name, self.command)
+            return "ArgumentError, Argument {0}, is not one of the allowed commands, {1}, for device, {2}, running command {3}.".format(self.received, self.allowed, self.device_name, self.command)
 
 
