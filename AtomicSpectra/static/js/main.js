@@ -123,7 +123,6 @@ $("document").ready(function () {
         }
         else{
             dataChannel.send("Camera/camera/a");
-            dataChannel.send("Ambient/on/")
             currentCam = "a"
         }
         
@@ -272,7 +271,7 @@ $("document").ready(function () {
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
             // Commented line below - 20200716
-            // dataChannel.send("FHpdu/off/2");                //use this command with PDU
+            dataChannel.send("Ambient/off/")            //use this command with PDU
                 //---------
             AmbientState=false;
             AmbientTOGGLE.title="Click here to turn ON";
@@ -282,7 +281,7 @@ $("document").ready(function () {
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
             // Commented line below - 20200716
-            // dataChannel.send("FHpdu/on/2");                 //use this command with PDU
+            dataChannel.send("Ambient/on/")                 //use this command with PDU
                 //---------
             AmbientState=true;
             AmbientTOGGLE.title="Click here to turn OFF";
