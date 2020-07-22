@@ -123,6 +123,7 @@ $("document").ready(function () {
         }
         else{
             dataChannel.send("Camera/camera/a");
+            dataChannel.send("Ambient/on/")
             currentCam = "a"
         }
         

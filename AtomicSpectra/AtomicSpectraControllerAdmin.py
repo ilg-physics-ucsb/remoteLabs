@@ -18,6 +18,8 @@ grating = StepperI2C("Grating", 2, bounds=(-bound, bound), style="DOUBLE")
 arm = StepperI2C("Arm", 3,bounds=(-bound, bound), style="DOUBLE")
 carousel = StepperI2C("Carousel", 4,bounds=(-bound, bound), style="MICROSTEP", delay=0.00002, refPoints=refPoints)
 
+ambient = SingleGPIO("Ambient", 29)
+
 
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[6])
 ASDIpdu.login()
@@ -30,6 +32,7 @@ exp.add_device(grating)
 exp.add_device(slit)
 exp.add_device(arm)
 exp.add_device(carousel)
+exp.add_device(ambient)
 exp.set_socket_path(socket_path)
 exp.recallState()
 exp.setup()
