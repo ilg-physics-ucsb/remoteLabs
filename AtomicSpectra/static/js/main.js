@@ -54,11 +54,7 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
 
     // Do we need these still?
-    var FirstTimeOvenOn = true;
-    var FirstTimeOvenOff = true;
-    var FirstTimePSon = true;
-    var FirstTimePSoff = true;
-    var FirstTimeTempCam = true;
+    var FirstTimeCam = true;
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap0, mWrap1, mWrap2, mWrap3
@@ -117,9 +113,9 @@ $("document").ready(function () {
     var SlitControl = document.getElementById("SlitControl");
     
     OverviewCam.addEventListener('click', function() {
-        if(FirstTimeTempCam){
+        if(FirstTimeCam){
             console.log("Temp cam was clicked for the first time");
-            FirstTimeTempCam=false;
+            FirstTimeCam=false;
         }
         else{
             dataChannel.send("Camera/camera/a");
@@ -581,7 +577,7 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#SlitControl').mapster({
+  $('#Slit').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0,
@@ -591,7 +587,7 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#Schematic').mapster({
+  $('#Schema').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0,

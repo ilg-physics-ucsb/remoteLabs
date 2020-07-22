@@ -81,19 +81,21 @@
           <map name="image-map-ls">
              <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
           </map>
-          <br>           
-        </div>
-        <div id="Grating" >
-          <img src="static/images/DiffractionGratingActual582x442.jpg" alt="" class="image-8">
-          <div class="click-note">(click for grating info)</div>
           <br>
+          <br>
+          <br>           
         </div>
         <div id="Crosshairs" >
           <img id="crossHairs" src="static/images/crossHairsIcon.png">
           <div class="click-note" style="margin-bottom: -50px;">
             (click to toggle crosshairs visibility; move mouse over video to position crosshairs)
-          </div>\
+          </div>
           <br>
+          <br>
+        </div>
+        <div id="Grating" >
+          <img src="static/images/DiffractionGratingActual582x442.jpg" alt="" class="image-8">
+          <div class="click-note">(click for grating info)</div>
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
@@ -115,13 +117,13 @@
             <div id="crosshair-v" class="hair"></div>
             <video id='v' data-playing="false" autoplay="" muted></video>
           </div>
-         <div id="EPcontrols" >
+          <div id="EPcontrols" >
            <center>Show Crosshair: <input type="checkbox" id="showRuler"><div  id="Coordinates" ></div></center>
-           </div>
+          </div>
         </div>
         <div id="SchematicLeft" class="column w-col w-col-2"></div>
         <div id="Schematic" class="column w-col w-col-8">
-          <img id="Schematic" src="static/images/spectroscope_schematic.png" alt="image-11" class="" usemap="#image-map-schematic">
+          <img id="Schema" src="static/images/spectroscope_schematic.png" alt="image-11" class="" usemap="#image-map-schematic">
           <map name="image-map-schematic">
             <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
             <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="144,267,122,273,130,298,138,318,150,332,132,344,185,367,183,312,169,319,160,299,150,280" shape="poly">
@@ -213,6 +215,15 @@
             (choose increment and click arrows to adjust slit width)
           </div> 
         </div>
+        <div id="Manual" >
+          <strong>Instrument: AO Spencer Spectrometer</strong> <br> 
+            <a target="_blank" href="static/docs/AO Spencer Spectrometer User Manual copy.pdf">
+                <img id="Manual" src="static/images/SpencerSpectrometerPhoto.jpg" >
+            </a>
+            <br>
+            (click on image for a PDF of the Manual)
+        </div>  
+
       </div>
     </div>
     <div id="PageBottom" class="column w-row">
@@ -220,12 +231,6 @@
         <div id="LeftSide" class="column w-col w-col-2">
         </div>
         <div id="Center" class="column w-col w-col-8">
-          <strong>Instrument: AO Spencer Spectrometer</strong> <br> 
-            <a target="_blank" href="static/docs/AO Spencer Spectrometer User Manual copy.pdf">
-                <img id="Manual" src="static/images/SpencerSpectrometerPhoto.jpg" >
-            </a>
-            <br>
-            (click on image for a PDF of the Manual)
         </div>  
         <div id="RightSide" class="column w-col w-col-2">
         </div>
