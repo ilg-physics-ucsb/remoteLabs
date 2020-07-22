@@ -182,7 +182,7 @@ class StepperI2C(MotorKit, BaseController):
             "SINGLE": stepper.SINGLE,
             "DOUBLE": stepper.DOUBLE,
             "MICROSTEP": stepper.MICROSTEP,
-            "INTERLEAVED": stepper.INTERLEAVED
+            "INTERLEAVE": stepper.INTERLEAVE
         }
         self.style = self.styles[style]
 
