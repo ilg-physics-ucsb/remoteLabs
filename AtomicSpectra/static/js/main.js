@@ -131,7 +131,7 @@ $("document").ready(function () {
     })
 
     ArmCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+        dataChannel.send("Camera/camera/c");
         
         EPC.style.visibility='visible';
         track_mouse= false;
@@ -139,11 +139,11 @@ $("document").ready(function () {
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
         SlitControl.style.visibility='visible';
-        currentCam = "b"       
+        currentCam = "c"       
     })
 
     V1Cam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/c");
+        dataChannel.send("Camera/camera/b");
         
         EPC.style.visibility='hidden';
         showruler.prop("checked",false)
@@ -155,7 +155,7 @@ $("document").ready(function () {
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
 
-        currentCam = "c"
+        currentCam = "b"
     })
 
     V2Cam.addEventListener('click', function() {
