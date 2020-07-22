@@ -1,16 +1,7 @@
 #! /usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera
-import visa
-import pickle
 
-# resource_manager = visa.ResourceManager("@py")
-# visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=57600)
-# visa_electrometer.read_termination = "\r\n"
-# visa_electrometer.write_termination = "\r\n"
 
-# visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=19200) #not sure if USB# is unique 2004234
-# visa_multimeter.read_termination = "\r\n"
-# visa_multimeter.write_termination = "\r\n"
 
 camera = ArduCamMultiCamera("Camera", 1)
 # camera.camera("b")
