@@ -189,7 +189,7 @@ $("document").ready(function () {
 
     //for LiveFeed  
     // TEMP CHANGE
-    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
@@ -607,9 +607,9 @@ $("document").ready(function () {
 
 window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
-    // mainCamSignal.hangup();
+    mainCamSignal.hangup();
     // TEMP CHANGE
-    // dataChannel.close();
+    dataChannel.close();
 })
 
 
