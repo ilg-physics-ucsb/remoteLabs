@@ -342,7 +342,7 @@ class ElectronicScreen(BaseController):
         self.pin = pin
         self.name = name
         self.state = "off"
-        gpio.setup(self.pin, gpio.OUTPUT)
+        gpio.setup(self.pin, gpio.OUT)
     
     def on(self, params):
         gpio.output(self.pin, gpio.HIGH)
@@ -360,7 +360,7 @@ class SingleGPIO(BaseController):
         self.pin = pin
         self.name = name
         self.state = "off"
-        gpio.setup(self.pin, gpio.OUTPUT)
+        gpio.setup(self.pin, gpio.OUT)
     
     def on(self, params):
         gpio.output(self.pin, gpio.HIGH)
