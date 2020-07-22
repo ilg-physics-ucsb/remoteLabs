@@ -234,8 +234,10 @@ $("document").ready(function () {
 
     //for Slit Settings
     var Slit = document.getElementById('Slit');
-    var openSlit = document.getElementById('Open');
-    var closeSlit = document.getElementById('Close');
+    var LopenSlit = document.getElementById('OpenL');
+    var RopenSlit = document.getElementById('OpenR');
+    var LcloseSlit = document.getElementById('CloseL');
+    var RcloseSlit = document.getElementById('CloseR');
     var fineSlit = document.getElementById('FineAdjustSlit');
     var coarseSlit = document.getElementById('CoarseAdjustSlit');
     var slitSteps=200;
@@ -521,14 +523,23 @@ $("document").ready(function () {
    fineSlit.addEventListener('click', function(){slitSteps=50;})
    coarseSlit.addEventListener('click', function(){slitSteps=200;})
 
-   openSlit.addEventListener('click', function() {
-       console.log("Slit was made wider");
-       dataChannel.send("Slit/move/"+(-slitSteps));
-    })
-   closeSlit.addEventListener('click', function() {
-       console.log("Slit was made narrower");
-       dataChannel.send("Slit/move/"+slitSteps);
-    })
+   function openSlitCmd() {
+    console.log("Slit was made wider");
+    dataChannel.send("Slit/move/"+(-slitSteps));
+   }
+
+   function closeSlitCmd() {
+    console.log("Slit was made narrower");
+    dataChannel.send("Slit/move/"+slitSteps);
+   }
+   
+   LopenSlit.addEventListener('click', openSlitCmd);
+   RopenSlit.addEventListener('click', openSlitCmd);
+   
+   LcloseSlit.addEventListener('click', closeSlitCmd);
+   RcloseSlit.addEventListener('click', closeSlitCmd);
+   
+
    //END Slit Buttons
 
  
@@ -576,7 +587,7 @@ $("document").ready(function () {
   }).parent().css({"margin":"0 auto"});
 
   $('#Slit').mapster({
-    mapKey:'id',
+    mapKey:'data-key',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
     render_select: { 
