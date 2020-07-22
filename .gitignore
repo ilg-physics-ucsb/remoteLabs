@@ -1,5 +1,8 @@
 .vscode
 .DS_Store
 .vscode/settings.json
+<<<<<<< HEAD
 .vscode/settings.json
 .vscode/settings.json
+=======
+>>>>>>> parent of 5f89e02... Added gitignore files
