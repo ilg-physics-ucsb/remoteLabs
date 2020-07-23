@@ -221,9 +221,22 @@ $("document").ready(function () {
     var AmbientState = false;
 
     //for Lamps
-    var H2press = document.getElementById('H2-off');
-    var Apress = document.getElementById('SampleA-off');
-    var Bpress = document.getElementById('SampleB-off');
+    var H2pressOff = document.getElementById('H2-off');
+    var ApressOff = document.getElementById('SampleA-off');
+    var BpressOff = document.getElementById('SampleB-off');
+
+    var H2pressH2 = document.getElementById('H2-h2');
+    var ApressH2 = document.getElementById('SampleA-h2');
+    var BpressH2 = document.getElementById('SampleB-h2');
+
+    var H2pressA = document.getElementById('H2-a');
+    var ApressA = document.getElementById('SampleA-a');
+    var BpressA = document.getElementById('SampleB-a');
+
+    var H2pressB = document.getElementById('H2-b');
+    var ApressB = document.getElementById('SampleA-b');
+    var BpressB = document.getElementById('SampleB-b');
+
     var allOFFpic = document.getElementById('LampsAllOff');
     var aONpic = document.getElementById('LampsAon');
     var bONpic = document.getElementById('LampsBon');
@@ -287,8 +300,8 @@ $("document").ready(function () {
     //END Ambient Toggling
     
     //BEGIN Lamp Toggling
-    
-    H2press.addEventListener('click', function(){
+
+    function H2PressCmd() {
         // If it is already on and is just switching to H2
         // Turn off carousel, move to H2, turn on carousel
         if(lampSupplyState && spectraLamp != "H2"){
@@ -324,9 +337,6 @@ $("document").ready(function () {
                 bONpic.style.display = "none";
                 allOFFpic.style.display = "block"
                 H2FirstTime = false
-                H2press = document.getElementById('H2-off');
-                Apress = document.getElementById('SampleA-off');
-                Bpress = document.getElementById('SampleB-off');
                 spectraLamp = "H2"
                 return
             } else {
@@ -343,9 +353,6 @@ $("document").ready(function () {
             aONpic.style.display = "none";
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
-            H2press = document.getElementById('H2-off');
-            Apress = document.getElementById('SampleA-off');
-            Bpress = document.getElementById('SampleB-off');
             spectraLamp = "H2"
             return
         }
@@ -359,14 +366,11 @@ $("document").ready(function () {
         aONpic.style.display = "none";
         bONpic.style.display = "none";
         allOFFpic.style.display = "none"
-        H2press = document.getElementById('H2-h2');
-        Apress = document.getElementById('SampleA-h2');
-        Bpress = document.getElementById('SampleB-h2');
         spectraLamp = "H2"
-    })
-
-    Apress.addEventListener('click', function(){
-        // If it is already on and is just switching to A
+    }
+    
+    function APressCmd() {
+         // If it is already on and is just switching to A
         // Turn off carousel, move to A, turn on carousel
         if(lampSupplyState && spectraLamp != "A"){
             console.log("Turning off and switching to A")
@@ -402,9 +406,6 @@ $("document").ready(function () {
             aONpic.style.display = "none";
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
-            H2press = document.getElementById('H2-off');
-            Apress = document.getElementById('SampleA-off');
-            Bpress = document.getElementById('SampleB-off');
             spectraLamp = "A"
             return
         }
@@ -418,13 +419,10 @@ $("document").ready(function () {
         aONpic.style.display = "block";
         bONpic.style.display = "none";
         allOFFpic.style.display = "none"
-        H2press = document.getElementById('H2-a');
-        Apress = document.getElementById('SampleA-a');
-        Bpress = document.getElementById('SampleB-a');
         spectraLamp = "A"
-    })
+    }
 
-    Bpress.addEventListener('click', function(){
+    function BPressCmd() {
         // If it is already on and is just switching to B
         // Turn off carousel, move to B, turn on carousel
         if(lampSupplyState && spectraLamp != "B"){
@@ -481,7 +479,23 @@ $("document").ready(function () {
         Apress = document.getElementById('SampleA-b');
         Bpress = document.getElementById('SampleB-b');
         spectraLamp = "B"
-    })
+    }
+
+    H2pressOff.addEventListener("click", H2PressCmd);
+    H2pressH2.addEventListener("click", H2PressCmd);
+    H2pressA.addEventListener("click", H2PressCmd);
+    H2pressB.addEventListener("click", H2PressCmd);
+
+    ApressOff.addEventListener("click", APressCmd);
+    ApressH2.addEventListener("click", APressCmd);
+    ApressA.addEventListener("click", APressCmd);
+    ApressB.addEventListener("click", APressCmd);
+
+    BpressOff.addEventListener("click", BPressCmd);
+    BpressH2.addEventListener("click", BPressCmd);
+    BpressA.addEventListener("click", BPressCmd);
+    BpressB.addEventListener("click", BPressCmd);
+
 
     //END Lamp Toggling
 
