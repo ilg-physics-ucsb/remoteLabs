@@ -79,7 +79,7 @@ $("document").ready(function () {
     
             // Do clicks here
             OverviewCam.click()
-            H2press.click()
+            H2pressOff.click()
             console.log("hiding modal")
             //Hide Loading Screen
             loadingModal.modal("hide")
