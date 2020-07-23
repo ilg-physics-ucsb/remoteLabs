@@ -409,19 +409,19 @@ $("document").ready(function () {
     
     lowerOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned down"); 
-        dataChannel.send("Oven/move/"+(-ovenSteps));})
+        dataChannel.send("Stage/move/"+(-ovenSteps));})
     raiseOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned up");
-        dataChannel.send("Oven/move/"+ovenSteps);})
+        dataChannel.send("Stage/move/"+ovenSteps);})
     //END Oven Variac Buttons
    //BEGIN Filament Variac Buttons 
    threeDegFilamentV.addEventListener('click', function(){filamentSteps=20;})
    thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=200;})
    
    lowerFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned down"); dataChannel.send("Filament/move/"+(-filamentSteps));})
+       console.log("Filament Variac was turned down"); dataChannel.send("Stage/move/"+(-filamentSteps));})
    raiseFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned up");dataChannel.send("Filament/move/"+filamentSteps);})
+       console.log("Filament Variac was turned up");dataChannel.send("Stage/move/"+filamentSteps);})
    //END Filament Variac Buttons
    //BEGIN Accelerating Voltage Buttons 
    threeDegVa.addEventListener('click', function(){VaSteps=2;})
@@ -429,18 +429,18 @@ $("document").ready(function () {
    threeSixtyDegVa.addEventListener('click', function(){VaSteps=200;})
 
    lowerVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned down"); dataChannel.send("Va/move/"+(-VaSteps));})
+       console.log("Accelerating voltage was turned down"); dataChannel.send("MultiSlits/move/"+(-VaSteps));})
    raiseVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned up");dataChannel.send("Va/move/"+VaSteps);})
+       console.log("Accelerating voltage was turned up");dataChannel.send("MultiSlits/move/"+VaSteps);})
    //END Accelerating Voltage Buttons
    //BEGIN Retarding Voltage Buttons 
    threeDegVr.addEventListener('click', function(){VrSteps=20;})
    thirtySixDegVr.addEventListener('click', function(){VrSteps=200;})
    
    lowerVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned down"); dataChannel.send("Vr/move/"+(-VrSteps));})
+       console.log("Retarding voltage was turned down"); dataChannel.send("SingleSlits/move/"+(-VrSteps));})
    raiseVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned up");dataChannel.send("Vr/move/"+VrSteps);})
+       console.log("Retarding voltage was turned up");dataChannel.send("SingleSlits/move/"+VrSteps);})
    //END Retarding Voltage Buttons
  
     var ElectrometerState=false;
