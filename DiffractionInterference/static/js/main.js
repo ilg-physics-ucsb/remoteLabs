@@ -304,7 +304,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            dataChannel.send("ASDIpdu/off/1");                //use this command with PDU
             }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
@@ -324,7 +324,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("FHpdu/on/1");                 //use this command with PDU 
+            dataChannel.send("ASDIpdu/on/1");                 //use this command with PDU 
             }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
@@ -340,7 +340,7 @@ $("document").ready(function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("FHpdu/off/2");                //use this command with PDU
+            dataChannel.send("Screen/off/");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -349,7 +349,7 @@ $("document").ready(function () {
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("FHpdu/on/2");                 //use this command with PDU
+            dataChannel.send("Screen/on/");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -367,7 +367,7 @@ $("document").ready(function () {
             if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            dataChannel.send("Ambient/off/");                //use this command with PDU
             }
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
@@ -388,7 +388,7 @@ $("document").ready(function () {
             if(!FirstTimePSon){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                //use this command with PDU
+            dataChannel.send("Ambient/on/");                //use this command with PDU
             
             }   
             mWrap7.style.display = "block";                      
@@ -404,8 +404,8 @@ $("document").ready(function () {
     // END Power Switches
 
     //BEGIN Oven Variac Buttons 
-    threeDegOvenV.addEventListener('click', function(){ovenSteps=2;})
-    thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=21;})
+    threeDegOvenV.addEventListener('click', function(){ovenSteps=20;})
+    thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=200;})
     
     lowerOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned down"); 
@@ -415,8 +415,8 @@ $("document").ready(function () {
         dataChannel.send("Oven/move/"+ovenSteps);})
     //END Oven Variac Buttons
    //BEGIN Filament Variac Buttons 
-   threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
-   thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=21;})
+   threeDegFilamentV.addEventListener('click', function(){filamentSteps=20;})
+   thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=200;})
    
    lowerFilamentV.addEventListener('click', function() {
        console.log("Filament Variac was turned down"); dataChannel.send("Filament/move/"+(-filamentSteps));})
@@ -434,8 +434,8 @@ $("document").ready(function () {
        console.log("Accelerating voltage was turned up");dataChannel.send("Va/move/"+VaSteps);})
    //END Accelerating Voltage Buttons
    //BEGIN Retarding Voltage Buttons 
-   threeDegVr.addEventListener('click', function(){VrSteps=2;})
-   thirtySixDegVr.addEventListener('click', function(){VrSteps=20;})
+   threeDegVr.addEventListener('click', function(){VrSteps=20;})
+   thirtySixDegVr.addEventListener('click', function(){VrSteps=200;})
    
    lowerVr.addEventListener('click', function() {
        console.log("Retarding voltage was turned down"); dataChannel.send("Vr/move/"+(-VrSteps));})

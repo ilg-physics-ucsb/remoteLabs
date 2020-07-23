@@ -11,9 +11,9 @@ socket_path = "/tmp/uv4l.socket"
 screen = SingleGPIO("Screen", 26)
 ambient = SingleGPIO("Ambient", 5)
 
-filament = StepperI2C("Filament", 1, bounds=(-20000,20000), style="DOUBLE")  
-Va = StepperI2C("Va", 2,bounds=(-20000,20000))
-Vr = StepperI2C("Vr", 3,bounds=(-20000, 200000))
+multiSlits = StepperI2C("MultiSlits", 1, bounds=(-20000,20000), style="DOUBLE")  #Multiple Slits
+singleSlits = StepperI2C("SingleSlits", 2,bounds=(-20000,20000), style="DOUBLE") #Single Slits
+stage = StepperI2C("Stage", 3, bounds=(-20000, 200000), style="DOUBLE") #Screen
 
 
 
@@ -25,9 +25,11 @@ ASDIpdu.login()
 exp = Experiment("DiffractionInterference")
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
-exp.add_device(filament)
-exp.add_device(Va)
-exp.add_device(Vr)
+exp.add_device(multiSlits)
+exp.add_device(singleSlits)
+exp.add_device(stage)
+exp.add_device(ambient)
+exp.add_device(screen)
 exp.set_socket_path(socket_path)
 exp.setup()
     
