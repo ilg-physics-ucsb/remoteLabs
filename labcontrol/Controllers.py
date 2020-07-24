@@ -161,12 +161,12 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE"):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8):
         if terminal > 2: 
             self.address=0x61
         else:
             self.address=0x60
-        super().__init__(address=self.address)
+        super().__init__(address=self.address, steppers_microsteps=microsteps)
         self.name = name
         self.device_type = "controller"
         self.experiment = None
@@ -182,7 +182,7 @@ class StepperI2C(MotorKit, BaseController):
             "SINGLE": stepper.SINGLE,
             "DOUBLE": stepper.DOUBLE,
             "MICROSTEP": stepper.MICROSTEP,
-            "INTERLEAVED": stepper.INTERLEAVED
+            "INTERLEAVE": stepper.INTERLEAVE
         }
         self.style = self.styles[style]
 
@@ -338,10 +338,11 @@ class ArduCamMultiCamera(BaseController):
 
 class ElectronicScreen(BaseController):
 
-    def __init__(self, pin):
+    def __init__(self, name, pin):
         self.pin = pin
+        self.name = name
         self.state = "off"
-        gpio.setup(self.pin, gpio.OUTPUT)
+        gpio.setup(self.pin, gpio.OUT)
     
     def on(self, params):
         gpio.output(self.pin, gpio.HIGH)
@@ -352,6 +353,23 @@ class ElectronicScreen(BaseController):
     def reset(self):
         gpio.output(self.pin, gpio.LOW)
 
+
+class SingleGPIO(BaseController):
+
+    def __init__(self, name, pin):
+        self.pin = pin
+        self.name = name
+        self.state = "off"
+        gpio.setup(self.pin, gpio.OUT)
+    
+    def on(self, params):
+        gpio.output(self.pin, gpio.HIGH)
+    
+    def off(self, params):
+        gpio.output(self.pin, gpio.LOW)
+
+    def reset(self):
+        gpio.output(self.pin, gpio.LOW)
 
 class CommandError(Exception):
 

@@ -1,0 +1,270 @@
+<!-- ATOMIC SPECTRA EXPERIMENT CONTROL PAGE -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- <meta content="Webflow" name="generator"> -->
+  <title>UCSB Physics Remote Lab - Atomic Spectra Experiment</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="static/css/mdb.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="static/css/styleGrid.css">
+  <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/skeleton-3df96e.webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/ruler.css" rel="stylesheet" type="text/css">
+  
+  <!-- Items below are from WebFlow, could make it easy to customize favicon and webclip icons -->
+  <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+  <!-- <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="static/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="static/images/webclip.png" rel="apple-touch-icon"> -->
+
+</head>
+<body>
+
+
+
+  <script src="static/js/signalling.js"></script>
+  <!-- jQuery - These are all the scripts to do all the styling -->
+  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="static/js/popper.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/js/webflow.js" type="text/javascript"></script>
+  <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
+  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
+
+  <script src="static/js/main.js"></script>
+  <!-- Start your project here--> 
+  <div class="pagecontainer w-row">
+    <div id="PageHead" class="column w-row">
+      <h1 class="Title">Atomic Spectra Experiment</h1>
+      <div class="text-block">
+        <h5 class="SubTitle">
+          <a target="_blank" href="static/docs/ASlabGuide.pdf">Click here to access the lab guide.</a>
+            <br>  
+          <span style="font-weight: 100;font-style: italic;"> This will become a link to the course's GauchoSpace.</span>
+        </h5>
+      </div> 
+      <!-- <div class="w-row"> -->
+      <div id="TopTextLeft" class="column w-col w-col-6">
+        <h2 class="SubTitle">Set-Up</h2>
+        <div class="text-block">
+          Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
+          as well as to equipment manuals and manufacturer websites.</div>
+      </div>
+      <div id="TopTextRight" class="column w-col w-col-6">
+        <h2 class="SubTitle">Get Help</h2>
+        <div class="text-block">
+          Here students will be advised of options for synchronous and asynchronous assistance. 
+          <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
+          so they can use the various Zoom features to request help in real time. 
+          There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.</div>
+      </div>
+      <div class="Warning">
+        This session will end and the system will reset in 
+        <span id="time" style="color:red;font-weight:bold">45:00</span> 
+        minutes.
+      </div>
+       <!-- </div> -->
+    </div>
+    <div id="PageMiddle" class="column w-row">
+      <div  id="LeftSideImages" class="column w-col w-col-2">
+        <div id="Toggle">
+          (click to toggle the Ambient Light)<br>
+          <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
+          </map>
+          <br>
+          <br>
+          <br>           
+        </div>
+        <div id="Crosshairs" >
+          <img id="crossHairs" src="static/images/crossHairsIcon.png">
+          <div class="click-note" style="margin-bottom: -50px;">
+            (click to toggle crosshairs visibility; move mouse over video to position crosshairs)
+          </div>
+          <br>
+          <br>
+        </div>
+        <div id="Grating" >
+          <img src="static/images/DiffractionGratingActual582x442.jpg" alt="" class="image-8">
+          <div class="click-note">(click for grating info)</div>
+        </div>
+      </div>
+      <div  id="VideoCenter" class="column w-col w-col-8">
+        <div  id="CrossContainer" >
+          <div class="video w-video w-embed">
+            <div id="crosshair-h" class="hair"></div>
+            <div id="crosshair-v" class="hair"></div>
+            <video id='v' data-playing="false" autoplay="" muted></video>
+          </div>
+          <div id="EPcontrols" >
+           <center>Show Crosshair: <input type="checkbox" id="showRuler"><div  id="Coordinates" ></div></center>
+          </div>
+        </div>
+        <div>
+          <div class="btn-group" role="group"  aria-label="Basic example">
+            <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
+            <button id="EyepieceCam" type="button" class="btn btn-primary">Eyepiece</button>
+            <button id="V1Cam" type="button" class="btn btn-primary">Vernier 1</button>
+            <button id="V2Cam" type="button" class="btn btn-primary">Vernier 2</button>
+            <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+          </div>
+        </div>
+        <div>  
+          <div id="SchematicLeft" class="column w-col w-col-2"></div>
+          <div id="Schematic" class="column w-col w-col-8">
+            <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
+            <map name="image-map-schematic">
+              <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
+              <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="144,267,122,273,130,298,138,318,150,332,132,344,185,367,183,312,169,319,160,299,150,280" shape="poly">
+              <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="405,135,412,145,424,135,431,139,444,113,414,113,421,123" shape="poly">
+              <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
+            </map>
+            <div id="radioButtonsSchematic" class="w-row">
+              <!-- <div class="column w-col w-col-1" style="bottom: -30px;"></div> -->
+              <div class="column w-col w-col-2" style="bottom: -30px; color:darkgreen" >Telescope:</div>
+              <div class="column w-col w-col-1" style=" bottom: -30px; color:darkgreen">
+                <input type="radio" id="fineArm" name="ArmStepSize" value="1">
+                <label for="fineArm">Fine</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-1" style=" bottom: -30px; color:darkgreen">
+                <input type="radio" id="mediumArm" name="ArmStepSize" value="5">
+                <label for="mediumArm">Medium</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-1" style="bottom: -30px; color:darkgreen">
+                <input type="radio" id="coarseArm" name="ArmStepSize" value="50" checked>
+                <label for="coarseArm">Coarse</label>
+              </div>
+              <div class="column w-col w-col-1" style="bottom: -30px;"></div>
+              <div class="column w-col w-col-1" style="bottom: -30px; color:darkorchid">Grating:</div>
+              <div class="column w-col w-col-1" style=" bottom: -30px; color:darkorchid">
+                <input type="radio" id="fineTable" name="TableStepSize" value="20">
+                <label for="fineTable">Fine</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-1" style=" bottom: -30px; color:darkorchid">
+                <input type="radio" id="mediumTable" name="TableStepSize" value="200">
+                <label for="mediumTable">Medium</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-1" style="bottom: -30px; color:darkorchid">
+                <input type="radio" id="coarseTable" name="TableStepSize" value="600" checked>
+                <label for="coarseTable">Coarse</label>
+              </div>
+              <div class="column w-col w-col-2" style="bottom: -30px;"></div>
+            </div>
+            <div class="click-note" style="margin-bottom: -20px;">
+              (choose Fine/Coarse and click arrows to move the telescope or the grating)
+            </div>
+          </div>
+          <div id="SchematicRight" class="column w-col w-col-2"></div>
+        </div>  
+      </div>
+      <div id="RightSideImages" class="column w-col w-col-2">
+        <div id="Lamps">
+            <strong>Spectrum Tube Lamps</strong> <br> 
+            <img id="LampsAllOff" src="static/images/LampToggles/AllOff.jpg" usemap="#image-map-Lamps-off">
+            <img id="LampsAon" src="static/images/LampToggles/Aon.jpg" usemap="#image-map-Lamps-a">
+            <img id="LampsBon" src="static/images/LampToggles/Bon.jpg" usemap="#image-map-Lamps-b">
+            <img id="LampsH2on" src="static/images/LampToggles/H2on.jpg" usemap="#image-map-Lamps-h2">
+            <map name="image-map-Lamps-off">
+              <area id="H2-off" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-off" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-off" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <map name="image-map-Lamps-a">
+              <area id="H2-a" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-a" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-a" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <map name="image-map-Lamps-b">
+              <area id="H2-b" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-b" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-b" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <map name="image-map-Lamps-h2">
+              <area id="H2-h2" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-h2" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-h2" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <br>
+            (click on a lamp to rotate it into position or turn it on/off)
+        </div>
+        <div id="SlitControl">
+          <img id="Slit" src="static/images/SlitIcon2.png" usemap="#image-map-Slit">
+          <map name="image-map-Slit">
+            <area data-key="Open" id="OpenL" title="Open Slit" href="#" coords="169,325,170,372,118,374,115,405,21,349,117,294,117,325" shape="poly">
+            <area data-key="Close" id="CloseL" title="Close Slit" href="#" coords="171,326,172,373,225,373,226,406,323,350,226,293,225,324,198,325" shape="poly">
+            <area data-key="Close" id="CloseR" title="Close Slit" href="#" coords="530,324,530,374,477,372,477,406,381,350,477,292,478,325" shape="poly">
+            <area data-key="Open" id="OpenR" title="Open Slit" href="#" coords="532,326,587,326,587,293,684,350,588,406,585,374,532,375" shape="poly">
+          </map>      
+          <div id="radioButtonsSlit" class="w-row">
+            <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+              <input type="radio" id="FineAdjustSlit" name="AdjustSlit" value="3.6">
+              <label for="FineAdjustSlit">Fine</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+              <input type="radio" id="CoarseAdjustSlit" name="AdjustSlit" value="36" checked>
+              <label for="CoarseAdjustSlit">Coarse</label>
+            </div>
+          </div>  
+          <div class="click-note">
+            (choose increment and click arrows to adjust slit width)
+          </div> 
+        </div>
+        <div id="Manual" >
+          <strong>Instrument: AO Spencer Spectrometer</strong> <br> 
+            <a target="_blank" href="static/docs/AO Spencer Spectrometer User Manual copy.pdf">
+                <img id="Manual" src="static/images/SpencerSpectrometerPhoto.jpg" >
+            </a>
+            <br>
+            (click on image for a PDF of the Manual)
+        </div>  
+
+      </div>
+    </div>
+    <div id="PageBottom" class="column w-row">
+      <div id="ControlsBottom" class="column w-row" >
+        <div id="LeftSide" class="column w-col w-col-2">
+        </div>
+        <div id="Center" class="column w-col w-col-8">
+        </div>  
+        <div id="RightSide" class="column w-col w-col-2">
+        </div>
+      </div>
+      <div id="MetersBottom" class="column w-row" >
+        <div id="MetersLeft" class="column w-col w-col-6">
+        <!-- Preserving 6-6 structure  -->
+        </div>
+        <div id="MetersRight" class="column w-col w-col-6">
+        <!-- Preserving 6-6 structure  -->
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="loadingModalLabel">Page Loading</h5>
+                </div>
+                <div class="modal-body">
+                        <div class="loader"></div>
+                        <p>Please wait while the page finishes loading.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="static/js/jquery.ruler.js"></script>
+ </body>
+</html>
