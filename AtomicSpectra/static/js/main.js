@@ -261,6 +261,7 @@ $("document").ready(function () {
     var tCW = document.getElementById('telescopeCW');
     var tCCW = document.getElementById('telescopeCCW');
     var tFine = document.getElementById('fineArm');
+medium    var tMedium = document.getElementById('mediumArm')
     var tCoarse = document.getElementById('coarseArm');
     var telescopeSteps=100; ///unknown number of degrees
     //for Grating Settings
@@ -306,7 +307,7 @@ $("document").ready(function () {
         // Turn off carousel, move to H2, turn on carousel
         if(lampSupplyState && spectraLamp != "H2"){
             console.log("Turning off and switching to H2")
-            dataChannel.send("Camera/camera/d")               //This should be overiew camera
+            dataChannel.send("Camera/camera/a")               //This should be overiew camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/6");
             dataChannel.send("Carousel/goto/h2")
@@ -316,7 +317,7 @@ $("document").ready(function () {
         // Move to H2, turn on carousel.
         } else if (!lampSupplyState && spectraLamp != "H2"){
             console.log("Switching to H2")
-            dataChannel.send("Camera/camera/d")               //This should be overiew camera
+            dataChannel.send("Camera/camera/a")               //This should be overiew camera
             // Add waiting popup (modal) here
             dataChannel.send("Carousel/goto/h2")
             dataChannel.send("ASDIpdu/on/6");
@@ -374,7 +375,7 @@ $("document").ready(function () {
         // Turn off carousel, move to A, turn on carousel
         if(lampSupplyState && spectraLamp != "A"){
             console.log("Turning off and switching to A")
-            dataChannel.send("Camera/camera/d")               //This should be overiew camera
+            dataChannel.send("Camera/camera/a")               //This should be overiew camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/6");
             dataChannel.send("Carousel/goto/a")
@@ -384,7 +385,7 @@ $("document").ready(function () {
         // Move to A, turn on carousel.
         } else if (!lampSupplyState && spectraLamp != "A"){
             console.log("Switching to A")
-            dataChannel.send("Camera/camera/d")               //This should be overiew camera
+            dataChannel.send("Camera/camera/a")               //This should be overiew camera
             // Add waiting popup (modal) here
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/6");
@@ -427,7 +428,7 @@ $("document").ready(function () {
         // Turn off carousel, move to B, turn on carousel
         if(lampSupplyState && spectraLamp != "B"){
             console.log("Turning off and switching to B")
-            dataChannel.send("Camera/camera/d")               //This should be overiew camera
+            dataChannel.send("Camera/camera/a")               //This should be overiew camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/6");
             dataChannel.send("Carousel/goto/b")
@@ -437,7 +438,7 @@ $("document").ready(function () {
         // Move to B, turn on carousel.
         } else if (!lampSupplyState && spectraLamp != "B"){
             console.log("Switching to B")
-            dataChannel.send("Camera/camera/d")               //This should be overiew camera
+            dataChannel.send("Camera/camera/a")               //This should be overiew camera
             // Add waiting popup (modal) here
             dataChannel.send("Carousel/goto/b")
             dataChannel.send("ASDIpdu/on/6");
@@ -519,17 +520,18 @@ $("document").ready(function () {
 
    //BEGIN Arm Buttons 
    tFine.addEventListener('click', function(){telescopeSteps=20;})
+   tMedium.addEventListener('click', function(){telescopeSteps=40;})
    tCoarse.addEventListener('click', function(){telescopeSteps=100;})
 
    tCW.addEventListener('click', function() {
        // Changed for AS 
        console.log("Telescope turned CW");
-       dataChannel.send("Arm/move/"+(-telescopeSteps));
+       dataChannel.send("Arm/move/"+telescopeSteps);
     })
    tCCW.addEventListener('click', function() {
        // Changed for AS 
        console.log("Telescope turned CCW");
-       dataChannel.send("Arm/move/"+telescopeSteps);
+       dataChannel.send("Arm/move/"+(-telescopeSteps));
     })
    //END Arm Buttons
 
@@ -539,12 +541,12 @@ $("document").ready(function () {
 
    function openSlitCmd() {
     console.log("Slit was made wider");
-    dataChannel.send("Slit/move/"+(-slitSteps));
+    dataChannel.send("Slit/move/"+slitStep));
    }
 
    function closeSlitCmd() {
     console.log("Slit was made narrower");
-    dataChannel.send("Slit/move/"+slitSteps);
+    dataChannel.send("Slit/move/"+(-slitSteps));
    }
    
    LopenSlit.addEventListener('click', openSlitCmd);
