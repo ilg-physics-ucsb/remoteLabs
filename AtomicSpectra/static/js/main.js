@@ -245,6 +245,9 @@ $("document").ready(function () {
     var spectraLamp = "H2"
     var H2FirstTime = true;
 
+    var nudgeLeft = document.getElementById('lampNudgeLeft');
+    var nudgeRight = document.getElementById('lampNudgeRight');
+
     //for Slit Settings
     var Slit = document.getElementById('Slit');
     var LopenSlit = document.getElementById('OpenL');
@@ -500,10 +503,19 @@ $("document").ready(function () {
     BpressA.addEventListener("click", BPressCmd);
     BpressB.addEventListener("click", BPressCmd);
 
-
     //END Lamp Toggling
 
+//BEGIN Lamp Nudging
 
+    nudgeLeft.addEventListener('click',function() {
+        console.log("Lamp nudged left");
+        dataChannel.send("Carousel/move/-20")
+    })
+    nudgeRight.addEventListener('click',function() {
+        console.log("Lamp nudged right");
+        dataChannel.send("Carousel/move/20")
+    })
+//END Lamp Nudging
 
     //BEGIN Grating buttons
     gFine.addEventListener('click', function(){gratingSteps=20;})        //roughly one degree
