@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-    var video= document.getElementById('v')
     var CH_click=document.getElementById('crossHairs')
     var draw_call=true
     
@@ -13,7 +12,7 @@ $(document).ready(function(){
     canvas.addEventListener('mousemove', function(evt) 
     {   
         if(draw_call){
-        var mousePos = getMousePos(video, evt);
+        var mousePos = getMousePos(liveStream, evt);
         var message = 'Mouse position: ' + mousePos.x.toFixed(0) + ',' + mousePos.y.toFixed(0);
         
         draw_cursor(mousePos.x,mousePos.y)
