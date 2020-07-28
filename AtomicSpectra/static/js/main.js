@@ -294,7 +294,7 @@ $("document").ready(function () {
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
             // Commented line below - 20200716
-            dataChannel.send("Ambient/on/")                 //use this command with PDU
+            dataChannel.send("Ambient/on/")                 //use this command with GPIO
                 //---------
             AmbientState=true;
             AmbientTOGGLE.title="Click here to turn OFF";
