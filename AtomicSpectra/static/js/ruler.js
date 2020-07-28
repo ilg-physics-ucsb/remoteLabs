@@ -17,7 +17,7 @@ $(document).ready(function(){
     canvas.addEventListener('mousemove', function(evt) 
     {   
         if(draw_call){
-        var mousePos = getMousePos(liveStream, evt);
+        var mousePos = getMousePos(canvas, evt);
         var message = 'Mouse position: ' + mousePos.x.toFixed(0) + ',' + mousePos.y.toFixed(0);
         
         draw_cursor(mousePos.x,mousePos.y)
