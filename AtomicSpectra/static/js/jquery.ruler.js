@@ -4,16 +4,10 @@ $(document).ready(function () {
     video = $('#v'),
     canvas_dom = $('canvas')
 
-    c_wrap.css('height',video.css('height'))
-    c_wrap.css('width',video.css('width'))
+    // c_wrap.css('height',video.css('height'))
+    // c_wrap.css('width',video.css('width'))
 
-    function getWidth(){
-        return document.getElementById('v').clientWidth; //parseInt(video.css('width'),10)
-    }
 
-    function getHeight(){
-        return  document.getElementById('v').clientHeight;
-    }
     // canvas_dom.css('height', video.css('height'))
     // canvas_dom.css('width',video.css('width'))
 
@@ -23,4 +17,12 @@ $(document).ready(function () {
     // })
 
 })
+
+function getWidth(){
+    return document.getElementById('v').clientWidth; //parseInt(video.css('width'),10)
+}
+
+function getHeight(){
+    return  document.getElementById('v').clientHeight;
+}
 

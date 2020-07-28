@@ -7,39 +7,8 @@ $(document).ready(function(){
     var draw_call=true
     
     
-    canvas.width=getWidth()
-    canvas.height=getHeight()
-    
-    function writeMessage(canvas, message, x, y) {
-        var context = canvas.getContext('2d');
-       // context.clearRect(0, 0, canvas.width, canvas.height);
-        context.font = '10pt Calibri';
-        context.fillStyle = 'green';
-        context.fillText(message, 10, 15);
-      }
-    function getMousePos(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-            x: evt.clientX - rect.left,
-            y: evt.clientY - rect.top
-        };
-    }
-    
-     
-    function draw_cursor(x,y){
-        context.clearRect(0,0,2000,2000)
-        context.beginPath();
-        context.moveTo(x, 0);
-        context.lineTo(x, 2000);
-        context.stroke();
-        context.beginPath();
-        context.moveTo(0, y);
-        context.lineTo(2000, y);
-        context.strokeStyle = "green";
-        context.stroke();
-    }
-    
-    
+    // canvas.width=getWidth()
+    // canvas.height=getHeight()
     
     canvas.addEventListener('mousemove', function(evt) 
     {   
@@ -74,5 +43,33 @@ $(document).ready(function(){
     })
 })
 
+function writeMessage(canvas, message, x, y) {
+    var context = canvas.getContext('2d');
+   // context.clearRect(0, 0, canvas.width, canvas.height);
+    context.font = '10pt Calibri';
+    context.fillStyle = 'green';
+    context.fillText(message, 10, 15);
+  }
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
+
+ 
+function draw_cursor(x,y){
+    context.clearRect(0,0,2000,2000)
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, 2000);
+    context.stroke();
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(2000, y);
+    context.strokeStyle = "green";
+    context.stroke();
+}
 
 
