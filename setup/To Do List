@@ -1,0 +1,79 @@
+PE1
+    link to 5L lab guide - Deborah
+    check value of h derived from zero crossing vs from asymptotic value - Carl
+    troubleshoot lack of open socket after hours - Zak
+PE2 
+    build - Raffi
+        add wires to motorHat
+        mount motors
+
+FH1
+    replace Oven variac pulley with one of larger diameter
+        (on order, not shipped... get Raffi to 3D print?)
+    get rid of blue tape in data view
+    determine whether filament glow is visible
+        clarify sense of glare in tube view
+    troubleshoot lack of open socket after hours - Zak
+FH2 
+    build - Raffi
+        add motors all around
+        
+AS1
+    fix carousel drive mechanism - Zak & Raffi 
+    fix cursors - Kelly
+    add blackout - Kelly
+    put on port 80
+AS2
+    build
+
+
+DI
+    add ufw
+
+DI2
+    build
+    
+GR
+    format GR2pi
+    design motorized arm
+
+MANUALS
+    mount markdown formatted 5L manuals - Deborah
+        PE
+        FH
+        AS
+        DI
+
+    readthrough and suggest edits to 5L manual
+        PE - 
+        FH
+        AS
+        DI
+    
+    readthrough and suggest edits to 25L manual
+        PE - 
+        FH
+        AS
+        DI
+    make video - Deborah & Jeremy
+        PE - 
+        FH
+        AS
+        DI
+
+
+GauchoSpace
+    mount Overleaf template for Plot assignments
+    mount course info pages
+        instructors
+        grading
+        notetaking
+        error propagation
+    generate welcome e-mail
+    respond to student inquiries
+
+Computer-wise  
+    remla stop to reset
+    
+    Establish protocol for protecting student access times
+    Establish calendar for reserving equipment at other times

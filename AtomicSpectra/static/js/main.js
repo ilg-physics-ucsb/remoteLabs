@@ -52,16 +52,14 @@ $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
-    var FirstTimeOvenOn = true;
-    var FirstTimeOvenOff = true;
-    var FirstTimePSon = true;
-    var FirstTimePSoff = true;
-    var FirstTimeTempCam = true;
+
+    // Do we need these still?
+    var FirstTimeCam = true;
 
     // Define Variables that are MWRAPs for use inside of callbacks
-    var mWrap1, mWrap2, mWrap6, mWrap7
+    var mWrap0, mWrap1, mWrap2, mWrap3
     var intervalId
-    var mWrapList = ["#mapster_wrap_2", "#mapster_wrap_1", "#mapster_wrap_6", "#mapster_wrap_7"]
+    var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1", "#mapster_wrap_2", "#mapster_wrap_3"]
 
     var loadingModal = $("#loadingModal")
 
@@ -69,106 +67,112 @@ $("document").ready(function () {
         intervalId = setInterval(function() {
             for (mWrap of mWrapList) {
                 if ($(mWrap).length == 0) {
+                    OverviewCam.click()
                     return
                 }
             } 
             
             //Run when all mwraps exist.
+            mWrap0 = $("#mapster_wrap_0")[0]
             mWrap1 = $("#mapster_wrap_1")[0]
             mWrap2 = $("#mapster_wrap_2")[0]
-            mWrap6 = $("#mapster_wrap_6")[0]
-            mWrap7 = $("#mapster_wrap_7")[0]
+            mWrap3 = $("#mapster_wrap_3")[0]
     
             // Do clicks here
-            OvenONpress.click()
-            OvenOFFpress.click()
-            powerSupplyON.click()
-            powerSupplyOFF.click()
-            TempCam.click()
+            OverviewCam.click()
+            H2pressOff.click()
             console.log("hiding modal")
             //Hide Loading Screen
             loadingModal.modal("hide")
             //Stop repeating check
-            clearInterval(intervalId)
-    
+            clearInterval(intervalId)    
         }, 500)
     })
     loadingModal.modal('show')
 
     
-
-
     //for multi-camera switching
     var OverviewCam = document.getElementById("OverviewCam");
     var ArmCam = document.getElementById("EyepieceCam");
     var V1Cam = document.getElementById("V1Cam");
     var V2Cam = document.getElementById("V2Cam");
+    var currentCam = "a";
     // var OffCam = document.getElementById("OffCam");
 
     //for div display switching
-    var FullPage = document.getElementById("FullPage");
-    var OvenLeft = document.getElementById("OvenLeft");
-    var OvenRight = document.getElementById("OvenRight");
-    var TubeLeft = document.getElementById("TubeLeft");
-    var TubeRight = document.getElementById("TubeRight");
-    var PotsLeft = document.getElementById("ControlsLeft");
-    var PotsRight = document.getElementById("ControlsRight");
-    var PotsBottom = document.getElementById("ControlsBottom");
-    var MetersBottom = document.getElementById("MetersBottom");
-
+    var Toggle = document.getElementById("Toggle");
+    var Grating = document.getElementById("Grating");
+    var Crosshairs = document.getElementById("Crosshairs");
+    var CrossContainer = document.getElementById("CrossContainer");
+    var EPC= document.getElementById("EPcontrols")
+    var Schematic = document.getElementById("Schematic");
+    var Lamps = document.getElementById("Lamps");
+    var SlitControl = document.getElementById("SlitControl");
+    
     OverviewCam.addEventListener('click', function() {
-        if(FirstTimeTempCam){
-            console.log("Temp cam was clicked for the first time");
-            FirstTimeTempCam=false;
+        if(FirstTimeCam){
+            console.log("Overview cam was clicked for the first time");
+            FirstTimeCam=false;
         }
         else{
             dataChannel.send("Camera/camera/a");
+            currentCam = "a"
         }
-        OvenLeft.style.display = "block";
-        OvenRight.style.display = "block";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "none";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "none";
+        
+        EPC.style.visibility='hidden';
+        showruler.prop("checked",false)
+        track_mouse= false
+        document.getElementById("crosshair-v").style.visibility = "hidden";
+        document.getElementById("crosshair-h").style.visibility = "hidden";
+        
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
         
     })
 
     ArmCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "block";
-        TubeRight.style.display = "block";
-        PotsLeft.style.display = "none";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "none";
+        dataChannel.send("Camera/camera/c");
+        
+        EPC.style.visibility='visible';
+        track_mouse= false;
+        
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility='visible';
+        SlitControl.style.visibility='visible';
+        currentCam = "c"       
     })
 
     V1Cam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/c");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "block";
-        PotsRight.style.display = "block";
-        PotsBottom.style.display = "block";
-        MetersBottom.style.display = "none";
+        dataChannel.send("Camera/camera/b");
+        
+        EPC.style.visibility='hidden';
+        showruler.prop("checked",false)
+        track_mouse= false
+        document.getElementById("crosshair-v").style.visibility = "hidden";
+        document.getElementById("crosshair-h").style.visibility = "hidden";
+        
+        Lamps.style.visibility = "hidden";
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
+
+        currentCam = "b"
     })
 
     V2Cam.addEventListener('click', function() {
         dataChannel.send("Camera/camera/d");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "block";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "block";
+        
+        EPC.style.visibility='hidden';
+        showruler.prop("checked",false)
+        track_mouse= false
+        document.getElementById("crosshair-v").style.visibility = "hidden";
+        document.getElementById("crosshair-h").style.visibility = "hidden";
+        
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility='visible';
+        SlitControl.style.visibility='visible';
+
+        currentCam = "d"
     })
 
     // OffCam.addEventListener('click', function() {
@@ -212,209 +216,373 @@ $("document").ready(function () {
      }
  
    
-    //for Oven Variac Power
-    var OvenOFFpress = document.getElementById('ovenOFF');
-    var OvenONpress = document.getElementById('ovenON');
-    var OvenOFFpic = document.getElementById('ovenSwitchOFF');
-    var OvenONpic = document.getElementById('ovenSwitchON');
-    var OvenState = false;
+    //for Ambient Light
+    var lightSwitch = document.getElementById('lightSwitch');
+    var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
+    var AmbientState = false;
 
-    //for Filament Variac Power
-    var filamentSwitch = document.getElementById('filamentSwitch');
-    var filamentTOGGLE = document.getElementById('filamentTOGGLE');
-    var filamentState = false;
+    //for Lamps
+    var H2pressOff = document.getElementById('H2-off');
+    var ApressOff = document.getElementById('SampleA-off');
+    var BpressOff = document.getElementById('SampleB-off');
 
-    //for Power Supply Power
-    var powerSupplyOFF = document.getElementById('psOFF');
-    var powerSupplyON = document.getElementById('psON');
-    var psOFFpic = document.getElementById('powerSupplySwitchOFF');
-    var psONpic = document.getElementById('powerSupplySwitchON');
-    var powerSupplyState = false;
+    var H2pressH2 = document.getElementById('H2-h2');
+    var ApressH2 = document.getElementById('SampleA-h2');
+    var BpressH2 = document.getElementById('SampleB-h2');
 
-    //for Oven Variac Settings
-    var lowerOvenV = document.getElementById('oVccw');
-    var raiseOvenV = document.getElementById('oVcw');
-    var threeDegOvenV = document.getElementById('3.6_deg_Vo');
-    var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
-    var ovenSteps=23;
+    var H2pressA = document.getElementById('H2-a');
+    var ApressA = document.getElementById('SampleA-a');
+    var BpressA = document.getElementById('SampleB-a');
+
+    var H2pressB = document.getElementById('H2-b');
+    var ApressB = document.getElementById('SampleA-b');
+    var BpressB = document.getElementById('SampleB-b');
+
+    var allOFFpic = document.getElementById('LampsAllOff');
+    var aONpic = document.getElementById('LampsAon');
+    var bONpic = document.getElementById('LampsBon');
+    var H2ONpic = document.getElementById('LampsH2on');
+    var lampSupplyState = false;
+    var spectraLamp = "H2"
+    var H2FirstTime = true;
+
+    var nudgeLeft = document.getElementById('lampNudgeLeft');
+    var nudgeRight = document.getElementById('lampNudgeRight');
+
+    //for Slit Settings
+    var Slit = document.getElementById('Slit');
+    var LopenSlit = document.getElementById('OpenL');
+    var RopenSlit = document.getElementById('OpenR');
+    var LcloseSlit = document.getElementById('CloseL');
+    var RcloseSlit = document.getElementById('CloseR');
+    var fineSlit = document.getElementById('FineAdjustSlit');
+    var coarseSlit = document.getElementById('CoarseAdjustSlit');
+    var slitSteps=200;
    
-    //for Filament Variac Settings
-    var lowerFilamentV = document.getElementById('fVccw');
-    var raiseFilamentV = document.getElementById('fVcw');
-    var threeDegFilamentV = document.getElementById('3.6_deg_Vf');
-    var thirtySixDegFilamentV = document.getElementById('36_deg_Vf');
-    var filamentSteps=23;
-    
-    //for Accelerating Voltage Potentiometer Settings
-    var raiseVa = document.getElementById('aCW');
-    var lowerVa = document.getElementById('aCCW');
-    var threeDegVa = document.getElementById('3.6_deg_Va');
-    var thirtySixDegVa = document.getElementById('36_deg_Va');
-    var threeSixtyDegVa = document.getElementById('360_deg_Va');
-    var VaSteps=23;
-   
-    //for Retarding Voltage Potentiometer Settings
-    var raiseVr = document.getElementById('rCW');
-    var lowerVr = document.getElementById('rCCW');
-    var threeDegVr = document.getElementById('3.6_deg_Vr');
-    var thirtySixDegVr = document.getElementById('36_deg_Vr');
-    var VrSteps=23;
+    //for Schematic
+    var SchemaPIC = document.getElementById('Schema')
+    //for Telescope Settings
+    var tCW = document.getElementById('telescopeCW');
+    var tCCW = document.getElementById('telescopeCCW');
+    var tFine = document.getElementById('fineArm');
+    var tMedium = document.getElementById('mediumArm')
+    var tCoarse = document.getElementById('coarseArm');
+    var telescopeSteps=100; ///unknown number of degrees
+    //for Grating Settings
+    var gCW = document.getElementById('gratingCW');
+    var gCCW = document.getElementById('gratingCCW');
+    var gFine = document.getElementById('fineTable');
+    var gMedium = document.getElementById('mediumTable')
+    var gCoarse = document.getElementById('coarseTable');
+    var gratingSteps=200; //roughly ten degrees
 
-    //BEGIN Power Switches 
- 
-    OvenOFFpress.addEventListener('click', function(){
-        console.log("Oven power was turned off");
-        if(OvenState){
-            if(FirstTimeOvenOff){
-                // mWrap2 = document.getElementById('mapster_wrap_2');
-                console.log("for the first time");
-            }
-            if(!FirstTimeOvenOff){
-            //--------choose one of the following
-            //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("FHpdu/off/1");                //use this command with PDU
-            }
-            mWrap1.style.display = "block";                      
-            mWrap2.style.display = "none";
-            OvenOFFpic.style.display = "block";                      
-            OvenONpic.style.display = "none"; 
-            OvenState=false; 
-            FirstTimeOvenOff=false;
-        }
-    })
-    OvenONpress.addEventListener('click', function(){
-        console.log("Oven power was turned on");
-        if(!OvenState){
-            if(FirstTimeOvenOn){  //initialize mapster wrap for OvenOn
-                // mWrap1 = document.getElementById('mapster_wrap_1');
-                console.log("for the first time");
-            }
-            if(!FirstTimeOvenOn){
-            //--------choose one of the following
-            //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("FHpdu/on/1");                 //use this command with PDU 
-            }
-            mWrap2.style.display = "block";                      
-            mWrap1.style.display = "none"; 
-            OvenONpic.style.display = "block";                      
-            OvenOFFpic.style.display = "none";
-            OvenState=true;  
-            FirstTimeOvenOn=false;
-        }
-    })
-    
-    filamentTOGGLE.addEventListener('click', function(){
-        console.log("Filament power was switched");
-        if(filamentState){
+
+    //BEGIN Ambient Toggling 
+     
+    AmbientTOGGLE.addEventListener('click', function(){
+        console.log("Ambient light was switched");
+        if(AmbientState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("FHpdu/off/2");                //use this command with PDU
+            // Commented line below - 20200716
+            dataChannel.send("Ambient/off/")            //use this command with PDU
                 //---------
-            filamentState=false;
-            filamentTOGGLE.title="Click here to turn ON";
-            filamentSwitch.style.transform='scaleY(1)';
+            AmbientState=false;
+            AmbientTOGGLE.title="Click here to turn ON";
+            lightSwitch.style.transform='scaleY(1)';
                      }
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("FHpdu/on/2");                 //use this command with PDU
+            // Commented line below - 20200716
+            dataChannel.send("Ambient/on/")                 //use this command with GPIO
                 //---------
-            filamentState=true;
-            filamentTOGGLE.title="Click here to turn OFF";
-            filamentSwitch.style.transform='scaleY(-1)';
+            AmbientState=true;
+            AmbientTOGGLE.title="Click here to turn OFF";
+            lightSwitch.style.transform='scaleY(-1)';
         }
     })
+    //END Ambient Toggling
     
-    powerSupplyOFF.addEventListener('click', function(){
-        console.log("Power Supply was turned off");
-        if(powerSupplyState){
-            if(FirstTimePSoff){
-                // mWrap6 = document.getElementById('mapster_wrap_6');
-                console.log("for the first time");            
-            }
-            if(!FirstTimePSoff){
-            //--------choose one of the following
-            //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            dataChannel.send("FHpdu/off/3");                //use this command with PDU
-            }
-            mWrap6.style.display = "block";                      
-            mWrap7.style.display = "none"; 
-            psOFFpic.style.display = "block";                      
-            psONpic.style.display = "none"; 
-            
-            powerSupplyState=false;
-            FirstTimePSoff=false;
-        }
-    })
-    powerSupplyON.addEventListener('click', function(){
-        console.log("Power Supply was turned on");
-        if(!powerSupplyState){
-            if(FirstTimePSon){
-                // mWrap7 = document.getElementById('mapster_wrap_7');  
-                console.log("for the first time");  
-            }
-            if(!FirstTimePSon){
-            //--------choose one of the following
-            //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                //use this command with PDU
-            
-            }   
-            mWrap7.style.display = "block";                      
-            mWrap6.style.display = "none"; 
-            psONpic.style.display = "block";                      
-            psOFFpic.style.display = "none"; 
-            
-            powerSupplyState=true;
-            FirstTimePSon=false;
-            
-        }
-    })
-    // END Power Switches
+    //BEGIN Lamp Toggling
 
-    //BEGIN Oven Variac Buttons 
-    threeDegOvenV.addEventListener('click', function(){ovenSteps=2;})
-    thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=21;})
+    function H2PressCmd() {
+        // If it is already on and is just switching to H2
+        // Turn off carousel, move to H2, turn on carousel
+        if(lampSupplyState && (spectraLamp != "H2")){
+            console.log("Turning off and switching to H2");
+            dataChannel.send("Camera/camera/a");               //This should be overview camera
+            // Add waiting popup (modal) here
+            dataChannel.send("ASDIpdu/off/6");
+            dataChannel.send("Carousel/goto/h2")
+            dataChannel.send("ASDIpdu/on/6");
+            dataChannel.send("Camera/camera/" + currentCam);
+            lampSupplyState = true;
+        // If it off and H2 is clicked while not on H2
+        // Move to H2, turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp != "H2")){
+            console.log("Switching to H2")
+            dataChannel.send("Camera/camera/a")               //This should be overview camera
+            // Add waiting popup (modal) here
+            dataChannel.send("ASDIpdu/off/6");
+            dataChannel.send("Carousel/goto/h2")
+            dataChannel.send("ASDIpdu/on/6");
+            dataChannel.send("Camera/camera/" + currentCam)
+            lampSupplyState = true;
+        // If its off and already at H2
+        // Start by checking if it is the first time
+        // If so, setup all lamps off, dont move or send anything
+        // If not, just turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp == "H2")){
+            if (H2FirstTime) {
+                mWrap0.style.display = "block";                     
+                mWrap1.style.display = "none";
+                mWrap2.style.display = "none";                     
+                mWrap3.style.display = "none";    
+                H2ONpic.style.display = "none";                      
+                aONpic.style.display = "none";
+                bONpic.style.display = "none";
+                allOFFpic.style.display = "block"
+                H2FirstTime = false
+                spectraLamp = "H2"
+                return
+            } else {
+                dataChannel.send("ASDIpdu/on/6")
+                lampSupplyState = true;
+            }
+        // If H2 is already on, turn it off and switch view to off view.
+        } else if (lampSupplyState && (spectraLamp == "H2")) {
+            dataChannel.send("ASDIpdu/off/6");
+            console.log("carousel was turned off");
+            mWrap0.style.display = "block";                     
+            mWrap1.style.display = "none";
+            mWrap2.style.display = "none";                     
+            mWrap3.style.display = "none";    
+            H2ONpic.style.display = "none";                      
+            aONpic.style.display = "none";
+            bONpic.style.display = "none";
+            allOFFpic.style.display = "block"
+            spectraLamp = "H2"
+            lampSupplyState = false;
+            return
+        }
+
+        // Setup picture to have H2 on
+        mWrap0.style.display = "none";                     
+        mWrap1.style.display = "none";
+        mWrap2.style.display = "none";                     
+        mWrap3.style.display = "block";  
+        H2ONpic.style.display = "block";                      
+        aONpic.style.display = "none";
+        bONpic.style.display = "none";
+        allOFFpic.style.display = "none"
+        spectraLamp = "H2"
+    }
     
-    lowerOvenV.addEventListener('click', function() {
-        console.log("Oven Variac was turned down"); 
-        dataChannel.send("Oven/move/"+(-ovenSteps));})
-    raiseOvenV.addEventListener('click', function() {
-        console.log("Oven Variac was turned up");
-        dataChannel.send("Oven/move/"+ovenSteps);})
-    //END Oven Variac Buttons
-   //BEGIN Filament Variac Buttons 
-   threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
-   thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=21;})
-   
-   lowerFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned down"); dataChannel.send("Filament/move/"+(-filamentSteps));})
-   raiseFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned up");dataChannel.send("Filament/move/"+filamentSteps);})
-   //END Filament Variac Buttons
-   //BEGIN Accelerating Voltage Buttons 
-   threeDegVa.addEventListener('click', function(){VaSteps=2;})
-   thirtySixDegVa.addEventListener('click', function(){VaSteps=21;})
-   threeSixtyDegVa.addEventListener('click', function(){VaSteps=210;})
+    function APressCmd() {
+         // If it is already on and is just switching to A
+        // Turn off carousel, move to A, turn on carousel
+        if(lampSupplyState && (spectraLamp != "A")){
+            console.log("Turning off and switching to A")
+            dataChannel.send("Camera/camera/a")               //This should be overview camera
+            // Add waiting popup (modal) here
+            dataChannel.send("ASDIpdu/off/6");
+            dataChannel.send("Carousel/goto/a")
+            dataChannel.send("ASDIpdu/on/6");
+            dataChannel.send("Camera/camera/" + currentCam)
+            lampSupplyState = true;
+        // If it off and H2 is clicked while not on H2
+        // Move to A, turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp != "A")){
+            console.log("Switching to A")
+            dataChannel.send("Camera/camera/a")               //This should be overview camera
+            // Add waiting popup (modal) here
+            dataChannel.send("ASDIpdu/off/6");
+            dataChannel.send("Carousel/goto/a")
+            dataChannel.send("ASDIpdu/on/6");
+            dataChannel.send("Camera/camera/" + currentCam)
+            lampSupplyState = true;
+        // If its off and already at A
+        // If not, just turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp == "A")){
+            dataChannel.send("ASDIpdu/on/6");
+            lampSupplyState = true;
 
-   lowerVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned down"); dataChannel.send("Va/move/"+(-VaSteps));})
-   raiseVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned up");dataChannel.send("Va/move/"+VaSteps);})
-   //END Accelerating Voltage Buttons
-   //BEGIN Retarding Voltage Buttons 
-   threeDegVr.addEventListener('click', function(){VrSteps=2;})
-   thirtySixDegVr.addEventListener('click', function(){VrSteps=21;})
+        // If A is already on, turn it off and switch view to off view.
+        } else if (lampSupplyState && (spectraLamp == "A")) {
+            dataChannel.send("ASDIpdu/off/6");
+            console.log("carousel was turned off");
+            mWrap0.style.display = "block";                     
+            mWrap1.style.display = "none";
+            mWrap2.style.display = "none";                     
+            mWrap3.style.display = "none";    
+            H2ONpic.style.display = "none";                      
+            aONpic.style.display = "none";
+            bONpic.style.display = "none";
+            allOFFpic.style.display = "block"
+            spectraLamp = "A"
+            lampSupplyState = false;
+            return
+        }
+
+        // Setup picture to have A on
+        mWrap0.style.display = "none";                     
+        mWrap1.style.display = "block";
+        mWrap2.style.display = "none";                     
+        mWrap3.style.display = "none";  
+        H2ONpic.style.display = "none";                      
+        aONpic.style.display = "block";
+        bONpic.style.display = "none";
+        allOFFpic.style.display = "none"
+        spectraLamp = "A"
+    }
+
+    function BPressCmd() {
+        // If it is already on and is just switching to B
+        // Turn off carousel, move to B, turn on carousel
+        if(lampSupplyState && spectraLamp != "B"){
+            console.log("Turning off and switching to B")
+            dataChannel.send("Camera/camera/a")               //This should be overview camera
+            // Add waiting popup (modal) here
+            dataChannel.send("ASDIpdu/off/6");
+            dataChannel.send("Carousel/goto/b")
+            dataChannel.send("ASDIpdu/on/6");
+            dataChannel.send("Camera/camera/" + currentCam)
+            lampSupplyState = true;
+        // If it off and B is clicked while not on B
+        // Move to B, turn on carousel.
+        } else if (!lampSupplyState && spectraLamp != "B"){
+            console.log("Switching to B")
+            dataChannel.send("Camera/camera/a")               //This should be overview camera
+            // Add waiting popup (modal) here
+            dataChannel.send("ASDIpdu/off/6");
+            dataChannel.send("Carousel/goto/b")
+            dataChannel.send("ASDIpdu/on/6");
+            dataChannel.send("Camera/camera/" + currentCam)
+            lampSupplyState = true;
+        // If its off and already at B
+        // If not, just turn on carousel.
+        } else if (!lampSupplyState && spectraLamp == "B"){
+            dataChannel.send("ASDIpdu/on/6");
+            lampSupplyState = true;
+        // If A is already on, turn it off and switch view to off view.
+        } else if (lampSupplyState && spectraLamp == "B") {
+            dataChannel.send("ASDIpdu/off/6");
+            console.log("carousel was turned off");
+            mWrap0.style.display = "block";                     
+            mWrap1.style.display = "none";
+            mWrap2.style.display = "none";                     
+            mWrap3.style.display = "none";    
+            H2ONpic.style.display = "none";                      
+            aONpic.style.display = "none";
+            bONpic.style.display = "none";
+            allOFFpic.style.display = "block"
+            spectraLamp = "B"
+            lampSupplyState = false;
+            return
+        }
+
+        // Setup picture to have B on
+        mWrap0.style.display = "none";                     
+        mWrap1.style.display = "none";
+        mWrap2.style.display = "block";                     
+        mWrap3.style.display = "none";  
+        H2ONpic.style.display = "none";                      
+        aONpic.style.display = "none";
+        bONpic.style.display = "block";
+        allOFFpic.style.display = "none"
+        spectraLamp = "B"
+    }
+
+    H2pressOff.addEventListener("click", H2PressCmd);
+    H2pressH2.addEventListener("click", H2PressCmd);
+    H2pressA.addEventListener("click", H2PressCmd);
+    H2pressB.addEventListener("click", H2PressCmd);
+
+    ApressOff.addEventListener("click", APressCmd);
+    ApressH2.addEventListener("click", APressCmd);
+    ApressA.addEventListener("click", APressCmd);
+    ApressB.addEventListener("click", APressCmd);
+
+    BpressOff.addEventListener("click", BPressCmd);
+    BpressH2.addEventListener("click", BPressCmd);
+    BpressA.addEventListener("click", BPressCmd);
+    BpressB.addEventListener("click", BPressCmd);
+
+    //END Lamp Toggling
+
+//BEGIN Lamp Nudging
+
+    nudgeLeft.addEventListener('click',function() {
+        console.log("Lamp nudged left");
+        dataChannel.send("Carousel/move/-2")
+    })
+    nudgeRight.addEventListener('click',function() {
+        console.log("Lamp nudged right");
+        dataChannel.send("Carousel/move/2")
+    })
+//END Lamp Nudging
+
+    //BEGIN Grating buttons
+    gFine.addEventListener('click', function(){gratingSteps=20;})        //roughly one degree
+    gMedium.addEventListener('click', function(){gratingSteps=200;})     //roughly ten degrees
+    gCoarse.addEventListener('click', function(){gratingSteps=600;})     //roughly 30 degrees
+    
+    gCW.addEventListener('click', function() {
+        console.log("Grating turned CW");
+        dataChannel.send("Grating/move/"+gratingSteps);
+    })
+    gCCW.addEventListener('click', function() {
+        console.log("Grating turned CCW");
+        dataChannel.send("Grating/move/"+(-gratingSteps));
+    })
+
+    //END  Grating Buttons
+
+   //BEGIN Arm Buttons 
+   tFine.addEventListener('click', function(){telescopeSteps=10;})
+   tMedium.addEventListener('click', function(){telescopeSteps=30;})
+   tCoarse.addEventListener('click', function(){telescopeSteps=100;})
+
+   tCW.addEventListener('click', function() {
+       // Changed for AS 
+       console.log("Telescope turned CW");
+       dataChannel.send("Arm/move/"+telescopeSteps);
+    })
+   tCCW.addEventListener('click', function() {
+       // Changed for AS 
+       console.log("Telescope turned CCW");
+       dataChannel.send("Arm/move/"+(-telescopeSteps));
+    })
+   //END Arm Buttons
+
+   //BEGIN Slit Buttons 
+   fineSlit.addEventListener('click', function(){slitSteps=50;})
+   coarseSlit.addEventListener('click', function(){slitSteps=200;})
+
+   function openSlitCmd() {
+    console.log("Slit was made wider");
+    dataChannel.send("Slit/move/"+slitSteps);
+   }
+
+   function closeSlitCmd() {
+    console.log("Slit was made narrower");
+    dataChannel.send("Slit/move/"+(-slitSteps));
+   }
    
-   lowerVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned down"); dataChannel.send("Vr/move/"+(-VrSteps));})
-   raiseVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned up");dataChannel.send("Vr/move/"+VrSteps);})
-   //END Retarding Voltage Buttons
+   LopenSlit.addEventListener('click', openSlitCmd);
+   RopenSlit.addEventListener('click', openSlitCmd);
+   
+   LcloseSlit.addEventListener('click', closeSlitCmd);
+   RcloseSlit.addEventListener('click', closeSlitCmd);
+   
+
+   //END Slit Buttons
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     
-    $('#ovenKnob').mapster({
+    $('#LampsAllOff').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -425,27 +593,7 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#ovenSwitchOFF').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#ovenSwitchON').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#fKnob').mapster({
+  $('#LampsAon').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -455,17 +603,7 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#Va').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-  
-  $('#Vr').mapster({
+  $('#LampsBon').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -475,27 +613,27 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#powerSupplySwitchOFF').mapster({
+  $('#LampsH2on').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
-    fillOpacity: 0,
+    fillOpacity: 0.6,
     render_select: { 
-        fillOpacity: 0
+        fillOpacity: 0.3
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#powerSupplySwitchON').mapster({
-    mapKey:'id',
+  $('#Slit').mapster({
+    mapKey:'data-key',
     fillColor: 'f5f5b5',
-    fillOpacity: 0,
+    fillOpacity: 0.6,
     render_select: { 
-        fillOpacity: 0
+        fillOpacity: 0.3
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#electrometer').mapster({
+  $('#Schema').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -505,51 +643,6 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
   
-//   console.log('mapster calls have been made');
-  
-
-    // var mWrap0 = document.getElementById('mapster_wrap_0');
-    // var mWrap1 = document.getElementById('mapster_wrap_1');
-    // var mWrap2 = document.getElementById('mapster_wrap_2');
-    // var mWrap3 = document.getElementById('mapster_wrap_3');
-    // var mWrap4 = document.getElementById('mapster_wrap_4');
-    // var mWrap5 = document.getElementById('mapster_wrap_5');
-    // var mWrap6 = document.getElementById('mapster_wrap_6');
-    // var mWrap7 = document.getElementById('mapster_wrap_7');
-    // var mWrap8 = document.getElementById('mapster_wrap_8');
-    
-
-//   var image = $('#themap');  <- need one of these for each map
-
-  
-//   var resizing,
-//       body= $(body),
-//       win=$(window),
-//       diffW=win.width() - image.width(),
-//       lastw=win.innerWidth(),
-//       lasth=win.innerHeight();
-  
-//   var resize = function() {
-//       var win= $(window),
-//           width=win.width(), height=win.height();
-//       // only try to resize every 200 ms 
-//       if (resizing) {
-//           return;
-//       }
-//       if (lastw !== width || lasth !== height) {
-//           resizing=true;
-//           image.mapster('resize',width-diffW,0,200);     
-//           lastw=width;
-//           lasth=height;
-//           setTimeout(function() {
-//               resizing=false;
-//               resize();
-//           },200);
-//       } else {
-  
-//       }
-//   };
-//   $(window).bind('resize',resize);
 });
 
 

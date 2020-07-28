@@ -22,6 +22,7 @@
   <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/skeleton-3df96e.webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/ruler.css" rel="stylesheet" type="text/css">
   
   <!-- Items below are from WebFlow, could make it easy to customize favicon and webclip icons -->
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
@@ -31,14 +32,18 @@
 
 </head>
 <body>
+
+
+
   <script src="static/js/signalling.js"></script>
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
   <script type="text/javascript" src="static/js/popper.min.js"></script>
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/js/webflow.js" type="text/javascript"></script>
-  <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
   <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
+  <!-- ruler - These scripts enable a canvas with cursor and coordinates -->
+  <script src="static/js/jquery.ruler.js"></script>
 
   <script src="static/js/main.js"></script>
   <!-- Start your project here--> 
@@ -47,213 +52,217 @@
       <h1 class="Title">Atomic Spectra Experiment</h1>
       <div class="text-block">
         <h5 class="SubTitle">
-          <a target="_blank" href="static/docs/FHlabGuide.pdf">Click here to access the lab guide.</a>
+          <a target="_blank" href="static/docs/ASlabGuide.pdf">Click here to access the lab guide.</a>
             <br>  
           <span style="font-weight: 100;font-style: italic;"> This will become a link to the course's GauchoSpace.</span>
         </h5>
       </div> 
       <!-- <div class="w-row"> -->
-        <div id="TopTextLeft" class="column w-col w-col-6">
-          <h2 class="SubTitle">Set-Up</h2>
-          <div class="text-block">
-            Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
-            as well as to equipment manuals and manufacturer websites.</div>
-        </div>
-        <div id="TopTextRight" class="column w-col w-col-6">
-          <h2 class="SubTitle">Get Help</h2>
-          <div class="text-block">
-            Here students will be advised of options for synchronous and asynchronous assistance. 
-            <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
-            so they can use the various Zoom features to request help in real time. 
-            There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.</div>
-        </div>
-      <!-- </div> -->
+      <div id="TopTextLeft" class="column w-col w-col-6">
+        <h2 class="SubTitle">Set-Up</h2>
+        <div class="text-block">
+          Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
+          as well as to equipment manuals and manufacturer websites.</div>
+      </div>
+      <div id="TopTextRight" class="column w-col w-col-6">
+        <h2 class="SubTitle">Get Help</h2>
+        <div class="text-block">
+          Here students will be advised of options for synchronous and asynchronous assistance. 
+          <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
+          so they can use the various Zoom features to request help in real time. 
+          There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.</div>
+      </div>
+      <div class="Warning">
+        This session will end and the system will reset in 
+        <span id="time" style="color:red;font-weight:bold">45:00</span> 
+        minutes.
+      </div>
+       <!-- </div> -->
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
-        <div id="OvenLeft" >
-          <div class="click-note" style="margin-bottom: -50px;">
-            (choose increment and click arrows to turn variac knob and adjust oven power)
-          </div>
-          <div id="radioButtonsVo" class="w-row">
-            <div class="column w-col w-col-3" style="top: 75px;">
-              <input type="radio" id="3.6_deg_Vo" name="angleStepVo" value="3.6">
-              <label for="3.6_deg_Vo">3.6&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-3" style="top: 75px;">
-              <input type="radio" id="36_deg_Vo" name="angleStepVo" value="36" checked>
-              <label for="36_deg_Vo">36&#176;</label>
-            </div>
-            <div class="column w-col w-col-6" style="top: 75px;"></div>
-          </div>
-          <img id="ovenKnob" src="static/images/bigVariacWarrows.png" usemap="#image-map-bigVariac"> <!--  -->
-          <map name="image-map-bigVariac">
-            <area id="oVccw" alt="CCW" title="decrease AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
-            <area id="oVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
-          </map>  
-        </div>
-        <div id="TubeLeft" >
-          <img src="static/images/FHbwIcon.jpg" width="125" alt="" class="image-8">
-          <div class="click-note">(click for circuit diagram)</div>
-        </div>
-        <div id="ControlsLeft" >
-          <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1>
-          <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
-          <map name="image-map-Va">
-            <area id="aCW" alt="" title="increase Va" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
-            <area id="aCCW" alt="" title="decrease Va" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+        <div id="Toggle">
+          (click to toggle the Ambient Light)<br>
+          <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
           </map>
-          <div id="radioButtonsVa" class="w-row">
-            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-              <input type="radio" id="3.6_deg_Va" name="angleStepVa" value="3.6">
-              <label for="3.6_deg_Va">3.6&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-              <input type="radio" id="36_deg_Va" name="angleStepVa" value="36" checked>
-              <label for="36_deg_Va">36&#176;</label>
-            </div>
-            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-              <input type="radio" id="360_deg_Va" name="angleStepVa" value="360" checked>
-              <label for="360_deg_Va">360&#176;</label>
-            </div>
-          </div>  
-          <div class="click-note">
-            (choose increment and click arrows to adjust accelerating voltage)
-          </div>   
+          <br>
+          <br>
+          <br>           
+        </div>
+        <div id="Crosshairs" >
+          <img id="crossHairs" src="static/images/crossHairsIcon.png">
+          <div class="click-note" style="margin-bottom: -50px;">
+            (click to toggle crosshairs visibility; move mouse over video to position crosshairs)
+          </div>
+          <br>
+          <br>
+        </div>
+        <div id="Grating" >
+          <a target="_blank" href="https://www.patonhawksley.com/product-page/te215">
+            <img src="static/images/DiffractionGratingActual582x442.jpg" alt="" class="image-8">
+          </a>
+          <div class="click-note">(click for grating info)</div>
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
-        <div class="Warning">
-          This session will end and the system will reset in 
-          <span id="time" style="color:red;font-weight:bold">45:00</span> 
-          minutes.
+        <div  id="CrossContainer" >
+          <div class="video w-video w-embed">
+            <div id="crosshair-h" class="hair"></div>
+            <div id="crosshair-v" class="hair"></div>
+            <video id='v' data-playing="false" autoplay="" muted></video>
+          </div>
+          <div id="EPcontrols" >
+           <center>Show Crosshair: <input type="checkbox" id="showRuler"><div  id="Coordinates" ></div></center>
+          </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
-          <button id="EyepieceCam" type="button" class="btn btn-primary">Eyepiece</button>
-          <button id="V1Cam" type="button" class="btn btn-primary">Vernier 1</button>
-          <button id="V2Cam" type="button" class="btn btn-primary">Vernier 2</button>
-          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+        <div id="CameraSelectorButtons">
+          <div class="btn-group" role="group"  aria-label="Basic example">
+            <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
+            <button id="EyepieceCam" type="button" class="btn btn-primary">Eyepiece</button>
+            <button id="V1Cam" type="button" class="btn btn-primary">Vernier 1</button>
+            <button id="V2Cam" type="button" class="btn btn-primary">Vernier 2</button>
+            <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+          </div>
         </div>
-        <div class="video w-video w-embed">
-          <video id='v' data-playing="false" autoplay="" muted></video>
+        <div id="Schematic">  
+          <div id="SchematicLeft" class="column w-col w-col-2"></div>
+          <div id="SchematicCenter" class="column w-col w-col-8">
+            <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
+            <map name="image-map-schematic">
+              <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
+              <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="144,267,122,273,130,298,138,318,150,332,132,344,185,367,183,312,169,319,160,299,150,280" shape="poly">
+              <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="405,135,412,145,424,135,431,139,444,113,414,113,421,123" shape="poly">
+              <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
+              <area id="lampNudgeLeft" alt="lampLeft" href="#" coords="978,156,978,135,968,135,987,108,1003,135,994,135,997,156" shape="poly">
+              <area id="lampNudgeRight" alt="lampRight" href="#" coords="978,224,979,245,971,245,988,272,1003,245,995,245,995,224" shape="poly">
+            </map>
+            <div class="click-note" style="margin-bottom: -10px;">
+              (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
+            </div>
+          </div>
+          <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6)">
+          </br></br></br></br>
+          (click arrows </br>  to nudge </br> the lamp)
+          </div>
+        </div>  
+        <div id="SchematicRadioButtons">
+          <div id="radioButtonsRight" class="column w-col w-col-3"></div>
+          <div id="radioButtonsMiddle" class="column w-col w-col-7">
+            <div class="column w-row">
+              <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
+              <div class="column w-col w-col-2" style=""></div>
+              <div class="column w-col w-col-4" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
+            </div>
+            <div id="radioButtonsSchematic" class="w-row">
+              <div class="column w-col w-col-1" style="color:darkgreen">
+                <input type="radio" id="fineArm" name="ArmStepSize" value="1">
+                <label for="fineArm">Fine</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-2" style="color:darkgreen">
+                <input type="radio" id="mediumArm" name="ArmStepSize" value="5">
+                <label for="mediumArm">Medium</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-1" style="color:darkgreen">
+                <input type="radio" id="coarseArm" name="ArmStepSize" value="50" checked>
+                <label for="coarseArm">Coarse</label>
+              </div>
+              <div class="column w-col w-col-2" style=""></div>
+              <div class="column w-col w-col-1" style=" color:darkorchid">
+                <input type="radio" id="fineTable" name="TableStepSize" value="20">
+                <label for="fineTable">Fine</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-2" style="color:darkorchid">
+                <input type="radio" id="mediumTable" name="TableStepSize" value="200">
+                <label for="mediumTable">Medium</label>
+              </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+              <div class="column w-col w-col-1" style="color:darkorchid">
+                <input type="radio" id="coarseTable" name="TableStepSize" value="600" checked>
+                <label for="coarseTable">Coarse</label>
+              </div>
+            </div>
+          </div>
+          <div id="radioButtonsRight" class="column w-col w-col-2"></div>
         </div>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
-        <div id="OvenRight" >
-          <div class="click-note">(click to toggle oven power)</div>
-          <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLEon">
-          <map name="image-map-oTOGGLEon">
-            <area id="ovenON" title="ON" href="#" coords="260,15,450,192" shape="rect">
-          </map>
-          <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" usemap="#image-map-oTOGGLEoff">
-          <map name="image-map-oTOGGLEoff">
-            <area id="ovenOFF" title="OFF" href="#" coords="69,15,259,192" shape="rect">
-          </map>
+        <div id="Lamps">
+            <strong>Spectrum Tube Lamps</strong> <br> 
+            <img id="LampsAllOff" src="static/images/LampToggles/AllOff.jpg" usemap="#image-map-Lamps-off">
+            <img id="LampsAon" src="static/images/LampToggles/Aon.jpg" usemap="#image-map-Lamps-a">
+            <img id="LampsBon" src="static/images/LampToggles/Bon.jpg" usemap="#image-map-Lamps-b">
+            <img id="LampsH2on" src="static/images/LampToggles/H2on.jpg" usemap="#image-map-Lamps-h2">
+            <map name="image-map-Lamps-off">
+              <area id="H2-off" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-off" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-off" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <map name="image-map-Lamps-a">
+              <area id="H2-a" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-a" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-a" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <map name="image-map-Lamps-b">
+              <area id="H2-b" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-b" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-b" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <map name="image-map-Lamps-h2">
+              <area id="H2-h2" title="H2 Lamp" href="#" coords="0,0,103,283" shape="rect">
+              <area id="SampleA-h2" title="Sample &quot;A&quot;" href="#" coords="123,0,226,283" shape="rect">
+              <area id="SampleB-h2" title="Sample &quot;B&quot;" href="#" coords="246,0,349,283" shape="rect">
+            </map>
+            <br>
+            (click on a lamp to rotate it into position or turn it on/off)
         </div>
-        <div id="TubeRight" >
-          <img src="static/images/closeUp.jpg" width="140" srcset="static/images/closeUp.jpg 800w, images/closeUp.jpg 1080w, images/closeUp.jpg 1600w, images/closeUp.jpg 2000w, images/closeUp.jpg 2600w, images/closeUp.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt="" class="image-7">
-        </div>
-        <div id="ControlsRight" >
-          <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1>
-          <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
-          <map name="image-map-Vr">
-            <area id="rCW" alt="" title="increase Vr" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
-            <area id="rCCW" alt="" title="decrease Vr" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
-          </map>
-          <div id="radioButtonsVr" class="w-row">
+        <div id="SlitControl">
+          <img id="Slit" src="static/images/SlitIcon2.png" usemap="#image-map-Slit">
+          <map name="image-map-Slit">
+            <area data-key="Open" id="OpenL" title="Open Slit" href="#" coords="169,325,170,372,118,374,115,405,21,349,117,294,117,325" shape="poly">
+            <area data-key="Close" id="CloseL" title="Close Slit" href="#" coords="171,326,172,373,225,373,226,406,323,350,226,293,225,324,198,325" shape="poly">
+            <area data-key="Close" id="CloseR" title="Close Slit" href="#" coords="530,324,530,374,477,372,477,406,381,350,477,292,478,325" shape="poly">
+            <area data-key="Open" id="OpenR" title="Open Slit" href="#" coords="532,326,587,326,587,293,684,350,588,406,585,374,532,375" shape="poly">
+          </map>      
+          <div id="radioButtonsSlit" class="w-row">
             <div class="column w-col w-col-6" style="margin-bottom: 0px;">
-              <input type="radio" id="3.6_deg_Vr" name="angleStepVr" value="3.6">
-              <label for="3.6_deg_Vr">3.6&#176;</label>
+              <input type="radio" id="FineAdjustSlit" name="AdjustSlit" value="3.6">
+              <label for="FineAdjustSlit">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-6" style="margin-bottom: 0px;">
-              <input type="radio" id="36_deg_Vr" name="angleStepVr" value="36" checked>
-              <label for="36_deg_Vr">36&#176;</label>
+              <input type="radio" id="CoarseAdjustSlit" name="AdjustSlit" value="36" checked>
+              <label for="CoarseAdjustSlit">Coarse</label>
             </div>
           </div>  
           <div class="click-note">
-            (choose increment and click arrows to adjust retarding voltage)
+            (choose increment and click arrows to adjust slit width)
           </div> 
         </div>
+        <div id="Manual" >
+          <strong>Instrument: AO Spencer Spectrometer</strong> <br> 
+            <a target="_blank" href="static/docs/AOSpencerSpectrometerUserManual.pdf">
+                <img id="Manual" src="static/images/SpencerSpectrometerPhoto.jpg" >
+            </a>
+            <br>
+            (click on image for a PDF of the Manual)
+        </div>  
       </div>
     </div>
-    <div id="PageBottom" class="column w-row">
+    <div id="PageBottom" class="column w-row"><!-- unused -->
       <div id="ControlsBottom" class="column w-row" >
         <div id="LeftSide" class="column w-col w-col-2">
         </div>
-        <div id="Filament Variac" class="column w-col w-col-8">
-          <div class="click-note" style="margin-bottom: -20px;">(choose increment and click arrows to adjust filament potential)</div>
-          <div id="radioButtonsVf" class="w-row">
-            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
-            <div class="column w-col w-col-1" style=" bottom: -30px;">
-              <input type="radio" id="3.6_deg_Vf" name="angleStepVf" value="3.6">
-              <label for="3.6_deg_Vf">3.6&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-1" style="bottom: -30px;">
-              <input type="radio" id="36_deg_Vf" name="angleStepVf" value="36" checked>
-              <label for="36_deg_Vf">36&#176;</label>
-            </div>
-            <div class="column w-col w-col-5" style="bottom: -30px;"></div>
-          </div>
-          <img id="fKnob" src="static/images/filament_knob.png" width="" alt="image-11" class="" usemap="#image-map-filamentV">
-          <map name="image-map-filamentV">
-            <area id="fVcw" alt="CW" title="raise V" href="#" coords="73,3,7,36,21,47,15,61,7,77,3,95,2,109,4,125,10,143,18,157,27,169,38,177,46,182,64,155,55,146,47,138,40,125,37,108,39,93,44,79,51,68,68,75" shape="poly">
-            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="226,2,231,76,249,67,256,74,261,83,264,99,264,115,260,129,254,140,247,149,238,155,245,166,252,175,256,181,270,171,280,160,287,147,293,135,296,119,298,103,295,87,292,72,286,60,278,47,292,36" shape="poly">
-          </map>
-        </div>    
-        <div id="Filament Toggle" class="column w-col w-col-2">
-          <div class="click-note">(click to toggle filament power)</div>
-          <img id="filamentSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-fTOGGLE">
-          <map name="image-map-fTOGGLE">
-            <area id="filamentTOGGLE" title="Click here to turn ON" coords="0,65,71,122" shape="rect">
-          </map>
+        <div id="Center" class="column w-col w-col-8">
+        </div>  
+        <div id="RightSide" class="column w-col w-col-2">
         </div>
       </div>
       <div id="MetersBottom" class="column w-row" >
         <div id="MetersLeft" class="column w-col w-col-6">
-          <img id="powerSupplySwitchOFF" src="static/images/PowerSupplyOFF.jpg" usemap="#image-map-psTOGGLEon">
-          <map name="image-map-psTOGGLEon">
-            <area id="psON" title="ON" href="#" coords="73,78,132,117" shape="rect">
-           </map>
-          <img id="powerSupplySwitchON" src="static/images/PowerSupplyON.jpg" usemap="#image-map-psTOGGLEoff">
-          <map name="image-map-psTOGGLEoff">
-            <area id="psOFF" title="OFF" href="#" coords="73,118,132,156" shape="rect">
-          </map>
+        <!-- Preserving 6-6 structure  -->
         </div>
         <div id="MetersRight" class="column w-col w-col-6">
-          <img id="electrometer" src="static/images/Keithley6514ElectrometerTXTcropped.jpg" usemap="#image-map-6514"> 
-          <map name="image-map-6514">
-            <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,218,17" shape="circle">
-            <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,285,17" shape="circle">
-            <area id="Power6514" 		    href="#"	title="Power" 		  coords="99,365,17" shape="circle">
-            <area id="Voltage" 		      href="#"	title="Voltage" 		coords="200,217,29" shape="circle">
-            <area id="Current" 		      href="#"	title="Current" 		coords="285,217,29" shape="circle">
-            <area id="Resistance" 	    href="#"	title="Resistance"  coords="381,217,29" shape="circle">
-            <area id="Charge" 		      href="#"	title="Charge" 		  coords="466,217,29" shape="circle">
-            <area id="ExternalFeedback" href="#"	title="ExternalFeedback" coords="562,217,29" shape="circle">
-            <area id="ZeroCheck" 		    href="#"	title="ZeroCheck" 	coords="647,217,29" shape="circle">
-            <area id="ZeroCorrect" 	    href="#"	title="ZeroCorrect" coords="743,217,29" shape="circle">
-            <area id="Ground" 		      href="#"	title="Ground" 		  coords="828,217,29" shape="circle">
-            <area id="Average" 		      href="#"	title="Average" 		coords="166,314,238,279" shape="rect">
-            <area id="Median" 		      href="#"	title="Median" 		  coords="242,279,316,314" shape="rect">
-            <area id="Relative" 		    href="#"	title="Relative" 	  coords="420,279,346,314" shape="rect">
-            <area id="Limit" 		        href="#"	title="Limit" 		  coords="423,279,499,314" shape="rect">
-            <area id="Digits6514" 	    href="#"	title="Digits"      coords="603,279,529,314" shape="rect">
-            <area id="Rate6514" 		    href="#"	title="Rate" 		    coords="606,279,678,314" shape="rect">
-            <area id="CursorLeft6514" 	href="#"	title="CursorLeft"  coords="786,279,712,314" shape="rect">
-            <area id="CursorRight6514" 	href="#"	title="CursorRight" coords="789,279,859,314" shape="rect">
-            <area id="Store6514" 		    href="#" title="Store" 		    coords="238,346,163,382" shape="rect">
-            <area id="Recall6514"		    href="#"	title="Recall" 		  coords="242,346,314,382" shape="rect">
-            <area id="Delay" 		        href="#"	title="Delay" 		  coords="420,346,346,382" shape="rect">
-            <area id="Damping" 		      href="#"	title="Damping" 		coords="423,346,495,382" shape="rect">
-            <area id="Halt" 		        href="#"	title="Halt" 		    coords="603,346,529,383" shape="rect">
-            <area id="Trigger6514" 	    href="#"	title="Trigger" 		coords="606,346,678,383" shape="rect">
-            <area id="Exit6514" 		    href="#"	title="Exit" 			  coords="786,346,712,384" shape="rect">
-            <area id="Enter6514" 		    href="#"	title="Enter" 		  coords="789,346,863,384" shape="rect">
-            <area id="UpRange6514" 	    href="#"	title="UpRange" 		coords="957,187,935,222,976,224" shape="poly">
-            <area id="DownRange6514" 	  href="#"	title="DownRange" 	coords="957,384,978,347,935,347" shape="poly">
-            <area id="AutoRange6514"	  href="#"	title="AutoRange" 	coords="908,267,1007,304" shape="rect">
-          </map>
+        <!-- Preserving 6-6 structure  -->
         </div>
       </div>
     </div>
