@@ -59,12 +59,15 @@ function getHeight(){
     return  document.getElementById('v').clientHeight;
 }
 
+var c_wrap
+var liveStream
+
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    var liveStream = document.getElementById("v");
+    liveStream = document.getElementById("v");
 
-    var c_wrap = $('#canvas_wrap')
+    c_wrap = $('#canvas_wrap')
     var canvas_dom = $('canvas')
 
     // Do we need these still?
