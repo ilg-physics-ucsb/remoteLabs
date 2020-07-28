@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import os, sys, subprocess
+import os, sys, subprocess, signal
 import argparse
 import json
 import time
@@ -81,7 +81,10 @@ def run(args):
             os.system("python3 " + os.path.join(rl_path, lab, controllerFile))
         else:
             controller_path = os.path.join(".", rl_path, lab, controllerFile)
-            os.system("nohup " + controller_path + " &")
+            process = subprocess.Popen(["nohup", controller_path, "&"])
+            settings["pid"] = process.pid
+            update_json(settings)
+            # os.system("nohup " + controller_path + " &")
     
     else:
         print('No lab has been setup yet. Run "remla setup <lab>"')
@@ -90,7 +93,9 @@ def run(args):
 def stop(args):
     os.system("sudo pkill uv4l")
     time.sleep(1)
-    os.system("sudo pkill python3")
+    os.kill(settings["pid"], signal.SIGINT)
+    print("Interupt signal sent. Please wait 30 seconds for shutdown to complete.")
+    # os.system("sudo pkill python3")
 
 
 settings = read_json()
