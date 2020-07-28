@@ -1,5 +1,5 @@
 #canvas-wrap { 
-    position:relative /* Make this a positioned parent */
+    position:relative; /* Make this a positioned parent */
     z-index: 10000!important
 }
 canvas{
