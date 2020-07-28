@@ -67,6 +67,7 @@ $("document").ready(function () {
         intervalId = setInterval(function() {
             for (mWrap of mWrapList) {
                 if ($(mWrap).length == 0) {
+                    OverviewCam.click()
                     return
                 }
             } 
@@ -110,7 +111,7 @@ $("document").ready(function () {
     
     OverviewCam.addEventListener('click', function() {
         if(FirstTimeCam){
-            console.log("Temp cam was clicked for the first time");
+            console.log("Overview cam was clicked for the first time");
             FirstTimeCam=false;
         }
         else{
