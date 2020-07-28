@@ -1,9 +1,14 @@
+var canvas 
+var context 
+var CH_click
+var draw_call
+
 $(document).ready(function(){
 
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-    var CH_click=document.getElementById('crossHairs')
-    var draw_call=true
+    canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+    CH_click=document.getElementById('crossHairs')
+    draw_call=true
     
     
     // canvas.width=getWidth()
