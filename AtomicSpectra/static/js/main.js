@@ -119,8 +119,6 @@ $("document").ready(function () {
     var Toggle = document.getElementById("Toggle");
     var Grating = document.getElementById("Grating");
     var Crosshairs = document.getElementById("Crosshairs");
-    var CrossContainer = document.getElementById("CrossContainer");
-    var EPC= document.getElementById("EPcontrols")
     var Schematic = document.getElementById("Schematic");
     var Lamps = document.getElementById("Lamps");
     var SlitControl = document.getElementById("SlitControl");
@@ -135,11 +133,6 @@ $("document").ready(function () {
             currentCam = "a"
         }
         
-        EPC.style.visibility='hidden';
-        showruler.prop("checked",false)
-        track_mouse= false
-        document.getElementById("crosshair-v").style.visibility = "hidden";
-        document.getElementById("crosshair-h").style.visibility = "hidden";
         
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility = "hidden";
@@ -150,8 +143,6 @@ $("document").ready(function () {
     ArmCam.addEventListener('click', function() {
         dataChannel.send("Camera/camera/c");
         
-        EPC.style.visibility='visible';
-        track_mouse= false;
         
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
@@ -161,13 +152,7 @@ $("document").ready(function () {
 
     V1Cam.addEventListener('click', function() {
         dataChannel.send("Camera/camera/b");
-        
-        EPC.style.visibility='hidden';
-        showruler.prop("checked",false)
-        track_mouse= false
-        document.getElementById("crosshair-v").style.visibility = "hidden";
-        document.getElementById("crosshair-h").style.visibility = "hidden";
-        
+                
         Lamps.style.visibility = "hidden";
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
@@ -177,12 +162,6 @@ $("document").ready(function () {
 
     V2Cam.addEventListener('click', function() {
         dataChannel.send("Camera/camera/d");
-        
-        EPC.style.visibility='hidden';
-        showruler.prop("checked",false)
-        track_mouse= false
-        document.getElementById("crosshair-v").style.visibility = "hidden";
-        document.getElementById("crosshair-h").style.visibility = "hidden";
         
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
