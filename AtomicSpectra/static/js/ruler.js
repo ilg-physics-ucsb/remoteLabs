@@ -1,74 +1,78 @@
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var video= document.getElementById('v')
-var CH_click=document.getElementById('crossHairs')
-var draw_call=true
+$(document).ready(function(){
 
-
-canvas.width=getWidth()
-canvas.height=getHeight()
-
-function writeMessage(canvas, message, x, y) {
+    var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-   // context.clearRect(0, 0, canvas.width, canvas.height);
-    context.font = '10pt Calibri';
-    context.fillStyle = 'green';
-    context.fillText(message, 10, 15);
-  }
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    };
-}
-
- 
-function draw_cursor(x,y){
-    context.clearRect(0,0,2000,2000)
-    context.beginPath();
-    context.moveTo(x, 0);
-    context.lineTo(x, 2000);
-    context.stroke();
-    context.beginPath();
-    context.moveTo(0, y);
-    context.lineTo(2000, y);
-    context.strokeStyle = "green";
-    context.stroke();
-}
-
-
-
-canvas.addEventListener('mousemove', function(evt) 
-{   
-    if(draw_call){
-    var mousePos = getMousePos(video, evt);
-    var message = 'Mouse position: ' + mousePos.x.toFixed(0) + ',' + mousePos.y.toFixed(0);
+    var video= document.getElementById('v')
+    var CH_click=document.getElementById('crossHairs')
+    var draw_call=true
     
-    draw_cursor(mousePos.x,mousePos.y)
-    writeMessage(canvas, message);
+    
+    canvas.width=getWidth()
+    canvas.height=getHeight()
+    
+    function writeMessage(canvas, message, x, y) {
+        var context = canvas.getContext('2d');
+       // context.clearRect(0, 0, canvas.width, canvas.height);
+        context.font = '10pt Calibri';
+        context.fillStyle = 'green';
+        context.fillText(message, 10, 15);
+      }
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
     }
-}, 
-false);
-
-canvas.addEventListener("click", function(evt){
-    if (canvas.style.visibility =='visible'){
-        if (draw_call){
-            draw_call= false
-        } else{
-            draw_call= true
+    
+     
+    function draw_cursor(x,y){
+        context.clearRect(0,0,2000,2000)
+        context.beginPath();
+        context.moveTo(x, 0);
+        context.lineTo(x, 2000);
+        context.stroke();
+        context.beginPath();
+        context.moveTo(0, y);
+        context.lineTo(2000, y);
+        context.strokeStyle = "green";
+        context.stroke();
+    }
+    
+    
+    
+    canvas.addEventListener('mousemove', function(evt) 
+    {   
+        if(draw_call){
+        var mousePos = getMousePos(video, evt);
+        var message = 'Mouse position: ' + mousePos.x.toFixed(0) + ',' + mousePos.y.toFixed(0);
+        
+        draw_cursor(mousePos.x,mousePos.y)
+        writeMessage(canvas, message);
         }
-    }
+    }, 
+    false);
+    
+    canvas.addEventListener("click", function(evt){
+        if (canvas.style.visibility =='visible'){
+            if (draw_call){
+                draw_call= false
+            } else{
+                draw_call= true
+            }
+        }
+    })
+    
+    CH_click.addEventListener("click", function(evt){
+        if (canvas.style.visibility =='visible'){
+            draw_call= false
+            canvas.style.visibility='hidden'
+        }else{
+            canvas.style.visibility ='visible'
+        }
+    
+    })
 })
 
-CH_click.addEventListener("click", function(evt){
-    if (canvas.style.visibility =='visible'){
-        draw_call= false
-        canvas.style.visibility='hidden'
-    }else{
-        canvas.style.visibility ='visible'
-    }
-
-})
 
 

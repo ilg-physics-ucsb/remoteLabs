@@ -6,7 +6,8 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
-
+        canvas.width = getWidth()
+        canvas.height = getHeight()
         // videoElement.play();
     }
 }
