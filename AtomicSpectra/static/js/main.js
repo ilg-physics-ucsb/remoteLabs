@@ -8,8 +8,8 @@ function connectStream(stream, videoElement) {
         videoElement.setAttribute("data-playing", "true");
         canvas.width = getWidth()
         canvas.height = getHeight()
-        c_wrap.css('height',liveStream.css('height'))
-        c_wrap.css('width', liveStream.css('width'))
+        c_wrap.css('height', getHeight())
+        c_wrap.css('width', getWidth())
         // videoElement.play();
     }
 }
@@ -68,7 +68,6 @@ $("document").ready(function () {
     liveStream = document.getElementById("v");
 
     c_wrap = $('#canvas_wrap')
-    var canvas_dom = $('canvas')
 
     // Do we need these still?
     var FirstTimeCam = true;
