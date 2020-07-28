@@ -113,7 +113,9 @@ $("document").ready(function () {
     var TubeRight = document.getElementById("TubeRight");
     var PotsLeft = document.getElementById("ControlsLeft");
     var PotsRight = document.getElementById("ControlsRight");
-    var PotsBottom = document.getElementById("ControlsBottom");
+    var FilaLeft = document.getElementById("FilamentVariac");
+    var FilaRight = document.getElementById("FilamentPower");
+    var MetersManual = document.getElementById("Keithley6514Manual");
     var MetersBottom = document.getElementById("MetersBottom");
 
     TempCam.addEventListener('click', function() {
@@ -130,7 +132,9 @@ $("document").ready(function () {
         TubeRight.style.display = "none";
         PotsLeft.style.display = "none";
         PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
+        FilaLeft.style.display = "none";
+        FilaRight.style.display = "none";
+        MetersManual.style.display = "none";
         MetersBottom.style.display = "none";
         
     })
@@ -143,7 +147,9 @@ $("document").ready(function () {
         TubeRight.style.display = "block";
         PotsLeft.style.display = "none";
         PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
+        FilaLeft.style.display = "block";
+        FilaRight.style.display = "block";
+        MetersManual.style.display = "none";
         MetersBottom.style.display = "none";
     })
 
@@ -155,7 +161,9 @@ $("document").ready(function () {
         TubeRight.style.display = "none";
         PotsLeft.style.display = "block";
         PotsRight.style.display = "block";
-        PotsBottom.style.display = "block";
+        FilaLeft.style.display = "block";
+        FilaRight.style.display = "block";
+        MetersManual.style.display = "none";
         MetersBottom.style.display = "none";
     })
 
@@ -167,7 +175,9 @@ $("document").ready(function () {
         TubeRight.style.display = "none";
         PotsLeft.style.display = "block";
         PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
+        FilaLeft.style.display = "none";
+        FilaRight.style.display = "none";
+        MetersManual.style.display = "block";
         MetersBottom.style.display = "block";
     })
 
