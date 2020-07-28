@@ -116,6 +116,17 @@
     overflow: hidden;
   } */
 
+#Keithley6514Manual {
+    position: relative;
+    top: 300px;
+}
+
+  #MetersBottom {
+    z-index: 1000;
+    position: relative;
+    top: -300px;
+}
+
 #toggleSwitch {
     width:50% ;  
     /* transform: scaleY(-1); */
@@ -129,6 +140,14 @@
     position: relative;
     top:-100%;
     overflow: visible;
+}
+#TubeLeft {
+    position: relative;
+    top: 50px;
+}
+#FilamentPower {
+    position: relative;
+    top:50px;
 }
 #v{
     width: 100%;
