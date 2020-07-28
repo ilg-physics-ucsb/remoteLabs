@@ -8,8 +8,8 @@ function connectStream(stream, videoElement) {
         videoElement.setAttribute("data-playing", "true");
         canvas.width = getWidth()
         canvas.height = getHeight()
-        c_wrap.css('height',video.css('height'))
-        c_wrap.css('width',video.css('width'))
+        c_wrap.css('height',liveStream.css('height'))
+        c_wrap.css('width', liveStream.css('width'))
         // videoElement.play();
     }
 }
