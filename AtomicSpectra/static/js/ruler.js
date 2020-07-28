@@ -54,8 +54,8 @@ function writeMessage(canvas, message, x, y) {
     context.fillStyle = 'green';
     context.fillText(message, 10, 15);
   }
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
+function getMousePos(this_canvas, evt) {
+    var rect = this_canvas.getBoundingClientRect();
     return {
         x: evt.clientX - rect.left,
         y: evt.clientY - rect.top
