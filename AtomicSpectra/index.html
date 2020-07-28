@@ -42,8 +42,8 @@
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/js/webflow.js" type="text/javascript"></script>
   <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
-  <!-- ruler - These scripts enable a canvas with cursor and coordinates -->
-  <script src="static/js/jquery.ruler.js"></script>
+ 
+
 
   <script src="static/js/main.js"></script>
   <!-- Start your project here--> 
@@ -105,16 +105,13 @@
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
-        <div  id="CrossContainer" >
-          <div class="video w-video w-embed">
-            <div id="crosshair-h" class="hair"></div>
-            <div id="crosshair-v" class="hair"></div>
+        <div id="canvas-wrap">
+          <div class="video w-video w-embed" id="v_overlay">
             <video id='v' data-playing="false" autoplay="" muted></video>
           </div>
-          <div id="EPcontrols" >
-           <center>Show Crosshair: <input type="checkbox" id="showRuler"><div  id="Coordinates" ></div></center>
-          </div>
+          <canvas id='canvas' ></canvas>
         </div>
+      
         <div id="CameraSelectorButtons">
           <div class="btn-group" role="group"  aria-label="Basic example">
             <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
@@ -278,4 +275,7 @@
         </div>
     </div>
  </body>
+ <!-- ruler - These scripts enable a canvas with cursor and coordinates -->
+ <script src="static/js/jquery.ruler.js"></script>
+ <script src="static/js/ruler.js"></script>
 </html>
