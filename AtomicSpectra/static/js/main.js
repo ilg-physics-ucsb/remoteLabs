@@ -509,11 +509,11 @@ $("document").ready(function () {
 
     nudgeLeft.addEventListener('click',function() {
         console.log("Lamp nudged left");
-        dataChannel.send("Carousel/move/-20")
+        dataChannel.send("Carousel/move/-4")
     })
     nudgeRight.addEventListener('click',function() {
         console.log("Lamp nudged right");
-        dataChannel.send("Carousel/move/20")
+        dataChannel.send("Carousel/move/4")
     })
 //END Lamp Nudging
 
@@ -556,7 +556,7 @@ $("document").ready(function () {
 
    function openSlitCmd() {
     console.log("Slit was made wider");
-    dataChannel.send("Slit/move/"+slitStep);
+    dataChannel.send("Slit/move/"+slitSteps);
    }
 
    function closeSlitCmd() {
