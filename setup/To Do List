@@ -5,12 +5,10 @@ PE1
 PE2 
     build - Raffi
         add wires to motorHat
-        mount motors
 
 FH1
     replace Oven variac pulley with one of larger diameter
-        (on order, not shipped... get Raffi to 3D print?)
-    get rid of blue tape in data view
+        (on order, not shipped... get Raffi to 3D print?)\
     determine whether filament glow is visible
         clarify sense of glare in tube view
     troubleshoot lack of open socket after hours - Zak
@@ -22,12 +20,12 @@ AS1
     fix carousel drive mechanism - Zak & Raffi 
     fix cursors - Kelly
     add blackout - Kelly
-    put on port 80
+
 AS2
     build
 
 
-DI
+DI1
     add ufw
 
 DI2
@@ -63,17 +61,19 @@ MANUALS
 
 
 GauchoSpace
+    generate & send welcome e-mail
     mount Overleaf template for Plot assignments
     mount course info pages
         instructors
         grading
         notetaking
         error propagation
-    generate welcome e-mail
     respond to student inquiries
 
+Admin
+
+
 Computer-wise  
-    remla stop to reset
     
     Establish protocol for protecting student access times
     Establish calendar for reserving equipment at other times
