@@ -32,7 +32,7 @@ $(document).ready(function(){
     // canvas.height=getHeight()
     
     canvas.addEventListener('mousemove', function(evt) 
-    {   
+    {  
         if(draw_call){
         var mousePos = getMousePos(canvas, evt);
         var message = 'Mouse position: ' + mousePos.x.toFixed(0) + ',' + mousePos.y.toFixed(0);
