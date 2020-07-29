@@ -18,7 +18,7 @@ canvas{
     z-index: 100;
 }
 #v {
-    /* background-color: rgba(59, 59, 59, 0.5); */
+   background-color: rgba(59, 59, 59, 0.5); 
     z-index: 100;
     position:absolute; 
     top:0px; 

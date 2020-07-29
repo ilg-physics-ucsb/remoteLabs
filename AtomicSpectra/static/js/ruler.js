@@ -3,6 +3,23 @@ var context
 var CH_click
 var draw_call
 
+function hide_crosshair(){
+    draw_call= false
+    canvas.style.visibility='hidden'
+}
+
+function show_crosshair(){
+   // draw_call= true
+    canvas.style.visibility='visible'
+}
+
+function resize_canvas(){
+    canvas.width = getWidth()
+    canvas.height = getHeight()
+    c_wrap.css('height', getHeight())
+    c_wrap.css('width', getWidth())
+}
+
 $(document).ready(function(){
 
     canvas = document.getElementById('canvas');
@@ -41,6 +58,7 @@ $(document).ready(function(){
             draw_call= false
             canvas.style.visibility='hidden'
         }else{
+            draw_call=true
             canvas.style.visibility ='visible'
         }
     
@@ -51,7 +69,7 @@ function writeMessage(canvas, message, x, y) {
     var context = canvas.getContext('2d');
    // context.clearRect(0, 0, canvas.width, canvas.height);
     context.font = '10pt Calibri';
-    context.fillStyle = 'green';
+    context.fillStyle = 'rgb(143, 255, 147)';
     context.fillText(message, 10, 15);
   }
 function getMousePos(this_canvas, evt) {
@@ -72,7 +90,7 @@ function draw_cursor(x,y){
     context.beginPath();
     context.moveTo(0, y);
     context.lineTo(2000, y);
-    context.strokeStyle = "green";
+    context.strokeStyle = 'rgb(143, 255, 147)';
     context.stroke();
 }
 

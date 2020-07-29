@@ -6,10 +6,7 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
-        canvas.width = getWidth()
-        canvas.height = getHeight()
-        c_wrap.css('height', getHeight())
-        c_wrap.css('width', getWidth())
+        resize_canvas()
         // videoElement.play();
     }
 }
@@ -124,6 +121,7 @@ $("document").ready(function () {
     var SlitControl = document.getElementById("SlitControl");
     
     OverviewCam.addEventListener('click', function() {
+        
         if(FirstTimeCam){
             console.log("Overview cam was clicked for the first time");
             FirstTimeCam=false;
@@ -137,37 +135,45 @@ $("document").ready(function () {
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
+        hide_crosshair()
         
     })
 
     ArmCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/c");
+        show_crosshair()
+        resize_canvas()
         
         
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
         SlitControl.style.visibility='visible';
         currentCam = "c"       
+        dataChannel.send("Camera/camera/c");
     })
 
     V1Cam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+       
+        
                 
         Lamps.style.visibility = "hidden";
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
-
         currentCam = "b"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/b");
     })
 
     V2Cam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/d");
+       
+        
         
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
         SlitControl.style.visibility='visible';
 
         currentCam = "d"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/d");
     })
 
     // OffCam.addEventListener('click', function() {
