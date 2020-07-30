@@ -176,7 +176,7 @@ $("document").ready(function () {
         PotsLeft.style.display = "block";
         PotsRight.style.display = "none";
         FilaLeft.style.display = "none";
-        FilaRight.style.display = "none";
+        FilaRight.style.display = "block";
         MetersManual.style.display = "block";
         MetersBottom.style.display = "block";
     })
