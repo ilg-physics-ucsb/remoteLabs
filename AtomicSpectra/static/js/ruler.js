@@ -15,6 +15,7 @@ function show_crosshair(){
 
 function start_CH(){
     console.log('Crosshair Toggle')
+    document.querySelector("#v").style.zIndex = "1"
         if (canvas.style.visibility =='visible'){
             draw_call= false
             canvas.style.visibility='hidden'
@@ -44,7 +45,7 @@ $(document).ready(function(){
     // canvas.width=getWidth()
     // canvas.height=getHeight()
     
-    canvas.addEventListener('mousemove', function(evt) 
+    document.getElementById('v').addEventListener('mousemove', function(evt) 
     {  
         if(draw_call){
         var mousePos = getMousePos(canvas, evt);
