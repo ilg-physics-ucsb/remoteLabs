@@ -45,7 +45,7 @@ $(document).ready(function(){
     // canvas.width=getWidth()
     // canvas.height=getHeight()
     
-    document.getElementById('v').addEventListener('mousemove', function(evt) 
+    document.getElementById('canvas').addEventListener('mousemove', function(evt) 
     {  
         if(draw_call){
         var mousePos = getMousePos(canvas, evt);

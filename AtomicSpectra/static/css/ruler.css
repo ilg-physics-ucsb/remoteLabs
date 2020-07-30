@@ -12,6 +12,17 @@
     visibility: hidden;
     cursor: crosshair;
 } 
+
+#canvas{
+    /* height: 350px;
+    width: 700px; */
+    position:relative; 
+    z-index: 1000!important;
+    top:0px;
+    left:0px;
+    visibility: hidden;
+    cursor: crosshair;
+} 
 #v_overlay    { 
     position:absolute; 
     top:-15px; 
