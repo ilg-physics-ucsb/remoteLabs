@@ -1,4 +1,3 @@
-
 // This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
 function connectStream(stream, videoElement) {
     if (videoElement) {
@@ -140,12 +139,12 @@ $("document").ready(function () {
     })
 
     ArmCam.addEventListener('click', function() {
-        show_crosshair()
+        //show_crosshair()
         resize_canvas()
-        
+        Crosshairs.style.visibility='visible';
         
         Lamps.style.visibility='visible';
-        Crosshairs.style.visibility='visible';
+        
         SlitControl.style.visibility='visible';
         currentCam = "c"       
         dataChannel.send("Camera/camera/c");

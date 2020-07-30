@@ -5,7 +5,7 @@ var draw_call
 
 function hide_crosshair(){
     draw_call= false
-    canvas.style.visibility='hidden'
+    document.getElementById('canvas').style.visibility='hidden'
 }
 
 function show_crosshair(){
@@ -13,11 +13,24 @@ function show_crosshair(){
     canvas.style.visibility='visible'
 }
 
+function start_CH(){
+    console.log('Crosshair Toggle')
+        if (canvas.style.visibility =='visible'){
+            draw_call= false
+            canvas.style.visibility='hidden'
+        }else{
+            draw_call=true
+            canvas.style.visibility ='visible'
+        }
+    
+}
+
 function resize_canvas(){
-    canvas.width = getWidth()
-    canvas.height = getHeight()
-    c_wrap.css('height', getHeight())
-    c_wrap.css('width', getWidth())
+    document.getElementById('canvas').width = getWidth()
+    document.getElementById('canvas').height = getHeight()
+    document.getElementById('canvas-wrap').width = getWidth()
+    document.getElementById('canvas-wrap').height = getHeight()
+   
 }
 
 $(document).ready(function(){
@@ -42,8 +55,10 @@ $(document).ready(function(){
         }
     }, 
     false);
+
     
     canvas.addEventListener("click", function(evt){
+        
         if (canvas.style.visibility =='visible'){
             if (draw_call){
                 draw_call= false
@@ -53,17 +68,8 @@ $(document).ready(function(){
         }
     })
     
-    CH_click.addEventListener("click", function(evt){
-        if (canvas.style.visibility =='visible'){
-            draw_call= false
-            canvas.style.visibility='hidden'
-        }else{
-            draw_call=true
-            canvas.style.visibility ='visible'
-        }
-    
-    })
-})
+
+
 
 function writeMessage(canvas, message, x, y) {
     var context = canvas.getContext('2d');
@@ -72,6 +78,7 @@ function writeMessage(canvas, message, x, y) {
     context.fillStyle = 'rgb(143, 255, 147)';
     context.fillText(message, 10, 15);
   }
+
 function getMousePos(this_canvas, evt) {
     var rect = this_canvas.getBoundingClientRect();
     return {
@@ -93,5 +100,7 @@ function draw_cursor(x,y){
     context.strokeStyle = 'rgb(143, 255, 147)';
     context.stroke();
 }
+
+})
 
 
