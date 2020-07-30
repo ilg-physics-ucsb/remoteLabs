@@ -8,15 +8,15 @@ socket_path = "/tmp/uv4l.socket"
 
 refPoints = {
     "h2":0,
-    "a":6572,
-    "b": int(2*6572),
+    "a": -625,
+    "b": int(-2*625),
     }
 
 bound = int(1e6)
 slit = StepperI2C("Slit", 1,bounds=(-bound,bound), style="DOUBLE", delay=0.1)  
 grating = StepperI2C("Grating", 2, bounds=(-bound, bound), style="DOUBLE")
 arm = StepperI2C("Arm", 3,bounds=(-bound, bound), style="DOUBLE")
-carousel = StepperI2C("Carousel", 4,bounds=(-bound, bound), style="MICROSTEP", delay=0.00002, refPoints=refPoints)
+carousel = StepperI2C("Carousel", 4,bounds=(-bound, bound), style="MICROSTEP", delay=0.0006, refPoints=refPoints)
 
 ambient = SingleGPIO("Ambient", 5)
 
