@@ -53,12 +53,7 @@ $("document").ready(function () {
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
    
-
-    // Define Variables that are MWRAPs for use inside of callbacks
-    var mWrap1, mWrap2, mWrap6, mWrap7
-    var intervalId
-    var mWrapList = ["#mapster_wrap_2", "#mapster_wrap_1", "#mapster_wrap_6", "#mapster_wrap_7"]
-
+//for modal
     var loadingModal = $("#loadingModal")
 
     loadingModal.on("shown.bs.modal", function(e){
@@ -95,77 +90,11 @@ $("document").ready(function () {
 
 
     //for multi-camera switching
-    var TempCam = document.getElementById("TempCam");
-    var TubeCam = document.getElementById("TubeCam");
-    var PotsCam = document.getElementById("PotsCam");
-    var DataCam = document.getElementById("DataCam");
+    var viewCam = document.getElementById("ViewCam");
+    var rulerCam = document.getElementById("RulerCam");
+    var screenCam = document.getElementById("ScreenCam");
     // var OffCam = document.getElementById("OffCam");
 
-    //for div display switching
-    var FullPage = document.getElementById("FullPage");
-    var OvenLeft = document.getElementById("OvenLeft");
-    var OvenRight = document.getElementById("OvenRight");
-    var TubeLeft = document.getElementById("TubeLeft");
-    var TubeRight = document.getElementById("TubeRight");
-    var PotsLeft = document.getElementById("ControlsLeft");
-    var PotsRight = document.getElementById("ControlsRight");
-    var PotsBottom = document.getElementById("ControlsBottom");
-    var MetersBottom = document.getElementById("MetersBottom");
-
-    TempCam.addEventListener('click', function() {
-        if(FirstTimeTempCam){
-            console.log("Temp cam was clicked for the first time");
-            FirstTimeTempCam=false;
-        }
-        else{
-            dataChannel.send("Camera/camera/a");
-        }
-        OvenLeft.style.display = "block";
-        OvenRight.style.display = "block";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "none";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "none";
-        
-    })
-
-    TubeCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "block";
-        TubeRight.style.display = "block";
-        PotsLeft.style.display = "none";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "none";
-    })
-
-    PotsCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/c");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "block";
-        PotsRight.style.display = "block";
-        PotsBottom.style.display = "block";
-        MetersBottom.style.display = "none";
-    })
-
-    DataCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/d");
-        OvenLeft.style.display = "none";
-        OvenRight.style.display = "none";
-        TubeLeft.style.display = "none";
-        TubeRight.style.display = "none";
-        PotsLeft.style.display = "block";
-        PotsRight.style.display = "none";
-        PotsBottom.style.display = "none";
-        MetersBottom.style.display = "block";
-    })
 
     // OffCam.addEventListener('click', function() {
     //     dataChannel.send("Camera/camera/off")
@@ -207,38 +136,41 @@ $("document").ready(function () {
          startTimer(fortyfiveMinutes, display);
      }
  
-    // for Keithley 6514 Electrometer
-    var shift6514Button = document.getElementById('Shift6514');
-    var local6514Button = document.getElementById('Local6514');
-    var power6514Button = document.getElementById('Power6514');
-    var voltageButton = document.getElementById('Voltage');
-    var currentButton = document.getElementById('Current');
-    var resistanceButton = document.getElementById('Resistance');
-    var chargeButton = document.getElementById('Charge');
-    var externalFeedbackButton = document.getElementById('ExternalFeedback');
-    var zeroCheckButton = document.getElementById('ZeroCheck');
-    var zeroCorrectButton = document.getElementById('ZeroCorrect');
-    var groundButton = document.getElementById('Ground');
-    var averageButton = document.getElementById('Average');
-    var medianButton = document.getElementById('Median');
-    var relativeButton = document.getElementById('Relative');
-    var limitButton = document.getElementById('Limit');
-    var digits6514Button = document.getElementById('Digits6514');
-    var rate6514Button = document.getElementById('Rate6514');
-    var cursorLeft6514Button = document.getElementById('CursorLeft6514');
-    var cursorRight6514Button = document.getElementById('CursorRight6514');
-    var store6514Button = document.getElementById('Store6514');
-    var recall6514Button = document.getElementById('Recall6514');
-    var delayButton = document.getElementById('Delay');
-    var dampingButton = document.getElementById('Damping');
-    var haltButton = document.getElementById('Halt');
-    var trigger6514Button = document.getElementById('Trigger6514');
-    var exit6514Button = document.getElementById('Exit6514');
-    var enter6514Button = document.getElementById('Enter6514');
-    var upRange6514Button = document.getElementById('UpRange6514');
-    var downRange6514Button = document.getElementById('DownRange6514');
-    var autoRange6514Button = document.getElementById('AutoRange6514');
- 
+    // for Diffraction Slits
+    var A02 = document.getElementById('a02');
+    var A04 = document.getElementById('a04');
+    var A08 = document.getElementById('a08');
+    var A16 = document.getElementById('a16');
+
+    var VaryWidth = document.getElementById('a02-20');
+
+    var Line = document.getElementById('line');
+    var LineSlit = document.getElementById('line+slit');
+    var LittleHole = document.getElementById('ø0.2');
+    var BigHole = document.getElementById('ø0.4');
+
+    var Square = document.getElementById('square');
+    var Hex = document.getElementById('hex');
+    var Dots = document.getElementById('dots');
+    var Holes = document.getElementById('holes');
+
+    // for Interference Slits
+    var TwoSlit = document.getElementById('2slit');
+    var ThreeSlit = document.getElementById('3slit');
+    var FourSlit = document.getElementById('4slit');
+    var FiveSlit = document.getElementById('5slit');
+    var A04D25 = document.getElementById('a04d25');
+    var A04D50 = document.getElementById('a04d50');
+    var A08D25 = document.getElementById('a08d25');
+    var A08D50 = document.getElementById('a08d50');
+
+    var varySpacing = document.getElementById('a04d0125-075');
+
+    var TwoOne = document.getElementById('twoOne');
+    var FarClose = document.getElementById('farClose');
+    var WideThin = document.getElementById('wideThin');
+    var ThreeTwo = document.getElementById('threeTwo');
+    
    
     //for Oven Variac Power
     var OvenOFFpress = document.getElementById('ovenOFF');
@@ -511,6 +443,17 @@ $("document").ready(function () {
   }).parent().css({"margin":"0 auto"}); 
 
   $('#comparisonsPic').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+
+  $('#schematic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,

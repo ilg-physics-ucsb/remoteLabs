@@ -128,7 +128,7 @@
           <video id='v' data-playing="false" autoplay="" muted></video>
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
+          <button id="ViewCam" type="button" class="btn btn-primary">Overview</button>
           <button id="RulerCam" type="button" class="btn btn-primary">Position</button>
           <button id="ScreenCam" type="button" class="btn btn-primary">Screen</button>
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
@@ -136,7 +136,7 @@
        </div>
       <div id="RightSideImages" class="column w-col w-col-3" style="justify-content: start">
         <div id="ToggleDark" >
-          (click to toggle the Screen Dark)<br>
+          (click to turn the background Dark)<br>
           <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ls">
           <map name="image-map-ls">
              <area id="ambientTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
@@ -144,18 +144,16 @@
           <br>
           <br>
           <br>           
-        </div><div id="multiDoubleDiv" >
-          <img id="multiDoublePic" src="static/images/iMultipleDoubleSlits-small.jpg" usemap="#image-map-multiDouble">
-          <map name="image-map-multiDouble">
-            <area id="2slit" title="2 slits" href="" coords="244,498,49" shape="circle">
-            <area id="3slit" title="3 slits" href="" coords="291,401,47" shape="circle">
-            <area id="4slit" title="4 slits" href="" coords="370,327,46" shape="circle">
-            <area id="5slit" title="5 slits" href="" coords="470,285,46" shape="circle">
-            <area id="a04d25" title="a=0.04mm d=0.25mm" href="" coords="623,288,46" shape="circle">
-            <area id="a04d50" title="a=0.04mm d=0.50mm" href="" coords="715,333,43" shape="circle">
-            <area id="a08d25" title="a=0.08mm d=0.25mm" href="" coords="782,408,43" shape="circle">
-            <area id="a08d50" title="a=0.08mm d=0.50mm" href="" coords="821,503,45" shape="circle">
-          </map>
+        </div>
+        <br>
+        <div id="doubleDiv" >
+          <img id="doublePic" src="static/images/iDoubleSlits-tiny.jpg" usemap="#image-map-double">
+            <map name="image-map-double">
+              <area id="a04d25" title="a=0.04mm d=0.25mm" href="" coords="623,288,46" shape="circle">
+              <area id="a04d50" title="a=0.04mm d=0.50mm" href="" coords="715,333,43" shape="circle">
+              <area id="a08d25" title="a=0.08mm d=0.25mm" href="" coords="782,408,43" shape="circle">
+              <area id="a08d50" title="a=0.08mm d=0.50mm" href="" coords="821,503,45" shape="circle">
+            </map>
         </div>
         <br>
         <div id="variDoubleDiv" >
@@ -165,7 +163,17 @@
             </map>
         </div>
         <br>
-        <div id="comparisonsDiv" >
+        <div id="multipleDiv" >
+          <img id="multiplePic" src="static/images/iMultipleSlits-tiny.jpg" usemap="#image-map-multiple">
+            <map name="image-map-multiple">
+              <area id="2slit" title="2 slits" href="" coords="244,498,49" shape="circle">
+              <area id="3slit" title="3 slits" href="" coords="291,401,47" shape="circle">
+              <area id="4slit" title="4 slits" href="" coords="370,327,46" shape="circle">
+              <area id="5slit" title="5 slits" href="" coords="470,285,46" shape="circle">
+            </map>
+        </div>
+        <br>
+         <div id="comparisonsDiv" >
           <img id="comparisonsPic" src="static/images/iComparisons-tiny.jpg" usemap="#image-map-comparisons">
             <map name="image-map-comparisons">
               <area id="twoOne" title="two vs one" href="" coords="124,261,38" shape="circle">
