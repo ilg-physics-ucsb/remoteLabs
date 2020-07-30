@@ -134,8 +134,8 @@
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
        </div>
-      <div id="RightSideImages" class="column w-col w-col-3" style="align-items: flex-start;">
-        <div id="ToggleDark">
+      <div id="RightSideImages" class="column w-col w-col-3" style="justify-content: start">
+        <div id="ToggleDark" >
           (click to toggle the Screen Dark)<br>
           <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ls">
           <map name="image-map-ls">
@@ -177,6 +177,11 @@
       </div>
     </div>
     <div id="PageBottom" class="column w-row">
+      <img id="schematic" src="static/images/TrackSchematic.png" usemap="#image-map-schematic">
+      <map name="image-map-schematic">
+        <area id="closer" title="closer" href="#" coords="338,85,304,105,337,125,337,116,358,117,357,94,338,94" shape="poly">
+        <area id="farther" title="farther" href="#" coords="446,93,465,93,465,84,499,105,466,126,465,117,445,116" shape="poly">
+      </map>
     </div>
     <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
