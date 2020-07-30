@@ -49,14 +49,10 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 
 
 $("document").ready(function () {
-    var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
+    var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
-    var FirstTimeOvenOn = true;
-    var FirstTimeOvenOff = true;
-    var FirstTimePSon = true;
-    var FirstTimePSoff = true;
-    var FirstTimeTempCam = true;
+   
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7
@@ -443,193 +439,12 @@ $("document").ready(function () {
        console.log("Retarding voltage was turned up");dataChannel.send("SingleSlits/move/"+VrSteps);})
    //END Retarding Voltage Buttons
  
-    var ElectrometerState=false;
-
-    //BEGIN Keithley 6514 Electrometer Buttons
-    shift6514Button.addEventListener('click', function(event) {
-        //Prevent it from reloading
-        event.stopPropagation();
-        //Run our command
-        dataChannel.send("Electrometer/press/SYST:KEY 1");
-        //Ensure it doesn't reload
-        return false
-    })
-    local6514Button.addEventListener('click', function(event) {
-        //Prevent it from reloading
-        event.stopPropagation();
-        //Run our command
-        dataChannel.send("Electrometer/press/SYST:LOC");
-        //Ensure it doesn't reload
-        return false
-    })
-    power6514Button.addEventListener('click', function(){
-        console.log("Electrometer was switched");
-        if(ElectrometerState){
-            dataChannel.send("FHpdu/off/4");
-            ElectrometerState=false;
-                     }
-        else{
-            dataChannel.send("FHpdu/on/4");
-            ElectrometerState=true;
-        }
-    })
-    // power6514Button.addEventListener('click', function(){
-    //     console.log("Electrometer was switched");
-    //     if(ElectrometerState){
-    //         dataChannel.send("ElectrometerPower/setRelay/OFF");
-    //         ElectrometerState=false;
-    //                  }
-    //     else{
-    //         dataChannel.send("ElectrometerPower/setRelay/ON");
-    //         ElectrometerState=true;
-    //     }
-    // })
-    voltageButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 2");
-        return false
-    })
-    currentButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 3");
-        return false
-    })
-    resistanceButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 4");
-        return false
-    })
-    chargeButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 5");
-        return false
-    })
-    externalFeedbackButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 6");
-        return false
-    })
-    zeroCheckButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 7");
-        return false
-    })
-    zeroCorrectButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 8");
-        return false
-    })
-    groundButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 16");
-        return false
-    })
-    averageButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 18");
-        return false
-    })
-    medianButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 19");
-        return false
-    })
-    relativeButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 20");
-        return false
-    })
-    limitButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 21");
-        return false
-    })
-    digits6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 22");
-        return false
-    })
-    rate6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 23");
-        return false
-    })
-    cursorLeft6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 24");
-        return false
-    })
-    cursorRight6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 15");
-        return false
-    })
-    store6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 26");
-        return false
-    })
-    recall6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 27");
-        return false
-    })
-    delayButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 28");
-        return false
-    })
-    dampingButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 29");
-        return false
-    })
-    haltButton.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 30");
-        // dataChannel.send("Electrometer/press/SYST:ABOR");
-        return false
-    })
-    trigger6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 31");
-        // dataChannel.send("Electrometer/press/TRIG:");
-        return false
-    })
-    exit6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 32");
-        return false
-    })
-    enter6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 14");
-        return false
-    })
-    upRange6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 11");
-        return false
-    })
-    downRange6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 13");
-        return false
-    })
-    autoRange6514Button.addEventListener('click', function(event) {
-        event.stopPropagation();
-        dataChannel.send("Electrometer/press/SYST:KEY 12");
-        return false
-    })
-    // abort.addEventListener('click', function() {
-    //     dataChannel.send("Electrometer/press/ABOR")
-    // })
- //END Keithley 6514 Electrometer Buttons
+    
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     
-    $('#ovenKnob').mapster({
+    $('#singleSlitsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -640,27 +455,7 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#ovenSwitchOFF').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#ovenSwitchON').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#fKnob').mapster({
+  $('#variSinglePic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -668,9 +463,10 @@ $("document").ready(function () {
         fillOpacity: 0.3
     },
     singleSelect: true
+    // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#Va').mapster({
+  $('#linesCirclesPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -678,9 +474,32 @@ $("document").ready(function () {
         fillOpacity: 0.3
     },
     singleSelect: true
+    // scaleMap: true
   }).parent().css({"margin":"0 auto"});
+
+  $('#patternsPic').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"});
+
+  $('#multiDoublePic').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
   
-  $('#Vr').mapster({
+  $('#variDoublePic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -688,29 +507,10 @@ $("document").ready(function () {
         fillOpacity: 0.3
     },
     singleSelect: true
-  }).parent().css({"margin":"0 auto"});
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
 
-  $('#powerSupplySwitchOFF').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#powerSupplySwitchON').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#electrometer').mapster({
+  $('#comparisonsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -718,7 +518,8 @@ $("document").ready(function () {
         fillOpacity: 0.3
     },
     singleSelect: true
-  }).parent().css({"margin":"0 auto"});
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
   
 //   console.log('mapster calls have been made');
   
