@@ -68,7 +68,7 @@ $(document).ready(function(){
 function writeMessage(canvas, message, x, y) {
     var context = canvas.getContext('2d');
    // context.clearRect(0, 0, canvas.width, canvas.height);
-    context.font = '10pt Calibri';
+    context.font = '14pt Calibri';
     context.fillStyle = 'rgb(143, 255, 147)';
     context.fillText(message, 10, 15);
   }
