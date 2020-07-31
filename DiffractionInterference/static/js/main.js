@@ -86,8 +86,6 @@ $("document").ready(function () {
     })
     loadingModal.modal('show')
 
-    
-
 
     //for multi-camera switching
     var viewCam = document.getElementById("ViewCam");
@@ -203,6 +201,9 @@ $("document").ready(function () {
     var NnudgeCCW = document.getElementById('multiplesCCW');
     var mSteps=1;
 
+    //for Stage Motion
+    var stageCloser=document.getElementById('')
+    var stageFarther=
 
     //BEGIN Switches 
     //BEGIN Ambient Toggling 
@@ -210,7 +211,7 @@ $("document").ready(function () {
     AmbientTOGGLE.addEventListener('click', function(){
         console.log("Ambient light was switched");
         if(AmbientState){
-            dataChannel.send("Ambient/off/")            //use this command with PDU
+            dataChannel.send("Ambient/off/")            //use this command with GPIO
             AmbientState=false;
             AmbientTOGGLE.title="Click here to turn ON";
             lightSwitch.style.transform='scaleY(1)';
@@ -266,8 +267,13 @@ $("document").ready(function () {
             screenState=true; 
         }
     })
+
+    //BEGIN Laser
+    //END Laser
+    
     //BEGIN SnapShot
     //END SnapShot
+
     // END Switches
 
    // BEGIN Single Slit Wheel Buttons
@@ -275,79 +281,92 @@ $("document").ready(function () {
     A02.addEventListener('click', function(event) {
         console.log("A02 was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/A02");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     A04.addEventListener('click', function(event) {
         console.log("A04 was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/A04");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     A08.addEventListener('click', function(event) {
         console.log("A08 was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/A08");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     A16.addEventListener('click', function(event) {
         console.log("A16 was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/A16");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     VaryWidth.addEventListener('click', function(event) {
         console.log("Variable Width Slit was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/VaryWidth");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
-    Line.addEventListener('click', function(event) {
-        console.log("Line was clicked");
+    SingleOpen.addEventListener('click', function(event) {
+        console.log("SingleOpen was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     LineSlit.addEventListener('click', function(event) {
         console.log("Line+Slit was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/LineSlit");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     LittleHole.addEventListener('click', function(event) {
         console.log("Little hole was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/LittleHole");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     BigHole.addEventListener('click', function(event) {
         console.log("Big hole was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/BigHole");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     Square.addEventListener('click', function(event) {
         console.log("Square grid was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/Square");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     Hex.addEventListener('click', function(event) {
         console.log("Hexagonal grid was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/Hex");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     Dots.addEventListener('click', function(event) {
         console.log("Random dots was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/Dots");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
     Holes.addEventListener('click', function(event) {
         console.log("Random holes was clicked");
         event.stopPropagation();
-        dataChannel.send("sWheel/goto/#deg");
+        dataChannel.send("SingleSlits/goto/Holes");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         return false
     })
 }
@@ -358,79 +377,92 @@ $("document").ready(function () {
     A04D25.addEventListener('click', function(event) {
         console.log("a=0.04, d=0.25 was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/A04D25");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     A04D50.addEventListener('click', function(event) {
         console.log("a=0.04, d=0.50 was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/A04D50");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     A08D25.addEventListener('click', function(event) {
         console.log("a=0.08, d=0.25 was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/A08D25");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     A08D50.addEventListener('click', function(event) {
         console.log("a=0.08, d=0.50 was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/A08D50");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     varySpacing.addEventListener('click', function(event) {
         console.log("Variable Slit Spacing was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/varySpacing");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     TwoSlit.addEventListener('click', function(event) {
         console.log("2 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/TwoSlit");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     ThreeSlit.addEventListener('click', function(event) {
         console.log("3 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/ThreeSlit");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     FourSlit.addEventListener('click', function(event) {
         console.log("4 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/FourSlit");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     FiveSlit.addEventListener('click', function(event) {
         console.log("5 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/FiveSlit");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     TwoOne.addEventListener('click', function(event) {
         console.log("2 slits vs 1 slit was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/TwoOne");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     FarClose.addEventListener('click', function(event) {
         console.log("Comparison of slit separations was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/FarClose");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     WideThin.addEventListener('click', function(event) {
         console.log("Wide slit vs thin slit was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/WideThin");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
     ThreeTwo.addEventListener('click', function(event) {
         console.log("3 slits vs 2 slit was clicked");
         event.stopPropagation();
-        dataChannel.send("mWheel/goto/#deg");
+        dataChannel.send("MultiSlits/goto/ThreeTwo");
+        dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
 }
