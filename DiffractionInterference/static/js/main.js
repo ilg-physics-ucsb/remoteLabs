@@ -134,7 +134,10 @@ $("document").ready(function () {
          var fortyfiveMinutes = 60 * 45,
              display = document.querySelector('#time');
          startTimer(fortyfiveMinutes, display);
-     }
+     
+         TransparencyOff.style.display = "block";                      
+         TransparencyOn.style.display = "none"; 
+        }
  
     // for Diffraction Slits
     var A02 = document.getElementById('a02');
@@ -155,10 +158,6 @@ $("document").ready(function () {
     var Holes = document.getElementById('holes');
 
     // for Interference Slits
-    var TwoSlit = document.getElementById('2slit');
-    var ThreeSlit = document.getElementById('3slit');
-    var FourSlit = document.getElementById('4slit');
-    var FiveSlit = document.getElementById('5slit');
     var A04D25 = document.getElementById('a04d25');
     var A04D50 = document.getElementById('a04d50');
     var A08D25 = document.getElementById('a08d25');
@@ -166,211 +165,276 @@ $("document").ready(function () {
 
     var varySpacing = document.getElementById('a04d0125-075');
 
+    var TwoSlit = document.getElementById('2slit');
+    var ThreeSlit = document.getElementById('3slit');
+    var FourSlit = document.getElementById('4slit');
+    var FiveSlit = document.getElementById('5slit');
+   
     var TwoOne = document.getElementById('twoOne');
     var FarClose = document.getElementById('farClose');
     var WideThin = document.getElementById('wideThin');
     var ThreeTwo = document.getElementById('threeTwo');
     
+
+    //for Screen
+    var screenWhite = document.getElementById('screenWHITE');
+    var screenClear = document.getElementById('screenCLEAR');
+    var TransparencyOff = document.getElementById('TransparencyOFF');
+    var TransparencyOn = document.getElementById('TransparencyON');
+    var screenState = false;
+
+    //for Background
+    var darkSwitch = document.getElementById('darkSwitch')
+    var DarkTOGGLE = document.getElementById('darkTOGGLE');
+    var DarkState = false;
+
+    //for Ambient Light
+    var lightSwitch = document.getElementById('lightSwitch');
+    var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
+    var AmbientState = false;
+
+    //for Single Slit Wheel
+    var SnudgeCW = document.getElementById('singlesCW');
+    var SnudgeCCW = document.getElementById('singlesCCW');
+    var sSteps=1;
    
-    //for Oven Variac Power
-    var OvenOFFpress = document.getElementById('ovenOFF');
-    var OvenONpress = document.getElementById('ovenON');
-    var OvenOFFpic = document.getElementById('ovenSwitchOFF');
-    var OvenONpic = document.getElementById('ovenSwitchON');
-    var OvenState = false;
+    //for Multiple Slit Settings
+    var MnudgeCW = document.getElementById('multiplesCW');
+    var NnudgeCCW = document.getElementById('multiplesCCW');
+    var mSteps=1;
 
-    //for Filament Variac Power
-    var filamentSwitch = document.getElementById('filamentSwitch');
-    var filamentTOGGLE = document.getElementById('filamentTOGGLE');
-    var filamentState = false;
 
-    //for Power Supply Power
-    var powerSupplyOFF = document.getElementById('psOFF');
-    var powerSupplyON = document.getElementById('psON');
-    var psOFFpic = document.getElementById('powerSupplySwitchOFF');
-    var psONpic = document.getElementById('powerSupplySwitchON');
-    var powerSupplyState = false;
-
-    //for Oven Variac Settings
-    var lowerOvenV = document.getElementById('oVccw');
-    var raiseOvenV = document.getElementById('oVcw');
-    var threeDegOvenV = document.getElementById('3.6_deg_Vo');
-    var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
-    var ovenSteps=23;
-   
-    //for Filament Variac Settings
-    var lowerFilamentV = document.getElementById('fVccw');
-    var raiseFilamentV = document.getElementById('fVcw');
-    var threeDegFilamentV = document.getElementById('3.6_deg_Vf');
-    var thirtySixDegFilamentV = document.getElementById('36_deg_Vf');
-    var filamentSteps=23;
-    
-    //for Accelerating Voltage Potentiometer Settings
-    var raiseVa = document.getElementById('aCW');
-    var lowerVa = document.getElementById('aCCW');
-    var threeDegVa = document.getElementById('3.6_deg_Va');
-    var thirtySixDegVa = document.getElementById('36_deg_Va');
-    var threeSixtyDegVa = document.getElementById('360_deg_Va');
-    var VaSteps=21;
-   
-    //for Retarding Voltage Potentiometer Settings
-    var raiseVr = document.getElementById('rCW');
-    var lowerVr = document.getElementById('rCCW');
-    var threeDegVr = document.getElementById('3.6_deg_Vr');
-    var thirtySixDegVr = document.getElementById('36_deg_Vr');
-    var VrSteps=21;
-
-    //BEGIN Power Switches 
- 
-    OvenOFFpress.addEventListener('click', function(){
-        console.log("Oven power was turned off");
-        if(OvenState){
-            if(FirstTimeOvenOff){
-                // mWrap2 = document.getElementById('mapster_wrap_2');
-                console.log("for the first time");
-            }
-            if(!FirstTimeOvenOff){
-            //--------choose one of the following
-            //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("ASDIpdu/off/1");                //use this command with PDU
-            }
-            mWrap1.style.display = "block";                      
-            mWrap2.style.display = "none";
-            OvenOFFpic.style.display = "block";                      
-            OvenONpic.style.display = "none"; 
-            OvenState=false; 
-            FirstTimeOvenOff=false;
-        }
-    })
-    OvenONpress.addEventListener('click', function(){
-        console.log("Oven power was turned on");
-        if(!OvenState){
-            if(FirstTimeOvenOn){  //initialize mapster wrap for OvenOn
-                // mWrap1 = document.getElementById('mapster_wrap_1');
-                console.log("for the first time");
-            }
-            if(!FirstTimeOvenOn){
-            //--------choose one of the following
-            //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("ASDIpdu/on/1");                 //use this command with PDU 
-            }
-            mWrap2.style.display = "block";                      
-            mWrap1.style.display = "none"; 
-            OvenONpic.style.display = "block";                      
-            OvenOFFpic.style.display = "none";
-            OvenState=true;  
-            FirstTimeOvenOn=false;
-        }
-    })
-    
-    filamentTOGGLE.addEventListener('click', function(){
-        console.log("Filament power was switched");
-        if(filamentState){
-                //--------choose one of the following
-            //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("Screen/off/");                //use this command with PDU
-                //---------
-            filamentState=false;
-            filamentTOGGLE.title="Click here to turn ON";
-            filamentSwitch.style.transform='scaleY(1)';
+    //BEGIN Switches 
+    //BEGIN Ambient Toggling 
+     
+    AmbientTOGGLE.addEventListener('click', function(){
+        console.log("Ambient light was switched");
+        if(AmbientState){
+            dataChannel.send("Ambient/off/")            //use this command with PDU
+            AmbientState=false;
+            AmbientTOGGLE.title="Click here to turn ON";
+            lightSwitch.style.transform='scaleY(1)';
                      }
         else{
-                //--------choose one of the following
-            //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("Screen/on/");                 //use this command with PDU
-                //---------
-            filamentState=true;
-            filamentTOGGLE.title="Click here to turn OFF";
-            filamentSwitch.style.transform='scaleY(-1)';
+            dataChannel.send("Ambient/on/")                 //use this command with GPIO
+            AmbientState=true;
+            AmbientTOGGLE.title="Click here to turn OFF";
+            lightSwitch.style.transform='scaleY(-1)';
         }
     })
-    
-    powerSupplyOFF.addEventListener('click', function(){
-        console.log("Power Supply was turned off");
-        if(powerSupplyState){
-            if(FirstTimePSoff){
-                // mWrap6 = document.getElementById('mapster_wrap_6');
-                console.log("for the first time");            
-            }
-            if(!FirstTimePSoff){
-            //--------choose one of the following
-            //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            dataChannel.send("Ambient/off/");                //use this command with PDU
-            }
-            mWrap6.style.display = "block";                      
-            mWrap7.style.display = "none"; 
-            psOFFpic.style.display = "block";                      
-            psONpic.style.display = "none"; 
-            
-            powerSupplyState=false;
-            FirstTimePSoff=false;
-        }
-    })
-    powerSupplyON.addEventListener('click', function(){
-        console.log("Power Supply was turned on");
-        if(!powerSupplyState){
-            if(FirstTimePSon){
-                // mWrap7 = document.getElementById('mapster_wrap_7');  
-                console.log("for the first time");  
-            }
-            if(!FirstTimePSon){
-            //--------choose one of the following
-            //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("Ambient/on/");                //use this command with PDU
-            
-            }   
-            mWrap7.style.display = "block";                      
-            mWrap6.style.display = "none"; 
-            psONpic.style.display = "block";                      
-            psOFFpic.style.display = "none"; 
-            
-            powerSupplyState=true;
-            FirstTimePSon=false;
-            
-        }
-    })
-    // END Power Switches
 
-    //BEGIN Oven Variac Buttons 
-    threeDegOvenV.addEventListener('click', function(){ovenSteps=20;})
-    thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=200;})
+    //END Ambient Toggling
     
-    lowerOvenV.addEventListener('click', function() {
-        console.log("Oven Variac was turned down"); 
-        dataChannel.send("Stage/move/"+(-ovenSteps));})
-    raiseOvenV.addEventListener('click', function() {
-        console.log("Oven Variac was turned up");
-        dataChannel.send("Stage/move/"+ovenSteps);})
-    //END Oven Variac Buttons
-   //BEGIN Filament Variac Buttons 
-   threeDegFilamentV.addEventListener('click', function(){filamentSteps=20;})
-   thirtySixDegFilamentV.addEventListener('click', function(){filamentSteps=200;})
-   
-   lowerFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned down"); dataChannel.send("Stage/move/"+(-filamentSteps));})
-   raiseFilamentV.addEventListener('click', function() {
-       console.log("Filament Variac was turned up");dataChannel.send("Stage/move/"+filamentSteps);})
-   //END Filament Variac Buttons
-   //BEGIN Accelerating Voltage Buttons 
-   threeDegVa.addEventListener('click', function(){VaSteps=2;})
-   thirtySixDegVa.addEventListener('click', function(){VaSteps=20;})
-   threeSixtyDegVa.addEventListener('click', function(){VaSteps=200;})
+    //BEGIN Background Toggling
+      
+    BackgroundTOGGLE.addEventListener('click', function(){
+           if(!DarkState){
+            console.log("Background was darkened. Controls were hidden.");
+            //hide controls; turn background black
+            DarkState=true;
+            DarkTOGGLE.title="Click here to reveal controls";
+            darkSwitch.style.transform='scaleY(1)';
+                     }
+        else{
+            console.log("Background was lit. Controls were revealed.");
+            //reveal controls; turn background white      
+            DarkState=false;
+            DarkTOGGLE.title="Click here to darken the background";
+            darkSwitch.style.transform='scaleY(-1)';
+        }
+    })
 
-   lowerVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned down"); dataChannel.send("MultiSlits/move/"+(-VaSteps));})
-   raiseVa.addEventListener('click', function() {
-       console.log("Accelerating voltage was turned up");dataChannel.send("MultiSlits/move/"+VaSteps);})
-   //END Accelerating Voltage Buttons
-   //BEGIN Retarding Voltage Buttons 
-   threeDegVr.addEventListener('click', function(){VrSteps=20;})
-   thirtySixDegVr.addEventListener('click', function(){VrSteps=200;})
+   //END Background Toggling
+
+    //BEGIN Screen Toggling
+
+    screenWhite.addEventListener('click', function(){
+        console.log("Screen power was turned off");
+        if(screenState){
+            dataChannel.send("Screen/off/");              
+            TransparencyOff.style.display = "block";                      
+            TransparencyOn.style.display = "none"; 
+            screenState=false; 
+        }
+    })
+    screenClear.addEventListener('click', function(){
+        console.log("Screen power was turned on");
+        if(!screenState){
+            dataChannel.send("Screen/on/");              
+            TransparencyOff.style.display = "none";                      
+            TransparencyOn.style.display = "block"; 
+            screenState=true; 
+        }
+    })
+    //BEGIN SnapShot
+    //END SnapShot
+    // END Switches
+
+   // BEGIN Single Slit Wheel Buttons
+{
+    A02.addEventListener('click', function(event) {
+        console.log("A02 was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    A04.addEventListener('click', function(event) {
+        console.log("A04 was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    A08.addEventListener('click', function(event) {
+        console.log("A08 was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    A16.addEventListener('click', function(event) {
+        console.log("A16 was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    VaryWidth.addEventListener('click', function(event) {
+        console.log("Variable Width Slit was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    Line.addEventListener('click', function(event) {
+        console.log("Line was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    LineSlit.addEventListener('click', function(event) {
+        console.log("Line+Slit was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    LittleHole.addEventListener('click', function(event) {
+        console.log("Little hole was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    BigHole.addEventListener('click', function(event) {
+        console.log("Big hole was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    Square.addEventListener('click', function(event) {
+        console.log("Square grid was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    Hex.addEventListener('click', function(event) {
+        console.log("Hexagonal grid was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    Dots.addEventListener('click', function(event) {
+        console.log("Random dots was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+    Holes.addEventListener('click', function(event) {
+        console.log("Random holes was clicked");
+        event.stopPropagation();
+        dataChannel.send("sWheel/goto/#deg");
+        return false
+    })
+}
+   // END Single Slite Wheel Buttons
    
-   lowerVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned down"); dataChannel.send("SingleSlits/move/"+(-VrSteps));})
-   raiseVr.addEventListener('click', function() {
-       console.log("Retarding voltage was turned up");dataChannel.send("SingleSlits/move/"+VrSteps);})
-   //END Retarding Voltage Buttons
- 
+   // BEGIN Multiple Slits Wheel Buttons
+{
+    A04D25.addEventListener('click', function(event) {
+        console.log("a=0.04, d=0.25 was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    A04D50.addEventListener('click', function(event) {
+        console.log("a=0.04, d=0.50 was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    A08D25.addEventListener('click', function(event) {
+        console.log("a=0.08, d=0.25 was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    A08D50.addEventListener('click', function(event) {
+        console.log("a=0.08, d=0.50 was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    varySpacing.addEventListener('click', function(event) {
+        console.log("Variable Slit Spacing was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    TwoSlit.addEventListener('click', function(event) {
+        console.log("2 slits was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    ThreeSlit.addEventListener('click', function(event) {
+        console.log("3 slits was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    FourSlit.addEventListener('click', function(event) {
+        console.log("4 slits was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    FiveSlit.addEventListener('click', function(event) {
+        console.log("5 slits was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    TwoOne.addEventListener('click', function(event) {
+        console.log("2 slits vs 1 slit was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    FarClose.addEventListener('click', function(event) {
+        console.log("Comparison of slit separations was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    WideThin.addEventListener('click', function(event) {
+        console.log("Wide slit vs thin slit was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+    ThreeTwo.addEventListener('click', function(event) {
+        console.log("3 slits vs 2 slit was clicked");
+        event.stopPropagation();
+        dataChannel.send("mWheel/goto/#deg");
+        return false
+    })
+}
+    // END Single Slite Wheel Buttons
     
 
  
