@@ -67,6 +67,7 @@ $("document").ready(function () {
         intervalId = setInterval(function() {
             for (mWrap of mWrapList) {
                 if ($(mWrap).length == 0) {
+                    OverviewCam.click()
                     return
                 }
             } 
@@ -110,7 +111,7 @@ $("document").ready(function () {
     
     OverviewCam.addEventListener('click', function() {
         if(FirstTimeCam){
-            console.log("Temp cam was clicked for the first time");
+            console.log("Overview cam was clicked for the first time");
             FirstTimeCam=false;
         }
         else{
@@ -245,6 +246,9 @@ $("document").ready(function () {
     var spectraLamp = "H2"
     var H2FirstTime = true;
 
+    var nudgeLeft = document.getElementById('lampNudgeLeft');
+    var nudgeRight = document.getElementById('lampNudgeRight');
+
     //for Slit Settings
     var Slit = document.getElementById('Slit');
     var LopenSlit = document.getElementById('OpenL');
@@ -291,7 +295,7 @@ $("document").ready(function () {
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
             // Commented line below - 20200716
-            dataChannel.send("Ambient/on/")                 //use this command with PDU
+            dataChannel.send("Ambient/on/")                 //use this command with GPIO
                 //---------
             AmbientState=true;
             AmbientTOGGLE.title="Click here to turn OFF";
@@ -305,17 +309,18 @@ $("document").ready(function () {
     function H2PressCmd() {
         // If it is already on and is just switching to H2
         // Turn off carousel, move to H2, turn on carousel
-        if(lampSupplyState && spectraLamp != "H2"){
-            console.log("Turning off and switching to H2")
-            dataChannel.send("Camera/camera/a")               //This should be overview camera
+        if(lampSupplyState && (spectraLamp != "H2")){
+            console.log("Turning off and switching to H2");
+            dataChannel.send("Camera/camera/a");               //This should be overview camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/6");
             dataChannel.send("Carousel/goto/h2")
             dataChannel.send("ASDIpdu/on/6");
-            dataChannel.send("Camera/camera/" + currentCam)
+            dataChannel.send("Camera/camera/" + currentCam);
+            lampSupplyState = true;
         // If it off and H2 is clicked while not on H2
         // Move to H2, turn on carousel.
-        } else if (!lampSupplyState && spectraLamp != "H2"){
+        } else if (!lampSupplyState && (spectraLamp != "H2")){
             console.log("Switching to H2")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
@@ -323,12 +328,12 @@ $("document").ready(function () {
             dataChannel.send("Carousel/goto/h2")
             dataChannel.send("ASDIpdu/on/6");
             dataChannel.send("Camera/camera/" + currentCam)
-
+            lampSupplyState = true;
         // If its off and already at H2
         // Start by checking if it is the first time
         // If so, setup all lamps off, dont move or send anything
         // If not, just turn on carousel.
-        } else if (!lampSupplyState && spectraLamp == "H2"){
+        } else if (!lampSupplyState && (spectraLamp == "H2")){
             if (H2FirstTime) {
                 mWrap0.style.display = "block";                     
                 mWrap1.style.display = "none";
@@ -343,10 +348,12 @@ $("document").ready(function () {
                 return
             } else {
                 dataChannel.send("ASDIpdu/on/6")
+                lampSupplyState = true;
             }
         // If H2 is already on, turn it off and switch view to off view.
-        } else if (lampSupplyState && spectraLamp == "H2") {
-            dataChannel.send("ASDIpdu/off/6")
+        } else if (lampSupplyState && (spectraLamp == "H2")) {
+            dataChannel.send("ASDIpdu/off/6");
+            console.log("carousel was turned off");
             mWrap0.style.display = "block";                     
             mWrap1.style.display = "none";
             mWrap2.style.display = "none";                     
@@ -356,6 +363,7 @@ $("document").ready(function () {
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
             spectraLamp = "H2"
+            lampSupplyState = false;
             return
         }
 
@@ -374,7 +382,7 @@ $("document").ready(function () {
     function APressCmd() {
          // If it is already on and is just switching to A
         // Turn off carousel, move to A, turn on carousel
-        if(lampSupplyState && spectraLamp != "A"){
+        if(lampSupplyState && (spectraLamp != "A")){
             console.log("Turning off and switching to A")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
@@ -382,9 +390,10 @@ $("document").ready(function () {
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/6");
             dataChannel.send("Camera/camera/" + currentCam)
+            lampSupplyState = true;
         // If it off and H2 is clicked while not on H2
         // Move to A, turn on carousel.
-        } else if (!lampSupplyState && spectraLamp != "A"){
+        } else if (!lampSupplyState && (spectraLamp != "A")){
             console.log("Switching to A")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
@@ -392,15 +401,17 @@ $("document").ready(function () {
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/6");
             dataChannel.send("Camera/camera/" + currentCam)
-
+            lampSupplyState = true;
         // If its off and already at A
         // If not, just turn on carousel.
-        } else if (!lampSupplyState && spectraLamp == "A"){
-            dataChannel.send("ASDIpdu/on/6")
+        } else if (!lampSupplyState && (spectraLamp == "A")){
+            dataChannel.send("ASDIpdu/on/6");
+            lampSupplyState = true;
 
         // If A is already on, turn it off and switch view to off view.
-        } else if (lampSupplyState && spectraLamp == "H2") {
-            dataChannel.send("ASDIpdu/off/6")
+        } else if (lampSupplyState && (spectraLamp == "A")) {
+            dataChannel.send("ASDIpdu/off/6");
+            console.log("carousel was turned off");
             mWrap0.style.display = "block";                     
             mWrap1.style.display = "none";
             mWrap2.style.display = "none";                     
@@ -410,6 +421,7 @@ $("document").ready(function () {
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
             spectraLamp = "A"
+            lampSupplyState = false;
             return
         }
 
@@ -436,6 +448,7 @@ $("document").ready(function () {
             dataChannel.send("Carousel/goto/b")
             dataChannel.send("ASDIpdu/on/6");
             dataChannel.send("Camera/camera/" + currentCam)
+            lampSupplyState = true;
         // If it off and B is clicked while not on B
         // Move to B, turn on carousel.
         } else if (!lampSupplyState && spectraLamp != "B"){
@@ -446,15 +459,16 @@ $("document").ready(function () {
             dataChannel.send("Carousel/goto/b")
             dataChannel.send("ASDIpdu/on/6");
             dataChannel.send("Camera/camera/" + currentCam)
-
+            lampSupplyState = true;
         // If its off and already at B
         // If not, just turn on carousel.
         } else if (!lampSupplyState && spectraLamp == "B"){
-            dataChannel.send("ASDIpdu/on/6")
-
+            dataChannel.send("ASDIpdu/on/6");
+            lampSupplyState = true;
         // If A is already on, turn it off and switch view to off view.
         } else if (lampSupplyState && spectraLamp == "B") {
-            dataChannel.send("ASDIpdu/off/6")
+            dataChannel.send("ASDIpdu/off/6");
+            console.log("carousel was turned off");
             mWrap0.style.display = "block";                     
             mWrap1.style.display = "none";
             mWrap2.style.display = "none";                     
@@ -463,10 +477,8 @@ $("document").ready(function () {
             aONpic.style.display = "none";
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
-            H2press = document.getElementById('H2-off');
-            Apress = document.getElementById('SampleA-off');
-            Bpress = document.getElementById('SampleB-off');
             spectraLamp = "B"
+            lampSupplyState = false;
             return
         }
 
@@ -479,9 +491,6 @@ $("document").ready(function () {
         aONpic.style.display = "none";
         bONpic.style.display = "block";
         allOFFpic.style.display = "none"
-        H2press = document.getElementById('H2-b');
-        Apress = document.getElementById('SampleA-b');
-        Bpress = document.getElementById('SampleB-b');
         spectraLamp = "B"
     }
 
@@ -500,10 +509,19 @@ $("document").ready(function () {
     BpressA.addEventListener("click", BPressCmd);
     BpressB.addEventListener("click", BPressCmd);
 
-
     //END Lamp Toggling
 
+//BEGIN Lamp Nudging
 
+    nudgeLeft.addEventListener('click',function() {
+        console.log("Lamp nudged left");
+        dataChannel.send("Carousel/move/-2")
+    })
+    nudgeRight.addEventListener('click',function() {
+        console.log("Lamp nudged right");
+        dataChannel.send("Carousel/move/2")
+    })
+//END Lamp Nudging
 
     //BEGIN Grating buttons
     gFine.addEventListener('click', function(){gratingSteps=20;})        //roughly one degree
@@ -544,7 +562,7 @@ $("document").ready(function () {
 
    function openSlitCmd() {
     console.log("Slit was made wider");
-    dataChannel.send("Slit/move/"+slitStep);
+    dataChannel.send("Slit/move/"+slitSteps);
    }
 
    function closeSlitCmd() {
