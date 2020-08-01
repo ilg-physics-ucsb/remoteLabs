@@ -1,0 +1,24 @@
+#wrapper_v{
+    position: relative;
+    display: block;
+    margin: auto;
+    height:5;
+  
+}
+
+#v{
+    position: relative;
+    float: left;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(137, 43, 226, 0.61);
+}
+
+#chcv{
+    float: left;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    visibility: hidden;
+}
+

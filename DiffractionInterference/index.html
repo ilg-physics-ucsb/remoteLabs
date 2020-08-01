@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="static/css/mdb.min.css">
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="static/css/styleGrid.css">
+  <link rel="stylesheet" href="static/css/crosshair.css">
   <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
@@ -31,16 +32,21 @@
 
 </head>
 <body>
+  <!-- crosshairs -->
+  <script src="static/js/crosshair.js"></script>
   <script src="static/js/signalling.js"></script>
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
   <script type="text/javascript" src="static/js/popper.min.js"></script>
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/js/webflow.js" type="text/javascript"></script>
+  
   <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
   <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
 
-  <script src="static/js/main.js"></script>
+  <script src="static/js/main.js"></script> 
+ 
+
   <!-- Start your project here--> 
   <div class="pagecontainer w-row">
     <div id="PageHead" class="column w-row">
@@ -158,13 +164,22 @@
             (click to toggle the Laser)
           </div> -->
         </div>
-        <div class="video w-video w-embed">
+        
+         
+            <div class="video w-video w-embed" id='embeded'>
+              <div id="wrapper_v" height=100>
           <video id='v' data-playing="false" autoplay="" muted></video>
+          <canvas id='chcv' width='100%'></canvas>
+        
+          </div>
+          <div style="clear: both;"></div>
         </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button id="ViewCam" type="button" class="btn btn-primary">Overview</button>
-          <button id="RulerCam" type="button" class="btn btn-primary">Position</button>
-          <button id="ScreenCam" type="button" class="btn btn-primary">Screen</button>
+        
+        <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
+          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Overview</button>
+          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Position</button>
+          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Screen</button>
+          <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
         <div id="Schema">
