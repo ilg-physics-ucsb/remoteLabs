@@ -643,15 +643,17 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
   
-});
-
-
-window.addEventListener('beforeunload', function(e) {
+  window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
     mainCamSignal.hangup();
     // TEMP CHANGE
     dataChannel.close();
-})
+  })
+
+});
+
+
+
 
 
 
