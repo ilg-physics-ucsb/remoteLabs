@@ -53,7 +53,13 @@ $("document").ready(function () {
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
     var eyeFirstClick = true;
-   
+
+    //for multi-camera switching
+    var viewCam = document.getElementById("ViewCam");
+    var rulerCam = document.getElementById("RulerCam");
+    var screenCam = document.getElementById("ScreenCam");
+    // var OffCam = document.getElementById("OffCam");
+
 //for modal
     var loadingModal = $("#loadingModal")
     var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
@@ -84,11 +90,6 @@ $("document").ready(function () {
     loadingModal.modal('show')
 
 
-    //for multi-camera switching
-    var viewCam = document.getElementById("ViewCam");
-    var rulerCam = document.getElementById("RulerCam");
-    var screenCam = document.getElementById("ScreenCam");
-    // var OffCam = document.getElementById("OffCam");
 
 
     // OffCam.addEventListener('click', function() {
@@ -166,7 +167,7 @@ $("document").ready(function () {
     var FourSlit = document.getElementById('4slit');
     var FiveSlit = document.getElementById('5slit');
    
-    var TwoOne = document.getElementById('twoOne');
+    var MultiOpen = document.getElementById('multiOpen');
     var FarClose = document.getElementById('farClose');
     var WideThin = document.getElementById('wideThin');
     var ThreeTwo = document.getElementById('threeTwo');
@@ -466,10 +467,10 @@ $("document").ready(function () {
         dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
-    TwoOne.addEventListener('click', function(event) {
+    MultiOpen.addEventListener('click', function(event) {
         console.log("2 slits vs 1 slit was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/TwoOne");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })

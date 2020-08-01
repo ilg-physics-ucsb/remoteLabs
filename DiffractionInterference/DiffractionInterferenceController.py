@@ -27,7 +27,7 @@ refPointsSingle = {
 }
 
 refPointsMulti = {
-    "TwoOne": 0,
+    "MultiOpen": 0,
     "FarClose": 0,
     "WideThin": 0,
     "ThreeTwo": 0,
