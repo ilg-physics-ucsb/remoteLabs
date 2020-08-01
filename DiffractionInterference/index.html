@@ -164,7 +164,13 @@
             (click to toggle the Laser)
           </div> -->
         </div>
-        
+        <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
+          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Overview</button>
+          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Position</button>
+          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Screen</button>
+          <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
+          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+        </div>
          
             <div class="video w-video w-embed" id='embeded'>
               <div id="wrapper_v" height=100>
@@ -175,13 +181,7 @@
           <div style="clear: both;"></div>
         </div>
         
-        <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
-          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Overview</button>
-          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Position</button>
-          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Screen</button>
-          <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
-          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
-        </div>
+        
         <div id="Schema">
           <img id="schematic" src="static/images/TrackSchematic.png" usemap="#image-map-schematic">
           <map name="image-map-schematic">

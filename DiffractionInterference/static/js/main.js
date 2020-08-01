@@ -54,12 +54,7 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
     var eyeFirstClick = true;
 
-    //for multi-camera switching
-    var viewCam = document.getElementById("ViewCam");
-    var rulerCam = document.getElementById("RulerCam");
-    var screenCam = document.getElementById("ScreenCam");
-    // var OffCam = document.getElementById("OffCam");
-
+  
 //for modal
     var loadingModal = $("#loadingModal")
     var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
@@ -545,17 +540,17 @@ $("document").ready(function () {
 
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
-        dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
+        dataChannel.send("Camera/camera/c") //Needs to be updated to proper camera
     })
 
     rulerCam.addEventListener("click", function() {
         console.log("Switched to ruler cam")
-        dataChannel.send("Camera/camera/b") //Needs to be updated to proper camera
+        dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
     })
 
     screenCam.addEventListener("click", function() {
         console.log("Switched to screen cam")
-        dataChannel.send("Camera/camera/d") //Needs to be updated to proper camera
+        dataChannel.send("Camera/camera/b") 
     })
     // END Camera Switching
 
