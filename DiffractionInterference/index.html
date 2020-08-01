@@ -79,42 +79,44 @@
           </map>
           <br>
           <br>
+          a=: slit width in mm
+          <br>
           <br>           
         </div>
         <div id="singleSlitsDiv" >
           <img id="singleSlitsPic" src="static/images/SingleSlits_tiny.jpg" usemap="#image-map-singleSlits">
             <map name="image-map-singleSlits">
-              <area id="a02" title="a=0.02mm" href="#" coords="143,263,40" shape="circle">
-              <area id="a04" title="a=0.04mm" href="#" coords="228,233,40" shape="circle">
-              <area id="a08" title="a=0.08mm" href="#" coords="317,231,40" shape="circle">
-              <area id="a16" title="a=0.16mm" href="#" coords="399,258,40" shape="circle">
+              <area id="a02" title="a=0.02mm" href="#" coords="62,132,20" shape="circle">
+              <area id="a04" title="a=0.04mm" href="#" coords="105,116,19" shape="circle">
+              <area id="a08" title="a=0.08mm" href="#" coords="150,114,20" shape="circle">
+              <area id="a16" title="a=0.16mm" href="#" coords="191,130,19" shape="circle">
             </map>
         </div>
         <br>
         <div id="variSingleDiv" >
           <img id="variSinglePic" src="static/images/VariableSlit-tiny.jpg" usemap="#image-map-variSingle">
             <map name="image-map-variSingle">
-              <area id="a02-20" title="a=0.02-0.20mm" href="" coords="111,284,121,294,131,299,143,301,157,298,172,291,185,284,197,280,209,275,221,273,233,268,247,265,264,264,283,265,300,265,315,268,332,271,348,276,363,283,378,290,393,298,409,298,421,291,430,282,437,269,438,255,433,240,423,231,407,222,390,215,373,208,357,202,341,196,324,193,307,192,289,190,273,190,254,192,239,194,223,196,209,200,194,205,179,209,165,214,151,220,138,227,124,235,112,242,104,255,104,271" shape="poly">
+              <area id="a02-20" title="a=0.02-0.20mm" href="" coords="56,117,47,123,45,134,49,144,57,149,69,150,84,143,99,137,115,133,127,132,146,134,159,137,174,142,187,148,198,149,207,141,211,131,210,121,200,113,183,106,162,98,145,95,126,95,102,99,78,105" shape="poly">
             </map>
         </div>
         <br>
         <div id="linesCirclesDiv" > 
           <img id="linesCirclesPic" src="static/images/LinesCircles-tiny.jpg" usemap="#image-map-linesCircles">
             <map name="image-map-linesCircles">
-              <area id="line" title="line" href="#" coords="140,261,38" shape="circle">
-              <area id="line+slit" title="line+slit" href="#" coords="223,230,38" shape="circle">
-              <area id="ø0.2" title="ø=0.2mm" href="#" coords="312,231,38" shape="circle">
-              <area id="ø0.4" title="ø=0.4mm" href="#" coords="395,261,38" shape="circle">
+              <area id="sOPEN" title="OPEN" href="#" coords="64,131,18" shape="circle">
+              <area id="line+slit" title="line+slit" href="#" coords="105,116,19" shape="circle">
+              <area id="ø0.2" title="ø=0.2mm" href="#" coords="149,116,19" shape="circle">
+              <area id="ø0.4" title="ø=0.4mm" href="#" coords="191,131,18" shape="circle">
             </map>  
         </div>
         <br>
         <div id="patternsDiv" >
           <img id="patternsPic" src="static/images/Patterns-tiny.jpg" usemap="#image-map-patterns">
             <map name="image-map-patterns">
-              <area id="square" title="square grid" href="" coords="147,261,37" shape="circle">
-              <area id="hex" title="hexagonal grid" href="" coords="230,231,37" shape="circle">
-              <area id="dots" title="scattered dots" href="" coords="319,233,37" shape="circle">
-              <area id="holes" title="scattered holes" href="" coords="402,264,37" shape="circle">
+              <area id="square" title="square grid" href="" coords="60,131,18" shape="circle">
+              <area id="hex" title="hexagonal grid" href="" coords="103,116,20" shape="circle">
+              <area id="dots" title="scattered dots" href="" coords="147,116,20" shape="circle">
+              <area id="holes" title="scattered holes" href="" coords="189,132,18" shape="circle">
             </map>
         </div>
         <br>
@@ -139,6 +141,22 @@
           This session will end and the system will reset in 
           <span id="time" style="color:red;font-weight:bold">45:00</span> 
           minutes.
+        </div>
+        <div id="otherToggles" class="row">
+          <div id="laser" class="column w-col">
+            <img id="laserSwitch" src="static/images/laserIcon.png" usemap="#image-map-laser">
+            <map name="image-map-laser">
+               <area id="laserTOGGLE" title="Click here to turn laser ON" coords="10,57,6,63,8,69,71,69,51,80,52,86,58,83,71,77,56,107,64,110,81,77,81,122,88,124,89,78,101,98,109,97,95,75,130,93,133,86,102,68,138,68,139,59,103,59,123,45,119,39,97,49,116,16,110,12,91,42,87,4,80,3,81,46,68,29,63,31,74,52,40,36,38,42,66,56" shape="poly">
+            </map><br>
+            (click to toggle the Laser)
+          </div>
+          <!-- <div id="laser" class="column w-col w-col-6">
+            <img id="laserSwitch" src="static/images/laserIcon.png" usemap="#image-map-laser">
+            <map name="image-map-laser">
+               <area id="laserTOGGLE" title="Click here to turn laser ON" coords="10,57,6,63,8,69,71,69,51,80,52,86,58,83,71,77,56,107,64,110,81,77,81,122,88,124,89,78,101,98,109,97,95,75,130,93,133,86,102,68,138,68,139,59,103,59,123,45,119,39,97,49,116,16,110,12,91,42,87,4,80,3,81,46,68,29,63,31,74,52,40,36,38,42,66,56" shape="poly">
+            </map>
+            (click to toggle the Laser)
+          </div> -->
         </div>
         <div class="video w-video w-embed">
           <video id='v' data-playing="false" autoplay="" muted></video>
@@ -168,42 +186,45 @@
              <area id="darkTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
           </map>
           <br>
-          <br>            
+          <br>   
+          d=: slit separation in mm     
+          <br>  
+          <br>  
         </div>
         <div id="doubleDiv" >
           <img id="doublePic" src="static/images/iDoubleSlits-tiny.jpg" usemap="#image-map-double">
             <map name="image-map-double">
-              <area id="a04d25" title="a=0.04mm d=0.25mm" href="" coords="623,288,46" shape="circle">
-              <area id="a04d50" title="a=0.04mm d=0.50mm" href="" coords="715,333,43" shape="circle">
-              <area id="a08d25" title="a=0.08mm d=0.25mm" href="" coords="782,408,43" shape="circle">
-              <area id="a08d50" title="a=0.08mm d=0.50mm" href="" coords="821,503,45" shape="circle">
+              <area id="a04d25" title="a=0.04mm d=0.25mm" href="" coords="65,130,18" shape="circle">
+              <area id="a04d50" title="a=0.04mm d=0.50mm" href="" coords="107,115,19" shape="circle">
+              <area id="a08d25" title="a=0.08mm d=0.25mm" href="" coords="153,116,18" shape="circle">
+              <area id="a08d50" title="a=0.08mm d=0.50mm" href="" coords="195,131,18" shape="circle">
             </map>
         </div>
         <br>
         <div id="variDoubleDiv" >
           <img id="variDoublePic" src="static/images/iVariableDoubleSlit-tiny.jpg" usemap="#image-map-variDouble">
             <map name="image-map-variDouble">
-              <area target="" alt="a04d0125-075" title="a04d0125-075" href="" coords="104,277,114,288,128,294,144,293,156,286,171,277,185,271,200,266,217,261,236,258,253,256,270,256,285,259,302,261,320,266,336,270,352,277,367,284,382,292,397,291,412,287,422,274,428,261,427,246,417,232,405,223,389,212,370,203,352,197,337,192,317,188,298,186,279,184,262,183,246,184,228,185,208,188,189,192,172,197,156,202,140,208,124,214,110,223,99,237,97,258" shape="poly">
+              <area target="" alt="a04d0125-075" title="a04d0125-075" href="" coords="52,114,49,132,56,143,71,147,85,140,101,134,119,131,137,129,156,132,169,136,184,143,200,148,213,138,212,119,195,107,176,99,149,92,126,92,98,93,73,103" shape="poly">
             </map>
         </div>
         <br>
         <div id="multipleDiv" >
           <img id="multiplePic" src="static/images/iMultipleSlits-tiny.jpg" usemap="#image-map-multiple">
             <map name="image-map-multiple">
-              <area id="2slit" title="2 slits" href="" coords="244,498,49" shape="circle">
-              <area id="3slit" title="3 slits" href="" coords="291,401,47" shape="circle">
-              <area id="4slit" title="4 slits" href="" coords="370,327,46" shape="circle">
-              <area id="5slit" title="5 slits" href="" coords="470,285,46" shape="circle">
+              <area id="2slit" title="2 slits" href="" coords="62,133,19" shape="circle">
+              <area id="3slit" title="3 slits" href="" coords="107,119,19" shape="circle">
+              <area id="4slit" title="4 slits" href="" coords="156,118,20" shape="circle">
+              <area id="5slit" title="5 slits" href="" coords="201,134,19" shape="circle">
             </map>
         </div>
         <br>
          <div id="comparisonsDiv" >
           <img id="comparisonsPic" src="static/images/iComparisons-tiny.jpg" usemap="#image-map-comparisons">
             <map name="image-map-comparisons">
-              <area id="twoOne" title="two vs one" href="" coords="124,261,38" shape="circle">
-              <area id="farClose" title="far apart vs close together" href="" coords="209,229,39" shape="circle">
-              <area id="wideThin" title="wide vs thin" href="" coords="299,230,40" shape="circle">
-              <area id="threeTwo" title="three vs two" href="" coords="386,261,37" shape="circle">
+              <area id="mOPEN" title="OPEN" href="" coords="62,131,18" shape="circle">
+              <area id="farClose" title="far apart vs close together" href="" coords="105,116,21" shape="circle">
+              <area id="wideThin" title="wide vs thin" href="" coords="151,116,20" shape="circle">
+              <area id="threeTwo" title="three vs two" href="" coords="193,131,19" shape="circle">
             </map>
         </div>
         <br>

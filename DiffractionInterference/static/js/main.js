@@ -471,7 +471,39 @@ $("document").ready(function () {
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
-    
+ $('#lightSwitch').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
+  $('#laserSwitch').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
+  $('#darkSwitch').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
     $('#singleSlitsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
