@@ -52,9 +52,11 @@ $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
+    var eyeFirstClick = true;
    
 //for modal
     var loadingModal = $("#loadingModal")
+    var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
 
     loadingModal.on("shown.bs.modal", function(e){
         intervalId = setInterval(function() {
@@ -65,17 +67,12 @@ $("document").ready(function () {
             } 
             
             //Run when all mwraps exist.
+            mWrap0 = $("#mapster_wrap_0")[0]
             mWrap1 = $("#mapster_wrap_1")[0]
-            mWrap2 = $("#mapster_wrap_2")[0]
-            mWrap6 = $("#mapster_wrap_6")[0]
-            mWrap7 = $("#mapster_wrap_7")[0]
     
             // Do clicks here
-            OvenONpress.click()
-            OvenOFFpress.click()
-            powerSupplyON.click()
-            powerSupplyOFF.click()
-            TempCam.click()
+            screenWhite.click()
+            viewCam.click()
             console.log("hiding modal")
             //Hide Loading Screen
             loadingModal.modal("hide")
@@ -138,14 +135,15 @@ $("document").ready(function () {
         }
  
     // for Diffraction Slits
-    var A02 = document.getElementById('a02');
+    
+    var A02 = document.getElementById('a02')
     var A04 = document.getElementById('a04');
     var A08 = document.getElementById('a08');
     var A16 = document.getElementById('a16');
 
     var VaryWidth = document.getElementById('a02-20');
 
-    var Line = document.getElementById('line');
+    var SingleOpen = document.getElementById('singleOpen');
     var LineSlit = document.getElementById('line+slit');
     var LittleHole = document.getElementById('ø0.2');
     var BigHole = document.getElementById('ø0.4');
@@ -191,19 +189,36 @@ $("document").ready(function () {
     var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
     var AmbientState = false;
 
-    //for Single Slit Wheel
-    var SnudgeCW = document.getElementById('singlesCW');
-    var SnudgeCCW = document.getElementById('singlesCCW');
-    var sSteps=1;
-   
-    //for Multiple Slit Settings
-    var MnudgeCW = document.getElementById('multiplesCW');
-    var NnudgeCCW = document.getElementById('multiplesCCW');
-    var mSteps=1;
+    // for Nudging Slits
+    var nudgeUp = document.getElementById("up")
+    var nudgeDown = document.getElementById("down")
+    var nudgeSteps = 25
+    var lastSlit = "none"
 
     //for Stage Motion
-    var stageCloser=document.getElementById('')
-    var stageFarther=
+    var stageCloser=document.getElementById('closer')
+    var stageFarther=document.getElementById('farther')
+    var stageSteps=250;
+
+    //for Laser Power
+    //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
+    // var laser = document.getElementById("laser")
+    // var laserState = false
+    // laser.addEventListener("click", function() {
+    //     if (laserState) {
+    //         console.log("Laser was turned off")
+    //         dataChannel.send("ASDIpdu/off/1")
+    //         laserState = false;
+    //     } else {
+    //         console.log("Laser was turned on")
+    //         dataChannel.send("ASDIpdu/on/1")
+    //         laserState = true;
+    //     }
+    // })
+
+    //for Snapshot 
+    var snapShot = document.getElementById("pushButton")
+    
 
     //BEGIN Switches 
     //BEGIN Ambient Toggling 
@@ -228,17 +243,22 @@ $("document").ready(function () {
     
     //BEGIN Background Toggling
       
-    BackgroundTOGGLE.addEventListener('click', function(){
+    DarkTOGGLE.addEventListener('click', function(){
            if(!DarkState){
             console.log("Background was darkened. Controls were hidden.");
             //hide controls; turn background black
+            $('img').css("visibility", "hidden")
+            $('body').css("background", "black")
+            darkSwitch.style.visibility = "visible"
             DarkState=true;
             DarkTOGGLE.title="Click here to reveal controls";
             darkSwitch.style.transform='scaleY(1)';
                      }
         else{
             console.log("Background was lit. Controls were revealed.");
-            //reveal controls; turn background white      
+            //reveal controls; turn background white
+            $('img').css("visibility", "visible")
+            $('body').css("background", "white")     
             DarkState=false;
             DarkTOGGLE.title="Click here to darken the background";
             darkSwitch.style.transform='scaleY(-1)';
@@ -251,27 +271,36 @@ $("document").ready(function () {
 
     screenWhite.addEventListener('click', function(){
         console.log("Screen power was turned off");
-        if(screenState){
-            dataChannel.send("Screen/off/");              
+        if(!screenState){
+            if (!eyeFirstClick) {
+                eyeFirstClick = false
+                dataChannel.send("Screen/off/");
+                console.log("Eye clicked for the first time")
+            }                 
             TransparencyOff.style.display = "block";                      
             TransparencyOn.style.display = "none"; 
-            screenState=false; 
+            screenState=true; 
         }
     })
-    screenClear.addEventListener('click', function(){
-        console.log("Screen power was turned on");
-        if(!screenState){
-            dataChannel.send("Screen/on/");              
+    screenClear.addEventListener('click', function(){        
+        if(screenState){
+            dataChannel.send("Screen/on/");
+            console.log("Screen power was turned on");         
             TransparencyOff.style.display = "none";                      
             TransparencyOn.style.display = "block"; 
-            screenState=true; 
+            screenState=false; 
         }
     })
 
     //BEGIN Laser
+    //PASTE LASER EVENT LISTENER HERE
     //END Laser
     
     //BEGIN SnapShot
+    snapShot.addEventListener("click", function () {
+        console.log("Snapshot was taken")
+        // Do unknown stuff here to make a picture happen.
+    })
     //END SnapShot
 
     // END Switches
@@ -405,7 +434,7 @@ $("document").ready(function () {
     varySpacing.addEventListener('click', function(event) {
         console.log("Variable Slit Spacing was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/varySpacing");
+        dataChannel.send("MultiSlits/goto/VarySpacing");
         dataChannel.send("SingleSlits/goto/SingleOpen");
         return false
     })
@@ -467,43 +496,95 @@ $("document").ready(function () {
     })
 }
     // END Single Slite Wheel Buttons
+
+    // BEGIN Stage Motion
+    stageCloser.addEventListener('click', function() {
+        console.log("Stage moved closer to slits.")
+        dataChannel.send("Stage/move/" + stageSteps)
+    })
+
+    stageFarther.addEventListener('click', function() {
+        console.log("Stage moved farther from slits.")
+        dataChannel.send("Stage/move/" + (-stageSteps))
+    })
+
+    // END Stage Motion
+
+    // BEGIN Nudge of Slits
+    // Motion defined with respect looking at face
+    nudgeUp.addEventListener("click", function() {
+        if (lastSlit == "single") {
+            console.log("Nudging Single Slit Up")
+            dataChannel.send("SingleSlits/move/" + (-nudgeSteps))
+        } else if (lastSlit == "multi") {
+            console.log("Nudging Multi Slit Up")
+            dataChannel.send("MultiSlits/move/" + nudgeSteps)
+        } else {
+            console.log("No slit to move yet.")
+        }
+    })
+
+    nudgeDown.addEventListener("click", function() {
+        if (lastSlit == "single") {
+            console.log("Nudging Single Slit Down")
+            dataChannel.send("SingleSlits/move/" + nudgeSteps)
+        } else if (lastSlit == "multi") {
+            console.log("Nudging Multi Slit Down")
+            dataChannel.send("MultiSlits/move/" + (-nudgeSteps))
+        } else {
+            console.log("No slit to move yet.")
+        }
+    })
+    // END Nudge of Slits
+
+    // BEGIN Camera Switching
+    var viewCam = document.getElementById("ViewCam");
+    var rulerCam = document.getElementById("RulerCam");
+    var screenCam = document.getElementById("ScreenCam");
+
+    viewCam.addEventListener("click", function() {
+        console.log("Switched to view cam")
+        dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
+    })
+
+    rulerCam.addEventListener("click", function() {
+        console.log("Switched to ruler cam")
+        dataChannel.send("Camera/camera/b") //Needs to be updated to proper camera
+    })
+
+    screenCam.addEventListener("click", function() {
+        console.log("Switched to screen cam")
+        dataChannel.send("Camera/camera/d") //Needs to be updated to proper camera
+    })
+    // END Camera Switching
+
     
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
- $('#lightSwitch').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
-  
-  $('#laserSwitch').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
-  
-  $('#darkSwitch').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
-  
+
+    $('#openEye').mapster({
+        mapKey:'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: { 
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+        // scaleMap: true
+    }).parent().css({"margin":"0 auto"});
+
+    $('#closedEye').mapster({
+        mapKey:'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: { 
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+        // scaleMap: true
+    }).parent().css({"margin":"0 auto"});
+
     $('#singleSlitsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
@@ -591,6 +672,46 @@ $("document").ready(function () {
     singleSelect: true
     // scaleMap: true
   }).parent().css({"margin":"0 auto"}); 
+
+  $('#lightSwitch').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
+  $('#laserSwitch').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
+  $('#darkSwitch').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
+  window.addEventListener('beforeunload', function(e) {
+        // // TEMP CHANGE
+        mainCamSignal.hangup();
+        // // TEMP CHANGE
+        dataChannel.close();
+    })
   
 //   console.log('mapster calls have been made');
   
@@ -640,12 +761,7 @@ $("document").ready(function () {
 });
 
 
-window.addEventListener('beforeunload', function(e) {
-    // TEMP CHANGE
-    mainCamSignal.hangup();
-    // TEMP CHANGE
-    dataChannel.close();
-})
+
 
 
 
