@@ -173,7 +173,6 @@ $("document").ready(function () {
     var screenClear = document.getElementById('screenCLEAR');
     var TransparencyOff = document.getElementById('TransparencyOFF');
     var TransparencyOn = document.getElementById('TransparencyON');
-    var screenState = false;
 
     //for Background
     var darkSwitch = document.getElementById('darkSwitch')
@@ -257,26 +256,20 @@ $("document").ready(function () {
     //BEGIN Screen Toggling
 
     screenWhite.addEventListener('click', function(){
-        console.log("Screen power was turned off");
-        if(!screenState){
-            if (!eyeFirstClick) {
-                eyeFirstClick = false
-                dataChannel.send("Screen/off/");
-                console.log("Eye clicked for the first time")
-            }                 
-            TransparencyOff.style.display = "block";                      
-            TransparencyOn.style.display = "none"; 
-            screenState=true; 
-        }
+        console.log("Screen power was turned off, thus the screen is opaque");
+        if (!eyeFirstClick) {
+            eyeFirstClick = false
+            dataChannel.send("Screen/off/");
+            console.log("Eye clicked for the first time")
+        }                 
+        TransparencyOff.style.display = "block";                      
+        TransparencyOn.style.display = "none";  
     })
     screenClear.addEventListener('click', function(){        
-        if(screenState){
-            dataChannel.send("Screen/on/");
-            console.log("Screen power was turned on");         
-            TransparencyOff.style.display = "none";                      
-            TransparencyOn.style.display = "block"; 
-            screenState=false; 
-        }
+        dataChannel.send("Screen/on/");
+        console.log("Screen power was turned on, thus the screen is clear");         
+        TransparencyOff.style.display = "none";                      
+        TransparencyOn.style.display = "block"; 
     })
 
     //BEGIN Laser
