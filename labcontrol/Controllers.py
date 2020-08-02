@@ -356,11 +356,16 @@ class ElectronicScreen(BaseController):
 
 class SingleGPIO(BaseController):
 
-    def __init__(self, name, pin):
+    def __init__(self, name, pin, initialState=False):
         self.pin = pin
         self.name = name
-        self.state = "off"
         gpio.setup(self.pin, gpio.OUT)
+        if initialState:
+            self.state = "off"
+            gpio.output(self.pin, gpio.HIGH)
+        else:
+            self.state = "off"
+            gpio.output(self.pin, gpio.LOW)
     
     def on(self, params):
         gpio.output(self.pin, gpio.HIGH)
