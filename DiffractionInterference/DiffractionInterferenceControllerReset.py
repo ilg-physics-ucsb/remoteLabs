@@ -9,21 +9,21 @@ socket_path = "/tmp/uv4l.socket"
 
 refPointsSingle = {
     "SingleOpen": 0,
-    "LineSlit": 0,
-    "LittleHole": 0,
-    "BigHole": 0,
+    "LineSlit": 660,
+    "LittleHole": 2*660,
+    "BigHole": 3*660,
     # Blank
-    "A02": 0,
-    "A04": 0,
-    "A08": 0,
-    "A16": 0,
+    "A02": 3*660 + 975,
+    "A04": 4*660 + 975,
+    "A08": 5*660 + 975,
+    "A16": 6*660 + 975,
     # Blank
-    "VaryWidth": 0,
+    "VaryWidth": 6*660 + 2*975,
     # Blank
-    "Square": 0,
-    "Hex": 0,
-    "Dots": 0,
-    "Holes": 0,
+    "Square": 6*660 + 3*975 + 1050,
+    "Hex": 7*660 + 3*975 + 1050,
+    "Dots": 8*660 + 3*975 + 1050,
+    "Holes": 9*660 + 3*975 + 1050,
 }
 
 refPointsMulti = {
