@@ -54,7 +54,7 @@ $("document").ready(function () {
     var eyeFirstClick = true;
 
   
-for modal
+//for modal
     var loadingModal = $("#loadingModal")
     var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
 
