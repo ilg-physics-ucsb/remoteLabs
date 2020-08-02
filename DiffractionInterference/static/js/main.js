@@ -543,17 +543,20 @@ $("document").ready(function () {
 
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
-        dataChannel.send("Camera/camera/b") //Needs to be updated to proper camera
+        dataChannel.send("Camera/camera/b") //Needs to be updated to proper 
+        liveStream.style.transform = "rotate(0deg)"
     })
 
     rulerCam.addEventListener("click", function() {
         console.log("Switched to ruler cam")
         dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
+        liveStream.style.transform = "rotate(0deg)"
     })
 
     screenCam.addEventListener("click", function() {
         console.log("Switched to screen cam")
-        dataChannel.send("Camera/camera/c") 
+        dataChannel.send("Camera/camera/c")
+        liveStream.style.transform = "rotate(180deg)"
     })
     // END Camera Switching
 
