@@ -200,6 +200,7 @@ $("document").ready(function () {
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
     var laser = document.getElementById("laserSwitch")
     var laserState = false
+    laser.style.opacity=0.2;
  
     //for Snapshot 
     var snapShot = document.getElementById("pushButton")
@@ -235,6 +236,7 @@ $("document").ready(function () {
             $('img').css("visibility", "hidden")
             $('body').css("background", "black")
             darkSwitch.style.visibility = "visible"
+            laser.style.visibility = "visible"
             DarkState=true;
             DarkTOGGLE.title="Click here to reveal controls";
             darkSwitch.style.transform='rotate(180deg)';
@@ -541,7 +543,7 @@ $("document").ready(function () {
 
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
-        dataChannel.send("Camera/camera/c") //Needs to be updated to proper camera
+        dataChannel.send("Camera/camera/b") //Needs to be updated to proper camera
     })
 
     rulerCam.addEventListener("click", function() {
@@ -551,7 +553,7 @@ $("document").ready(function () {
 
     screenCam.addEventListener("click", function() {
         console.log("Switched to screen cam")
-        dataChannel.send("Camera/camera/b") 
+        dataChannel.send("Camera/camera/c") 
     })
     // END Camera Switching
 
