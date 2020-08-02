@@ -200,7 +200,7 @@ $("document").ready(function () {
     //for Laser Power
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
     var laser = document.getElementById("laserSwitch")
-    var laserState = false
+    var laserState = false;
     laser.style.opacity=0.2;
  
     //for Snapshot 
