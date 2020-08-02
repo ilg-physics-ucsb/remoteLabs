@@ -198,20 +198,9 @@ $("document").ready(function () {
 
     //for Laser Power
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
-    // var laser = document.getElementById("laser")
-    // var laserState = false
-    // laser.addEventListener("click", function() {
-    //     if (laserState) {
-    //         console.log("Laser was turned off")
-    //         dataChannel.send("ASDIpdu/off/1")
-    //         laserState = false;
-    //     } else {
-    //         console.log("Laser was turned on")
-    //         dataChannel.send("ASDIpdu/on/1")
-    //         laserState = true;
-    //     }
-    // })
-
+    var laser = document.getElementById("laserSwitch")
+    var laserState = false
+ 
     //for Snapshot 
     var snapShot = document.getElementById("pushButton")
     
@@ -289,8 +278,20 @@ $("document").ready(function () {
     })
 
     //BEGIN Laser
-    //PASTE LASER EVENT LISTENER HERE
-    //END Laser
+    laser.addEventListener("click", function() {
+        if (laserState) {
+            console.log("Laser was turned off")
+            dataChannel.send("ASDIpdu/off/1")
+            laserState = false;
+            laser.style.opacity=0.2;
+        } else {
+            console.log("Laser was turned on")
+            dataChannel.send("ASDIpdu/on/1")
+            laserState = true;
+            laser.style.opacity=1;
+        }
+    })
+   //END Laser
     
     //BEGIN SnapShot
     snapShot.addEventListener("click", function () {
