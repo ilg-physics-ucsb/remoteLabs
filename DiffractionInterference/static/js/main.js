@@ -225,13 +225,13 @@ $("document").ready(function () {
             dataChannel.send("Ambient/off/")            //use this command with GPIO
             AmbientState=false;
             AmbientTOGGLE.title="Click here to turn ON";
-            lightSwitch.style.transform='scaleY(1)';
+            lightSwitch.style.transform='rotate(0deg)';
                      }
         else{
             dataChannel.send("Ambient/on/")                 //use this command with GPIO
             AmbientState=true;
             AmbientTOGGLE.title="Click here to turn OFF";
-            lightSwitch.style.transform='scaleY(-1)';
+            lightSwitch.style.transform='rotate(180deg)';
         }
     })
 
@@ -248,7 +248,7 @@ $("document").ready(function () {
             darkSwitch.style.visibility = "visible"
             DarkState=true;
             DarkTOGGLE.title="Click here to reveal controls";
-            darkSwitch.style.transform='scaleY(1)';
+            darkSwitch.style.transform='rotate(180deg)';
                      }
         else{
             console.log("Background was lit. Controls were revealed.");
@@ -257,7 +257,7 @@ $("document").ready(function () {
             $('body').css("background", "white")     
             DarkState=false;
             DarkTOGGLE.title="Click here to darken the background";
-            darkSwitch.style.transform='scaleY(-1)';
+            darkSwitch.style.transform='rotate(0deg)';
         }
     })
 
