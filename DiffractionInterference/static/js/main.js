@@ -6,12 +6,12 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
-
+        viewCam.click();
         // videoElement.play();
     }
 }
 
-//This function runs if there is an error returned from teh websocket connecting to the stream.
+//This function runs if there is an error returned from the websocket connecting to the stream.
 function errorStream(error){
     alert(error);
 }
@@ -91,10 +91,6 @@ $("document").ready(function () {
     //     dataChannel.send("Camera/camera/off")
     // })
 
-    //for LiveFeed  
-    // TEMP CHANGE
-    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
- 
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
  
@@ -556,7 +552,9 @@ $("document").ready(function () {
     })
     // END Camera Switching
 
-    
+     //for LiveFeed  
+     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+   
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
