@@ -78,14 +78,14 @@ def run(args):
         os.system(uv4l_cmd)
 
         if args.foreground:
-            # os.system("python3 " + os.path.join(rl_path, lab, controllerFile))
-            process=subprocess.Popen(["python3",os.path.join(rl_path, lab, controllerFile)])
+            os.system("python3 " + os.path.join(rl_path, lab, controllerFile))
+            # process=subprocess.Popen(["python3",os.path.join(rl_path, lab, controllerFile)])
         else:
             controller_path = os.path.join(".", rl_path, lab, controllerFile)
             process = subprocess.Popen(["nohup", controller_path, "&"])
              # os.system("nohup " + controller_path + " &")
-        settings["pid"] = process.pid
-        update_json(settings)
+            settings["pid"] = process.pid
+            update_json(settings)
 
     else:
         print('No lab has been setup yet. Run "remla setup <lab>"')
@@ -97,7 +97,8 @@ def stop(args):
     try:
         os.kill(settings["pid"], signal.SIGINT)
     except:
-        print("No python process was found.")
+        print("No python process was found. Killing uv4l only.")
+        return
     print("Interupt signal sent. Please wait 30 seconds for shutdown to complete.")
     # os.system("sudo pkill python3")
 
