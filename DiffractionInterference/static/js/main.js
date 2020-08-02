@@ -6,7 +6,6 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
-        viewCam.click();
         // videoElement.play();
     }
 }
@@ -55,34 +54,26 @@ $("document").ready(function () {
     var eyeFirstClick = true;
 
   
-//for modal
-    // var loadingModal = $("#loadingModal")
-    // var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
+for modal
+    var loadingModal = $("#loadingModal")
+    var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
 
-    // loadingModal.on("shown.bs.modal", function(e){
-    //     intervalId = setInterval(function() {
-    //         for (mWrap of mWrapList) {
-    //             if ($(mWrap).length == 0) {
-    //                 return
-    //             }
-    //         } 
-            
-    //         //Run when all mwraps exist.
-    //         mWrap0 = $("#mapster_wrap_0")[0]
-    //         mWrap1 = $("#mapster_wrap_1")[0]
+    loadingModal.on("shown.bs.modal", function(e){
+        intervalId = setInterval(function() {
+            if(!dataChannel){
+                return
+            }    
+            //Run when all mwraps exist.
+            viewCam.click()
+            console.log("hiding modal")
+            //Hide Loading Screen
+            loadingModal.modal("hide")
+            //Stop repeating check
+            clearInterval(intervalId)
     
-    //         // Do clicks here
-    //         screenWhite.click()
-    //         viewCam.click()
-    //         console.log("hiding modal")
-    //         //Hide Loading Screen
-    //         loadingModal.modal("hide")
-    //         //Stop repeating check
-    //         clearInterval(intervalId)
-    
-    //     }, 500)
-    // })
-    // loadingModal.modal('show')
+        }, 500)
+    })
+    loadingModal.modal('show')
 
 
 
@@ -535,7 +526,7 @@ $("document").ready(function () {
 
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
-        dataChannel.send("Camera/camera/b") //Needs to be updated to proper 
+        dataChannel.send("Camera/camera/b") 
         liveStream.style.transform = "rotate(0deg)"
     })
 
