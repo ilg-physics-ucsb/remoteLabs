@@ -495,12 +495,12 @@ $("document").ready(function () {
     // BEGIN Stage Motion
     stageCloser.addEventListener('click', function() {
         console.log("Stage moved closer to slits.")
-        dataChannel.send("Stage/move/" + stageSteps)
+        dataChannel.send("Stage/move/" + (-stageSteps))
     })
 
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
-        dataChannel.send("Stage/move/" + (-stageSteps))
+        dataChannel.send("Stage/move/" + stageSteps)
     })
 
     // END Stage Motion
