@@ -51,7 +51,7 @@ ambient = SingleGPIO("Ambient", 5)
 
 multiSlits = StepperI2C("MultiSlits", 1, bounds=(-20000,20000), style="DOUBLE", refPoints=refPointsMulti)  #Multiple Slits
 singleSlits = StepperI2C("SingleSlits", 2,bounds=(-20000,20000), style="DOUBLE", refPoints=refPointsSingle) #Single Slits
-stage = StepperI2C("Stage", 3, bounds=(-20000, 200000), style="DOUBLE") #Screen
+stage = StepperI2C("Stage", 4, bounds=(-20000, 200000), style="DOUBLE") #Screen
 
 
 
