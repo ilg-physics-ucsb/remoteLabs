@@ -669,38 +669,38 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"}); 
 
-  $('#lightSwitch').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
+//   $('#lightSwitch').mapster({
+//     mapKey:'id',
+//     fillColor: 'f5f5b5',
+//     fillOpacity: 0.6,
+//     render_select: { 
+//         fillOpacity: 0.3
+//     },
+//     singleSelect: true
+//     // scaleMap: true
+//   }).parent().css({"margin":"0 auto"}); 
   
-  $('#laserSwitch').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
+//   $('#laserSwitch').mapster({
+//     mapKey:'id',
+//     fillColor: 'f5f5b5',
+//     fillOpacity: 0.6,
+//     render_select: { 
+//         fillOpacity: 0.3
+//     },
+//     singleSelect: true
+//     // scaleMap: true
+//   }).parent().css({"margin":"0 auto"}); 
   
-  $('#darkSwitch').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
+//   $('#darkSwitch').mapster({
+//     mapKey:'id',
+//     fillColor: 'f5f5b5',
+//     fillOpacity: 0.6,
+//     render_select: { 
+//         fillOpacity: 0.3
+//     },
+//     singleSelect: true
+//     // scaleMap: true
+//   }).parent().css({"margin":"0 auto"}); 
   
   window.addEventListener('beforeunload', function(e) {
         // // TEMP CHANGE
