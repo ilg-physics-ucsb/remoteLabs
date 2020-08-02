@@ -56,33 +56,33 @@ $("document").ready(function () {
 
   
 //for modal
-    var loadingModal = $("#loadingModal")
-    var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
+    // var loadingModal = $("#loadingModal")
+    // var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
 
-    loadingModal.on("shown.bs.modal", function(e){
-        intervalId = setInterval(function() {
-            for (mWrap of mWrapList) {
-                if ($(mWrap).length == 0) {
-                    return
-                }
-            } 
+    // loadingModal.on("shown.bs.modal", function(e){
+    //     intervalId = setInterval(function() {
+    //         for (mWrap of mWrapList) {
+    //             if ($(mWrap).length == 0) {
+    //                 return
+    //             }
+    //         } 
             
-            //Run when all mwraps exist.
-            mWrap0 = $("#mapster_wrap_0")[0]
-            mWrap1 = $("#mapster_wrap_1")[0]
+    //         //Run when all mwraps exist.
+    //         mWrap0 = $("#mapster_wrap_0")[0]
+    //         mWrap1 = $("#mapster_wrap_1")[0]
     
-            // Do clicks here
-            screenWhite.click()
-            viewCam.click()
-            console.log("hiding modal")
-            //Hide Loading Screen
-            loadingModal.modal("hide")
-            //Stop repeating check
-            clearInterval(intervalId)
+    //         // Do clicks here
+    //         screenWhite.click()
+    //         viewCam.click()
+    //         console.log("hiding modal")
+    //         //Hide Loading Screen
+    //         loadingModal.modal("hide")
+    //         //Stop repeating check
+    //         clearInterval(intervalId)
     
-        }, 500)
-    })
-    loadingModal.modal('show')
+    //     }, 500)
+    // })
+    // loadingModal.modal('show')
 
 
 
@@ -173,6 +173,8 @@ $("document").ready(function () {
     var screenClear = document.getElementById('screenCLEAR');
     var TransparencyOff = document.getElementById('TransparencyOFF');
     var TransparencyOn = document.getElementById('TransparencyON');
+    TransparencyOn.style.display="none";
+    TransparencyOff.style.display="block";
 
     //for Background
     var darkSwitch = document.getElementById('darkSwitch')
@@ -257,17 +259,18 @@ $("document").ready(function () {
 
     screenWhite.addEventListener('click', function(){
         console.log("Screen power was turned off, thus the screen is opaque");
-        if (!eyeFirstClick) {
-            eyeFirstClick = false
-            dataChannel.send("Screen/off/");
-            console.log("Eye clicked for the first time")
-        }                 
+        // if (!eyeFirstClick) {
+        //     eyeFirstClick = false
+        //     dataChannel.send("Screen/off/");
+        //     console.log("Eye clicked for the first time")
+        // }  
+        dataChannel.send("Screen/off/");               
         TransparencyOff.style.display = "block";                      
         TransparencyOn.style.display = "none";  
     })
     screenClear.addEventListener('click', function(){        
-        dataChannel.send("Screen/on/");
         console.log("Screen power was turned on, thus the screen is clear");         
+        dataChannel.send("Screen/on/");
         TransparencyOff.style.display = "none";                      
         TransparencyOn.style.display = "block"; 
     })
@@ -558,27 +561,27 @@ $("document").ready(function () {
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
 
-    $('#openEye').mapster({
-        mapKey:'id',
-        fillColor: 'f5f5b5',
-        fillOpacity: 0.6,
-        render_select: { 
-            fillOpacity: 0.3
-        },
-        singleSelect: true
-        // scaleMap: true
-    }).parent().css({"margin":"0 auto"});
+    // $('#openEye').mapster({
+    //     mapKey:'id',
+    //     fillColor: 'f5f5b5',
+    //     fillOpacity: 0.6,
+    //     render_select: { 
+    //         fillOpacity: 0.3
+    //     },
+    //     singleSelect: true
+    //     // scaleMap: true
+    // }).parent().css({"margin":"0 auto"});
 
-    $('#closedEye').mapster({
-        mapKey:'id',
-        fillColor: 'f5f5b5',
-        fillOpacity: 0.6,
-        render_select: { 
-            fillOpacity: 0.3
-        },
-        singleSelect: true
-        // scaleMap: true
-    }).parent().css({"margin":"0 auto"});
+    // $('#closedEye').mapster({
+    //     mapKey:'id',
+    //     fillColor: 'f5f5b5',
+    //     fillOpacity: 0.6,
+    //     render_select: { 
+    //         fillOpacity: 0.3
+    //     },
+    //     singleSelect: true
+    //     // scaleMap: true
+    // }).parent().css({"margin":"0 auto"});
 
     $('#singleSlitsPic').mapster({
     mapKey:'id',
@@ -624,7 +627,7 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#multiDoublePic').mapster({
+  $('#doublePic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -636,6 +639,17 @@ $("document").ready(function () {
   }).parent().css({"margin":"0 auto"}); 
   
   $('#variDoublePic').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
+  $('#multiplePic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
