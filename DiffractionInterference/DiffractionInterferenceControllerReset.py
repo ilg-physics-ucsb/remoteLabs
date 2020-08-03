@@ -32,8 +32,8 @@ refPointsSingle = {
     "Holes": 9*Sstep + 2*Mstep + Lstep + VariableLength,
 }
 
-mSstep = Sstep - 50
-mMstep = Mstep - 25
+mSstep = 645
+mMstep = 1000
 refPointsMulti = {
     "MultiOpen": 0,
     "FarClose": mSstep,
