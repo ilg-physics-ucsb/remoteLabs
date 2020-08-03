@@ -32,24 +32,26 @@ refPointsSingle = {
 }
 
 mSstep = Sstep - 50
+mMstep = Mstep - 25
 refPointsMulti = {
     "MultiOpen": 0,
     "FarClose": mSstep,
     "WideThin": 2*mSstep,
     "ThreeTwo": 3*mSstep,
     # Blank
-    "TwoSlit": 3*mSstep + Mstep,
-    "ThreeSlit": 4*mSstep + Mstep,
-    "FourSlit": 5*mSstep + Mstep,
-    "FiveSlit": 6*mSstep + Mstep,
+    "TwoSlit": 3*mSstep + mMstep,
+    "ThreeSlit": 4*mSstep + mMstep,
+    "FourSlit": 5*mSstep + mMstep,
+    "FiveSlit": 6*mSstep + mMstep,
     # Blank
-    "A04D25": 6*mSstep + 2*Mstep,
-    "A04D50": 7*mSstep + 2*Mstep,
-    "A08D25": 8*mSstep + 2*Mstep,
-    "A08D50": 9*mSstep + 2*Mstep,
+    "A04D25": 6*mSstep + 2*mMstep,
+    "A04D50": 7*mSstep + 2*mMstep,
+    "A08D25": 8*mSstep + 2*mMstep,
+    "A08D50": 9*mSstep + 2*mMstep,
     # Blank
-    "VarySpacing": 10*mSstep + 3*Mstep
+    "VarySpacing": 10*mSstep + 3*mMstep
 }
+
 
 #this uses the broadcom pin numbering system
 screen = SingleGPIO("Screen", 26)
