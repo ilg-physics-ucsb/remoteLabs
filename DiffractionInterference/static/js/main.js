@@ -556,7 +556,7 @@ $("document").ready(function () {
         "drc_strength": 0
     }
 
-    var defailtScreenCameraSettings = {
+    var defaultScreenCameraSettings = {
         "frame_rate":2,
         "brightness": 50,
         "contrast": 0,
