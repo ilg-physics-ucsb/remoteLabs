@@ -529,6 +529,7 @@ $("document").ready(function () {
 
     async function updateCameraSetting(setting, newValue) {
         dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
+        currentCameraSettings[setting] = newValue
     }
 
     async function updateManyCameraSettings(currentSettings, newSettings) {
@@ -540,6 +541,7 @@ $("document").ready(function () {
                 await sleep(50)
             }
         }
+
     }
 
     var cameraDefaults = {
