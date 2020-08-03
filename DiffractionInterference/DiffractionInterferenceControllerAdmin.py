@@ -32,22 +32,22 @@ refPointsSingle = {
 }
 
 refPointsMulti = {
-    "TwoOne": 0,
-    "FarClose": 0,
-    "WideThin": 0,
-    "ThreeTwo": 0,
+    "MultiOpen": 0,
+    "FarClose": Sstep,
+    "WideThin": 2*Sstep,
+    "ThreeTwo": 3*Sstep,
     # Blank
-    "A04D25": 0,
-    "A04D50": 0,
-    "A08D25": 0,
-    "A08D50": 0,
+    "TwoSlit": 3*Sstep + Mstep,
+    "ThreeSlit": 4*Sstep + Mstep,
+    "FourSlit": 5*Sstep + Mstep,
+    "FiveSlit": 6*Sstep + Mstep,
     # Blank
-    "VarySpacing": 0,
+    "A04D25": 6*Sstep + 2*Mstep,
+    "A04D50": 7*Sstep + 2*Mstep,
+    "A08D25": 8*Sstep + 2*Mstep,
+    "A08D50": 9*Sstep + 2*Mstep,
     # Blank
-    "TwoSlit": 0,
-    "ThreeSlit": 0,
-    "FourSlit": 0,
-    "FiveSlit": 0,
+    "VarySpacing": 10*Sstep + 3*Mstep
 }
 
 #this uses the broadcom pin numbering system
