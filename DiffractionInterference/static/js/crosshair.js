@@ -14,9 +14,11 @@ function start_CH(){
         if (document.getElementById('chcv').style.visibility =='visible'){
             draw_call= false
             document.getElementById('chcv').style.visibility='hidden'
+            console.log("Switched to hidden")
         }else{
             draw_call=true
             document.getElementById('chcv').style.visibility ='visible'
+            console.log("Switched to visible")
         }
     if(!draw_queded){
         draw_queded=true
@@ -68,7 +70,7 @@ function queue_draw (){
     
     crosshair_button.addEventListener("click", function(evt){
         resize_canvas();
-        start_CH();
+        // start_CH();
     })
     
 
