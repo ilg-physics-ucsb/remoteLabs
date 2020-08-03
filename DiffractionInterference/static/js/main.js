@@ -527,11 +527,11 @@ $("document").ready(function () {
         return new Promise(r => setTimeout(r, ms));
     }
 
-    function updateCameraSetting(setting, newValue) {
+    async function updateCameraSetting(setting, newValue) {
         dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
     }
 
-    function updateManyCameraSettings(currentSettings, newSettings) {
+    async function updateManyCameraSettings(currentSettings, newSettings) {
         for (const setting in newSettings) {
             var newValue = newSettings[setting]
             var oldValue = currentSettings[setting]
@@ -577,7 +577,7 @@ $("document").ready(function () {
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
         dataChannel.send("Camera/camera/b")
-        await sleep(100);
+        // await sleep(100);
         updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
         liveStream.style.transform = "rotate(0deg)"
     })
@@ -585,7 +585,7 @@ $("document").ready(function () {
     rulerCam.addEventListener("click", function() {
         console.log("Switched to ruler cam")
         dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
-        await sleep(100)
+        // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         liveStream.style.transform = "rotate(0deg)"
     })
@@ -593,7 +593,7 @@ $("document").ready(function () {
     screenCam.addEventListener("click", function() {
         console.log("Switched to screen cam")
         dataChannel.send("Camera/camera/c")
-        await sleep(100)
+        // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
         liveStream.style.transform = "rotate(180deg)"
     })
