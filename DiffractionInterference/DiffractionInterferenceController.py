@@ -7,7 +7,7 @@ camera = ArduCamMultiCamera("Camera", 1)
 
 socket_path = "/tmp/uv4l.socket"
 
-Sstep = 610
+Sstep = 675
 Mstep = 975
 Lstep = 1050
 
