@@ -31,23 +31,24 @@ refPointsSingle = {
     "Holes": 9*Sstep + 2*Mstep + Lstep + VariableLength,
 }
 
+mSstep = Sstep + 75
 refPointsMulti = {
     "MultiOpen": 0,
-    "FarClose": Sstep,
-    "WideThin": 2*Sstep,
-    "ThreeTwo": 3*Sstep,
+    "FarClose": mSstep,
+    "WideThin": 2*mSstep,
+    "ThreeTwo": 3*mSstep,
     # Blank
-    "TwoSlit": 3*Sstep + Mstep,
-    "ThreeSlit": 4*Sstep + Mstep,
-    "FourSlit": 5*Sstep + Mstep,
-    "FiveSlit": 6*Sstep + Mstep,
+    "TwoSlit": 3*mSstep + Mstep,
+    "ThreeSlit": 4*mSstep + Mstep,
+    "FourSlit": 5*mSstep + Mstep,
+    "FiveSlit": 6*mSstep + Mstep,
     # Blank
-    "A04D25": 6*Sstep + 2*Mstep,
-    "A04D50": 7*Sstep + 2*Mstep,
-    "A08D25": 8*Sstep + 2*Mstep,
-    "A08D50": 9*Sstep + 2*Mstep,
+    "A04D25": 6*mSstep + 2*Mstep,
+    "A04D50": 7*mSstep + 2*Mstep,
+    "A08D25": 8*mSstep + 2*Mstep,
+    "A08D50": 9*mSstep + 2*Mstep,
     # Blank
-    "VarySpacing": 10*Sstep + 3*Mstep
+    "VarySpacing": 10*mSstep + 3*Mstep
 }
 
 #this uses the broadcom pin numbering system
