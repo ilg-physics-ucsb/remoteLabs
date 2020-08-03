@@ -7,7 +7,7 @@ camera = ArduCamMultiCamera("Camera", 1)
 
 socket_path = "/tmp/uv4l.socket"
 
-Sstep = 675
+Sstep = 670
 Mstep = 975
 Lstep = 1050
 VariableLength=1800
@@ -15,8 +15,8 @@ VariableLength=1800
 refPointsSingle = {
     "SingleOpen": 0,
     "LineSlit": Sstep,
-    "LittleHole": 2*Sstep+25,
-    "BigHole": 3*Sstep+25,
+    "LittleHole": 2*Sstep+50,
+    "BigHole": 3*Sstep+50,
     # Blank
     "A02": 3*Sstep + Mstep,
     "A04": 4*Sstep + Mstep,
@@ -30,6 +30,7 @@ refPointsSingle = {
     "Dots": 8*Sstep + 2*Mstep + Lstep + VariableLength,
     "Holes": 9*Sstep + 2*Mstep + Lstep + VariableLength,
 }
+
 refPointsMulti = {
     "TwoOne": 0,
     "FarClose": 0,
