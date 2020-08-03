@@ -156,20 +156,20 @@
           </div> -->
         </div>
         <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
-          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Overview</button>
-          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Position</button>
-          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_crosshair()'>Screen</button>
+          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Overview</button>
+          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' show_image_crosshairs()'>Position</button>
+          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Screen</button>
           <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
-         
-            <div class="video w-video w-embed" id='embeded'>
+        <div class="video w-video w-embed" id='embeded'>
               <div id="wrapper_v" height=100>
-          <video id='v' data-playing="false" autoplay="" muted></video>
-          <canvas id='chcv' width='100%'></canvas>
-        
-          </div>
-          <div style="clear: both;"></div>
+                <img id="imgCrossHairs" src="static/images/crosshairs.png" width=100% alt="" srcset="">
+                <video id='v' data-playing="false" autoplay="" muted></video>
+                <canvas id='chcv' width='100%'></canvas>
+            
+              </div>
+              <div style="clear: both;"></div>
         </div>
         
         

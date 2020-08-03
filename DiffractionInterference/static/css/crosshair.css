@@ -1,6 +1,6 @@
 #wrapper_v{
     position: relative;
-    display: block;
+    display: flex;
     margin: auto;
     height:5;
   
