@@ -8,15 +8,16 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 
-Sstep = 610
+Sstep = 670
 Mstep = 975
 Lstep = 1050
+VariableLength=1725
 
 refPointsSingle = {
     "SingleOpen": 0,
     "LineSlit": Sstep,
-    "LittleHole": 2*Sstep+25,
-    "BigHole": 3*Sstep+75,
+    "LittleHole": 2*Sstep+50,
+    "BigHole": 3*Sstep+50,
     # Blank
     "A02": 3*Sstep + Mstep,
     "A04": 4*Sstep + Mstep,
@@ -25,29 +26,33 @@ refPointsSingle = {
     # Blank
     "VaryWidth": 6*Sstep + 2*Mstep,
     # Blank
-    "Square": 6*Sstep + 3*Mstep + Lstep,
-    "Hex": 7*Sstep + 3*Mstep + Lstep,
-    "Dots": 8*Sstep + 3*Mstep + Lstep,
-    "Holes": 9*Sstep + 3*Mstep + Lstep,
+    "Square": 6*Sstep + 2*Mstep + Lstep + VariableLength,
+    "Hex": 7*Sstep + 2*Mstep + Lstep + VariableLength,
+    "Dots": 8*Sstep + 2*Mstep + Lstep + VariableLength,
+    "Holes": 9*Sstep + 2*Mstep + Lstep + VariableLength,
 }
+
+mSstep = 645
+mMstep = 1000
 refPointsMulti = {
     "MultiOpen": 0,
-    "FarClose": 0,
-    "WideThin": 0,
-    "ThreeTwo": 0,
+    "FarClose": mSstep,
+    "WideThin": 2*mSstep,
+    "ThreeTwo": 3*mSstep,
     # Blank
-    "A04D25": 0,
-    "A04D50": 0,
-    "A08D25": 0,
-    "A08D50": 0,
+    "TwoSlit": 3*mSstep + mMstep,
+    "ThreeSlit": 4*mSstep + mMstep,
+    "FourSlit": 5*mSstep + mMstep,
+    "FiveSlit": 6*mSstep + mMstep,
     # Blank
-    "VarySpacing": 0,
+    "A04D25": 6*mSstep + 2*mMstep,
+    "A04D50": 7*mSstep + 2*mMstep,
+    "A08D25": 8*mSstep + 2*mMstep,
+    "A08D50": 9*mSstep + 2*mMstep,
     # Blank
-    "TwoSlit": 0,
-    "ThreeSlit": 0,
-    "FourSlit": 0,
-    "FiveSlit": 0,
+    "VarySpacing": 10*mSstep + 3*mMstep
 }
+
 
 #this uses the broadcom pin numbering system
 screen = SingleGPIO("Screen", 26)
