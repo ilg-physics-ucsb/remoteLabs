@@ -19,7 +19,7 @@ carousel = StepperI2C("Carousel", 4,bounds=(-1300, 50), style="MICROSTEP", delay
 
 ambient = SingleGPIO("Ambient", 5)
 
-ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[6])
+ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[7])
 ASDIpdu.login()
 
 
