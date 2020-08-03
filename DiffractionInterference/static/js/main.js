@@ -51,7 +51,6 @@ $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
-    var eyeFirstClick = true;
 
   
 //for modal
@@ -524,21 +523,78 @@ $("document").ready(function () {
     var rulerCam = document.getElementById("RulerCam");
     var screenCam = document.getElementById("ScreenCam");
 
+    function sleep(ms){
+        return new Promise(r => setTimeout(r, ms));
+    }
+
+    function updateCameraSetting(setting, newValue) {
+        dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
+    }
+
+    function updateManyCameraSettings(currentSettings, newSettings) {
+        for (const setting in newSettings) {
+            var newValue = newSettings[setting]
+            var oldValue = currentSettings[setting]
+            if (newValue !== oldValue) {
+                updateCameraSetting(setting, newValue)
+                await sleep(50)
+            }
+        }
+    }
+
+    var cameraDefaults = {
+        "frame_rate":15,
+        "brightness": 50,
+        "contrast": 0,
+        "saturation": 0,
+        "red_balance": 100,
+        "blue_balance": 100,
+        "shutter_speed": 0,
+        "iso_sensitvity": 400,
+        "awb_mode": 0,
+        "exposure_mode": 1,
+        "drc_strength": 0
+    }
+
+    var defailtScreenCameraSettings = {
+        "frame_rate":2,
+        "brightness": 50,
+        "contrast": 0,
+        "saturation": 0,
+        "red_balance": 100,
+        "blue_balance": 100,
+        "shutter_speed": 6000,
+        "iso_sensitvity": 400,
+        "awb_mode": 6,
+        "exposure_mode": 5,
+        "drc_strength": 0
+    }
+
+    var currentCameraSettings = cameraDefaults
+
+
+
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
-        dataChannel.send("Camera/camera/b") 
+        dataChannel.send("Camera/camera/b")
+        await sleep(100);
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
         liveStream.style.transform = "rotate(0deg)"
     })
 
     rulerCam.addEventListener("click", function() {
         console.log("Switched to ruler cam")
         dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
+        await sleep(100)
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         liveStream.style.transform = "rotate(0deg)"
     })
 
     screenCam.addEventListener("click", function() {
         console.log("Switched to screen cam")
         dataChannel.send("Camera/camera/c")
+        await sleep(100)
+        updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
         liveStream.style.transform = "rotate(180deg)"
     })
     // END Camera Switching
