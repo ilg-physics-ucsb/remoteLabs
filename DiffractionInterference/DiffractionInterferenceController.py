@@ -10,7 +10,7 @@ socket_path = "/tmp/uv4l.socket"
 SSstep = 670
 Mstep = 975
 Lstep = 1050
-VariableLength=1750
+VariableLength=1725
 
 refPointsSingle = {
     "SingleOpen": 0,
