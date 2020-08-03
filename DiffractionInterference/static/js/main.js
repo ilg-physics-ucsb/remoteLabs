@@ -51,6 +51,7 @@ $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
+    var staticCrossHairs = document.getElementById('imgCrossHairs')
 
   
 //for modal
@@ -232,7 +233,10 @@ $("document").ready(function () {
             console.log("Background was lit. Controls were revealed.");
             //reveal controls; turn background white
             $('img').css("visibility", "visible")
-            $('body').css("background", "white")     
+            $('body').css("background", "white")
+            if (!staticCrossHairsStatus) {
+                staticCrossHairs.style.visibility = "hidden"
+            }   
             DarkState=false;
             DarkTOGGLE.title="Click here to darken the background";
             darkSwitch.style.transform='rotate(0deg)';

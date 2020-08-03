@@ -141,6 +141,7 @@
     height: 100%;
     width: 100%;
     visibility: hidden;
+    z-index: 1;
 }
 
 .variable{

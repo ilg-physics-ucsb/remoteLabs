@@ -3,22 +3,26 @@ var context
 var crosshair_button
 var draw_call=false
 var draw_queded=false
+var staticCrossHairsStatus = false
 
 function hide_all_crosshair(){
     draw_call= false
     document.getElementById('chcv').style.visibility='hidden'
     document.getElementById('imgCrossHairs').style.visibility='hidden'
+    staticCrossHairsStatus = false
 }
 
 function show_image_crosshairs() {
     draw_call= false
     document.getElementById('chcv').style.visibility='hidden'
     document.getElementById('imgCrossHairs').style.visibility='visible'
+    staticCrossHairsStatus = true
 }
 
 function start_CH(){
     console.log('Crosshair Toggle')
     document.getElementById('imgCrossHairs').style.visibility='hidden'
+    staticCrossHairsStatus = false
         if (document.getElementById('chcv').style.visibility =='visible'){
             draw_call= false
             document.getElementById('chcv').style.visibility='hidden'
