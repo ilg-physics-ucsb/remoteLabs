@@ -54,7 +54,7 @@ refPointsMulti = {
 
 
 #this uses the broadcom pin numbering system
-screen = SingleGPIO("Screen", 26)
+# screen = SingleGPIO("Screen", 26)
 ambient = SingleGPIO("Ambient", 5)
 
 bound = 1e6
@@ -65,7 +65,7 @@ stage = StepperI2C("Stage", 4, bounds=(-bound, bound), style="DOUBLE", delay=0.0
 
 
 
-ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[1])
+ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[1,2])
 ASDIpdu.login()
 
 
@@ -77,7 +77,6 @@ exp.add_device(multiSlits)
 exp.add_device(singleSlits)
 exp.add_device(stage)
 exp.add_device(ambient)
-exp.add_device(screen)
 exp.set_socket_path(socket_path)
 exp.recallState()
 exp.setup()

@@ -251,13 +251,13 @@ $("document").ready(function () {
         //     dataChannel.send("Screen/off/");
         //     console.log("Eye clicked for the first time")
         // }  
-        dataChannel.send("Screen/off/");               
+        dataChannel.send("ASDIpdu/off/2");               
         TransparencyOff.style.display = "block";                      
         TransparencyOn.style.display = "none";  
     })
     screenClear.addEventListener('click', function(){        
         console.log("Screen power was turned on, thus the screen is clear");         
-        dataChannel.send("Screen/on/");
+        dataChannel.send("ASDIpdu/on/2");
         TransparencyOff.style.display = "none";                      
         TransparencyOn.style.display = "block"; 
     })
