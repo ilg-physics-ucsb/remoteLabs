@@ -30,8 +30,9 @@ class BaseController(object):
         method = getattr(self, cmd)
         
         if callable(method):
-            method(params)
+            response = method(params)
         
+        return response
 
     def cleanup(self):
         pass
