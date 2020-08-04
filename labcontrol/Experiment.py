@@ -113,7 +113,7 @@ class Experiment(object):
             raise NoDeviceError(device_name)
         response = self.devices[device_name].cmd_handler(command, params)
         if response is not None:
-            self.connection.send(responce.encode())
+            self.connection.send(response.encode())
         self.allStates[device_name] = self.devices[device_name].getState()
         with open(self.json_file, "w") as f:
             json.dump(self.allStates, f)        
