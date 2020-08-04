@@ -89,20 +89,98 @@
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
       </div>
-       <!-- </div> -->
+      <div id="SchematicRadioButtons">
+        <div id="radioButtonsLeft" class="column w-col w-col-3"></div>
+        <div id="radioButtonsMiddle" class="column w-col w-col-7">
+          <div class="column w-row">
+            <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
+            <div class="column w-col w-col-2" style=""></div>
+            <div class="column w-col w-col-4" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
+          </div>
+          <div id="radioButtonsSchematic" class="w-row">
+            <div class="column w-col w-col-1" style="color:darkgreen">
+              <input type="radio" id="fineArm" name="ArmStepSize" value="1">
+              <label for="fineArm">Fine</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-2" style="color:darkgreen">
+              <input type="radio" id="mediumArm" name="ArmStepSize" value="5">
+              <label for="mediumArm">Medium</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-1" style="color:darkgreen">
+              <input type="radio" id="coarseArm" name="ArmStepSize" value="50" checked>
+              <label for="coarseArm">Coarse</label>
+            </div>
+            <div class="column w-col w-col-2" style=""></div>
+            <div class="column w-col w-col-1" style=" color:darkorchid">
+              <input type="radio" id="fineTable" name="TableStepSize" value="20">
+              <label for="fineTable">Fine</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-2" style="color:darkorchid">
+              <input type="radio" id="mediumTable" name="TableStepSize" value="200">
+              <label for="mediumTable">Medium</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-1" style="color:darkorchid">
+              <input type="radio" id="coarseTable" name="TableStepSize" value="600" checked>
+              <label for="coarseTable">Coarse</label>
+            </div>
+          </div>
+        </div>
+        <div id="radioButtonsRight" class="column w-col w-col-2"></div>
+      </div>
+      <div id="ControlsBottom" class="column w-row" >
+        <div id="LeftSide" class="column w-col w-col-2">
+          <div id="Toggle">
+            (click to toggle the Ambient Light)<br>
+            <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
+            <map name="image-map-ls">
+               <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
+            </map>
+            <!-- <br>
+            <br>
+            <br>            -->
+          </div>
+        </div>
+        <div id="Center" class="column w-col w-col-8">
+           <div id="Schematic">  
+            <div id="SchematicLeft" class="column w-col w-col-2"></div>
+            <div id="SchematicCenter" class="column w-col w-col-8">    
+              <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
+              <map name="image-map-schematic">
+                <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
+                <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="144,267,122,273,130,298,138,318,150,332,132,344,185,367,183,312,169,319,160,299,150,280" shape="poly">
+                <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="405,135,412,145,424,135,431,139,444,113,414,113,421,123" shape="poly">
+                <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
+                <area id="lampNudgeLeft" alt="lampLeft" href="#" coords="978,156,978,135,968,135,987,108,1003,135,994,135,997,156" shape="poly">
+                <area id="lampNudgeRight" alt="lampRight" href="#" coords="978,224,979,245,971,245,988,272,1003,245,995,245,995,224" shape="poly">
+              </map>
+              <div class="click-note" style="margin-bottom: -10px;">
+                (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
+              </div>
+            </div>
+            <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6);">
+            <!-- </br></br></br></br> -->
+            (click arrows </br>  to nudge </br> the lamp)
+            </div>
+          </div>  
+        </div>  
+        <div id="RightSide" class="column w-col w-col-2">
+          <div id="ToggleDark" >
+            (click to toggle the Background dark)<br>
+            <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
+            <map name="image-map-ds">
+               <area id="darkTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
+            </map>
+            <br>
+            <br>     
+            <br>  
+            <br>  
+          </div>
+        </div>
+      </div>
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
-        <div id="Toggle">
-          (click to toggle the Ambient Light)<br>
-          <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
-          <map name="image-map-ls">
-             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
-          </map>
-          <br>
-          <br>
-          <br>           
-        </div>
+
         <div id="Crosshairs" >
           <img id="crossHairs" src="static/images/crossHairsIcon.png" onclick=start_CH()>
           <div class="click-note" style="margin-bottom: -50px;">
@@ -192,73 +270,7 @@
       </div>
     </div>
     <div id="PageBottom" class="column w-row"><!-- unused -->
-      <div id="ControlsBottom" class="column w-row" >
-        <div id="LeftSide" class="column w-col w-col-2">
-        </div>
-        <div id="Center" class="column w-col w-col-8">
-          <div id="Schematic">  
-            <div id="SchematicLeft" class="column w-col w-col-2"></div>
-            <div id="SchematicCenter" class="column w-col w-col-8">
-              <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
-              <map name="image-map-schematic">
-                <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
-                <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="144,267,122,273,130,298,138,318,150,332,132,344,185,367,183,312,169,319,160,299,150,280" shape="poly">
-                <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="405,135,412,145,424,135,431,139,444,113,414,113,421,123" shape="poly">
-                <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
-                <area id="lampNudgeLeft" alt="lampLeft" href="#" coords="978,156,978,135,968,135,987,108,1003,135,994,135,997,156" shape="poly">
-                <area id="lampNudgeRight" alt="lampRight" href="#" coords="978,224,979,245,971,245,988,272,1003,245,995,245,995,224" shape="poly">
-              </map>
-              <div class="click-note" style="margin-bottom: -10px;">
-                (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
-              </div>
-            </div>
-            <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6)">
-            </br></br></br></br>
-            (click arrows </br>  to nudge </br> the lamp)
-            </div>
-          </div>  
-          <div id="SchematicRadioButtons">
-            <div id="radioButtonsRight" class="column w-col w-col-3"></div>
-            <div id="radioButtonsMiddle" class="column w-col w-col-7">
-              <div class="column w-row">
-                <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
-                <div class="column w-col w-col-2" style=""></div>
-                <div class="column w-col w-col-4" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
-              </div>
-              <div id="radioButtonsSchematic" class="w-row">
-                <div class="column w-col w-col-1" style="color:darkgreen">
-                  <input type="radio" id="fineArm" name="ArmStepSize" value="1">
-                  <label for="fineArm">Fine</label>
-                </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-                <div class="column w-col w-col-2" style="color:darkgreen">
-                  <input type="radio" id="mediumArm" name="ArmStepSize" value="5">
-                  <label for="mediumArm">Medium</label>
-                </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-                <div class="column w-col w-col-1" style="color:darkgreen">
-                  <input type="radio" id="coarseArm" name="ArmStepSize" value="50" checked>
-                  <label for="coarseArm">Coarse</label>
-                </div>
-                <div class="column w-col w-col-2" style=""></div>
-                <div class="column w-col w-col-1" style=" color:darkorchid">
-                  <input type="radio" id="fineTable" name="TableStepSize" value="20">
-                  <label for="fineTable">Fine</label>
-                </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-                <div class="column w-col w-col-2" style="color:darkorchid">
-                  <input type="radio" id="mediumTable" name="TableStepSize" value="200">
-                  <label for="mediumTable">Medium</label>
-                </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-                <div class="column w-col w-col-1" style="color:darkorchid">
-                  <input type="radio" id="coarseTable" name="TableStepSize" value="600" checked>
-                  <label for="coarseTable">Coarse</label>
-                </div>
-              </div>
-            </div>
-            <div id="radioButtonsRight" class="column w-col w-col-2"></div>
-          </div>
-        </div>  
-        <div id="RightSide" class="column w-col w-col-2">
-        </div>
-      </div>
+
       <div id="MetersBottom" class="column w-row" >
         <div id="MetersLeft" class="column w-col w-col-6">
         <!-- Preserving 6-6 structure  -->
