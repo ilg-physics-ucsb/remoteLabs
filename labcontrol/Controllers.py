@@ -208,7 +208,7 @@ class StepperI2C(MotorKit, BaseController):
         self.state["position"] = self.currentPosition
         self.device.release()
 
-        if self.currentPotion == self.upperBound or self.currentPosition == self.lowerBound:
+        if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
             return "{0}/{1}/{2}".format(self.name, "position", "limit")
         
     def move_parser(self, params):
