@@ -1,4 +1,3 @@
-
 // This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
 function connectStream(stream, videoElement) {
     if (videoElement) {
@@ -6,7 +5,7 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
-
+        resize_canvas()
         // videoElement.play();
     }
 }
@@ -48,10 +47,23 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 }
 
 
+function getWidth(){
+    return document.getElementById('v').clientWidth; //parseInt(video.css('width'),10)
+}
+
+function getHeight(){
+    return  document.getElementById('v').clientHeight;
+}
+
+var c_wrap
+var liveStream
+
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    var liveStream = document.getElementById("v");
+    liveStream = document.getElementById("v");
+
+    c_wrap = $('#canvas_wrap')
 
     // Do we need these still?
     var FirstTimeCam = true;
@@ -103,13 +115,12 @@ $("document").ready(function () {
     var Toggle = document.getElementById("Toggle");
     var Grating = document.getElementById("Grating");
     var Crosshairs = document.getElementById("Crosshairs");
-    var CrossContainer = document.getElementById("CrossContainer");
-    var EPC= document.getElementById("EPcontrols")
     var Schematic = document.getElementById("Schematic");
     var Lamps = document.getElementById("Lamps");
     var SlitControl = document.getElementById("SlitControl");
     
     OverviewCam.addEventListener('click', function() {
+        
         if(FirstTimeCam){
             console.log("Overview cam was clicked for the first time");
             FirstTimeCam=false;
@@ -119,60 +130,49 @@ $("document").ready(function () {
             currentCam = "a"
         }
         
-        EPC.style.visibility='hidden';
-        showruler.prop("checked",false)
-        track_mouse= false
-        document.getElementById("crosshair-v").style.visibility = "hidden";
-        document.getElementById("crosshair-h").style.visibility = "hidden";
         
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
+        hide_crosshair()
         
     })
 
     ArmCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/c");
-        
-        EPC.style.visibility='visible';
-        track_mouse= false;
+        //show_crosshair()
+        resize_canvas()
+        Crosshairs.style.visibility='visible';
         
         Lamps.style.visibility='visible';
-        Crosshairs.style.visibility='visible';
+        
         SlitControl.style.visibility='visible';
         currentCam = "c"       
+        dataChannel.send("Camera/camera/c");
     })
 
     V1Cam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+       
         
-        EPC.style.visibility='hidden';
-        showruler.prop("checked",false)
-        track_mouse= false
-        document.getElementById("crosshair-v").style.visibility = "hidden";
-        document.getElementById("crosshair-h").style.visibility = "hidden";
-        
+                
         Lamps.style.visibility = "hidden";
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
-
         currentCam = "b"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/b");
     })
 
     V2Cam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/d");
+       
         
-        EPC.style.visibility='hidden';
-        showruler.prop("checked",false)
-        track_mouse= false
-        document.getElementById("crosshair-v").style.visibility = "hidden";
-        document.getElementById("crosshair-h").style.visibility = "hidden";
         
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
         SlitControl.style.visibility='visible';
 
         currentCam = "d"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/d");
     })
 
     // OffCam.addEventListener('click', function() {
@@ -515,11 +515,11 @@ $("document").ready(function () {
 
     nudgeLeft.addEventListener('click',function() {
         console.log("Lamp nudged left");
-        dataChannel.send("Carousel/move/-2")
+        dataChannel.send("Carousel/move/10")
     })
     nudgeRight.addEventListener('click',function() {
         console.log("Lamp nudged right");
-        dataChannel.send("Carousel/move/2")
+        dataChannel.send("Carousel/move/-10")
     })
 //END Lamp Nudging
 
@@ -643,15 +643,17 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
   
-});
-
-
-window.addEventListener('beforeunload', function(e) {
+  window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
     mainCamSignal.hangup();
     // TEMP CHANGE
     dataChannel.close();
-})
+  })
+
+});
+
+
+
 
 
 
@@ -662,7 +664,7 @@ window.addEventListener('beforeunload', function(e) {
 // document.getElementById('remote_hw_vcodec').checked = true;
 // var vformat = document.getElementById('remote_vformat').value;
 // switch (vformat) {
-//     case '5':
+//     case '5': 
 //         document.getElementById('remote-video').style.width = "320px";
 //         document.getElementById('remote-video').style.height = "240px";
 //         break;

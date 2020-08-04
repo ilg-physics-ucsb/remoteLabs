@@ -6,12 +6,11 @@ function connectStream(stream, videoElement) {
         console.log(videoElement);
         videoElement.srcObject = stream;
         videoElement.setAttribute("data-playing", "true");
-
         // videoElement.play();
     }
 }
 
-//This function runs if there is an error returned from teh websocket connecting to the stream.
+//This function runs if there is an error returned from the websocket connecting to the stream.
 function errorStream(error){
     alert(error);
 }
@@ -52,30 +51,20 @@ $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
-   
+    var staticCrossHairs = document.getElementById('imgCrossHairs')
+
+  
 //for modal
     var loadingModal = $("#loadingModal")
+    var mWrapList = ["#mapster_wrap_0", "#mapster_wrap_1"]
 
     loadingModal.on("shown.bs.modal", function(e){
         intervalId = setInterval(function() {
-            for (mWrap of mWrapList) {
-                if ($(mWrap).length == 0) {
-                    return
-                }
-            } 
-            
+            if(!dataChannel){
+                return
+            }    
             //Run when all mwraps exist.
-            mWrap1 = $("#mapster_wrap_1")[0]
-            mWrap2 = $("#mapster_wrap_2")[0]
-            mWrap6 = $("#mapster_wrap_6")[0]
-            mWrap7 = $("#mapster_wrap_7")[0]
-    
-            // Do clicks here
-            OvenONpress.click()
-            OvenOFFpress.click()
-            powerSupplyON.click()
-            powerSupplyOFF.click()
-            TempCam.click()
+            viewCam.click()
             console.log("hiding modal")
             //Hide Loading Screen
             loadingModal.modal("hide")
@@ -87,21 +76,12 @@ $("document").ready(function () {
     loadingModal.modal('show')
 
 
-    //for multi-camera switching
-    var viewCam = document.getElementById("ViewCam");
-    var rulerCam = document.getElementById("RulerCam");
-    var screenCam = document.getElementById("ScreenCam");
-    // var OffCam = document.getElementById("OffCam");
 
 
     // OffCam.addEventListener('click', function() {
     //     dataChannel.send("Camera/camera/off")
     // })
 
-    //for LiveFeed  
-    // TEMP CHANGE
-    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
- 
     //for Time Limit
      window.setTimeout(timeOutHandler,2700000)
  
@@ -138,14 +118,15 @@ $("document").ready(function () {
         }
  
     // for Diffraction Slits
-    var A02 = document.getElementById('a02');
+    
+    var A02 = document.getElementById('a02')
     var A04 = document.getElementById('a04');
     var A08 = document.getElementById('a08');
     var A16 = document.getElementById('a16');
 
     var VaryWidth = document.getElementById('a02-20');
 
-    var Line = document.getElementById('line');
+    var SingleOpen = document.getElementById('singleOpen');
     var LineSlit = document.getElementById('line+slit');
     var LittleHole = document.getElementById('ø0.2');
     var BigHole = document.getElementById('ø0.4');
@@ -168,18 +149,19 @@ $("document").ready(function () {
     var FourSlit = document.getElementById('4slit');
     var FiveSlit = document.getElementById('5slit');
    
-    var TwoOne = document.getElementById('twoOne');
+    var MultiOpen = document.getElementById('multiOpen');
     var FarClose = document.getElementById('farClose');
     var WideThin = document.getElementById('wideThin');
     var ThreeTwo = document.getElementById('threeTwo');
     
 
     //for Screen
-    var screenWhite = document.getElementById('screenWHITE');
-    var screenClear = document.getElementById('screenCLEAR');
+    var screenWhite = document.getElementById('openEye');
+    var screenClear = document.getElementById('closedEye');
     var TransparencyOff = document.getElementById('TransparencyOFF');
     var TransparencyOn = document.getElementById('TransparencyON');
-    var screenState = false;
+    TransparencyOn.style.display="none";
+    TransparencyOff.style.display="block";
 
     //for Background
     var darkSwitch = document.getElementById('darkSwitch')
@@ -191,19 +173,26 @@ $("document").ready(function () {
     var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
     var AmbientState = false;
 
-    //for Single Slit Wheel
-    var SnudgeCW = document.getElementById('singlesCW');
-    var SnudgeCCW = document.getElementById('singlesCCW');
-    var sSteps=1;
-   
-    //for Multiple Slit Settings
-    var MnudgeCW = document.getElementById('multiplesCW');
-    var NnudgeCCW = document.getElementById('multiplesCCW');
-    var mSteps=1;
+    // for Nudging Slits
+    var nudgeUp = document.getElementById("up")
+    var nudgeDown = document.getElementById("down")
+    var nudgeSteps = 25
+    var lastSlit = "none"
 
     //for Stage Motion
-    var stageCloser=document.getElementById('')
-    var stageFarther=
+    var stageCloser=document.getElementById('closer')
+    var stageFarther=document.getElementById('farther')
+    var stageSteps=250;
+
+    //for Laser Power
+    //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
+    var laser = document.getElementById("laserSwitch")
+    var laserState = false;
+    laser.style.opacity=0.2;
+ 
+    //for Snapshot 
+    var snapShot = document.getElementById("pushButton")
+    
 
     //BEGIN Switches 
     //BEGIN Ambient Toggling 
@@ -214,13 +203,13 @@ $("document").ready(function () {
             dataChannel.send("Ambient/off/")            //use this command with GPIO
             AmbientState=false;
             AmbientTOGGLE.title="Click here to turn ON";
-            lightSwitch.style.transform='scaleY(1)';
+            lightSwitch.style.transform='rotate(0deg)';
                      }
         else{
             dataChannel.send("Ambient/on/")                 //use this command with GPIO
             AmbientState=true;
             AmbientTOGGLE.title="Click here to turn OFF";
-            lightSwitch.style.transform='scaleY(-1)';
+            lightSwitch.style.transform='rotate(180deg)';
         }
     })
 
@@ -228,20 +217,29 @@ $("document").ready(function () {
     
     //BEGIN Background Toggling
       
-    BackgroundTOGGLE.addEventListener('click', function(){
+    DarkTOGGLE.addEventListener('click', function(){
            if(!DarkState){
             console.log("Background was darkened. Controls were hidden.");
             //hide controls; turn background black
+            $('img').css("visibility", "hidden")
+            $('body').css("background", "black")
+            darkSwitch.style.visibility = "visible"
+            laser.style.visibility = "visible"
             DarkState=true;
             DarkTOGGLE.title="Click here to reveal controls";
-            darkSwitch.style.transform='scaleY(1)';
+            darkSwitch.style.transform='rotate(180deg)';
                      }
         else{
             console.log("Background was lit. Controls were revealed.");
-            //reveal controls; turn background white      
+            //reveal controls; turn background white
+            $('img').css("visibility", "visible")
+            $('body').css("background", "white")
+            if (!staticCrossHairsStatus) {
+                staticCrossHairs.style.visibility = "hidden"
+            }   
             DarkState=false;
             DarkTOGGLE.title="Click here to darken the background";
-            darkSwitch.style.transform='scaleY(-1)';
+            darkSwitch.style.transform='rotate(0deg)';
         }
     })
 
@@ -250,28 +248,44 @@ $("document").ready(function () {
     //BEGIN Screen Toggling
 
     screenWhite.addEventListener('click', function(){
-        console.log("Screen power was turned off");
-        if(screenState){
-            dataChannel.send("Screen/off/");              
-            TransparencyOff.style.display = "block";                      
-            TransparencyOn.style.display = "none"; 
-            screenState=false; 
-        }
+        console.log("Screen power was turned off, thus the screen is opaque");
+        // if (!eyeFirstClick) {
+        //     eyeFirstClick = false
+        //     dataChannel.send("Screen/off/");
+        //     console.log("Eye clicked for the first time")
+        // }  
+        dataChannel.send("ASDIpdu/off/2");               
+        TransparencyOff.style.display = "block";                      
+        TransparencyOn.style.display = "none";  
     })
-    screenClear.addEventListener('click', function(){
-        console.log("Screen power was turned on");
-        if(!screenState){
-            dataChannel.send("Screen/on/");              
-            TransparencyOff.style.display = "none";                      
-            TransparencyOn.style.display = "block"; 
-            screenState=true; 
-        }
+    screenClear.addEventListener('click', function(){        
+        console.log("Screen power was turned on, thus the screen is clear");         
+        dataChannel.send("ASDIpdu/on/2");
+        TransparencyOff.style.display = "none";                      
+        TransparencyOn.style.display = "block"; 
     })
 
     //BEGIN Laser
-    //END Laser
+    laser.addEventListener("click", function() {
+        if (laserState) {
+            console.log("Laser was turned off")
+            dataChannel.send("ASDIpdu/off/1")
+            laserState = false;
+            laser.style.opacity=0.2;
+        } else {
+            console.log("Laser was turned on")
+            dataChannel.send("ASDIpdu/on/1")
+            laserState = true;
+            laser.style.opacity=1;
+        }
+    })
+   //END Laser
     
     //BEGIN SnapShot
+    snapShot.addEventListener("click", function () {
+        console.log("Snapshot was taken")
+        // Do unknown stuff here to make a picture happen.
+    })
     //END SnapShot
 
     // END Switches
@@ -283,91 +297,91 @@ $("document").ready(function () {
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/A02");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     A04.addEventListener('click', function(event) {
         console.log("A04 was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/A04");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     A08.addEventListener('click', function(event) {
         console.log("A08 was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/A08");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     A16.addEventListener('click', function(event) {
         console.log("A16 was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/A16");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     VaryWidth.addEventListener('click', function(event) {
         console.log("Variable Width Slit was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/VaryWidth");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     SingleOpen.addEventListener('click', function(event) {
         console.log("SingleOpen was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/SingleOpen");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     LineSlit.addEventListener('click', function(event) {
         console.log("Line+Slit was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/LineSlit");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     LittleHole.addEventListener('click', function(event) {
         console.log("Little hole was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/LittleHole");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     BigHole.addEventListener('click', function(event) {
         console.log("Big hole was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/BigHole");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     Square.addEventListener('click', function(event) {
         console.log("Square grid was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/Square");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     Hex.addEventListener('click', function(event) {
         console.log("Hexagonal grid was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/Hex");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     Dots.addEventListener('click', function(event) {
         console.log("Random dots was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/Dots");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
     Holes.addEventListener('click', function(event) {
         console.log("Random holes was clicked");
         event.stopPropagation();
         dataChannel.send("SingleSlits/goto/Holes");
         dataChannel.send("MultiSlits/goto/MultiOpen");
-        return false
+        lastSlit = "single"
     })
 }
    // END Single Slite Wheel Buttons
@@ -379,99 +393,247 @@ $("document").ready(function () {
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/A04D25");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     A04D50.addEventListener('click', function(event) {
         console.log("a=0.04, d=0.50 was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/A04D50");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     A08D25.addEventListener('click', function(event) {
         console.log("a=0.08, d=0.25 was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/A08D25");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     A08D50.addEventListener('click', function(event) {
         console.log("a=0.08, d=0.50 was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/A08D50");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     varySpacing.addEventListener('click', function(event) {
         console.log("Variable Slit Spacing was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/varySpacing");
+        dataChannel.send("MultiSlits/goto/VarySpacing");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     TwoSlit.addEventListener('click', function(event) {
         console.log("2 slits was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/TwoSlit");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     ThreeSlit.addEventListener('click', function(event) {
         console.log("3 slits was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/ThreeSlit");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     FourSlit.addEventListener('click', function(event) {
         console.log("4 slits was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/FourSlit");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     FiveSlit.addEventListener('click', function(event) {
         console.log("5 slits was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/FiveSlit");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
-    TwoOne.addEventListener('click', function(event) {
+    MultiOpen.addEventListener('click', function(event) {
         console.log("2 slits vs 1 slit was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/TwoOne");
+        dataChannel.send("MultiSlits/goto/MultiOpen");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     FarClose.addEventListener('click', function(event) {
         console.log("Comparison of slit separations was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/FarClose");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     WideThin.addEventListener('click', function(event) {
         console.log("Wide slit vs thin slit was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/WideThin");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
     ThreeTwo.addEventListener('click', function(event) {
         console.log("3 slits vs 2 slit was clicked");
         event.stopPropagation();
         dataChannel.send("MultiSlits/goto/ThreeTwo");
         dataChannel.send("SingleSlits/goto/SingleOpen");
-        return false
+        lastSlit = "multi"
     })
 }
     // END Single Slite Wheel Buttons
-    
+
+    // BEGIN Stage Motion
+    stageCloser.addEventListener('click', function() {
+        console.log("Stage moved closer to slits.")
+        dataChannel.send("Stage/move/" + (-stageSteps))
+    })
+
+    stageFarther.addEventListener('click', function() {
+        console.log("Stage moved farther from slits.")
+        dataChannel.send("Stage/move/" + stageSteps)
+    })
+
+    // END Stage Motion
+
+    // BEGIN Nudge of Slits
+    // Motion defined with respect looking at face
+    nudgeUp.addEventListener("click", function() {
+        if (lastSlit == "single") {
+            console.log("Nudging Single Slit Up")
+            dataChannel.send("SingleSlits/move/" + (-nudgeSteps))
+        } else if (lastSlit == "multi") {
+            console.log("Nudging Multi Slit Up")
+            dataChannel.send("MultiSlits/move/" + nudgeSteps)
+        } else {
+            console.log("No slit to move yet.")
+        }
+    })
+
+    nudgeDown.addEventListener("click", function() {
+        if (lastSlit == "single") {
+            console.log("Nudging Single Slit Down")
+            dataChannel.send("SingleSlits/move/" + nudgeSteps)
+        } else if (lastSlit == "multi") {
+            console.log("Nudging Multi Slit Down")
+            dataChannel.send("MultiSlits/move/" + (-nudgeSteps))
+        } else {
+            console.log("No slit to move yet.")
+        }
+    })
+    // END Nudge of Slits
+
+    // BEGIN Camera Switching
+    var viewCam = document.getElementById("ViewCam");
+    var rulerCam = document.getElementById("RulerCam");
+    var screenCam = document.getElementById("ScreenCam");
+
+    function sleep(ms){
+        return new Promise(r => setTimeout(r, ms));
+    }
+
+    async function updateCameraSetting(setting, newValue) {
+        dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
+        currentCameraSettings[setting] = newValue
+    }
+
+    async function updateManyCameraSettings(currentSettings, newSettings) {
+        for (const setting in newSettings) {
+            var newValue = newSettings[setting]
+            var oldValue = currentSettings[setting]
+            if (newValue !== oldValue) {
+                updateCameraSetting(setting, newValue)
+                await sleep(50)
+            }
+        }
+
+    }
+
+    var cameraDefaults = {
+        "frame_rate":15,
+        "brightness": 50,
+        "contrast": 0,
+        "saturation": 0,
+        "red_balance": 100,
+        "blue_balance": 100,
+        "shutter_speed": 0,
+        "iso_sensitvity": 400,
+        "awb_mode": 0,
+        "exposure_mode": 1,
+        "drc_strength": 0
+    }
+
+    var defaultScreenCameraSettings = {
+        "frame_rate":2,
+        "brightness": 50,
+        "contrast": 0,
+        "saturation": 0,
+        "red_balance": 100,
+        "blue_balance": 100,
+        "shutter_speed": 6000,
+        "iso_sensitvity": 400,
+        "awb_mode": 6,
+        "exposure_mode": 5,
+        "drc_strength": 0
+    }
+
+    var currentCameraSettings = cameraDefaults
+
+
+
+    viewCam.addEventListener("click", function() {
+        console.log("Switched to view cam")
+        dataChannel.send("Camera/camera/b")
+        // await sleep(100);
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
+        liveStream.style.transform = "rotate(0deg)"
+    })
+
+    rulerCam.addEventListener("click", function() {
+        console.log("Switched to ruler cam")
+        dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
+        // await sleep(100)
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        liveStream.style.transform = "rotate(0deg)"
+    })
+
+    screenCam.addEventListener("click", function() {
+        console.log("Switched to screen cam")
+        dataChannel.send("Camera/camera/c")
+        // await sleep(100)
+        updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
+        liveStream.style.transform = "rotate(180deg)"
+    })
+    // END Camera Switching
+
+     //for LiveFeed  
+     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+   
 
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
-    
+
+    // $('#openEye').mapster({
+    //     mapKey:'id',
+    //     fillColor: 'f5f5b5',
+    //     fillOpacity: 0.6,
+    //     render_select: { 
+    //         fillOpacity: 0.3
+    //     },
+    //     singleSelect: true
+    //     // scaleMap: true
+    // }).parent().css({"margin":"0 auto"});
+
+    // $('#closedEye').mapster({
+    //     mapKey:'id',
+    //     fillColor: 'f5f5b5',
+    //     fillOpacity: 0.6,
+    //     render_select: { 
+    //         fillOpacity: 0.3
+    //     },
+    //     singleSelect: true
+    //     // scaleMap: true
+    // }).parent().css({"margin":"0 auto"});
+
     $('#singleSlitsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
@@ -516,7 +678,7 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#multiDoublePic').mapster({
+  $('#doublePic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -528,6 +690,17 @@ $("document").ready(function () {
   }).parent().css({"margin":"0 auto"}); 
   
   $('#variDoublePic').mapster({
+    mapKey:'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select: { 
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+    // scaleMap: true
+  }).parent().css({"margin":"0 auto"}); 
+  
+  $('#multiplePic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -559,6 +732,46 @@ $("document").ready(function () {
     singleSelect: true
     // scaleMap: true
   }).parent().css({"margin":"0 auto"}); 
+
+//   $('#lightSwitch').mapster({
+//     mapKey:'id',
+//     fillColor: 'f5f5b5',
+//     fillOpacity: 0.6,
+//     render_select: { 
+//         fillOpacity: 0.3
+//     },
+//     singleSelect: true
+//     // scaleMap: true
+//   }).parent().css({"margin":"0 auto"}); 
+  
+//   $('#laserSwitch').mapster({
+//     mapKey:'id',
+//     fillColor: 'f5f5b5',
+//     fillOpacity: 0.6,
+//     render_select: { 
+//         fillOpacity: 0.3
+//     },
+//     singleSelect: true
+//     // scaleMap: true
+//   }).parent().css({"margin":"0 auto"}); 
+  
+//   $('#darkSwitch').mapster({
+//     mapKey:'id',
+//     fillColor: 'f5f5b5',
+//     fillOpacity: 0.6,
+//     render_select: { 
+//         fillOpacity: 0.3
+//     },
+//     singleSelect: true
+//     // scaleMap: true
+//   }).parent().css({"margin":"0 auto"}); 
+  
+  window.addEventListener('beforeunload', function(e) {
+        // // TEMP CHANGE
+        mainCamSignal.hangup();
+        // // TEMP CHANGE
+        dataChannel.close();
+    })
   
 //   console.log('mapster calls have been made');
   
@@ -608,12 +821,7 @@ $("document").ready(function () {
 });
 
 
-window.addEventListener('beforeunload', function(e) {
-    // TEMP CHANGE
-    mainCamSignal.hangup();
-    // TEMP CHANGE
-    dataChannel.close();
-})
+
 
 
 
