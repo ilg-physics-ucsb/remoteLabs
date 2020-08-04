@@ -108,7 +108,7 @@ $("document").ready(function () {
 
     slitModal.on("shown.bs.modal", function(e){
         setTimeout(function() {
-            loadingModal.modal("hide")
+            slitModal.modal("hide")
         }, slitDelay)
     })
 
