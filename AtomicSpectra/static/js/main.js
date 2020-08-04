@@ -102,7 +102,18 @@ $("document").ready(function () {
     })
     loadingModal.modal('show')
 
-    
+
+    var slitModal = $("#slitModal")
+    var slitDelay = 20000
+
+    slitModal.on("shown.bs.modal", function(e){
+        setTimeout(function() {
+            loadingModal.modal("hide")
+        }, slitDelay)
+    })
+
+    var extremaModal = $("#extremaModal")
+
     //for multi-camera switching
     var OverviewCam = document.getElementById("OverviewCam");
     var ArmCam = document.getElementById("EyepieceCam");
@@ -164,8 +175,6 @@ $("document").ready(function () {
 
     V2Cam.addEventListener('click', function() {
        
-        
-        
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
         SlitControl.style.visibility='visible';
@@ -180,7 +189,6 @@ $("document").ready(function () {
     // })
 
     //for LiveFeed  
-    // TEMP CHANGE
     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
@@ -221,6 +229,10 @@ $("document").ready(function () {
     var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
     var AmbientState = false;
 
+    var darkToggle = document.getElementById('darkTOGGLE')
+    var darkSwitchPic = document.getElementById("darkSwitch")
+    var darkState = false
+
     //for Lamps
     var H2pressOff = document.getElementById('H2-off');
     var ApressOff = document.getElementById('SampleA-off');
@@ -258,6 +270,9 @@ $("document").ready(function () {
     var fineSlit = document.getElementById('FineAdjustSlit');
     var coarseSlit = document.getElementById('CoarseAdjustSlit');
     var slitSteps=200;
+    var slitCurrentPosition = 0
+    var slitUB = 600
+    var slitLB = 0
    
     //for Schematic
     var SchemaPIC = document.getElementById('Schema')
@@ -268,6 +283,8 @@ $("document").ready(function () {
     var tMedium = document.getElementById('mediumArm')
     var tCoarse = document.getElementById('coarseArm');
     var telescopeSteps=100; ///unknown number of degrees
+    var telescopeCurrentPosition = 0
+    var 
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
     var gCCW = document.getElementById('gratingCCW');
@@ -303,6 +320,36 @@ $("document").ready(function () {
         }
     })
     //END Ambient Toggling
+
+    //BEGIN Dark Toggling
+
+
+    darkToggle.addEventListener('click', function(){
+        if(!darkState){
+         console.log("Background was darkened. Controls were hidden.");
+         //hide controls; turn background black
+         $('img').css("visibility", "hidden")
+         $('body').css("background", "black")
+         darkSwitchPic.style.visibility = "visible"
+         laser.style.visibility = "visible"
+         darkState=true;
+         darkToggle.title="Click here to reveal controls";
+         darkSwitchPic.style.transform='rotate(180deg)';
+                  }
+     else{
+         console.log("Background was lit. Controls were revealed.");
+         //reveal controls; turn background white
+         $('img').css("visibility", "visible")
+         $('body').css("background", "white")
+         darkState=false;
+         darkToggle.title="Click here to darken the background";
+         darkSwitchPic.style.transform='rotate(0deg)';
+        }
+    })
+
+    //END Dark Toggling
+
+
     
     //BEGIN Lamp Toggling
 
@@ -557,17 +604,26 @@ $("document").ready(function () {
    //END Arm Buttons
 
    //BEGIN Slit Buttons 
-   fineSlit.addEventListener('click', function(){slitSteps=50;})
-   coarseSlit.addEventListener('click', function(){slitSteps=200;})
+   fineSlit.addEventListener('click', function(){
+        slitSteps=50;
+        slitDelay = 5000;
+    })
+   coarseSlit.addEventListener('click', function(){
+        slitSteps=200;
+        slitDelay = 20000
+    })
 
    function openSlitCmd() {
     console.log("Slit was made wider");
     dataChannel.send("Slit/move/"+slitSteps);
+    slitModal.modal("show")
+    
    }
 
    function closeSlitCmd() {
     console.log("Slit was made narrower");
     dataChannel.send("Slit/move/"+(-slitSteps));
+    slitModal.modal("show")
    }
    
    LopenSlit.addEventListener('click', openSlitCmd);
