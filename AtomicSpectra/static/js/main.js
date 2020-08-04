@@ -284,7 +284,6 @@ $("document").ready(function () {
     var tCoarse = document.getElementById('coarseArm');
     var telescopeSteps=100; ///unknown number of degrees
     var telescopeCurrentPosition = 0
-    var 
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
     var gCCW = document.getElementById('gratingCCW');
