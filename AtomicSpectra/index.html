@@ -51,7 +51,7 @@
 
   <!-- Start your project here--> 
   <div class="pagecontainer w-row">
-    <div id="PageHead" class="column w-row">
+    <div id="PageHead" class="column w-row" style="margin-bottom: 0px;">
       <h1 class="Title">Atomic Spectra Experiment</h1>
       <div class="text-block">
         <h5 class="SubTitle">
@@ -80,19 +80,10 @@
         <span id="time" style="color:red;font-weight:bold">45:00</span> 
         minutes.
       </div>       
-      <div id="CameraSelectorButtons">
-        <div class="btn-group" role="group"  aria-label="Basic example">
-          <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
-          <button id="EyepieceCam" type="button" class="btn btn-primary">Eyepiece</button>
-          <button id="V1Cam" type="button" class="btn btn-primary">Vernier 1</button>
-          <button id="V2Cam" type="button" class="btn btn-primary">Vernier 2</button>
-          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
-        </div>
-      </div>
       <div id="SchematicRadioButtons">
         <div id="radioButtonsLeft" class="column w-col w-col-3"></div>
         <div id="radioButtonsMiddle" class="column w-col w-col-7">
-          <div class="column w-row">
+          <div class="w-row">
             <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
             <div class="column w-col w-col-2" style=""></div>
             <div class="column w-col w-col-4" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
@@ -127,17 +118,11 @@
         </div>
         <div id="radioButtonsRight" class="column w-col w-col-2"></div>
       </div>
-      <div id="Controls" class="column w-row" >
+      <div id="Controls" class="column w-row" style="margin-bottom: 0px;">
         <div id="LeftSide" class="column w-col w-col-2">
-          <div id="Toggle">
-            (click to toggle the<br> ambient Light)<br>
-            <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
-            <map name="image-map-ls">
-               <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
-            </map>
-          </div>
+
         </div>
-        <div id="Center" class="column w-col w-col-8">
+        <div id="Center" class="column w-col w-col-8" style="margin-bottom: 0px;">
            <div id="Schematic">  
             <div id="SchematicLeft" class="column w-col w-col-2"></div>
             <div id="SchematicCenter" class="column w-col w-col-8">    
@@ -152,7 +137,7 @@
               </map>
               <div class="click-note" style="margin-bottom: -10px;">
                 (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
-              </div>
+              </div>  
             </div>
             <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6);">
             </br></br></br></br>
@@ -161,24 +146,37 @@
           </div>  
         </div>  
         <div id="RightSide" class="column w-col w-col-2">
-          <div id="ToggleDark" >
-            (click to toggle the Background dark)<br>
-            <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
-            <map name="image-map-ds">
-               <area id="darkTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
-            </map>
-          </div>
+
         </div>
+      </div>
+      <div id="CameraSelectorButtons" >
+
+        <div class="btn-group" role="group"  aria-label="Basic example">
+          <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
+          <button id="EyepieceCam" type="button" class="btn btn-primary">Eyepiece</button>
+          <button id="V1Cam" type="button" class="btn btn-primary">Vernier 1</button>
+          <button id="V2Cam" type="button" class="btn btn-primary">Vernier 2</button>
+          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+        </div>
+
       </div>
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
+        <div id="Toggle">
+          (click to toggle the<br> ambient Light)<br>
+          <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
+          </map>
+        </div>
         <div id="Grating" >
           <strong>Transmission Grating</strong>
           <a target="_blank" href="https://www.patonhawksley.com/product-page/te215">
-            <img src="static/images/DiffractionGratingActual582x442.jpg" alt="" class="image-8">
+            <img src="static/images/DiffractionGrating.jpg">
           </a>
           <div class="click-note">(click for grating info)</div>
+          <br>
         </div>
         <div id="Crosshairs" >
           <img id="crossHairs" src="static/images/crossHairsIcon.png" onclick=start_CH()>
@@ -202,6 +200,13 @@
         
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
+        <div id="ToggleDark">
+          (click to toggle the <br> Background dark)<br>
+          <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
+          <map name="image-map-ds">
+             <area id="darkTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
+          </map>
+        </div>
         <div id="Lamps">
             <strong>Spectrum Tube Lamps</strong> <br> 
             <img id="LampsAllOff" src="static/images/LampToggles/AllOff.jpg" usemap="#image-map-Lamps-off">
