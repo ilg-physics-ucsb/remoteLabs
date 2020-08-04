@@ -330,7 +330,6 @@ $("document").ready(function () {
          $('img').css("visibility", "hidden")
          $('body').css("background", "black")
          darkSwitchPic.style.visibility = "visible"
-         laser.style.visibility = "visible"
          darkState=true;
          darkToggle.title="Click here to reveal controls";
          darkSwitchPic.style.transform='rotate(180deg)';
