@@ -1,50 +1,29 @@
-#crosshair-h{
-    position: fixed;
-    width:100%;
-    height:1px;
-    margin-top:-1px;
+#canvas-wrap { 
+    position:relative; /* Make this a positioned parent */
+    z-index: 10000!important
+}
+
+
+#canvas{
+    /* height: 350px;
+    width: 700px; */
+    position:relative; 
     z-index: 1000!important;
-    overflow: hidden!important;
+    top:0px;
+    left:0px;
     visibility: hidden;
-
+    cursor: crosshair;
+} 
+#v_overlay    { 
+    position:absolute; 
+    top:-15px; 
+    left:10px; 
+    z-index: 100;
 }
-
-#crosshair-v{
-    position: fixed;
-    height:400px;
-    width:1px;
-    margin-left:-1px;
-    z-index: 1000!important;
-    overflow: hidden!important;
-    visibility: hidden;
-
-}
-
-.hair{    
-    position:static;
-    background-color:rgba(135, 187, 128, 0.808);
-    box-shadow:0 0 1px rgb(35, 75, 47);
-    z-index: 1000!important;
-}
-
-
-/* #CrossContainer{
-    position: absolute;
-    margin:auto;  
-    width: 86%!important;
-    height: 500px!important;
-    overflow: hidden!important;
-    /* z-index: 1000!important; */
-    background-color: white;
-} */
-#Coordinates{
-
-}
-#v{
-    margin:auto;    
-    /* background-color: black; */
-}
-
-#EPcontrols{
-    visibility:hidden ;
+#v {
+    background-color: rgba(59, 59, 59, 0.5); 
+    z-index: 100;
+    position:absolute; 
+    top:0px; 
+    left:0px; 
 }
