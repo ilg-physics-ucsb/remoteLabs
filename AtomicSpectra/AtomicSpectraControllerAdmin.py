@@ -8,8 +8,8 @@ socket_path = "/tmp/uv4l.socket"
 
 refPoints = {
     "h2":0,
-    "a": -76,
-    "b": int(-2*76),
+    "a": -78,
+    "b": int(-2*78),
     }
 
 bound = int(1e6)
