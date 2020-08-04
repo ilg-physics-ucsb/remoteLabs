@@ -133,6 +133,17 @@
 #v{
     width: 100%;
 }
+
+#imgCrossHairs {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+    z-index: 1;
+}
+
 .variable{
     font-family: 'Times New Roman', Times, serif;
     font-style: italic;
