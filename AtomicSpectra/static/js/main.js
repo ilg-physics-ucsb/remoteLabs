@@ -70,6 +70,10 @@ function controllerResponseHandler(cmd) {
     }
 }
 
+function sleep(ms){
+    return new Promise(r => setTimeout(r, ms));
+}
+
 var c_wrap
 var liveStream
 var slitModal, extremaModal
@@ -615,15 +619,17 @@ $("document").ready(function () {
         slitSteps=200;
     })
 
-   function openSlitCmd() {
+   async function openSlitCmd() {
     console.log("Slit was made wider");
     slitModal.modal("show")
+    await sleep(250)
     dataChannel.send("Slit/move/"+slitSteps);
    }
 
-   function closeSlitCmd() {
+   async function closeSlitCmd() {
     console.log("Slit was made narrower");
     slitModal.modal("show")
+    await sleep(250)
     dataChannel.send("Slit/move/"+(-slitSteps));
    }
    
