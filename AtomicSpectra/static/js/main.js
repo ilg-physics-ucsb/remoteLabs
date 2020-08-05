@@ -68,13 +68,14 @@ function controllerResponseHandler(cmd) {
     console.log(infoValue)
 
     if (infoValue == "limit") {
-        $("#slitModal").modal("hide")
-        $('#extremaModal').modal("show")
+        slitModal.modal("hide")
+        extremaModal.modal("show")
     }
 }
 
 var c_wrap
 var liveStream
+var slitModal, extremaModal
 
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
@@ -121,7 +122,7 @@ $("document").ready(function () {
     loadingModal.modal('show')
 
 
-    var slitModal = $("#slitModal")
+    slitModal = $("#slitModal")
     var slitDelay = 20000
 
     slitModal.on("shown.bs.modal", function(e){
