@@ -131,7 +131,7 @@ $("document").ready(function () {
         }, slitDelay)
     })
 
-    var extremaModal = $("#extremaModal")
+    extremaModal = $("#extremaModal")
 
     //for multi-camera switching
     var OverviewCam = document.getElementById("OverviewCam");
