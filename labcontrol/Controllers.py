@@ -162,7 +162,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[]):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -188,12 +188,29 @@ class StepperI2C(MotorKit, BaseController):
         self.style = self.styles[style]
 
         self.state = {"position": self.currentPosition}
+        self.limitSwitches = limitSwitches
                
     def setup(self, style):
         pass
 
     def move(self, steps):
         print(steps)
+        limitStatus = 0 #The Motor status, each limit switch trigger will be a number
+        #limitStatus convention: 0=Null, 1=LeftEnd?, 2=Center?, 3=RightEnd?
+        limitSwitchesLength = True
+        i = 0
+        if len(limitSwitches)==0:
+            limitSwitchesLength = False
+        else:
+            limitSwitchesLength = True
+            for switch in limitSwitches:
+                i++
+                if switch.getStatus():
+                    limitStatus = i
+                    #run the left end function
+                else:
+            
+                        
         if steps >= 0:
             direction = stepper.BACKWARD
         else: 
@@ -358,7 +375,21 @@ class ElectronicScreen(BaseController):
 
     def reset(self):
         gpio.output(self.pin, gpio.LOW)
-
+        
+        
+        
+class LimitSwitch(BaseController):
+    def __init__(self, name, pin, state=False):
+        self.name = name
+        self.pin = pin
+        self.state = state
+        gpio.setup(self.pin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+        
+    def getStatus(self, params):
+        state = gpio.input(self.pin)
+        self.state = state
+        return state
+        
 
 class SingleGPIO(BaseController):
 
