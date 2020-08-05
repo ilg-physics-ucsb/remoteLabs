@@ -68,6 +68,8 @@ function controllerResponseHandler(cmd) {
     console.log(infoValue)
 
     if (infoValue == "limit") {
+        console.log("running inside")
+        slitModal.modal("hide")
         slitModal.modal("hide")
         extremaModal.modal("show")
     }
