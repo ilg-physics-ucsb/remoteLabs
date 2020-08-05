@@ -66,6 +66,7 @@ function controllerResponseHandler(cmd) {
     }
 
     if (device == "Slit") {
+        console.log("Controller Response Hide")
         slitModal.modal('hide')
     }
 }
@@ -622,14 +623,15 @@ $("document").ready(function () {
    async function openSlitCmd() {
     console.log("Slit was made wider");
     slitModal.modal("show")
-    await sleep(250)
+    await sleep(2500)
     dataChannel.send("Slit/move/"+slitSteps);
    }
 
    async function closeSlitCmd() {
     console.log("Slit was made narrower");
     slitModal.modal("show")
-    await sleep(250)
+    console.log("Close Slit Modal Shown")
+    await sleep(250o)
     dataChannel.send("Slit/move/"+(-slitSteps));
    }
    
