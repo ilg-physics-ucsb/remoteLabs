@@ -61,8 +61,14 @@ function controllerResponseHandler(cmd) {
     var info = components[1]
     var infoValue = components[2]
 
+    console.log("RUnning Command")
+    console.log(components)
+    console.log(device)
+    console.log(info)
+    console.log(infoValue)
+
     if (infoValue == "limit") {
-        slitModal.modal('hide')
+        slitModal.modal("hide")
         extremaModal.modal("show")
     }
 }
