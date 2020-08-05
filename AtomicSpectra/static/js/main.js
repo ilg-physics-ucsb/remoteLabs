@@ -55,6 +55,18 @@ function getHeight(){
     return  document.getElementById('v').clientHeight;
 }
 
+function controllerResponseHandler(cmd) {
+    var components = cmd.split("/");
+    var device = components[0]
+    var info = components[1]
+    var infoValue = components[2]
+
+    if (infoValue == "limit") {
+        slitModal.modal('hide')
+        extremaModal.modal("show")
+    }
+}
+
 var c_wrap
 var liveStream
 
