@@ -61,28 +61,22 @@ function controllerResponseHandler(cmd) {
     var info = components[1]
     var infoValue = components[2]
 
-    console.log("RUnning Command")
-    console.log(components)
-    console.log(device)
-    console.log(info)
-    console.log(infoValue)
-
     if (infoValue == "limit") {
-        console.log("running inside")
-        console.log(slitModal)
-        slitModal.modal("hide")
-        slitModal.modal("hide")
-        slitModal.modal("hide")
-        slitModal.modal("hide")
-        slitModal.modal("hide")
-        slitModal.modal("hide")
         extremaModal.modal("show")
+        if (device == "Slit") {
+            slitLimit = true
+        }
+    } else {
+        if (device == "Slit") {
+            slitLimit = false
+        }
     }
 }
 
 var c_wrap
 var liveStream
 var slitModal, extremaModal
+var slitLimit = true
 
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
@@ -133,8 +127,6 @@ $("document").ready(function () {
     var slitDelay = 20000
 
     slitModal.on("shown.bs.modal", function(e){
-        console.log("Show slit modal")
-        console.log(slitModal)
         setTimeout(function() {
             slitModal.modal("hide")
         }, slitDelay)
@@ -298,9 +290,6 @@ $("document").ready(function () {
     var fineSlit = document.getElementById('FineAdjustSlit');
     var coarseSlit = document.getElementById('CoarseAdjustSlit');
     var slitSteps=200;
-    var slitCurrentPosition = 0
-    var slitUB = 600
-    var slitLB = 0
    
     //for Schematic
     var SchemaPIC = document.getElementById('Schema')
@@ -642,14 +631,18 @@ $("document").ready(function () {
    function openSlitCmd() {
     console.log("Slit was made wider");
     dataChannel.send("Slit/move/"+slitSteps);
-    slitModal.modal("show")
+    if (!slitLimit) {
+        slitModal.modal("show")
+    }
     
    }
 
    function closeSlitCmd() {
     console.log("Slit was made narrower");
     dataChannel.send("Slit/move/"+(-slitSteps));
-    slitModal.modal("show")
+    if (!slitLimit) {
+        slitModal.modal("show")
+    }
    }
    
    LopenSlit.addEventListener('click', openSlitCmd);
