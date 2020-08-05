@@ -631,7 +631,7 @@ $("document").ready(function () {
     console.log("Slit was made narrower");
     slitModal.modal("show")
     console.log("Close Slit Modal Shown")
-    await sleep(250o)
+    await sleep(2500)
     dataChannel.send("Slit/move/"+(-slitSteps));
    }
    
