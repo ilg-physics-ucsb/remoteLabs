@@ -68,7 +68,7 @@ function controllerResponseHandler(cmd) {
     console.log(infoValue)
 
     if (infoValue == "limit") {
-        slitModal.modal("hide")
+        $("#slitModal").modal("hide")
         extremaModal.modal("show")
     }
 }
