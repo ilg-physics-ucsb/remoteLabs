@@ -69,6 +69,11 @@ function controllerResponseHandler(cmd) {
 
     if (infoValue == "limit") {
         console.log("running inside")
+        console.log(slitModal)
+        slitModal.modal("hide")
+        slitModal.modal("hide")
+        slitModal.modal("hide")
+        slitModal.modal("hide")
         slitModal.modal("hide")
         slitModal.modal("hide")
         extremaModal.modal("show")
@@ -128,6 +133,8 @@ $("document").ready(function () {
     var slitDelay = 20000
 
     slitModal.on("shown.bs.modal", function(e){
+        console.log("Show slit modal")
+        console.log(slitModal)
         setTimeout(function() {
             slitModal.modal("hide")
         }, slitDelay)
