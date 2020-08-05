@@ -30,8 +30,9 @@ class BaseController(object):
         method = getattr(self, cmd)
         
         if callable(method):
-            method(params)
+            response = method(params)
         
+        return response
 
     def cleanup(self):
         pass
@@ -207,6 +208,11 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition+=steps
         self.state["position"] = self.currentPosition
         self.device.release()
+        print(self.currentPosition, self.upperBound, self.lowerBound)
+        if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
+            return "{0}/{1}/{2}".format(self.name, "position", "limit")
+        else:
+            return "{0}/{1}/{2}".format(self.name, "position", self.currentPosition)
         
     def move_parser(self, params):
         if len(params) != 1:
