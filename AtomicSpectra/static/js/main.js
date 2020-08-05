@@ -63,13 +63,10 @@ function controllerResponseHandler(cmd) {
 
     if (infoValue == "limit") {
         extremaModal.modal("show")
-        if (device == "Slit") {
-            slitLimit = true
-        }
-    } else {
-        if (device == "Slit") {
-            slitLimit = false
-        }
+    }
+
+    if (device == "Slit") {
+        slitModal.modal('hide')
     }
 }
 
@@ -124,13 +121,6 @@ $("document").ready(function () {
 
 
     slitModal = $("#slitModal")
-    var slitDelay = 20000
-
-    slitModal.on("shown.bs.modal", function(e){
-        setTimeout(function() {
-            slitModal.modal("hide")
-        }, slitDelay)
-    })
 
     extremaModal = $("#extremaModal")
 
@@ -621,28 +611,21 @@ $("document").ready(function () {
    //BEGIN Slit Buttons 
    fineSlit.addEventListener('click', function(){
         slitSteps=50;
-        slitDelay = 5000;
     })
    coarseSlit.addEventListener('click', function(){
         slitSteps=200;
-        slitDelay = 20000
     })
 
    function openSlitCmd() {
     console.log("Slit was made wider");
     dataChannel.send("Slit/move/"+slitSteps);
-    if (!slitLimit) {
-        slitModal.modal("show")
-    }
-    
+    slitModal.modal("show")
    }
 
    function closeSlitCmd() {
     console.log("Slit was made narrower");
     dataChannel.send("Slit/move/"+(-slitSteps));
-    if (!slitLimit) {
-        slitModal.modal("show")
-    }
+    slitModal.modal("show")
    }
    
    LopenSlit.addEventListener('click', openSlitCmd);
