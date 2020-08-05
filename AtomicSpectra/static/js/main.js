@@ -73,7 +73,6 @@ function controllerResponseHandler(cmd) {
 var c_wrap
 var liveStream
 var slitModal, extremaModal
-var slitLimit = true
 
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
@@ -618,14 +617,14 @@ $("document").ready(function () {
 
    function openSlitCmd() {
     console.log("Slit was made wider");
-    dataChannel.send("Slit/move/"+slitSteps);
     slitModal.modal("show")
+    dataChannel.send("Slit/move/"+slitSteps);
    }
 
    function closeSlitCmd() {
     console.log("Slit was made narrower");
-    dataChannel.send("Slit/move/"+(-slitSteps));
     slitModal.modal("show")
+    dataChannel.send("Slit/move/"+(-slitSteps));
    }
    
    LopenSlit.addEventListener('click', openSlitCmd);
