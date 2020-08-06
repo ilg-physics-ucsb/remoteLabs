@@ -2,8 +2,8 @@
     "outlets":[1,2,3,4],
     "outletMap":{
         "Electrometer": 1,
-        "DMM": 2,
-        "HgLamp": 3,
+        "MultiMeter": 2,
+        "HgNeLamp": 3,
         "Ambient": 4
     },
     "electrometer_address":1,

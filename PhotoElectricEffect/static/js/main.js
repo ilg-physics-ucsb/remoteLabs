@@ -226,14 +226,14 @@ window.addEventListener('DOMContentLoaded', function () {
         console.log("Ambient light was switched");
         if(ambientState){
             // dataChannel.send("ambientLight/state/OFF");
-            dataChannel.send("PEpdu/off/4")
+            dataChannel.send("PEpdu/off/Ambient")
             ambientState=false;
             ambientTOGGLE.title="Click here to turn ON";
             lightSwitch.style.transform='rotate(0deg)';
                      }
         else{
             // dataChannel.send("ambientLight/state/ON");
-            dataChannel.send("PEpdu/on/4");
+            dataChannel.send("PEpdu/on/Ambient");
             ambientState=true;
             ambientTOGGLE.title="Click here to turn OFF";
             lightSwitch.style.transform='rotate(180deg)';
@@ -242,13 +242,13 @@ window.addEventListener('DOMContentLoaded', function () {
     HgNeTOGGLE.addEventListener('click', function(){
         console.log("HgNe lamp was switched");
         if(HgNeState){
-            dataChannel.send("PEpdu/off/3");
+            dataChannel.send("PEpdu/off/HgNeLamp");
             HgNeState=false;
             HgNeTOGGLE.title="Click here to turn ON";
             toggleSwitch.style.transform='scaleY(1)';
                      }
         else{
-            dataChannel.send("PEpdu/on/3");
+            dataChannel.send("PEpdu/on/HgNeLamp");
             HgNeState=true;
             HgNeTOGGLE.title="Click here to turn OFF";
             toggleSwitch.style.transform='scaleY(-1)';
@@ -349,11 +349,11 @@ window.addEventListener('DOMContentLoaded', function () {
     power6514Button.addEventListener('click', function(){
         console.log("Electrometer was switched");
         if(ElectrometerState){
-            dataChannel.send("PEpdu/off/1");
+            dataChannel.send("PEpdu/off/Electrometer");
             ElectrometerState=false;
                      }
         else{
-            dataChannel.send("PEpdu/on/1");
+            dataChannel.send("PEpdu/on/Electrometer");
             ElectrometerState=true;
         }
     })
@@ -513,11 +513,11 @@ window.addEventListener('DOMContentLoaded', function () {
     power2000Button.addEventListener('click', function(){
         console.log("Multimeter was switched");
         if(MultimeterState){
-            dataChannel.send("PEpdu/off/2");
+            dataChannel.send("PEpdu/off/Multimeter");
             MultimeterState=false;
                      }
         else{
-            dataChannel.send("PEpdu/on/2");
+            dataChannel.send("PEpdu/on/Multimeter");
             MultimeterState=true;
         }
     })
