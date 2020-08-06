@@ -55,8 +55,29 @@ function getHeight(){
     return  document.getElementById('v').clientHeight;
 }
 
+function controllerResponseHandler(cmd) {
+    var components = cmd.split("/");
+    var device = components[0]
+    var info = components[1]
+    var infoValue = components[2]
+
+    if (infoValue == "limit") {
+        extremaModal.modal("show")
+    }
+
+    if (device == "Slit") {
+        console.log("Controller Response Hide")
+        slitModal.modal('hide')
+    }
+}
+
+function sleep(ms){
+    return new Promise(r => setTimeout(r, ms));
+}
+
 var c_wrap
 var liveStream
+var slitModal, extremaModal
 
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
@@ -102,7 +123,11 @@ $("document").ready(function () {
     })
     loadingModal.modal('show')
 
-    
+
+    slitModal = $("#slitModal")
+
+    extremaModal = $("#extremaModal")
+
     //for multi-camera switching
     var OverviewCam = document.getElementById("OverviewCam");
     var ArmCam = document.getElementById("EyepieceCam");
@@ -164,8 +189,6 @@ $("document").ready(function () {
 
     V2Cam.addEventListener('click', function() {
        
-        
-        
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
         SlitControl.style.visibility='visible';
@@ -180,7 +203,6 @@ $("document").ready(function () {
     // })
 
     //for LiveFeed  
-    // TEMP CHANGE
     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
@@ -220,6 +242,10 @@ $("document").ready(function () {
     var lightSwitch = document.getElementById('lightSwitch');
     var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
     var AmbientState = false;
+
+    var darkToggle = document.getElementById('darkTOGGLE')
+    var darkSwitchPic = document.getElementById("darkSwitch")
+    var darkState = false
 
     //for Lamps
     var H2pressOff = document.getElementById('H2-off');
@@ -268,6 +294,7 @@ $("document").ready(function () {
     var tMedium = document.getElementById('mediumArm')
     var tCoarse = document.getElementById('coarseArm');
     var telescopeSteps=100; ///unknown number of degrees
+    var telescopeCurrentPosition = 0
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
     var gCCW = document.getElementById('gratingCCW');
@@ -303,6 +330,35 @@ $("document").ready(function () {
         }
     })
     //END Ambient Toggling
+
+    //BEGIN Dark Toggling
+
+
+    darkToggle.addEventListener('click', function(){
+        if(!darkState){
+         console.log("Background was darkened. Controls were hidden.");
+         //hide controls; turn background black
+         $('img').css("visibility", "hidden")
+         $('body').css("background", "black")
+         darkSwitchPic.style.visibility = "visible"
+         darkState=true;
+         darkToggle.title="Click here to reveal controls";
+         darkSwitchPic.style.transform='rotate(180deg)';
+                  }
+     else{
+         console.log("Background was lit. Controls were revealed.");
+         //reveal controls; turn background white
+         $('img').css("visibility", "visible")
+         $('body').css("background", "white")
+         darkState=false;
+         darkToggle.title="Click here to darken the background";
+         darkSwitchPic.style.transform='rotate(0deg)';
+        }
+    })
+
+    //END Dark Toggling
+
+
     
     //BEGIN Lamp Toggling
 
@@ -515,11 +571,11 @@ $("document").ready(function () {
 
     nudgeLeft.addEventListener('click',function() {
         console.log("Lamp nudged left");
-        dataChannel.send("Carousel/move/1")
+        dataChannel.send("Carousel/move/20")
     })
     nudgeRight.addEventListener('click',function() {
         console.log("Lamp nudged right");
-        dataChannel.send("Carousel/move/-1")
+        dataChannel.send("Carousel/move/-20")
     })
 //END Lamp Nudging
 
@@ -557,16 +613,25 @@ $("document").ready(function () {
    //END Arm Buttons
 
    //BEGIN Slit Buttons 
-   fineSlit.addEventListener('click', function(){slitSteps=50;})
-   coarseSlit.addEventListener('click', function(){slitSteps=200;})
+   fineSlit.addEventListener('click', function(){
+        slitSteps=50;
+    })
+   coarseSlit.addEventListener('click', function(){
+        slitSteps=200;
+    })
 
-   function openSlitCmd() {
+   async function openSlitCmd() {
     console.log("Slit was made wider");
+    slitModal.modal("show")
+    await sleep(2500)
     dataChannel.send("Slit/move/"+slitSteps);
    }
 
-   function closeSlitCmd() {
+   async function closeSlitCmd() {
     console.log("Slit was made narrower");
+    slitModal.modal("show")
+    console.log("Close Slit Modal Shown")
+    await sleep(2500)
     dataChannel.send("Slit/move/"+(-slitSteps));
    }
    

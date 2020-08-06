@@ -111,7 +111,11 @@ class Experiment(object):
         params = params.split(",")
         if device_name not in self.devices:
             raise NoDeviceError(device_name)
-        self.devices[device_name].cmd_handler(command, params)
+        response = self.devices[device_name].cmd_handler(command, params)
+        print("RESPONSE", response)
+        if response is not None:
+            print("Sending data")
+            self.connection.send(response.encode())
         self.allStates[device_name] = self.devices[device_name].getState()
         with open(self.json_file, "w") as f:
             json.dump(self.allStates, f)        
@@ -123,10 +127,11 @@ class Experiment(object):
             self.socket.close()
             logging.info("Socket is closed")
         logging.info("Looping through devices shutting them down.")
-        for device_name, device in self.devices.items():
-            logging.info("Running reset and cleanup on device " + device_name)
-            device.reset()
-            device.cleanup()
+        if not self.admin:
+            for device_name, device in self.devices.items():
+                logging.info("Running reset and cleanup on device " + device_name)
+                device.reset()
+                device.cleanup()
         # print("Everything shutdown properly. Exiting.")
         logging.info("Everything shutdown properly. Exiting")
         exit(0)

@@ -1,35 +1,33 @@
 PE1
     link to 5L lab guide - Deborah
     check value of h derived from zero crossing vs from asymptotic value - Carl
-    troubleshoot lack of open socket after hours - Zak
 PE2 
     build - Raffi
-        add wires to motorHat
+        add LEDs
 
 FH1
-    replace Oven variac pulley with one of larger diameter
-        (on order, not shipped... get Raffi to 3D print?)\
-    determine whether filament glow is visible
-        clarify sense of glare in tube view
-    troubleshoot lack of open socket after hours - Zak
+    
 FH2 
     build - Raffi
         add motors all around
         
 AS1
-    fix carousel drive mechanism - Zak & Raffi 
-    fix cursors - Kelly
-    add blackout - Kelly
+    add blackout - Zak 0804
+    add limit switches
 
 AS2
-    build
-
+    build - 
+        have box completed
+        buy curtain
 
 DI1
-    add ufw
+    add camera controls
+    explore setting a different aspect ratio to the camera
 
 DI2
     build
+        buy M6 screws
+        get ribbon cable to emerge from front (enabling upright camera)
     
 GR
     format GR2pi
@@ -58,22 +56,20 @@ MANUALS
         FH
         AS
         DI
-
+VIDEOS
+    write scripts
+        PE
+        FH 
+        AS  
+        DI
+        GR
+    record videos
 
 GauchoSpace
-    generate & send welcome e-mail
-    mount Overleaf template for Plot assignments
-    mount course info pages
-        instructors
-        grading
-        notetaking
-        error propagation
-    respond to student inquiries
+   add links to manuals
 
 Admin
 
-
 Computer-wise  
-    
     Establish protocol for protecting student access times
     Establish calendar for reserving equipment at other times
