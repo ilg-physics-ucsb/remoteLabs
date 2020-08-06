@@ -24,9 +24,11 @@ def rightSwitchHit(motor, steps):
 
 def homing(motor):
     homeSwitch = motor.move(20000)
+    print("Here I am at left switch")
     if homeSwitch:
         motor.adminMove(5)
     else:
+        print("Moving Towards home.")
         motor.homeMove()
     
     motor.currentPosition = 0
