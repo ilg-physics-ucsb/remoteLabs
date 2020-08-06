@@ -23,10 +23,10 @@ refPoints = {
     "180deg":810
     }
     
+bounds = 1e6
+potentiometer = StepperI2C("Pot", 2,bounds=(-bounds,bounds))
 
-potentiometer = StepperI2C("Pot", 2,bounds=(0,2100))
-
-filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
+filterWheel = StepperI2C("Wheel", 1, bounds=(-bounds,bounds), refPoints=refPoints)
 
 PEpdu = PDUOutlet("PEpdu", "128.111.18.80", "admin", "5tgb567ujnb", 60, outlets=[1,2,3,4])
 PEpdu.login()
@@ -40,7 +40,7 @@ multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 # multimeterPower = Plug("multimeterPower","192.168.0.20")
 
 
-exp = Experiment("PhotoElectricEffect")
+exp = Experiment("PhotoElectricEffect", admin=True)
 exp.add_device(PEpdu)
 exp.add_device(potentiometer)
 exp.add_device(filterWheel)
