@@ -195,22 +195,16 @@ class StepperI2C(MotorKit, BaseController):
 
     def move(self, steps):
         print(steps)
-        limitStatus = 0 #The Motor status, each limit switch trigger will be a number
-        #limitStatus convention: 0=Null, 1=LeftEnd?, 2=Center?, 3=RightEnd?
-        limitSwitchesLength = True
-        i = 0
-        if len(limitSwitches)==0:
-            limitSwitchesLength = False
-        else:
-            limitSwitchesLength = True
-            for switch in limitSwitches:
-                i++
-                if switch.getStatus():
-                    limitStatus = i
-                    #run the left end function
-                else:
+        if len(self.limitSwitches) != 0:
+            for switch in self.limitSwitches:
+                status = switch.getStatus()
+                if status == gpio.HIGH:
+                    response = switch.switchAction(self, steps)
+                    if response is None:
+                        return "{0}/{1}/{2}".format(self.name, "position", "limit")
+                    else:
+                        return response
             
-                        
         if steps >= 0:
             direction = stepper.BACKWARD
         else: 
@@ -225,7 +219,6 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition+=steps
         self.state["position"] = self.currentPosition
         self.device.release()
-        print(self.currentPosition, self.upperBound, self.lowerBound)
         if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
             return "{0}/{1}/{2}".format(self.name, "position", "limit")
         else:
@@ -390,6 +383,8 @@ class LimitSwitch(BaseController):
         self.state = state
         return state
         
+    def switchAction(self, motor, steps):
+        pass
 
 class SingleGPIO(BaseController):
 
