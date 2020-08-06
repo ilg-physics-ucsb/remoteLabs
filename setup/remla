@@ -64,10 +64,12 @@ def setup(args):
         with open(lab_settings_path, "r") as f:
             lab_settings = json.load(f)
         for controller in controllers:
-            with open(controller, "r+") as f:
+            with open(controller, "r") as f:
                 controller_text = f.read()
-                for setting, value in lab_settings.items():
-                    controller_text = controller_text.replace("#REPLACE-"+setting, "{0}={1}".format(setting, value))
+            for setting, value in lab_settings.items():
+                controller_text = controller_text.replace("#REPLACE-"+setting, "{0}={1}".format(setting, value))
+            
+            with open(controller, "w") as f:
                 f.write(controller_text)
     
     settings["status"] = args.lab
