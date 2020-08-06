@@ -8,6 +8,12 @@ import pickle
 #REPLACE-electrometer_address
 #REPLACE-multimeter_address
 #REPLACE-refPoints
+#REPLACE-potBounds
+#REPLACE-filterBounds
+
+#ADMIN-bounds = (-1e6, 1e6)
+#ADMIN-potBounds=bounds
+#ADMIN-filterBounds=bounds
 
 
 resource_manager = visa.ResourceManager("@py")
@@ -21,9 +27,8 @@ visa_multimeter.write_termination = "\r\n"
 
 socket_path = "/tmp/uv4l.socket"
 
-potentiometer = StepperI2C("Pot", 2, bounds=(0,2100))
-
-filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
+potentiometer = StepperI2C("Pot", 2, bounds=potBounds)
+filterWheel = StepperI2C("Wheel", 1, bounds=filterBounds, refPoints=refPoints)
 
 PEpdu = PDUOutlet("PEpdu", "128.111.18.80", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 PEpdu.login()
