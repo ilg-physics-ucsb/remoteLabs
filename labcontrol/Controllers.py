@@ -162,7 +162,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[]):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -188,12 +188,23 @@ class StepperI2C(MotorKit, BaseController):
         self.style = self.styles[style]
 
         self.state = {"position": self.currentPosition}
+        self.limitSwitches = limitSwitches
                
     def setup(self, style):
         pass
 
     def move(self, steps):
         print(steps)
+        if len(self.limitSwitches) != 0:
+            for switch in self.limitSwitches:
+                status = switch.getStatus()
+                if status == gpio.HIGH:
+                    response = switch.switchAction(self, steps)
+                    if response is None:
+                        return "{0}/{1}/{2}".format(self.name, "position", "limit")
+                    else:
+                        return response
+            
         if steps >= 0:
             direction = stepper.BACKWARD
         else: 
@@ -208,7 +219,6 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition+=steps
         self.state["position"] = self.currentPosition
         self.device.release()
-        print(self.currentPosition, self.upperBound, self.lowerBound)
         if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
             return "{0}/{1}/{2}".format(self.name, "position", "limit")
         else:
@@ -358,7 +368,23 @@ class ElectronicScreen(BaseController):
 
     def reset(self):
         gpio.output(self.pin, gpio.LOW)
-
+        
+        
+        
+class LimitSwitch(BaseController):
+    def __init__(self, name, pin, state=False):
+        self.name = name
+        self.pin = pin
+        self.state = state
+        gpio.setup(self.pin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+        
+    def getStatus(self, params):
+        state = gpio.input(self.pin)
+        self.state = state
+        return state
+        
+    def switchAction(self, motor, steps):
+        pass
 
 class SingleGPIO(BaseController):
 
