@@ -68,8 +68,7 @@ def setup(args):
                 controller_text = f.read()
                 for setting, value in lab_settings.items():
                     controller_text = controller_text.replace("#REPLACE-"+setting, "{0}={1}".format(setting, value))
-
-
+                f.write(controller_text)
     
     settings["status"] = args.lab
     settings["driver"] = args.driver
