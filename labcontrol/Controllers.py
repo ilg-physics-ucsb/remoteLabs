@@ -49,7 +49,7 @@ class BaseController(object):
 
 
 class PDUOutlet(dlipower.PowerSwitch, BaseController):
-    def __init__(self, name, hostname, userid, password, timeout=None, outlets=[1,2,3,4,5,6,7,8]):
+    def __init__(self, name, hostname, userid, password, timeout=None, outlets=[1,2,3,4,5,6,7,8], outletMap={}):
         # self, userid=None, password=None, hostname=None, timeout=None, cycletime=None, retries=None, use_https=False
         super().__init__(hostname=hostname, userid=userid, password=password, timeout=timeout)
         self.name = name
@@ -57,6 +57,7 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
         self.experiment = None
         self.state = {1:"Off", 2:"Off", 3:"Off", 4:"Off", 5:"Off", 6:"Off", 7:"Off", 8:"Off" }
         self.outlets = outlets
+        self.outletMap = outletMap
         
     def on(self, outletNumber):
         super().on(outletNumber)
@@ -69,16 +70,32 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
     def on_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "on")
-        if int(params[0]) not in self.outlets:
+        try:
+            outlet = int(params[0])
+        except ValueError:
+            outlet_name = params[0]
+            if outlet_name not in self.outletMap:
+                raise ArgumentError(outlet_name, self.outletMap, self.name, "On")
+            outlet = self.outletMap[outlet_name]
+        
+        if outlet not in self.outlets:
             raise ArgumentError(self.name, "On", "Outlet "+ params[0], allowed="Outlets " + str(self.outlets))
-        return int(params[0])
+        return outlet
     
     def off_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "off")
-        if int(params[0]) not in self.outlets:
+        try:
+            outlet = int(params[0])
+        except ValueError:
+            outlet_name = params[0]
+            if outlet_name not in self.outletMap:
+                raise ArgumentError(outlet_name, self.outletMap, self.name, "Off")
+            outlet = self.outletMap[outlet_name]
+
+        if outlet not in self.outlets:
             raise ArgumentError(self.name, "Off", "Outlet "+ params[0], allowed="Outlets " + str(self.outlets))
-        return int(params[0])
+        return outlet
     
     def reset(self):
         for outlet in self.outlets:
