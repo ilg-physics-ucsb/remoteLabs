@@ -219,8 +219,8 @@ class StepperI2C(MotorKit, BaseController):
                             return response
             
             if self.homing:
-                homeStatus == self.homeSwitch.getStatus(1)
-                if homeStatus == gpio.HIGH
+                homeStatus = self.homeSwitch.getStatus(1)
+                if homeStatus == gpio.HIGH:
                     return True
 
             self.device.onestep(style=self.style, direction=direction)
