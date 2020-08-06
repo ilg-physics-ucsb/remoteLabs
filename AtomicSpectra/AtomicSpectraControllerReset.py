@@ -8,8 +8,8 @@ socket_path = "/tmp/uv4l.socket"
 
 refPoints = {
     "h2":0,
-    "a":int(-78),
-    "b": int(-2*78),
+    "a":int(7860),
+    "b": int(2*7860),
     }
 
 leftSwitch = LimitSwitch("LeftSwitch", 6)
@@ -36,7 +36,6 @@ def homing(motor):
     else:
         print("Moving Towards home.")
         motor.homeMove()
-    
     motor.currentPosition = 0
 
 leftSwitch.switchAction = leftSwitchHit
@@ -47,7 +46,7 @@ slit = StepperI2C("Slit", 1,bounds=(0,600), style="DOUBLE", delay=0.1)
 grating = StepperI2C("Grating", 2, bounds=(-450, 450), style="DOUBLE")
 arm = StepperI2C("Arm", 3,bounds=(-21000,21000), style="DOUBLE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch)
 arm.customHome = homing
-carousel = StepperI2C("Carousel", 4,bounds=(-161, 5), style="DOUBLE", delay=0.1, refPoints=refPoints, microsteps=16)
+carousel = StepperI2C("Carousel", 4,bounds=(-160, int(2*7680+160)), style="MICROSTEP", delay=0.0001, refPoints=refPoints, microsteps=16)
 
 ambient = SingleGPIO("Ambient", 5)
 

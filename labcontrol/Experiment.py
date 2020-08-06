@@ -127,10 +127,11 @@ class Experiment(object):
             self.socket.close()
             logging.info("Socket is closed")
         logging.info("Looping through devices shutting them down.")
-        for device_name, device in self.devices.items():
-            logging.info("Running reset and cleanup on device " + device_name)
-            device.reset()
-            device.cleanup()
+        if not self.admin:
+            for device_name, device in self.devices.items():
+                logging.info("Running reset and cleanup on device " + device_name)
+                device.reset()
+                device.cleanup()
         # print("Everything shutdown properly. Exiting.")
         logging.info("Everything shutdown properly. Exiting")
         exit(0)

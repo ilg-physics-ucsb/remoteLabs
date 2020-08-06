@@ -571,11 +571,11 @@ $("document").ready(function () {
 
     nudgeLeft.addEventListener('click',function() {
         console.log("Lamp nudged left");
-        dataChannel.send("Carousel/move/1")
+        dataChannel.send("Carousel/move/20")
     })
     nudgeRight.addEventListener('click',function() {
         console.log("Lamp nudged right");
-        dataChannel.send("Carousel/move/-1")
+        dataChannel.send("Carousel/move/-20")
     })
 //END Lamp Nudging
 

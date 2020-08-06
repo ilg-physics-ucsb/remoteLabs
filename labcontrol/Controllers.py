@@ -278,7 +278,10 @@ class StepperI2C(MotorKit, BaseController):
         
          
     def reset(self):
-        self.move(-self.currentPosition)
+        if self.homeSwitch is not None:
+            self.home(1)
+        else:
+            self.move(-self.currentPosition)
         # pass
     
     def home(self, params):
