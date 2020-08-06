@@ -12,6 +12,7 @@ import pickle
 #REPLACE-filterBounds
 
 #ADMIN-bounds = (-1e6, 1e6)
+#If in admin mode, overwrite the bounds to be super large.
 #ADMIN-potBounds=bounds
 #ADMIN-filterBounds=bounds
 
