@@ -219,7 +219,7 @@ class StepperI2C(MotorKit, BaseController):
                             return response
             
             if self.homing:
-                homeStatus = self.homeSwitch.getStatus(1)
+                homeStatus == self.homeSwitch.getStatus(1)
                 if homeStatus == gpio.HIGH
                     return True
 
