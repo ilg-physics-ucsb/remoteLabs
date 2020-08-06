@@ -31,7 +31,7 @@ def homing(motor):
     homeSwitch = motor.move(20000)
     print("Here I am at left switch")
     print(homeSwitch)
-    if homeSwitch:
+    if homeSwitch is True:
         motor.adminMove(5)
     else:
         print("Moving Towards home.")
