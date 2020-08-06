@@ -1,0 +1,18 @@
+{
+    "outlets":[5,6,7,8],
+    "outletMap":{
+        "Electrometer": 5,
+        "DMM": 6,
+        "HgLamp": 7,
+        "Ambient": 8
+    },
+    "electrometer_address":1,
+    "multimeter_address":0,
+    "refPoints": {
+        "0deg":0,
+        "60deg":270,
+        "120deg":540,
+        "180deg":810
+        }
+        
+}

@@ -3,32 +3,29 @@ from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithle
 import visa
 import pickle
 
+#REPLACE-outlets
+#REPLACE-outletMap
+#REPLACE-electrometer_address
+#REPLACE-multimeter_address
+#REPLACE-refPoints
+
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB1::INSTR', baud_rate=19200)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ electrometer_address +'::INSTR', baud_rate=19200)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
-visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=19200) #not sure if USB# is unique 2004234
+visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB'+ multimeter_address + '::INSTR', baud_rate=19200) #not sure if USB# is unique 2004234
 visa_multimeter.read_termination = "\r\n"
 visa_multimeter.write_termination = "\r\n"
 
 socket_path = "/tmp/uv4l.socket"
 
-pot_pins = [5,6,12,13]
-wheel_pins = [17,18,27,22]  #this uses the broadcom pin numbering system
-refPoints = {
-    "0deg":0,
-    "60deg":270,
-    "120deg":540,
-    "180deg":810
-    }
-    
 
 potentiometer = StepperI2C("Pot", 2,bounds=(0,2100))
 
 filterWheel = StepperI2C("Wheel", 1, bounds=(0,810), refPoints=refPoints)
 
-PEpdu = PDUOutlet("PEpdu", "128.111.18.80", "admin", "5tgb567ujnb", 60, outlets=[1,2,3,4])
+PEpdu = PDUOutlet("PEpdu", "128.111.18.80", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 PEpdu.login()
 # ambientLight = Plug("ambientLight", "192.168.0.3")
 # HgNeLamp = Plug("HgNeLamp", "192.168.0.18")
