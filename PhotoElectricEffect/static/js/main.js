@@ -187,7 +187,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var threeDegree = document.getElementById('3.6_degree');
     var thirtySixDegree = document.getElementById('36_degree');
     var threeSixtyDegree = document.getElementById('360_degree');
-    var potSteps=23;
+    var potSteps=230;
   
     //BEGIN Light Switches 
     // HgNeOFF.addEventListener('click', function(){
