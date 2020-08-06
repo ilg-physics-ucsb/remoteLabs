@@ -162,7 +162,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[], homeSwitch=None):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -188,12 +188,58 @@ class StepperI2C(MotorKit, BaseController):
         self.style = self.styles[style]
 
         self.state = {"position": self.currentPosition}
+        self.limitSwitches = limitSwitches
+        self.homeSwitch = homeSwitch
+        self.homing = False
                
     def setup(self, style):
         pass
 
     def move(self, steps):
-        print(steps)
+        print(steps)        
+        if steps >= 0:
+            direction = stepper.BACKWARD
+        else: 
+            direction = stepper.FORWARD
+        if self.currentPosition+steps <self.lowerBound and steps < 0:
+            steps = self.lowerBound-self.currentPosition
+        elif self.currentPosition+steps >self.upperBound and steps > 0:
+            steps = self.upperBound-self.currentPosition
+
+        for i in range(abs(steps)):
+
+            if len(self.limitSwitches) != 0:
+                for switch in self.limitSwitches:
+                    status = switch.getStatus(1)
+                    if status == gpio.HIGH:
+                        response = switch.switchAction(self, steps-i)
+                        if response is None:
+                            return "{0}/{1}/{2}".format(self.name, "position", "limit")
+                        else:
+                            return response
+            
+            if self.homing:
+                homeStatus = self.homeSwitch.getStatus(1)
+                if homeStatus == gpio.HIGH:
+                    return True
+
+            self.device.onestep(style=self.style, direction=direction)
+            time.sleep(self.delay)
+
+        self.currentPosition+=steps
+        self.state["position"] = self.currentPosition
+        self.device.release()
+        if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
+            return "{0}/{1}/{2}".format(self.name, "position", "limit")
+        else:
+            return "{0}/{1}/{2}".format(self.name, "position", self.currentPosition)
+        
+    def move_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "move")
+        return int(params[0])
+    
+    def adminMove(self, steps):
         if steps >= 0:
             direction = stepper.BACKWARD
         else: 
@@ -208,17 +254,7 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition+=steps
         self.state["position"] = self.currentPosition
         self.device.release()
-        print(self.currentPosition, self.upperBound, self.lowerBound)
-        if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
-            return "{0}/{1}/{2}".format(self.name, "position", "limit")
-        else:
-            return "{0}/{1}/{2}".format(self.name, "position", self.currentPosition)
-        
-    def move_parser(self, params):
-        if len(params) != 1:
-            raise ArgumentNumberError(len(params), 1, "move")
-        return int(params[0])
-
+       
     def goto(self, position):
         print(position)
         endPoint=self.refPoints[position]   
@@ -228,11 +264,37 @@ class StepperI2C(MotorKit, BaseController):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
+
+    def homeMove(self, stepLimit=5000, additionalSteps=10):
+        if self.currentPosition > 0:
+            direction = -1
+        elif self.currentPosition < 0:
+            direction = 1
+        else:
+            return
+        
+        self.move(direction*stepLimit)
+        self.move(direction*additionalSteps)
+        
          
-    
     def reset(self):
-        self.move(-self.currentPosition)
+        if self.homeSwitch is not None:
+            self.home(1)
+        else:
+            self.move(-self.currentPosition)
         # pass
+    
+    def home(self, params):
+        if self.homeSwitch is not None:
+            self.homing = True
+            self.customHome(self)
+            self.homing = False
+        else:
+            print("No homing switch is attached to this motor")
+
+    def customHome(self, motor):
+        pass
+
   
 
 class Keithley6514Electrometer(BaseController):
@@ -358,7 +420,36 @@ class ElectronicScreen(BaseController):
 
     def reset(self):
         gpio.output(self.pin, gpio.LOW)
+        
+        
+        
+class LimitSwitch(BaseController):
+    def __init__(self, name, pin, state=False):
+        self.name = name
+        self.pin = pin
+        self.state = state
+        gpio.setup(self.pin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+        
+    def getStatus(self, params):
+        state = gpio.input(self.pin)
+        self.state = state
+        return state
+        
+    def switchAction(self, motor, steps):
+        pass
 
+class HomeSwitch(BaseController):
+    def __init__(self, name, pin, state=False):
+        self.name = name
+        self.pin = pin
+        self.state = state
+        gpio.setup(self.pin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+        
+    def getStatus(self, params):
+        state = gpio.input(self.pin)
+        self.state = state
+        return state
+        
 
 class SingleGPIO(BaseController):
 
