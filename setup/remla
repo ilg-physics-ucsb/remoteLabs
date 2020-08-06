@@ -52,13 +52,29 @@ def setup(args):
 
     with open(os.path.join("/etc", "uv4l", configs[args.driver]), "w") as f:
         f.write(config_contents)
-    controller_path = os.path.join(".", rl_path, args.lab, args.lab+"Controller.py" ) 
+    controller_path = os.path.join(".", rl_path, args.lab, args.lab+"Controller.py" )
+
+    controller_path_recall = os.path.join(".", rl_path, args.lab, args.lab+"ControllerRecall.py" )
     controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
     controller_path_admin = os.path.join(".", rl_path, args.lab, args.lab+"ControllerAdmin.py" )
-    controllers = [controller_path, controller_path_reset, controller_path_admin]
+    controllers = [controller_path_recall, controller_path_reset, controller_path_admin]
     for controller in controllers:
+        os.system("cp {0} {1}".format(controller_path, controller))
         os.system("sudo chmod +x " + controller)
-    
+        with open(controller, "r") as f:
+            controller_contents = f.read()
+        if "Recall" in controller:
+            controller_contents = controller_contents.replace("#RECALL-", "")
+        elif "Admin" in controller:
+            controller_contents = controller_contents.replace("#ADMIN-", "")
+        elif "Reset" in controller:
+            controller_contents = controller_contents.replace("#RESET-", "")
+        else:
+            raise IOError
+
+        with open(controller, "w") as f:
+            f.write(controller_contents)
+
     if args.settings != "None":
         lab_settings_path = os.path.join(rl_path, args.lab, args.settings)
         with open(lab_settings_path, "r") as f:
