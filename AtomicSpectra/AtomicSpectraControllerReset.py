@@ -17,10 +17,10 @@ rightSwitch = LimitSwitch("RightSwitch", 12)
 homeSwitch = LimitSwitch("HomeSwitch", 13)
 
 def leftSwitchHit(motor, steps):
-    motor.adminMove(-10)
+    motor.adminMove(-50)
 
 def rightSwitchHit(motor, steps):
-    motor.adminMove(10)
+    motor.adminMove(50)
 
 def homing(motor):
     homeSwitch = motor.move(20000)
