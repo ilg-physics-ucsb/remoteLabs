@@ -36,6 +36,7 @@ def setup(args):
         print("ERROR: " + args.lab + " does not exist in the remoteLabs directory.")
         return
     
+
     try:
         configs[args.driver]
     except KeyError:
@@ -48,12 +49,28 @@ def setup(args):
     config_contents = config_contents.replace("<rootPath>", os.path.join(rl_path, args.lab))
     config_contents = config_contents.replace("<port>", args.port)
 
+
     with open(os.path.join("/etc", "uv4l", configs[args.driver]), "w") as f:
         f.write(config_contents)
     controller_path = os.path.join(".", rl_path, args.lab, args.lab+"Controller.py" ) 
     controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
-    os.system("sudo chmod +x " + controller_path)
-    os.system("sudo chmod +x " + controller_path_reset)
+    controller_path_admin = os.path.join(".", rl_path, args.lab, args.lab+"ControllerAdmin.py" )
+    controllers = [controller_path, controller_path_reset, controller_path_admin]
+    for controller in controllers:
+        os.system("sudo chmod +x " + controller)
+    
+    if args.settings != "None":
+        lab_settings_path = os.path.join(rl_path, args.lab, args.settings)
+        with open(lab_settings_path, "r") as f:
+            lab_settings = json.load(f)
+        for controller in controllers:
+            with open(controller, "r+") as f:
+                controller_text = f.read()
+                for setting, value in lab_settings.items():
+                    controller_text = controller_text.replace("#REPLACE-"+setting, "{0}={1}".format(setting, value))
+
+
+    
     settings["status"] = args.lab
     settings["driver"] = args.driver
     settings["port"] = args.port
@@ -117,6 +134,7 @@ parser_setup.set_defaults(func=setup)
 parser_setup.add_argument('lab')
 parser_setup.add_argument('-p', '--port', default="80")
 parser_setup.add_argument("-d", '--driver', default="raspicam")
+parser_setup.add_argument("-s", '--settings', default="None")
 
 parser_run = subparsers.add_parser("run")
 parser_run.set_defaults(func=run)
