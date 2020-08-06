@@ -52,8 +52,8 @@ def setup(args):
 
     with open(os.path.join("/etc", "uv4l", configs[args.driver]), "w") as f:
         f.write(config_contents)
+        
     controller_path = os.path.join(".", rl_path, args.lab, args.lab+"Controller.py" )
-
     controller_path_recall = os.path.join(".", rl_path, args.lab, args.lab+"ControllerRecall.py" )
     controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
     controller_path_admin = os.path.join(".", rl_path, args.lab, args.lab+"ControllerAdmin.py" )
@@ -104,7 +104,7 @@ def run(args):
         elif args.admin:
             controllerFile = lab + "ControllerAdmin.py"
         else:
-            controllerFile = lab + "Controller.py"
+            controllerFile = lab + "ControllerRecall.py"
 
         os.system("sudo killall uv4l")
         time.sleep(1)
