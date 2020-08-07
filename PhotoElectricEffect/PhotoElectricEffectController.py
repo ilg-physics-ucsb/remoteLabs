@@ -1,22 +1,36 @@
 #!/usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet
 import visa
-import pickle
+import argparse, os, json
 
-#REPLACE-outlets
-#REPLACE-outletMap
-#REPLACE-electrometer_address
-#REPLACE-multimeter_address
-#REPLACE-refPoints
-#REPLACE-potBounds
-#REPLACE-filterBounds
+parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
 
-#ADMIN-bounds = (-1e6, 1e6)
-#If in admin mode, overwrite the bounds to be super large.
-#ADMIN-potBounds=bounds
-#ADMIN-filterBounds=bounds
+parser.add_argument("-s", "--settings", required=True)
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-r", "--reset", action="store_true")
+group.add_argument("-a", "--admin", action="store_true")
+
+args = parser.parse_args()
+
+labSettingsPath = os.path.join("home","pi", "remoteLabs", "PhotoElectricEffect", args.settings)
+
+with open(labSettingsPath, "r") as f:
+    labSettings = json.load(f)
 
 
+outlets = labSettings["outlets"]
+outletMap = labSettings["outletMap"]
+electrometer_address = labSettings["electrometer_address"]
+multimeter_address = labSettings["multimeter_address"]
+refPoints = labSettings["refPoints"]
+potBounds = labSettings["potBounds"]
+filterBounds = labSettings["filterBounds"]
+
+if args.admin:
+    bounds = bounds = (-1e6, 1e6)
+    filterBounds=bounds
+    potBounds=bounds
+    
 resource_manager = visa.ResourceManager("@py")
 visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ str(electrometer_address) +'::INSTR', baud_rate=19200)
 visa_electrometer.read_termination = "\r\n"
@@ -39,14 +53,18 @@ electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
 multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 
 
-#RECALL-exp = Experiment("PhotoElectricEffect")
-#RESET-exp = Experiment("PhotoElectricEffect")
-#ADMIN-exp = Experiment("PhotoElectricEffect", admin=True)
+if args.reset:
+    exp = Experiment("PhotoElectricEffect")
+elif args.admin:
+    exp = Experiment("PhotoElectricEffect", admin=True)
+else:
+    Experiment("PhotoElectricEffect")
 exp.add_device(PEpdu)
 exp.add_device(potentiometer)
 exp.add_device(filterWheel)
 exp.add_device(electrometer)
 exp.add_device(multimeter)
 exp.set_socket_path(socket_path)
-#RECALL-exp.recallState()
+if not args.reset or not args.admin:
+    exp.recallState()
 exp.setup()
