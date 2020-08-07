@@ -118,7 +118,10 @@ def run(args):
             # process=subprocess.Popen(["python3",os.path.join(rl_path, lab, controllerFile)])
         else:
             controller_path = os.path.join(".", rl_path, lab, controllerFile)
-            process = subprocess.Popen(["nohup", controller_path, flags, "&"])
+            cmd = ["nohup", controller_path]
+            for argument in flags.split(" "):
+                cmd.append(argument)
+            process = subprocess.Popen(cmd)
              # os.system("nohup " + controller_path + " &")
             settings["pid"] = process.pid
             update_json(settings)

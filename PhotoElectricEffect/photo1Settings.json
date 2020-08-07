@@ -6,8 +6,8 @@
         "HgNeLamp": 7,
         "Ambient": 8
     },
-    "electrometer_address":1,
-    "multimeter_address":0,
+    "electrometer_address":0,
+    "multimeter_address":1,
     "refPoints": {
         "0deg":0,
         "60deg":270,
