@@ -35,8 +35,6 @@ def setup(args):
     if not os.path.isdir(os.path.join(rl_path, args.lab)):
         print("ERROR: " + args.lab + " does not exist in the remoteLabs directory.")
         return
-    
-
     try:
         configs[args.driver]
     except KeyError:
@@ -54,43 +52,46 @@ def setup(args):
         f.write(config_contents)
         
     controller_path = os.path.join(".", rl_path, args.lab, args.lab+"Controller.py" )
-    controller_path_recall = os.path.join(".", rl_path, args.lab, args.lab+"ControllerRecall.py" )
-    controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
-    controller_path_admin = os.path.join(".", rl_path, args.lab, args.lab+"ControllerAdmin.py" )
-    controllers = [controller_path_recall, controller_path_reset, controller_path_admin]
-    for controller in controllers:
-        os.system("cp {0} {1}".format(controller_path, controller))
-        os.system("sudo chmod +x " + controller)
-        with open(controller, "r") as f:
-            controller_contents = f.read()
-        if "Recall" in controller:
-            controller_contents = controller_contents.replace("#RECALL-", "")
-        elif "Admin" in controller:
-            controller_contents = controller_contents.replace("#ADMIN-", "")
-        elif "Reset" in controller:
-            controller_contents = controller_contents.replace("#RESET-", "")
-        else:
-            raise IOError
+    os.system("sudo chmod +x " + controller_path)
+    labSettingsFile = os.path.join(rl_path, args.lab, args.settings)
 
-        with open(controller, "w") as f:
-            f.write(controller_contents)
+    # controller_path_recall = os.path.join(".", rl_path, args.lab, args.lab+"ControllerRecall.py" )
+    # controller_path_reset = os.path.join(".", rl_path, args.lab, args.lab+"ControllerReset.py" ) 
+    # controller_path_admin = os.path.join(".", rl_path, args.lab, args.lab+"ControllerAdmin.py" )
+    # controllers = [controller_path_recall, controller_path_reset, controller_path_admin]
+    # for controller in controllers:
+    #     os.system("cp {0} {1}".format(controller_path, controller))
+    #     os.system("sudo chmod +x " + controller)
+    #     with open(controller, "r") as f:
+    #         controller_contents = f.read()
+    #     if "Recall" in controller:
+    #         controller_contents = controller_contents.replace("#RECALL-", "")
+    #     elif "Admin" in controller:
+    #         controller_contents = controller_contents.replace("#ADMIN-", "")
+    #     elif "Reset" in controller:
+    #         controller_contents = controller_contents.replace("#RESET-", "")
+    #     else:
+    #         raise IOError
 
-    if args.settings != "None":
-        lab_settings_path = os.path.join(rl_path, args.lab, args.settings)
-        with open(lab_settings_path, "r") as f:
-            lab_settings = json.load(f)
-        for controller in controllers:
-            with open(controller, "r") as f:
-                controller_text = f.read()
-            for setting, value in lab_settings.items():
-                controller_text = controller_text.replace("#REPLACE-"+setting, "{0}={1}".format(setting, value))
-            
-            with open(controller, "w") as f:
-                f.write(controller_text)
+    #     with open(controller, "w") as f:
+    #         f.write(controller_contents)
+
+    # lab_settings_path = os.path.join(rl_path, args.lab, args.settings)
+    # with open(lab_settings_path, "r") as f:
+    #     lab_settings = json.load(f)
+    # for controller in controllers:
+    #     with open(controller, "r") as f:
+    #         controller_text = f.read()
+    #     for setting, value in lab_settings.items():
+    #         controller_text = controller_text.replace("#REPLACE-"+setting, "{0}={1}".format(setting, value))
+        
+    #     with open(controller, "w") as f:
+    #         f.write(controller_text)
     
     settings["status"] = args.lab
     settings["driver"] = args.driver
     settings["port"] = args.port
+    settings["settingsFile"] = labSettingsFile
     update_json(settings)
     
 
@@ -98,25 +99,26 @@ def run(args):
     if settings["status"] != "None":
         lab = settings["status"]
         driver = settings["driver"]
+        labSettingsFile = settings["settingsFile"]
         configfile = configs[driver]
+        flags = "-s {0}".format(labSettingsFile)
         if args.reset:
-            controllerFile = lab + "ControllerReset.py"
+            flags += " -r"
         elif args.admin:
-            controllerFile = lab + "ControllerAdmin.py"
-        else:
-            controllerFile = lab + "ControllerRecall.py"
-
+            flags += "- a"
+        controllerFile = lab + "Controller.py"
         os.system("sudo killall uv4l")
         time.sleep(1)
         uv4l_cmd = "sudo uv4l --config-file=/etc/uv4l/" +configfile + " -d " + driver + " --driver-config-file=/etc/uv4l/" + configfile + " --enable-server yes"
         os.system(uv4l_cmd)
 
         if args.foreground:
-            os.system("python3 " + os.path.join(rl_path, lab, controllerFile))
+            pythonFilePath = os.path.join(rl_path, lab, controllerFile)
+            os.system("python3 {0} {1}".format(pythonFilePath, flags))
             # process=subprocess.Popen(["python3",os.path.join(rl_path, lab, controllerFile)])
         else:
             controller_path = os.path.join(".", rl_path, lab, controllerFile)
-            process = subprocess.Popen(["nohup", controller_path, "&"])
+            process = subprocess.Popen(["nohup", controller_path, flags, "&"])
              # os.system("nohup " + controller_path + " &")
             settings["pid"] = process.pid
             update_json(settings)
@@ -151,7 +153,7 @@ parser_setup.set_defaults(func=setup)
 parser_setup.add_argument('lab')
 parser_setup.add_argument('-p', '--port', default="80")
 parser_setup.add_argument("-d", '--driver', default="raspicam")
-parser_setup.add_argument("-s", '--settings', default="None")
+parser_setup.add_argument("-s", '--settings', required=True)
 
 parser_run = subparsers.add_parser("run")
 parser_run.set_defaults(func=run)
