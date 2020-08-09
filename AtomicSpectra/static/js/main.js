@@ -442,7 +442,7 @@ $("document").ready(function () {
             console.log("Turning off and switching to A")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
-            dataChannel.send("ASDIpdu/off/");
+            dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
             dataChannel.send("Camera/camera/" + currentCam)
