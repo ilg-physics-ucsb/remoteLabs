@@ -78,7 +78,7 @@ carousel = StepperI2C("Carousel", 4,bounds=carouselBounds, style="MICROSTEP", de
 ambient = SingleGPIO("Ambient", ambientPin)
 
 
-ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[7])
+ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 ASDIpdu.login()
 
 
@@ -96,7 +96,7 @@ exp.add_device(arm)
 exp.add_device(carousel)
 exp.add_device(ambient)
 exp.set_socket_path(socket_path)
-if not args.reset or not args.admin:
+if not args.reset and not args.admin:
     exp.recallState()
 exp.setup()
         
