@@ -1,0 +1,21 @@
+{
+    "outlets":[3],
+    "outletMap":{
+        "Carousel": 3
+    },
+    "refPoints": {
+        "h2":0,
+        "a":7860,
+        "b": 15720
+        },
+    
+    "leftSwitchPin": 6,
+    "rightSwitchPin": 12,
+    "homeSwitchPin": 13,
+    "ambientPin": 5,
+
+    "slitBounds": [0,600],
+    "gratingBounds": [-450,450],
+    "armBounds": [-21000, 21000],
+    "carouselBounds": [-160, 15520]
+}

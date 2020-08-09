@@ -1,20 +1,48 @@
 #! /usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO
+import argparse, os, json
 
+parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
+
+parser.add_argument("-s", "--settings", required=True)
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-r", "--reset", action="store_true")
+group.add_argument("-a", "--admin", action="store_true")
+
+args = parser.parse_args()
+
+labSettingsPath = os.path.join("home","pi", "remoteLabs", "PhotoElectricEffect", args.settings)
+
+with open(labSettingsPath, "r") as f:
+    labSettings = json.load(f)
+
+outlets         = labSettings["outlets"]
+outletMap       = labSettings["outletMap"]
+refPoints       = labSettings["refPoints"]
+
+leftSwitchPin   = labSettings["leftSwitchPin"]
+rightSwitchPin  = labSettings["rightSwitchPin"]
+homeSwitchPin   = labSettings["homeSwitchPin"]
+ambientPin      = labSettings["ambientPin"]
+
+slitBounds      = labSettings["slitBounds"]
+gratingBounds   = labSettings["gratingBounds"]
+armBounds       = labSettings["armBounds"]
+carouselBounds  = labSettings["carouselBounds"]
+
+if args.admin:
+    bounds = bounds = (-1e6, 1e6)
+    slitBounds = bounds
+    gratingBounds = bounds
+    armBounds = bounds
+    carouselBounds = bounds
 
 camera = ArduCamMultiCamera("Camera", 1)
-
 socket_path = "/tmp/uv4l.socket"
 
-refPoints = {
-    "h2":0,
-    "a":int(7860),
-    "b": int(2*7860),
-    }
-
-leftSwitch = LimitSwitch("LeftSwitch", 6)
-rightSwitch = LimitSwitch("RightSwitch", 12)
-homeSwitch = LimitSwitch("HomeSwitch", 13)
+leftSwitch = LimitSwitch("LeftSwitch", leftSwitchPin)
+rightSwitch = LimitSwitch("RightSwitch", rightSwitchPin)
+homeSwitch = LimitSwitch("HomeSwitch", homeSwitchPin)
 
 def leftSwitchHit(motor, steps):
     print("Left Switch Hit")
@@ -41,21 +69,25 @@ def homing(motor):
 leftSwitch.switchAction = leftSwitchHit
 rightSwitch.switchAction = rightSwitchHit
 
-slit = StepperI2C("Slit", 1,bounds=(0,600), style="DOUBLE", delay=0.1)  
-grating = StepperI2C("Grating", 2, bounds=(-450, 450), style="DOUBLE")
-arm = StepperI2C("Arm", 3,bounds=(-21000,21000), style="DOUBLE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch)
+slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.1)  
+grating = StepperI2C("Grating", 2, bounds=gratingBounds, style="DOUBLE")
+arm = StepperI2C("Arm", 3,bounds=armBounds, style="DOUBLE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch)
 arm.customHome = homing
-carousel = StepperI2C("Carousel", 4,bounds=(-160, int(2*7680+160)), style="MICROSTEP", delay=0.0001, refPoints=refPoints, microsteps=16)
+carousel = StepperI2C("Carousel", 4,bounds=carouselBounds, style="MICROSTEP", delay=0.0001, refPoints=refPoints, microsteps=16)
 
-ambient = SingleGPIO("Ambient", 5)
+ambient = SingleGPIO("Ambient", ambientPin)
 
 
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[7])
 ASDIpdu.login()
 
 
-
-exp = Experiment("AtomicSpectra")
+if args.reset:
+    exp = Experiment("AtomicSpectra")
+elif args.admin:
+    exp = Experiment("AtmoicSpectra", admin=True)
+else:
+    Experiment("AtomicSpectra")
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(grating)
@@ -64,7 +96,8 @@ exp.add_device(arm)
 exp.add_device(carousel)
 exp.add_device(ambient)
 exp.set_socket_path(socket_path)
-exp.recallState()
+if not args.reset or not args.admin:
+    exp.recallState()
 exp.setup()
         
     
