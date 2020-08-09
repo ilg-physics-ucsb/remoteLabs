@@ -1,0 +1,20 @@
+{
+    "outlets":[5,6],
+    "outletMap":{
+        "Laser": 5,
+        "Screen": 6
+    },
+    "Sstep":670,
+    "Mstep": 975,
+    "Lstep":1050,
+    "VariableLength":1725,
+
+    "mSstep": 645,
+    "mMstep": 1000,
+
+    "ambientPin": 5,
+
+    "multiSlitBounds":[-12000, 12000],
+    "singleSlitBounds":[-12000,12000],
+    "stageBounds":[9750, 0]
+}
