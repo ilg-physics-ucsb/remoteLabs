@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO
+from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO, LimitSwitch
 import argparse, os, json
 
 parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
