@@ -105,7 +105,7 @@ def run(args):
         if args.reset:
             flags += " -r"
         elif args.admin:
-            flags += "- a"
+            flags += " -a"
         controllerFile = lab + "Controller.py"
         os.system("sudo killall uv4l")
         time.sleep(1)
