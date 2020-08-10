@@ -16,5 +16,5 @@
 
     "multiSlitBounds":[-12000, 12000],
     "singleSlitBounds":[-12000,12000],
-    "stageBounds":[9750, 0]
+    "stageBounds":[-9750, 0]
 }
