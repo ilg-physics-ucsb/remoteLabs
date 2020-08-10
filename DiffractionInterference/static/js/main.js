@@ -601,7 +601,6 @@ $("document").ready(function () {
         dataChannel.send("Camera/camera/c")
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
-        liveStream.style.transform = "rotate(180deg)"
     })
     // END Camera Switching
 
