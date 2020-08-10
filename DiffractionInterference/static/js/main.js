@@ -148,7 +148,7 @@ $("document").ready(function () {
 
     var TwoSlit = document.getElementById('2slit');
     var ThreeSlit = document.getElementById('3slit');
-    var     Slit = document.getElementById('4slit');
+    var FourSlit = document.getElementById('4slit');
     var FiveSlit = document.getElementById('5slit');
    
     var MultiOpen = document.getElementById('multiOpen');
