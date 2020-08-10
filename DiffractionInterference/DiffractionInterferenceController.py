@@ -1,73 +1,74 @@
 #! /usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO
+import argparse, os, json
 
+parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
+
+parser.add_argument("-s", "--settings", required=True)
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-r", "--reset", action="store_true")
+group.add_argument("-a", "--admin", action="store_true")
+
+args = parser.parse_args()
+
+labSettingsPath = os.path.join("home","pi", "remoteLabs", "PhotoElectricEffect", args.settings)
+
+with open(labSettingsPath, "r") as f:
+    labSettings = json.load(f)
+
+
+outlets         = labSettings["outlets"]
+outletMap       = labSettings["outletMap"]
+
+#Single slits spacing ~670
+#Single slit medium is about 975 (between groups)
+#Single slit large is 1050 (from variable to next group)
+#Single slit variable is 1725 long
+
+#Multi slit spacing is 645
+#Multi slit medium spacing is 1000 (between groups) 
+
+
+ambientPin      = labSettings["ambientPin"]
+
+multiSlitBounds = labSettings["multiSlitBounds"]
+singleSlitBounds= labSettings["singleSlitBounds"]
+stageBounds     = labSettings["stageBounds"]
+refPointsSingle = labSettings["refPointsSingle"]
+refPointsMulti = labSettings["refPointsMulti"]
+
+if args.admin:
+    bounds = (-1e6, 1e6)
+    multiSlitBounds = bounds
+    singleSlitBounds = bounds
+    stageBounds = bounds
 
 camera = ArduCamMultiCamera("Camera", 1)
 
 
 socket_path = "/tmp/uv4l.socket"
 
-SSstep = 670
-Mstep = 975
-Lstep = 1050
-VariableLength=1725
 
-refPointsSingle = {
-    "SingleOpen": 0,
-    "LineSlit": Sstep,
-    "LittleHole": 2*Sstep+50,
-    "BigHole": 3*Sstep+50,
-    # Blank
-    "A02": 3*Sstep + Mstep,
-    "A04": 4*Sstep + Mstep,
-    "A08": 5*Sstep + Mstep,
-    "A16": 6*Sstep + Mstep,
-    # Blank
-    "VaryWidth": 6*Sstep + 2*Mstep,
-    # Blank
-    "Square": 6*Sstep + 2*Mstep + Lstep + VariableLength,
-    "Hex": 7*Sstep + 2*Mstep + Lstep + VariableLength,
-    "Dots": 8*Sstep + 2*Mstep + Lstep + VariableLength,
-    "Holes": 9*Sstep + 2*Mstep + Lstep + VariableLength,
-}
-
-mSstep = 645
-mMstep = 1000
-refPointsMulti = {
-    "MultiOpen": 0,
-    "FarClose": mSstep,
-    "WideThin": 2*mSstep,
-    "ThreeTwo": 3*mSstep,
-    # Blank
-    "TwoSlit": 3*mSstep + mMstep,
-    "ThreeSlit": 4*mSstep + mMstep,
-    "FourSlit": 5*mSstep + mMstep,
-    "FiveSlit": 6*mSstep + mMstep,
-    # Blank
-    "A04D25": 6*mSstep + 2*mMstep,
-    "A04D50": 7*mSstep + 2*mMstep,
-    "A08D25": 8*mSstep + 2*mMstep,
-    "A08D50": 9*mSstep + 2*mMstep,
-    # Blank
-    "VarySpacing": 10*mSstep + 3*mMstep
-}
 
 #this uses the broadcom pin numbering system
 # screen = SingleGPIO("Screen", 26)
-ambient = SingleGPIO("Ambient", 5)
+ambient = SingleGPIO("Ambient", ambientPin)
 
-multiSlits = StepperI2C("MultiSlits", 1, bounds=(-12000,12000), style="DOUBLE", delay=0.00004, refPoints=refPointsMulti)  #Multiple Slits
-singleSlits = StepperI2C("SingleSlits", 2,bounds=(-12000,12000), style="DOUBLE", delay=0.00004, refPoints=refPointsSingle) #Single Slits
-stage = StepperI2C("Stage", 4, bounds=(-(39*250), 0), style="DOUBLE", delay=0.004) #Screen
+multiSlits = StepperI2C("MultiSlits", 1, bounds=multiSlitBounds, style="DOUBLE", delay=0.00004, refPoints=refPointsMulti)  #Multiple Slits
+singleSlits = StepperI2C("SingleSlits", 2,bounds=singleSlitBounds, style="DOUBLE", delay=0.00004, refPoints=refPointsSingle) #Single Slits
+stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=0.004) #Screen
 
 
 
-ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=[1,2])
+ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 ASDIpdu.login()
 
-
-
-exp = Experiment("DiffractionInterference")
+if args.reset:
+    exp = Experiment("DiffractionInterference")
+elif args.admin:
+    exp = Experiment("DiffractionInterference", admin=True)
+else:
+    Experiment("DiffractionInterference")
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(multiSlits)
@@ -75,7 +76,8 @@ exp.add_device(singleSlits)
 exp.add_device(stage)
 exp.add_device(ambient)
 exp.set_socket_path(socket_path)
-exp.recallState()
+if not args.reset and not args.admin:
+    exp.recallState()
 exp.setup()
         
     
