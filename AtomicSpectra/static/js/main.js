@@ -369,9 +369,9 @@ $("document").ready(function () {
             console.log("Turning off and switching to H2");
             dataChannel.send("Camera/camera/a");               //This should be overview camera
             // Add waiting popup (modal) here
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/h2")
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             dataChannel.send("Camera/camera/" + currentCam);
             lampSupplyState = true;
         // If it off and H2 is clicked while not on H2
@@ -380,9 +380,9 @@ $("document").ready(function () {
             console.log("Switching to H2")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/h2")
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If its off and already at H2
@@ -403,12 +403,12 @@ $("document").ready(function () {
                 spectraLamp = "H2"
                 return
             } else {
-                dataChannel.send("ASDIpdu/on/7")
+                dataChannel.send("ASDIpdu/on/Carousel")
                 lampSupplyState = true;
             }
         // If H2 is already on, turn it off and switch view to off view.
         } else if (lampSupplyState && (spectraLamp == "H2")) {
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             console.log("carousel was turned off");
             mWrap0.style.display = "block";                     
             mWrap1.style.display = "none";
@@ -442,9 +442,9 @@ $("document").ready(function () {
             console.log("Turning off and switching to A")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If it off and H2 is clicked while not on H2
@@ -453,20 +453,20 @@ $("document").ready(function () {
             console.log("Switching to A")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If its off and already at A
         // If not, just turn on carousel.
         } else if (!lampSupplyState && (spectraLamp == "A")){
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             lampSupplyState = true;
 
         // If A is already on, turn it off and switch view to off view.
         } else if (lampSupplyState && (spectraLamp == "A")) {
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             console.log("carousel was turned off");
             mWrap0.style.display = "block";                     
             mWrap1.style.display = "none";
@@ -500,9 +500,9 @@ $("document").ready(function () {
             console.log("Turning off and switching to B")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/b")
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If it off and B is clicked while not on B
@@ -511,19 +511,19 @@ $("document").ready(function () {
             console.log("Switching to B")
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/b")
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If its off and already at B
         // If not, just turn on carousel.
         } else if (!lampSupplyState && spectraLamp == "B"){
-            dataChannel.send("ASDIpdu/on/7");
+            dataChannel.send("ASDIpdu/on/Carousel");
             lampSupplyState = true;
         // If A is already on, turn it off and switch view to off view.
         } else if (lampSupplyState && spectraLamp == "B") {
-            dataChannel.send("ASDIpdu/off/7");
+            dataChannel.send("ASDIpdu/off/Carousel");
             console.log("carousel was turned off");
             mWrap0.style.display = "block";                     
             mWrap1.style.display = "none";
