@@ -254,13 +254,13 @@ $("document").ready(function () {
         //     dataChannel.send("Screen/off/");
         //     console.log("Eye clicked for the first time")
         // }  
-        dataChannel.send("ASDIpdu/off/2");               
+        dataChannel.send("ASDIpdu/off/Screen");
         TransparencyOff.style.display = "block";                      
         TransparencyOn.style.display = "none";  
     })
     screenClear.addEventListener('click', function(){        
         console.log("Screen power was turned on, thus the screen is clear");         
-        dataChannel.send("ASDIpdu/on/2");
+        dataChannel.send("ASDIpdu/on/Screen");
         TransparencyOff.style.display = "none";                      
         TransparencyOn.style.display = "block"; 
     })
@@ -269,12 +269,12 @@ $("document").ready(function () {
     laser.addEventListener("click", function() {
         if (laserState) {
             console.log("Laser was turned off")
-            dataChannel.send("ASDIpdu/off/1")
+            dataChannel.send("ASDIpdu/off/Laser")
             laserState = false;
             laser.style.opacity=0.2;
         } else {
             console.log("Laser was turned on")
-            dataChannel.send("ASDIpdu/on/1")
+            dataChannel.send("ASDIpdu/on/Laser")
             laserState = true;
             laser.style.opacity=1;
         }
