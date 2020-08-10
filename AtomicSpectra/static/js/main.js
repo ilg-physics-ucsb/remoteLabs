@@ -233,7 +233,7 @@ $("document").ready(function () {
      }
      
      window.onload = function () {
-         var threeHours = 3 * 60,
+         var threeHours = 3 * 60 * 60,
              display = document.querySelector('#time');
          startTimer(threeHours, display);
      }
