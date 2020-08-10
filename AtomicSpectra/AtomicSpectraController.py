@@ -30,8 +30,11 @@ gratingBounds   = labSettings["gratingBounds"]
 armBounds       = labSettings["armBounds"]
 carouselBounds  = labSettings["carouselBounds"]
 
+limitBounce     = labSettings["limitBounce"]
+homeOvershoot   = labSettings["homeOvershoot"]
+
 if args.admin:
-    bounds = bounds = (-1e6, 1e6)
+    bounds = (-1e6, 1e6)
     slitBounds = bounds
     gratingBounds = bounds
     armBounds = bounds
@@ -47,12 +50,12 @@ homeSwitch = LimitSwitch("HomeSwitch", homeSwitchPin)
 def leftSwitchHit(motor, steps):
     print("Left Switch Hit")
     motor.currentPosition += steps
-    motor.adminMove(-50)
+    motor.adminMove(-limitBounce)
 
 def rightSwitchHit(motor, steps):
     print("Right Switch Hit")
     motor.currentPosition += steps
-    motor.adminMove(50)
+    motor.adminMove(limitBounce)
 
 def homing(motor):
     print("Home switch hit.")
@@ -60,7 +63,7 @@ def homing(motor):
     print("Here I am at left switch")
     print(homeSwitch)
     if homeSwitch is True:
-        motor.adminMove(5)
+        motor.adminMove(homeOvershoot)
     else:
         print("Moving Towards home.")
         motor.homeMove()
