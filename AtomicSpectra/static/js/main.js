@@ -233,9 +233,9 @@ $("document").ready(function () {
      }
      
      window.onload = function () {
-         var fortyfiveMinutes = 60 * 45,
+         var threeHours = 3 * 60,
              display = document.querySelector('#time');
-         startTimer(fortyfiveMinutes, display);
+         startTimer(threeHours, display);
      }
  
    
