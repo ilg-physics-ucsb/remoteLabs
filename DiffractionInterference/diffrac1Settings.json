@@ -4,17 +4,42 @@
         "Laser": 1,
         "Screen": 2
     },
-    "Sstep":670,
-    "Mstep": 975,
-    "Lstep":1050,
-    "VariableLength":1725,
-
-    "mSstep": 645,
-    "mMstep": 1000,
-
+    
     "ambientPin": 5,
 
     "multiSlitBounds":[-12000, 12000],
     "singleSlitBounds":[-12000,12000],
-    "stageBounds":[-9750, 0]
+    "stageBounds":[-9750, 0],
+
+    "refPointsSingle" : {
+        "SingleOpen": 0,
+        "LineSlit": 670,
+        "LittleHole": 1390,
+        "BigHole": 2060,
+        "A02": 2985,
+        "A04": 3655,
+        "A08": 4325,
+        "A16": 4995,
+        "VaryWidth": 5970,
+        "Square": 8745,
+        "Hex": 9415,
+        "Dots": 10085,
+        "Holes": 10755
+    },
+
+    "refPointsMulti": {
+        "MultiOpen": 0,
+        "FarClose": 645,
+        "WideThin": 1290,
+        "ThreeTwo": 1935,
+        "TwoSlit": 2935,
+        "ThreeSlit": 3580,
+        "FourSlit": 4225,
+        "FiveSlit": 4870,
+        "A04D25": 5870,
+        "A04D50": 6515,
+        "A08D25": 7160,
+        "A08D50": 7805,
+        "VarySpacing": 8805
+    }
 }

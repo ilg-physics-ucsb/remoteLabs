@@ -20,19 +20,22 @@ with open(labSettingsPath, "r") as f:
 outlets         = labSettings["outlets"]
 outletMap       = labSettings["outletMap"]
 
-Sstep           = labSettings["Sstep"]
-Mstep           = labSettings["Mstep"]
-Lstep           = labSettings["Lstep"]
-VariableLength  = labSettings["VariableLength"]
+#Single slits spacing ~670
+#Single slit medium is about 975 (between groups)
+#Single slit large is 1050 (from variable to next group)
+#Single slit variable is 1725 long
 
-mSstep          = labSettings["mSstep"]
-mMstep          = labSettings["mMstep"]
+#Multi slit spacing is 645
+#Multi slit medium spacing is 1000 (between groups) 
+
 
 ambientPin      = labSettings["ambientPin"]
 
 multiSlitBounds = labSettings["multiSlitBounds"]
 singleSlitBounds= labSettings["singleSlitBounds"]
 stageBounds     = labSettings["stageBounds"]
+refPointsSingle = labSettings["refPointsSingle"]
+refPointsMulti = labSettings["refPointsMulti"]
 
 if args.admin:
     bounds = (-1e6, 1e6)
@@ -46,44 +49,6 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 
-
-refPointsSingle = {
-    "SingleOpen": 0,
-    "LineSlit": Sstep,
-    "LittleHole": 2*Sstep+50,
-    "BigHole": 3*Sstep+50,
-    # Blank
-    "A02": 3*Sstep + Mstep,
-    "A04": 4*Sstep + Mstep,
-    "A08": 5*Sstep + Mstep,
-    "A16": 6*Sstep + Mstep,
-    # Blank
-    "VaryWidth": 6*Sstep + 2*Mstep,
-    # Blank
-    "Square": 6*Sstep + 2*Mstep + Lstep + VariableLength,
-    "Hex": 7*Sstep + 2*Mstep + Lstep + VariableLength,
-    "Dots": 8*Sstep + 2*Mstep + Lstep + VariableLength,
-    "Holes": 9*Sstep + 2*Mstep + Lstep + VariableLength,
-}
-
-refPointsMulti = {
-    "MultiOpen": 0,
-    "FarClose": mSstep,
-    "WideThin": 2*mSstep,
-    "ThreeTwo": 3*mSstep,
-    # Blank
-    "TwoSlit": 3*mSstep + mMstep,
-    "ThreeSlit": 4*mSstep + mMstep,
-    "FourSlit": 5*mSstep + mMstep,
-    "FiveSlit": 6*mSstep + mMstep,
-    # Blank
-    "A04D25": 6*mSstep + 2*mMstep,
-    "A04D50": 7*mSstep + 2*mMstep,
-    "A08D25": 8*mSstep + 2*mMstep,
-    "A08D50": 9*mSstep + 2*mMstep,
-    # Blank
-    "VarySpacing": 10*mSstep + 3*mMstep
-}
 
 #this uses the broadcom pin numbering system
 # screen = SingleGPIO("Screen", 26)
