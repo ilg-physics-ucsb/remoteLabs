@@ -1,36 +1,21 @@
-PE1
+PE
     link to 5L lab guide - Deborah
     check value of h derived from zero crossing vs from asymptotic value - Carl
-PE2 
-    build - Raffi
-        add LEDs
 
-FH1
-    
-FH2 
-    build - Raffi
+FH 
+    build 2nd - Raffi
         add motors all around
         
-AS1
-    add blackout - Zak 0804
-    add limit switches
-
-AS2
-    build - 
-        have box completed
-        buy curtain
+AS
+    
 
 DI1
     add camera controls
+    adjust for upright cameras
     explore setting a different aspect ratio to the camera
 
-DI2
-    build
-        buy M6 screws
-        get ribbon cable to emerge from front (enabling upright camera)
     
 GR
-    format GR2pi
     design motorized arm
 
 MANUALS
@@ -39,6 +24,7 @@ MANUALS
         FH
         AS
         DI
+        RA - done
 
     readthrough and suggest edits to 5L manual
         PE - 
@@ -51,12 +37,8 @@ MANUALS
         FH
         AS
         DI
-    make video - Deborah & Jeremy
-        PE - 
-        FH
-        AS
-        DI
-VIDEOS
+
+VIDEOS - deferred
     write scripts
         PE
         FH 

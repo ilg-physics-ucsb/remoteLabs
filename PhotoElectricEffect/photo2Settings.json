@@ -2,7 +2,7 @@
     "outlets":[1,2,3,4],
     "outletMap":{
         "Electrometer": 1,
-        "MultiMeter": 2,
+        "Multimeter": 2,
         "HgNeLamp": 3,
         "Ambient": 4
     },
