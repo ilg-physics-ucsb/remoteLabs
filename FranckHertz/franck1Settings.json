@@ -1,0 +1,12 @@
+{
+    "outlets":[1,2,3,4],
+    "outletMap":{
+        "Electrometer": 1,
+        "Oven": 2,
+        "Filament": 3,
+        "PowerSupply": 4
+    },
+    "electrometer_address":0,
+    "potBounds": [0, 2100],
+    "filterBounds": [0, 810]
+}
