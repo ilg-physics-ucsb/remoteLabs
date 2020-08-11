@@ -315,7 +315,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            dataChannel.send("FHpdu/off/Oven");                //use this command with PDU
             }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
@@ -335,7 +335,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("FHpdu/on/1");                 //use this command with PDU 
+            dataChannel.send("FHpdu/on/Oven");                 //use this command with PDU 
             }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
@@ -351,7 +351,7 @@ $("document").ready(function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("FHpdu/off/2");                //use this command with PDU
+            dataChannel.send("FHpdu/off/Filament");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -360,7 +360,7 @@ $("document").ready(function () {
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("FHpdu/on/2");                 //use this command with PDU
+            dataChannel.send("FHpdu/on/Filament");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -378,7 +378,7 @@ $("document").ready(function () {
             if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            dataChannel.send("FHpdu/off/PowerSupply");                //use this command with PDU
             }
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
@@ -399,7 +399,7 @@ $("document").ready(function () {
             if(!FirstTimePSon){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                //use this command with PDU
+            dataChannel.send("FHpdu/on/PowerSupply");                //use this command with PDU
             
             }   
             mWrap7.style.display = "block";                      
@@ -476,11 +476,11 @@ $("document").ready(function () {
     power6514Button.addEventListener('click', function(){
         console.log("Electrometer was switched");
         if(ElectrometerState){
-            dataChannel.send("FHpdu/off/4");
+            dataChannel.send("FHpdu/off/Electrometer");
             ElectrometerState=false;
                      }
         else{
-            dataChannel.send("FHpdu/on/4");
+            dataChannel.send("FHpdu/on/Electrometer");
             ElectrometerState=true;
         }
     })
