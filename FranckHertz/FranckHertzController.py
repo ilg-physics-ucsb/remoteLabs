@@ -34,7 +34,7 @@ if args.admin:
     VrBounds=bounds
 
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ electrometer_address +'::INSTR', baud_rate=19200)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ str(electrometer_address) +'::INSTR', baud_rate=19200)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
