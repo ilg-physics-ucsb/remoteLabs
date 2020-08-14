@@ -83,6 +83,8 @@ $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     liveStream = document.getElementById("v");
+    
+    
 
     c_wrap = $('#canvas_wrap')
 
@@ -243,10 +245,11 @@ $("document").ready(function () {
     var lightSwitch = document.getElementById('lightSwitch');
     var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
     var AmbientState = false;
+    var AmbientStatePrev = false;
 
-    var darkToggle = document.getElementById('darkTOGGLE')
-    var darkSwitchPic = document.getElementById("darkSwitch")
-    var darkState = false
+    var darkToggle = document.getElementById('darkTOGGLE');
+    var darkSwitchPic = document.getElementById("darkSwitch");
+    var darkState = false;
 
     //for Lamps
     var H2pressOff = document.getElementById('H2-off');
@@ -270,7 +273,7 @@ $("document").ready(function () {
     var bONpic = document.getElementById('LampsBon');
     var H2ONpic = document.getElementById('LampsH2on');
     var lampSupplyState = false;
-    var spectraLamp = "H2"
+    var spectraLamp = "H2";
     var H2FirstTime = true;
 
     var nudgeLeft = document.getElementById('lampNudgeLeft');
@@ -287,7 +290,7 @@ $("document").ready(function () {
     var slitSteps=200;
    
     //for Schematic
-    var SchemaPIC = document.getElementById('Schema')
+    var SchemaPIC = document.getElementById('Schema');
     //for Telescope Settings
     var tCW = document.getElementById('telescopeCW');
     var tCCW = document.getElementById('telescopeCCW');
@@ -295,7 +298,7 @@ $("document").ready(function () {
     var tMedium = document.getElementById('mediumArm')
     var tCoarse = document.getElementById('coarseArm');
     var telescopeSteps=100; ///unknown number of degrees
-    var telescopeCurrentPosition = 0
+    var telescopeCurrentPosition = 0;
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
     var gCCW = document.getElementById('gratingCCW');
@@ -368,22 +371,36 @@ $("document").ready(function () {
         // Turn off carousel, move to H2, turn on carousel
         if(lampSupplyState && (spectraLamp != "H2")){
             console.log("Turning off and switching to H2");
+            AmbientStatePrev = AmbientState;
+            if(!AmbientState){
+                AmbientTOGGLE.click();
+            }
             dataChannel.send("Camera/camera/a");               //This should be overview camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/h2")
+            dataChannel.send("Carousel/goto/h2");
             dataChannel.send("ASDIpdu/on/Carousel");
+            if(!AmbientStatePrev){
+                AmbientTOGGLE.click;
+            }
             dataChannel.send("Camera/camera/" + currentCam);
             lampSupplyState = true;
         // If it off and H2 is clicked while not on H2
         // Move to H2, turn on carousel.
         } else if (!lampSupplyState && (spectraLamp != "H2")){
             console.log("Switching to H2")
+            AmbientStatePrev = AmbientState;
+            if(!AmbientState){
+                AmbientTOGGLE.click();
+            }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/h2")
             dataChannel.send("ASDIpdu/on/Carousel");
+            if(!AmbientStatePrev){
+                AmbientTOGGLE.click;
+            }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If its off and already at H2
@@ -441,22 +458,36 @@ $("document").ready(function () {
         // Turn off carousel, move to A, turn on carousel
         if(lampSupplyState && (spectraLamp != "A")){
             console.log("Turning off and switching to A")
+            AmbientStatePrev = AmbientState;
+            if(!AmbientState){
+                AmbientTOGGLE.click();
+            }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
+            if(!AmbientStatePrev){
+                AmbientTOGGLE.click;
+            }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If it off and H2 is clicked while not on H2
         // Move to A, turn on carousel.
         } else if (!lampSupplyState && (spectraLamp != "A")){
             console.log("Switching to A")
+            AmbientStatePrev = AmbientState;
+            if(!AmbientState){
+                AmbientTOGGLE.click();
+            }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
+            if(!AmbientStatePrev){
+                AmbientTOGGLE.click;
+            }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If its off and already at A
@@ -499,22 +530,36 @@ $("document").ready(function () {
         // Turn off carousel, move to B, turn on carousel
         if(lampSupplyState && spectraLamp != "B"){
             console.log("Turning off and switching to B")
+            AmbientStatePrev = AmbientState;
+            if(!AmbientState){
+                AmbientTOGGLE.click();
+            }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/b")
+            dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
+            if(!AmbientStatePrev){
+                AmbientTOGGLE.click;
+            }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If it off and B is clicked while not on B
         // Move to B, turn on carousel.
         } else if (!lampSupplyState && spectraLamp != "B"){
             console.log("Switching to B")
+            AmbientStatePrev = AmbientState;
+            if(!AmbientState){
+                AmbientTOGGLE.click();
+            }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // Add waiting popup (modal) here
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/b")
+            dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
+            if(!AmbientStatePrev){
+                AmbientTOGGLE.click;
+            }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
         // If its off and already at B
