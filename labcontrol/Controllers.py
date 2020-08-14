@@ -179,7 +179,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[], homeSwitch=None):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -281,6 +281,10 @@ class StepperI2C(MotorKit, BaseController):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
+
+    def degMove(self, deg):
+        print("{0} degrees".format(deg))
+
 
     def homeMove(self, stepLimit=5000, additionalSteps=10):
         if self.currentPosition > 0:
