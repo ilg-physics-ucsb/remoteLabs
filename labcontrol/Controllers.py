@@ -208,6 +208,7 @@ class StepperI2C(MotorKit, BaseController):
         self.limitSwitches = limitSwitches
         self.homeSwitch = homeSwitch
         self.homing = False
+        self.degPerStep = degPerStep
                
     def setup(self, style):
         pass
@@ -281,9 +282,19 @@ class StepperI2C(MotorKit, BaseController):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
-
+        
+    def degMove_parser(self, params):
+        try:
+            steps = int(params)
+        except ValueError:
+            raise ArgumentError(self.name, "degMove", params)
+        return steps
+        
+        
     def degMove(self, deg):
         print("{0} degrees".format(deg))
+        step = deg / self.degPerStep
+        self.move(step)
 
 
     def homeMove(self, stepLimit=5000, additionalSteps=10):
