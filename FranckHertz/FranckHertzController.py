@@ -35,7 +35,7 @@ if args.admin:
     VrBounds=bounds
 
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ electrometer_address +'::INSTR', baud_rate=19200)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ str(electrometer_address) +'::INSTR', baud_rate=19200)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
@@ -64,7 +64,7 @@ if args.reset:
 elif args.admin:
     exp = Experiment("FranckHertz", admin=True)
 else:
-    Experiment("FranckHertz")
+    exp=Experiment("FranckHertz")
 exp.add_device(camera)
 exp.add_device(FHpdu)
 exp.add_device(oven)
@@ -76,7 +76,7 @@ exp.add_device(Va)
 exp.add_device(Vr)
 exp.add_device(electrometer)
 exp.set_socket_path(socket_path)
-if not args.reset or not args.admin:
+if not args.reset andd not args.admin:
     exp.recallState()
 exp.setup()
         
