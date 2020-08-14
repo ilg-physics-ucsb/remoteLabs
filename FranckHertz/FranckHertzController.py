@@ -63,7 +63,7 @@ if args.reset:
 elif args.admin:
     exp = Experiment("FranckHertz", admin=True)
 else:
-    Experiment("FranckHertz")
+    exp=Experiment("FranckHertz")
 exp.add_device(camera)
 exp.add_device(FHpdu)
 exp.add_device(oven)
@@ -75,7 +75,7 @@ exp.add_device(Va)
 exp.add_device(Vr)
 exp.add_device(electrometer)
 exp.set_socket_path(socket_path)
-if not args.reset and not args.admin:
+if not args.reset andd not args.admin:
     exp.recallState()
 exp.setup()
         
