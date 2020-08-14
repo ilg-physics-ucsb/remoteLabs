@@ -48,7 +48,21 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
+function controllerResponseHandler(cmd) {
+    var components = cmd.split("/");
+    var device = components[0]
+    var info = components[1]
+    var infoValue = components[2]
 
+    if (infoValue == "limit") {
+        extremaModal.modal("show")
+    }
+
+    if (device == "Slit") {
+        console.log("Controller Response Hide")
+        slitModal.modal('hide')
+    }
+}
 
 
 window.addEventListener('DOMContentLoaded', function () {
