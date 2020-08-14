@@ -196,6 +196,8 @@ function signal(url, videoElement, vformat, hardwareCodec, onStream, onError, on
 
 //Zak's Additional Functions
 function messageHandler(event) {
+    console.log("MESSAGE HANDLER")
     var data = event.data;
     console.log(data);
+    controllerResponseHandler(data)
 }
