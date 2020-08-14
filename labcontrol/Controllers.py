@@ -286,7 +286,7 @@ class StepperI2C(MotorKit, BaseController):
         
     def degMove_parser(self, params):
         try:
-            steps = int(params)
+            steps = int(params[0])
         except ValueError:
             raise ArgumentError(self.name, "degMove", params)
         return steps
@@ -295,7 +295,7 @@ class StepperI2C(MotorKit, BaseController):
     def degMove(self, deg):
         print("{0} degrees".format(deg))
         step = deg / self.degPerStep
-        step = int(step * gearRatio)
+        step = int(step * self.gearRatio)
         self.move(step)
 
 
