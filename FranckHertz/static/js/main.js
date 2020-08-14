@@ -279,7 +279,7 @@ $("document").ready(function () {
     var raiseOvenV = document.getElementById('oVcw');
     var threeDegOvenV = document.getElementById('3.6_deg_Vo');
     var thirtySixDegOvenV = document.getElementById('36_deg_Vo');
-    var ovenSteps=23;
+    var ovenDegs=36;
    
     //for Filament Variac Settings
     var lowerFilamentV = document.getElementById('fVccw');
@@ -415,15 +415,15 @@ $("document").ready(function () {
     // END Power Switches
 
     //BEGIN Oven Variac Buttons 
-    threeDegOvenV.addEventListener('click', function(){ovenSteps=2;})
-    thirtySixDegOvenV.addEventListener('click', function(){ovenSteps=21;})
+    threeDegOvenV.addEventListener('click', function(){ovenDegs=3.6;})
+    thirtySixDegOvenV.addEventListener('click', function(){ovenDegs=36;})
     
     lowerOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned down"); 
-        dataChannel.send("Oven/move/"+(-ovenSteps));})
+        dataChannel.send("Oven/degMove/"+(-ovenDegs));})
     raiseOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned up");
-        dataChannel.send("Oven/move/"+ovenSteps);})
+        dataChannel.send("Oven/degMove/"+ovenDegs);})
     //END Oven Variac Buttons
    //BEGIN Filament Variac Buttons 
    threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
