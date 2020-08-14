@@ -190,24 +190,25 @@ $("document").ready(function () {
     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
-     window.setTimeout(timeOutHandler,2700000)
- 
+     window.setTimeout(timeOutHandler,10800000)
+
      function timeOutHandler(){
-        //  TEMP CHANGE
          mainCamSignal.hangup()
          alert("Your session has timed out.")
      }
- 
+
      function startTimer(duration, display) {
-         var timer = duration, minutes, seconds;
+         var timer = duration, hours, minutes, seconds;
          setInterval(function () {
-             minutes = parseInt(timer / 60, 10);
-             seconds = parseInt(timer % 60, 10);
+             hours = Math.floor(parseInt(timer / 3600, 10));
+             minutes = Math.floor(parseInt(timer % 3600 / 60 , 10));
+             seconds = Math.floor(parseInt(timer % 3600 % 60, 10));
      
+             hours = hours <10 ? "0" + hours : hours;
              minutes = minutes < 10 ? "0" + minutes : minutes;
              seconds = seconds < 10 ? "0" + seconds : seconds;
      
-             display.textContent = minutes + ":" + seconds;
+             display.textContent = hours + ":" + minutes + ":" + seconds;
      
              if (--timer < 0) {
                  timer = duration;
@@ -216,9 +217,9 @@ $("document").ready(function () {
      }
      
      window.onload = function () {
-         var fortyfiveMinutes = 60 * 45,
+         var threeHours = 3 * 60 * 60,
              display = document.querySelector('#time');
-         startTimer(fortyfiveMinutes, display);
+         startTimer(threeHours, display);
      }
  
     // for Keithley 6514 Electrometer
@@ -314,7 +315,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel.send("FHpdu/off/1");                //use this command with PDU
+            dataChannel.send("FHpdu/off/Oven");                //use this command with PDU
             }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
@@ -334,7 +335,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel.send("FHpdu/on/1");                 //use this command with PDU 
+            dataChannel.send("FHpdu/on/Oven");                 //use this command with PDU 
             }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
@@ -350,7 +351,7 @@ $("document").ready(function () {
         if(filamentState){
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
-            dataChannel.send("FHpdu/off/2");                //use this command with PDU
+            dataChannel.send("FHpdu/off/Filament");                //use this command with PDU
                 //---------
             filamentState=false;
             filamentTOGGLE.title="Click here to turn ON";
@@ -359,7 +360,7 @@ $("document").ready(function () {
         else{
                 //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
-            dataChannel.send("FHpdu/on/2");                 //use this command with PDU
+            dataChannel.send("FHpdu/on/Filament");                 //use this command with PDU
                 //---------
             filamentState=true;
             filamentTOGGLE.title="Click here to turn OFF";
@@ -377,7 +378,7 @@ $("document").ready(function () {
             if(!FirstTimePSoff){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/OFF"); //use this command with HS105
-            dataChannel.send("FHpdu/off/3");                //use this command with PDU
+            dataChannel.send("FHpdu/off/PowerSupply");                //use this command with PDU
             }
             mWrap6.style.display = "block";                      
             mWrap7.style.display = "none"; 
@@ -398,7 +399,7 @@ $("document").ready(function () {
             if(!FirstTimePSon){
             //--------choose one of the following
             //dataChannel.send("PowerSupplyPower/setRelay/ON");  //use this command with HS105
-            dataChannel.send("FHpdu/on/3");                //use this command with PDU
+            dataChannel.send("FHpdu/on/PowerSupply");                //use this command with PDU
             
             }   
             mWrap7.style.display = "block";                      
@@ -475,11 +476,11 @@ $("document").ready(function () {
     power6514Button.addEventListener('click', function(){
         console.log("Electrometer was switched");
         if(ElectrometerState){
-            dataChannel.send("FHpdu/off/4");
+            dataChannel.send("FHpdu/off/Electrometer");
             ElectrometerState=false;
                      }
         else{
-            dataChannel.send("FHpdu/on/4");
+            dataChannel.send("FHpdu/on/Electrometer");
             ElectrometerState=true;
         }
     })
