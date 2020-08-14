@@ -179,7 +179,7 @@ class StepperSimple(stp.Motor, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8, gearRatio=1):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -209,6 +209,7 @@ class StepperI2C(MotorKit, BaseController):
         self.homeSwitch = homeSwitch
         self.homing = False
         self.degPerStep = degPerStep
+        self.gearRatio = gearRatio
                
     def setup(self, style):
         pass
@@ -294,6 +295,7 @@ class StepperI2C(MotorKit, BaseController):
     def degMove(self, deg):
         print("{0} degrees".format(deg))
         step = deg / self.degPerStep
+        step = int(step * gearRatio)
         self.move(step)
 
 

@@ -25,6 +25,7 @@ filamentBounds          = labSettings["filamentBounds"]
 ovenBounds              = labSettings["ovenBounds"]
 VaBounds                = labSettings["VaBounds"]
 VrBounds                = labSettings["VrBounds"]
+ovenGearRatio               = labSettings["ovenGearRatio"]
 
 if args.admin:
     bounds = (-1e6, 1e6)
@@ -43,7 +44,7 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 filament = StepperI2C("Filament", 1,bounds=VaBounds, style="DOUBLE")  
-oven = StepperI2C("Oven", 2,bounds=ovenBounds, style="DOUBLE")
+oven = StepperI2C("Oven", 2,bounds=ovenBounds, style="DOUBLE", gearRatio=ovenGearRatio)
 Va = StepperI2C("Va", 3,bounds=VaBounds)
 Vr = StepperI2C("Vr", 4,bounds=VrBounds)
 
