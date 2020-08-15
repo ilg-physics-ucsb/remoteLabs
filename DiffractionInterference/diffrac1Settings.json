@@ -13,33 +13,33 @@
 
     "refPointsSingle" : {
         "SingleOpen": 0,
-        "LineSlit": 670,
-        "LittleHole": 1390,
-        "BigHole": 2060,
-        "A02": 2985,
-        "A04": 3655,
-        "A08": 4325,
-        "A16": 4995,
-        "VaryWidth": 5970,
-        "Square": 8745,
-        "Hex": 9415,
-        "Dots": 10085,
-        "Holes": 10755
+        "LineSlit": 745,
+        "LittleHole": 1365,
+        "BigHole": 2010,
+        "A02": 2855,
+        "A04": 3450,
+        "A08": 4095,
+        "A16": 4690,
+        "VaryWidth": 5660,
+        "Square": 8405,
+        "Hex": 9050,
+        "Dots": 9670,
+        "Holes": 10315
     },
 
     "refPointsMulti": {
         "MultiOpen": 0,
         "FarClose": 645,
-        "WideThin": 1290,
-        "ThreeTwo": 1935,
-        "TwoSlit": 2935,
-        "ThreeSlit": 3580,
-        "FourSlit": 4225,
-        "FiveSlit": 4870,
-        "A04D25": 5870,
-        "A04D50": 6515,
-        "A08D25": 7160,
-        "A08D50": 7805,
-        "VarySpacing": 8805
+        "WideThin": 1240,
+        "ThreeTwo": 1810,
+        "TwoSlit": 2785,
+        "ThreeSlit": 3385,
+        "FourSlit": 3985,
+        "FiveSlit": 4610,
+        "A04D25": 5535,
+        "A04D50": 6135,
+        "A08D25": 6860,
+        "A08D50": 7435,
+        "VarySpacing": 8385
     }
 }

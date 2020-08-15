@@ -150,7 +150,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //for LiveFeed
     var mainCamSignal = setupWebRTC(8081, video, 100);
     // var mainCamSignal = setupWebRTC(5002, video, 50);
-    window.setTimeout(timeOutHandler,2700000)
+    window.setTimeout(timeOutHandler,10800000)
 
     function timeOutHandler(){
         mainCamSignal.hangup()
@@ -158,15 +158,17 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
+        var timer = duration, hours, minutes, seconds;
         setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+            hours = Math.floor(parseInt(timer / 3600, 10));
+            minutes = Math.floor(parseInt(timer % 3600 / 60 , 10));
+            seconds = Math.floor(parseInt(timer % 3600 % 60, 10));
     
+            hours = hours <10 ? "0" + hours : hours;
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
     
-            display.textContent = minutes + ":" + seconds;
+            display.textContent = hours + ":" + minutes + ":" + seconds;
     
             if (--timer < 0) {
                 timer = duration;
@@ -175,9 +177,9 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     
     window.onload = function () {
-        var fortyfiveMinutes = 60 * 45,
+        var threeHours = 3 * 60 * 60,
             display = document.querySelector('#time');
-        startTimer(fortyfiveMinutes, display);
+        startTimer(threeHours, display);
     }
 
     //for HgNe Lamp
