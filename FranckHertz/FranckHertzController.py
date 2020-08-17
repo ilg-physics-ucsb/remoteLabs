@@ -1,47 +1,70 @@
 #! /usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera
 import visa
-import pickle
+import argparse, os, json
+
+parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
+
+parser.add_argument("-s", "--settings", required=True)
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-r", "--reset", action="store_true")
+group.add_argument("-a", "--admin", action="store_true")
+
+args = parser.parse_args()
+
+labSettingsPath = os.path.join("home","pi", "remoteLabs", "FranckHertz", args.settings)
+
+with open(labSettingsPath, "r") as f:
+    labSettings = json.load(f)
+
+
+outlets                 = labSettings["outlets"]
+outletMap               = labSettings["outletMap"]
+electrometer_address    = labSettings["electrometer_address"]
+filamentBounds          = labSettings["filamentBounds"]
+ovenBounds              = labSettings["ovenBounds"]
+VaBounds                = labSettings["VaBounds"]
+VrBounds                = labSettings["VrBounds"]
+ovenGearRatio               = labSettings["ovenGearRatio"]
+
+if args.admin:
+    bounds = (-1e6, 1e6)
+    filamentBounds=bounds
+    ovenBounds=bounds
+    VaBounds=bounds
+    VrBounds=bounds
 
 resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=19200)
+visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ str(electrometer_address) +'::INSTR', baud_rate=19200)
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
-# visa_multimeter = resource_manager.open_resource('ASRL/dev/ttyUSB0::INSTR', baud_rate=19200) #not sure if USB# is unique 2004234
-# visa_multimeter.read_termination = "\r\n"
-# visa_multimeter.write_termination = "\r\n"
-
 camera = ArduCamMultiCamera("Camera", 1)
-# camera.camera("b")
 
 socket_path = "/tmp/uv4l.socket"
 
-#this uses the broadcom pin numbering system
-# oven_pins = [5,6,12,13]
-# filament_pins = [5,6,12,13]
-# Va_pins = [5,6,12,13]
-# Vr_pins = [5,6,12,13]
-
-filament = StepperI2C("Filament", 1,bounds=(0,180), style="DOUBLE")  
-oven = StepperI2C("Oven", 2,bounds=(0,200), style="DOUBLE")
-Va = StepperI2C("Va", 3,bounds=(0,2000))
-Vr = StepperI2C("Vr", 4,bounds=(0,160))
+filament = StepperI2C("Filament", 1,bounds=VaBounds, style="DOUBLE")  
+oven = StepperI2C("Oven", 2,bounds=ovenBounds, style="DOUBLE", gearRatio=ovenGearRatio)
+Va = StepperI2C("Va", 3,bounds=VaBounds)
+Vr = StepperI2C("Vr", 4,bounds=VrBounds)
 
 
 
 
-FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60)
+FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 FHpdu.login()
-# OvenPower = Plug("OvenPower", "192.168.0.18")
-# FilamentPower = Plug("FilamentPower", "192.168.0.19")
-# PowerSupplyPower = Plug("PowerSupplyPower", "192.168.0.03")
+
 
 electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
-# ElectrometerPower = Plug("ElectrometerPower","192.168.0.20")
 
 
-exp = Experiment("FranckHertz")
+
+if args.reset:
+    exp = Experiment("FranckHertz")
+elif args.admin:
+    exp = Experiment("FranckHertz", admin=True)
+else:
+    exp=Experiment("FranckHertz")
 exp.add_device(camera)
 exp.add_device(FHpdu)
 exp.add_device(oven)
@@ -53,7 +76,8 @@ exp.add_device(Va)
 exp.add_device(Vr)
 exp.add_device(electrometer)
 exp.set_socket_path(socket_path)
-exp.recallState()
+if not args.reset and not args.admin:
+    exp.recallState()
 exp.setup()
         
         
