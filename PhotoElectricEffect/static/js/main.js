@@ -61,12 +61,14 @@ function controllerResponseHandler(cmd) {
 
 }
 
+var extremaModal
 
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
     var isStreaming2 = false;
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
+    extremaModal = $("#extremaModal")
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');

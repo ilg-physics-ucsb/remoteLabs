@@ -46,12 +46,14 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
+var extremaModal
 
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
+    extremaModal = $("extremaModal")
 
   
 //for modal
