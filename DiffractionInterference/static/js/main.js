@@ -529,6 +529,19 @@ $("document").ready(function () {
     var rulerCam = document.getElementById("RulerCam");
     var screenCam = document.getElementById("ScreenCam");
 
+    function controllerResponseHandler(cmd) {
+        var components = cmd.split("/");
+        var device = components[0]
+        var info = components[1]
+        var infoValue = components[2]
+
+        if (infoValue == "limit") {
+            extremaModal.modal("show")
+        }
+    }
+
+                     
+                     
     function sleep(ms){
         return new Promise(r => setTimeout(r, ms));
     }

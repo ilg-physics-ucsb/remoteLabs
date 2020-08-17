@@ -25,6 +25,18 @@ function closeStream(videoElement) {
     }
 }
 
+function controllerResponseHandler(cmd) {
+    var components = cmd.split("/");
+    var device = components[0]
+    var info = components[1]
+    var infoValue = components[2]
+
+    if (infoValue == "limit") {
+        extremaModal.modal("show")
+    }
+
+}
+
 // This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
 function onWebsocketMessage(message){
     alert(message);
