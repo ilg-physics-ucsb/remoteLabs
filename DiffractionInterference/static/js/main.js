@@ -53,7 +53,7 @@ $("document").ready(function () {
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
-    extremaModal = $("extremaModal")
+    extremaModal = $("#extremaModal")
 
   
 //for modal

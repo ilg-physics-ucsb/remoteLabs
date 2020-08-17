@@ -70,7 +70,7 @@ $("document").ready(function () {
     var FirstTimePSon = true;
     var FirstTimePSoff = true;
     var FirstTimeTempCam = true;
-    extremaModal = $("extremaModal")
+    extremaModal = $("#extremaModal")
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7
