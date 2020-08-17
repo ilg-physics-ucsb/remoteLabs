@@ -297,7 +297,8 @@ class StepperI2C(MotorKit, BaseController):
         step = deg / self.degPerStep
         step = int(step * self.gearRatio)
         step = round(step)
-        self.move(step)
+        response = self.move(step)
+        return response
 
 
     def homeMove(self, stepLimit=5000, additionalSteps=10):
