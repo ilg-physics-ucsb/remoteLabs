@@ -58,10 +58,7 @@ function controllerResponseHandler(cmd) {
         extremaModal.modal("show")
     }
 
-    if (device == "Slit") {
-        console.log("Controller Response Hide")
-        slitModal.modal('hide')
-    }
+
 }
 
 
