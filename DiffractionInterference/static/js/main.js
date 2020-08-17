@@ -83,7 +83,7 @@ $("document").ready(function () {
     // })
 
     //for Time Limit
-     window.setTimeout(timeOutHandler,2700000)
+     window.setTimeout(timeOutHandler,10800000)
  
      function timeOutHandler(){
         //  TEMP CHANGE
@@ -92,15 +92,17 @@ $("document").ready(function () {
      }
  
      function startTimer(duration, display) {
-         var timer = duration, minutes, seconds;
+         var timer = duration, hours, minutes, seconds;
          setInterval(function () {
-             minutes = parseInt(timer / 60, 10);
-             seconds = parseInt(timer % 60, 10);
-     
-             minutes = minutes < 10 ? "0" + minutes : minutes;
-             seconds = seconds < 10 ? "0" + seconds : seconds;
-     
-             display.textContent = minutes + ":" + seconds;
+            hours = Math.floor(parseInt(timer / 3600, 10));
+            minutes = Math.floor(parseInt(timer % 3600 / 60 , 10));
+            seconds = Math.floor(parseInt(timer % 3600 % 60, 10));
+        
+            hours = hours <10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+             
+            display.textContent = hours + ":" + minutes + ":" + seconds;
      
              if (--timer < 0) {
                  timer = duration;
@@ -109,9 +111,9 @@ $("document").ready(function () {
      }
      
      window.onload = function () {
-         var fortyfiveMinutes = 60 * 45,
+         var threeHours = 3 * 60 * 60,
              display = document.querySelector('#time');
-         startTimer(fortyfiveMinutes, display);
+         startTimer(threeHours, display);
      
          TransparencyOff.style.display = "block";                      
          TransparencyOn.style.display = "none"; 
@@ -527,6 +529,19 @@ $("document").ready(function () {
     var rulerCam = document.getElementById("RulerCam");
     var screenCam = document.getElementById("ScreenCam");
 
+    function controllerResponseHandler(cmd) {
+        var components = cmd.split("/");
+        var device = components[0]
+        var info = components[1]
+        var infoValue = components[2]
+
+        if (infoValue == "limit") {
+            extremaModal.modal("show")
+        }
+    }
+
+                     
+                     
     function sleep(ms){
         return new Promise(r => setTimeout(r, ms));
     }

@@ -142,8 +142,8 @@
       <div  id="VideoCenter" class="column w-col w-col-8">
         <div class="Warning">
           This session will end and the system will reset in 
-          <span id="time" style="color:red;font-weight:bold">45:00</span> 
-          minutes.
+          <span id="time" style="color:red;font-weight:bold">3:00:00</span>
+          hours.
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
           <button id="TempCam" type="button" class="btn btn-primary">HEAT</button>
@@ -281,6 +281,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -294,5 +295,19 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="extremaModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="loadingModalLabel">Limit Reached!</h5>
+              </div>
+              <div class="modal-body">
+                      <p>This object can't move any more in that direction.</p>
+              </div>
+          </div>
+      </div>
+    </div>
+    
  </body>
 </html>
