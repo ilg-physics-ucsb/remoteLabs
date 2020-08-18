@@ -650,7 +650,7 @@ $("document").ready(function () {
     //     // scaleMap: true
     // }).parent().css({"margin":"0 auto"});
 
-    $('#singleSlitsPic').mapster({
+    $('#diffractionSlitsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -661,62 +661,7 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"});
 
-  $('#variSinglePic').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#linesCirclesPic').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#patternsPic').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#doublePic').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
-  
-  $('#variDoublePic').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
-  
-  $('#multiplePic').mapster({
+  $('#interferenceSlitsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
     fillOpacity: 0.6,
@@ -727,16 +672,6 @@ $("document").ready(function () {
     // scaleMap: true
   }).parent().css({"margin":"0 auto"}); 
 
-  $('#comparisonsPic').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"}); 
 
   $('#schematic').mapster({
     mapKey:'id',
