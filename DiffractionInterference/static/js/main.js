@@ -83,7 +83,7 @@ $("document").ready(function () {
     brightnessDisplay = $("#briVal")[0]
     brightnessSlider = $("#brightnessSlider")[0]
     contrastDisplay = $("#conVal")[0]
-    constrastSlider = $("#contrastSlider")[0]
+    contrastSlider = $("#contrastSlider")[0]
     cameraControl = $("#cameraControl")[0]
 
   
