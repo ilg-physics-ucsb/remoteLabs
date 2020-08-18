@@ -67,7 +67,7 @@ function setContrast(){
 }
 
 function contrastValue(){
-    exposureDisplay.innerHTML=contrastSlider.value + "%"
+    contrastDisplay.innerHTML=contrastSlider.value + "%"
 }
 
 var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
