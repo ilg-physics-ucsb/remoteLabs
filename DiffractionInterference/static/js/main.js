@@ -634,7 +634,7 @@ $("document").ready(function () {
         // await sleep(100);
         updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
         liveStream.style.transform = "rotate(0deg)"
-        exposureControl.style.display = "None"
+        cameraControl.style.display = "None"
     })
 
     rulerCam.addEventListener("click", function() {
@@ -643,7 +643,7 @@ $("document").ready(function () {
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         liveStream.style.transform = "rotate(0deg)"
-        exposureControl.style.display = "None"
+        cameraControl.style.display = "None"
     })
 
     screenCam.addEventListener("click", function() {
@@ -651,7 +651,7 @@ $("document").ready(function () {
         dataChannel.send("Camera/camera/c")
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
-        exposureControl.style.display = "Block"
+        cameraControl.style.display = "Block"
     })
     // END Camera Switching
 
