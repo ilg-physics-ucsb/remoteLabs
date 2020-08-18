@@ -120,20 +120,3 @@ function draw_cursor(x,y){
 
 }
 
-
-
-
-
-//////////////////////////////////////////////////////////////
-//Arbitrary slider function
-
-
-
-function arbitrary_function(){
-    document.getElementById('slo').innerHTML=document.getElementById('slo').innerHTML+ ', ' +document.getElementById('myslider').value
-
-}
-
-function slider_value(){
-    document.getElementById('slo_val').innerHTML=document.getElementById('myslider').value
-}

@@ -46,6 +46,15 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
+function setExposure(){
+    dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
+
+}
+
+function slider_value(){
+    exposureDisplay.innerHTML=exposureSlider.value
+}
+
 var extremaModal
 
 $("document").ready(function () {
@@ -54,6 +63,8 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
+    var exposureDisplay = $("#slo_val")[0]
+    var exposureSlider = $("#myslider")[0]
 
   
 //for modal

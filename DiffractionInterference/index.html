@@ -165,12 +165,12 @@
         </map>
           </map>
         </div>
-        <br>
-        <br>
-        <br>
-        <b>Arbitrary Slider Value:</b> <span id="slo_val" style="font-weight:bold" >50</span> <br>
-        <b>Arbitrary Slider Calls:</b> <span id="slo" style="font-weight:bold" >50</span> 
-        <input type="range" min="0" max="100" value="50" class="sliders" id='myslider' oninput= 'slider_value()' onmouseup="arbitrary_function()">
+
+        <div id="exposureSlider">
+          <b>Microseconds:</b> <span id="slo_val" style="font-weight:bold" >50</span> <br>
+          <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >600</span> 
+           <input type="range" min="0" max="15000" value="6000" class="sliders" id='myslider' oninput= 'slider_value()' onmouseup="setExposure()">
+        </div>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2" style="justify-content: start">
         <div id="ToggleDark" >
