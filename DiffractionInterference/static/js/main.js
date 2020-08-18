@@ -55,7 +55,7 @@ function slider_value(){
     exposureDisplay.innerHTML=exposureSlider.value
 }
 
-var extremaModal
+var extremaModal, exposureDisplay, exposureControl, exposureSlider
 
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
@@ -63,8 +63,9 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
-    var exposureDisplay = $("#slo_val")[0]
-    var exposureSlider = $("#myslider")[0]
+    exposureDisplay = $("#slo_val")[0]
+    exposureSlider = $("#myslider")[0]
+    exposureControl = $("#exposureControl")[0]
 
   
 //for modal
@@ -614,6 +615,7 @@ $("document").ready(function () {
         // await sleep(100);
         updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
         liveStream.style.transform = "rotate(0deg)"
+        exposureControl.style.display = "None"
     })
 
     rulerCam.addEventListener("click", function() {
@@ -622,6 +624,7 @@ $("document").ready(function () {
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         liveStream.style.transform = "rotate(0deg)"
+        exposureControl.style.display = "None"
     })
 
     screenCam.addEventListener("click", function() {
@@ -629,6 +632,7 @@ $("document").ready(function () {
         dataChannel.send("Camera/camera/c")
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
+        exposureControl.style.display = "Block"
     })
     // END Camera Switching
 
