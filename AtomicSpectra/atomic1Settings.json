@@ -19,6 +19,6 @@
     "armBounds": [-21000, 21000],
     "carouselBounds": [-160, 15520],
     
-    "limitBounce": 50,
+    "limitBounce": -100,
     "homeOvershoot": 5
 }
