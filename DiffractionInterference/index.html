@@ -154,6 +154,23 @@
               <div style="clear: both;"></div>
         </div>
         
+        <div id="cameraControl" style="display: none;">
+          <b> Camera Controls</b>
+          <hr>
+          <b>Exposure</b>
+          <b>Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
+           <b>Brightness</b>
+           <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
+           <b>Contrast</b>
+           <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
+        </div>
+        <hr>
         
         <div id="Schema">
           <img id="schematic" src="static/images/TrackSchematic.png" usemap="#image-map-schematic">
@@ -166,11 +183,7 @@
           </map>
         </div>
 
-        <div id="exposureControl" style="display: none;">
-          <b>Microseconds:</b> <span id="slo_val" style="font-weight:bold" >6000</span> <br>
-          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
-           <input type="range" min="1" max="15000" value="6000" class="sliders" id='myslider' oninput= 'slider_value()' onmouseup="setExposure()">
-        </div>
+        
       </div>
       <div id="RightSideImages" class="column w-col w-col-2" style="justify-content: start">
         <div id="ToggleDark" >

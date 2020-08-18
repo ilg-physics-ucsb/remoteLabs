@@ -48,14 +48,29 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 
 function setExposure(){
     dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
-
 }
 
-function slider_value(){
+function exposureValue(){
     exposureDisplay.innerHTML=exposureSlider.value
 }
 
-var extremaModal, exposureDisplay, exposureControl, exposureSlider
+function setBrightness(){
+    dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+}
+
+function brightnessValue(){
+    brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+}
+
+function setContrast(){
+    dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+}
+
+function contrastValue(){
+    exposureDisplay.innerHTML=contrastSlider.value + "%"
+}
+
+var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
@@ -63,9 +78,13 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
-    exposureDisplay = $("#slo_val")[0]
-    exposureSlider = $("#myslider")[0]
-    exposureControl = $("#exposureControl")[0]
+    exposureDisplay = $("#expVal")[0]
+    exposureSlider = $("#exposureSlider")[0]
+    brightnessDisplay = $("#briVal")[0]
+    brightnessSlider = $("#brightnessSlider")[0]
+    contrastDisplay = $("#conVal")[0]
+    constrastSlider = $("#contrastSlider")[0]
+    cameraControl = $("#cameraControl")[0]
 
   
 //for modal
