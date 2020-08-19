@@ -13,33 +13,33 @@
 
     "refPointsSingle" : {
         "SingleOpen": 0,
-        "LineSlit": 675,
-        "LittleHole": 1350,
-        "BigHole": 1975,
-        "A02": 2875,
-        "A04": 3475,
-        "A08": 4150,
-        "A16": 4775,
+        "LineSlit": 600,
+        "LittleHole": 1250,
+        "BigHole": 1875,
+        "A02": 2775,
+        "A04": 3450,
+        "A08": 4075,
+        "A16": 4725,
         "VaryWidth": 5875,
-        "Square": 8700,
-        "Hex": 9350,
-        "Dots": 10000,
-        "Holes": 10650
+        "Square": 8575,
+        "Hex": 9200,
+        "Dots": 9900,
+        "Holes": 10500
     },
 
     "refPointsMulti": {
         "MultiOpen": 0,
-        "FarClose": 650,
-        "WideThin": 1300,
-        "ThreeTwo": 1950,
-        "TwoSlit": 2875,
-        "ThreeSlit": 3525,
-        "FourSlit": 3150,
-        "FiveSlit": 4800,
-        "A04D25": 5800,
-        "A04D50": 6450,
-        "A08D25": 7075,
-        "A08D50": 7725,
-        "VarySpacing": 8825
+        "FarClose": 600,
+        "WideThin": 1200,
+        "ThreeTwo": 1850,
+        "TwoSlit": 2775,
+        "ThreeSlit": 3400,
+        "FourSlit": 4025,
+        "FiveSlit": 4725,
+        "A04D25": 5650,
+        "A04D50": 6300,
+        "A08D25": 6925,
+        "A08D50": 7550,
+        "VarySpacing": 8600
     }
 }
