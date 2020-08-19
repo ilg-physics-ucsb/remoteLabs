@@ -46,7 +46,31 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
-var extremaModal
+function setExposure(){
+    dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
+}
+
+function exposureValue(){
+    exposureDisplay.innerHTML=exposureSlider.value
+}
+
+function setBrightness(){
+    dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+}
+
+function brightnessValue(){
+    brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+}
+
+function setContrast(){
+    dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+}
+
+function contrastValue(){
+    contrastDisplay.innerHTML=contrastSlider.value + "%"
+}
+
+var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
@@ -54,6 +78,13 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
+    exposureDisplay = $("#expVal")[0]
+    exposureSlider = $("#exposureSlider")[0]
+    brightnessDisplay = $("#briVal")[0]
+    brightnessSlider = $("#brightnessSlider")[0]
+    contrastDisplay = $("#conVal")[0]
+    contrastSlider = $("#contrastSlider")[0]
+    cameraControl = $("#cameraControl")[0]
 
   
 //for modal
@@ -603,6 +634,7 @@ $("document").ready(function () {
         // await sleep(100);
         updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
         liveStream.style.transform = "rotate(0deg)"
+        cameraControl.style.display = "None"
     })
 
     rulerCam.addEventListener("click", function() {
@@ -611,6 +643,7 @@ $("document").ready(function () {
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         liveStream.style.transform = "rotate(0deg)"
+        cameraControl.style.display = "None"
     })
 
     screenCam.addEventListener("click", function() {
@@ -618,6 +651,7 @@ $("document").ready(function () {
         dataChannel.send("Camera/camera/c")
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
+        cameraControl.style.display = "Block"
     })
     // END Camera Switching
 
