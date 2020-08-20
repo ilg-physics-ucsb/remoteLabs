@@ -63,6 +63,11 @@ stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=0.004) 
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 ASDIpdu.login()
 
+#This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
+multiSlits.device.release()
+singleSlits.device.release()
+stage.device.release()
+
 if args.reset:
     exp = Experiment("DiffractionInterference")
 elif args.admin:

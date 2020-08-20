@@ -84,6 +84,11 @@ ambient = SingleGPIO("Ambient", ambientPin)
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 ASDIpdu.login()
 
+#This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
+slit.device.release()
+grationg.device.release()
+arm.device.release()
+carousel.device.release()
 
 if args.reset:
     exp = Experiment("AtomicSpectra")

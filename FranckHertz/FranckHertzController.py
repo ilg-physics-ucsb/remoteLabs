@@ -57,7 +57,11 @@ FHpdu.login()
 
 electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
 
-
+#This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
+filament.device.release()
+oven.device.release()
+Va.device.release()
+Vr.device.release()
 
 if args.reset:
     exp = Experiment("FranckHertz")

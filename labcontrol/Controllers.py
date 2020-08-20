@@ -210,6 +210,7 @@ class StepperI2C(MotorKit, BaseController):
         self.homing = False
         self.degPerStep = degPerStep
         self.gearRatio = gearRatio
+        self.device.release()
                
     def setup(self, style):
         pass

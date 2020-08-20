@@ -52,6 +52,9 @@ electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
 
 multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 
+#This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
+potentiometer.device.release()
+filterWheel.device.release()
 
 if args.reset:
     exp = Experiment("PhotoElectricEffect")
