@@ -566,6 +566,7 @@ $("document").ready(function () {
             var newValue = newSettings[setting]
             var oldValue = currentSettings[setting]
             if (newValue !== oldValue) {
+                console.log("Updating " + setting)
                 updateCameraSetting(setting, newValue)
                 await sleep(50)
             }
@@ -602,10 +603,12 @@ $("document").ready(function () {
     }
 
     var currentCameraSettings = cameraDefaults
+    var screenCameraSettings = defaultScreenCameraSettings
 
 
     setExposure = function(){
         updateCameraSetting("shutter_speed", exposureSlider.value)
+        screenCameraSettings["shutter_speed"] = exposureSlider.value
         // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
     }
     
@@ -615,6 +618,7 @@ $("document").ready(function () {
     
     setBrightness = function(){
         updateCameraSetting("brightness", brightnessSlider.value)
+        screenCameraSettings["brightness"] = brightnessSlider.value
         // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
     }
     
@@ -624,6 +628,7 @@ $("document").ready(function () {
     
     setContrast = function(){
         updateCameraSetting("contrast", contrastSlider.value)
+        screenCameraSettings["contrast"] = contrastSlider.value
         // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
     }
     
@@ -656,7 +661,7 @@ $("document").ready(function () {
         console.log("Switched to screen cam")
         dataChannel.send("Camera/camera/c")
         // await sleep(100)
-        updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
+        updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
         cameraControl.style.display = "Block"
     })
     // END Camera Switching
