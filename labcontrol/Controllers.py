@@ -378,12 +378,13 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
 
 class ArduCamMultiCamera(BaseController):
 
-    def __init__(self, name, videoNumber=0):
+    def __init__(self, name, videoNumber=0, defaultSettings=None):
         self.name = name
         self.videoNumber = videoNumber
         self.device_type = "measurement"
         self.experiment = None
         self.state = {}
+        self.defaultSettings = defaultSettings
 
         # Define Pins
         # Board Pin 7 = BCM Pin 4 = Selection
@@ -440,6 +441,12 @@ class ArduCamMultiCamera(BaseController):
         if len(params) != 2:
             raise ArgumentNumberError(len(params), 2, "imageMod")
         return params
+    
+    def reset(self):
+        if self.defaultSettings is not None:
+            for setting, value in self.defaultSettings.items():
+                self.imageMod([setting,value])
+                time.sleep(0.1)
 
 class ElectronicScreen(BaseController):
 

@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO
-import argparse, os, json, time
+import argparse, os, json
 
 parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
 
@@ -28,13 +28,6 @@ outletMap       = labSettings["outletMap"]
 #Multi slit spacing is 645
 #Multi slit medium spacing is 1000 (between groups) 
 
-defaultCameraSettings = labSettings["defaultCameraSettings"]
-
-def cameraReset(self):
-    for setting, value in labSettings.items():
-        self.imageMod([setting,value])
-        time.sleep(0.1)
-
 
 
 ambientPin      = labSettings["ambientPin"]
@@ -51,8 +44,10 @@ if args.admin:
     singleSlitBounds = bounds
     stageBounds = bounds
 
-camera = ArduCamMultiCamera("Camera", 1)
-camera.reset = cameraReset
+
+defaultCameraSettings = labSettings["defaultCameraSettings"]
+camera = ArduCamMultiCamera("Camera", 1, defaultSettings=defaultCameraSettings)
+
 
 socket_path = "/tmp/uv4l.socket"
 
