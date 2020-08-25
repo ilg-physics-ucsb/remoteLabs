@@ -602,8 +602,8 @@ $("document").ready(function () {
         "drc_strength": 0
     }
 
-    var currentCameraSettings = cameraDefaults
-    var screenCameraSettings = defaultScreenCameraSettings
+    var currentCameraSettings = JSON.parse(JSON.stringify(cameraDefaults))
+    var screenCameraSettings = JSON.parse(JSON.stringify(defaultScreenCameraSettings))
 
 
     setExposure = function(){
