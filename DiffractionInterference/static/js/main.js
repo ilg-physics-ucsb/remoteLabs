@@ -46,6 +46,32 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
+function setExposure(){
+    updateCameraSetting("shutter_speed", exposueSlider.value)
+    // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
+}
+
+function exposureValue(){
+    exposureDisplay.innerHTML=exposureSlider.value
+}
+
+function setBrightness(){
+    updateCameraSetting("brightness", brightnessSlider.value)
+    // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+}
+
+function brightnessValue(){
+    brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+}
+
+function setContrast(){
+    updateCameraSetting("contrast", contrastSlider.value)
+    // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+}
+
+function contrastValue(){
+    contrastDisplay.innerHTML=contrastSlider.value + "%"
+}
 
 var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 
@@ -602,36 +628,6 @@ $("document").ready(function () {
     }
 
     var currentCameraSettings = cameraDefaults
-
-    function setExposure(){
-        updateCameraSetting("shutter_speed", exposueSlider.value)
-        // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
-    }
-    
-    function exposureValue(){
-        exposureDisplay.innerHTML=exposureSlider.value
-    }
-    
-    function setBrightness(){
-        updateCameraSetting("brightness", brightnessSlider.value)
-        // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
-    }
-    
-    function brightnessValue(){
-        brightnessDisplay.innerHTML=brightnessSlider.value + "%"
-    }
-    
-    function setContrast(){
-        updateCameraSetting("contrast", contrastSlider.value)
-        // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
-    }
-    
-    function contrastValue(){
-        contrastDisplay.innerHTML=contrastSlider.value + "%"
-    }
-    
-
-
 
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
