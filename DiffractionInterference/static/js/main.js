@@ -582,7 +582,7 @@ $("document").ready(function () {
         "red_balance": 100,
         "blue_balance": 100,
         "shutter_speed": 0,
-        "iso_sensitvity": 400,
+        "iso_sensitivity": 400,
         "awb_mode": 0,
         "exposure_mode": 1,
         "drc_strength": 0
@@ -596,7 +596,7 @@ $("document").ready(function () {
         "red_balance": 100,
         "blue_balance": 100,
         "shutter_speed": 6000,
-        "iso_sensitvity": 400,
+        "iso_sensitivity": 400,
         "awb_mode": 6,
         "exposure_mode": 5,
         "drc_strength": 0
