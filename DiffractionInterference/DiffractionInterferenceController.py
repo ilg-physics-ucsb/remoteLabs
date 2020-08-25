@@ -29,6 +29,7 @@ outletMap       = labSettings["outletMap"]
 #Multi slit medium spacing is 1000 (between groups) 
 
 
+
 ambientPin      = labSettings["ambientPin"]
 
 multiSlitBounds = labSettings["multiSlitBounds"]
@@ -43,7 +44,9 @@ if args.admin:
     singleSlitBounds = bounds
     stageBounds = bounds
 
-camera = ArduCamMultiCamera("Camera", 1)
+
+defaultCameraSettings = labSettings["defaultCameraSettings"]
+camera = ArduCamMultiCamera("Camera", 1, defaultSettings=defaultCameraSettings)
 
 
 socket_path = "/tmp/uv4l.socket"

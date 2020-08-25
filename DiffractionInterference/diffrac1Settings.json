@@ -41,5 +41,14 @@
         "A08D25": 6925,
         "A08D50": 7550,
         "VarySpacing": 8600
+    },
+
+    "defaultCameraSettings":{
+        "frame_rate":15,
+        "brightness": 50,
+        "contrast": 0,
+        "shutter_speed": 0,
+        "awb_mode": 0,
+        "exposure_mode": 1
     }
 }

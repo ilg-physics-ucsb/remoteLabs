@@ -46,7 +46,7 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
-
+var setExposure, exposureValue, setBrightness, brightnessValue, setContrast, contrastValue
 var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 
 $("document").ready(function () {
@@ -566,6 +566,7 @@ $("document").ready(function () {
             var newValue = newSettings[setting]
             var oldValue = currentSettings[setting]
             if (newValue !== oldValue) {
+                console.log("Updating " + setting)
                 updateCameraSetting(setting, newValue)
                 await sleep(50)
             }
@@ -581,7 +582,7 @@ $("document").ready(function () {
         "red_balance": 100,
         "blue_balance": 100,
         "shutter_speed": 0,
-        "iso_sensitvity": 400,
+        "iso_sensitivity": 400,
         "awb_mode": 0,
         "exposure_mode": 1,
         "drc_strength": 0
@@ -595,38 +596,43 @@ $("document").ready(function () {
         "red_balance": 100,
         "blue_balance": 100,
         "shutter_speed": 6000,
-        "iso_sensitvity": 400,
+        "iso_sensitivity": 400,
         "awb_mode": 6,
         "exposure_mode": 5,
         "drc_strength": 0
     }
 
-    var currentCameraSettings = cameraDefaults
+    var currentCameraSettings = JSON.parse(JSON.stringify(cameraDefaults))
+    var screenCameraSettings = JSON.parse(JSON.stringify(defaultScreenCameraSettings))
 
-    function setExposure(){
-        updateCameraSetting("shutter_speed", exposueSlider.value)
+
+    setExposure = function(){
+        updateCameraSetting("shutter_speed", exposureSlider.value)
+        screenCameraSettings["shutter_speed"] = exposureSlider.value
         // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
     }
     
-    function exposureValue(){
+    exposureValue = function(){
         exposureDisplay.innerHTML=exposureSlider.value
     }
     
-    function setBrightness(){
+    setBrightness = function(){
         updateCameraSetting("brightness", brightnessSlider.value)
+        screenCameraSettings["brightness"] = brightnessSlider.value
         // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
     }
     
-    function brightnessValue(){
+    brightnessValue = function(){
         brightnessDisplay.innerHTML=brightnessSlider.value + "%"
     }
     
-    function setContrast(){
+    setContrast = function(){
         updateCameraSetting("contrast", contrastSlider.value)
+        screenCameraSettings["contrast"] = contrastSlider.value
         // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
     }
     
-    function contrastValue(){
+    contrastValue = function(){
         contrastDisplay.innerHTML=contrastSlider.value + "%"
     }
     
@@ -655,7 +661,7 @@ $("document").ready(function () {
         console.log("Switched to screen cam")
         dataChannel.send("Camera/camera/c")
         // await sleep(100)
-        updateManyCameraSettings(currentCameraSettings, defaultScreenCameraSettings)
+        updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
         cameraControl.style.display = "Block"
     })
     // END Camera Switching
