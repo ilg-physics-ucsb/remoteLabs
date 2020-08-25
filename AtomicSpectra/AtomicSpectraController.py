@@ -86,7 +86,7 @@ ASDIpdu.login()
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
 slit.device.release()
-grationg.device.release()
+grating.device.release()
 arm.device.release()
 carousel.device.release()
 
