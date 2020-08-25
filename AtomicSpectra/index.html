@@ -53,64 +53,60 @@
   <div class="pagecontainer w-row">
     <div id="PageHead" class="column w-row" style="margin-bottom: 0px;">
       <h1 class="Title">Atomic Spectra Experiment</h1>
-      <div class="text-block">
-        <h5 class="SubTitle">
-          <a target="_blank" href="static/docs/ASlabGuide.pdf">Click here to access the lab guide.</a>
-            <br>  
-          <span style="font-weight: 100;font-style: italic;"> This will become a link to the course's GauchoSpace.</span>
-        </h5>
-      </div> 
       <!-- <div class="w-row"> -->
       <div id="TopTextLeft" class="column w-col w-col-6">
-        <h2 class="SubTitle">Set-Up</h2>
-        <div class="text-block">
-          Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
-          as well as to equipment manuals and manufacturer websites.</div>
+          <h2 class="SubTitle">Get Set</h2>
+            <b>Lab Guides:&emsp;&emsp;</b>  
+            <a target="_blank" href="static/docs/_ASmarkdown/AS5L.html">PHYS 5L</a> &emsp;&emsp;
+            <a target="_blank" href="static/docs/ASlabGuide.pdf">PHYS 25L</a><br> 
+            <b>GauchoSpaces:&emsp;&emsp;</b>
+            <a target="_blank" href="https://gauchospace.ucsb.edu/courses/course/view.php?id=83753&section=9">PHYS 5L</a> &emsp;&emsp;
+            <a target="_blank" href="https://gauchospace.ucsb.edu/courses/course/view.php?id=89250">PHYS 25L</a>
       </div>
       <div id="TopTextRight" class="column w-col w-col-6">
-        <h2 class="SubTitle">Get Help</h2>
-        <div class="text-block">
-          Here students will be advised of options for synchronous and asynchronous assistance. 
-          <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
-          so they can use the various Zoom features to request help in real time. 
-          There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.</div>
+          <h2 class="SubTitle">Get Help</h2>
+          <b>Section Zoom Rooms:&emsp;&emsp;</b>
+          <a target="_blank" href="https://ucsb.zoom.us/j/9333607071?pwd=TUE0cTBLRE5qbjNqU1BFRUhxSkg0Zz09">TA Connor Fitzgerald</a>&emsp;&emsp;
+          <a target="_blank" href="https://ucsb.zoom.us/j/9305930023?pwd=K0NJY1pnNENUL09LMWhWZ2tOK2Rwdz09">TA Carl Padgett</a>
+            <br><b>Slack Channel:&emsp;&emsp;</b>
+             <a target="_blank" href="ucsb-lowdiv-physlabs.slack.com">UCSB Sophomore Labs</a>  
       </div>
       <div class="Warning">
         This session will end and the system will reset in 
         <span id="time" style="color:red;font-weight:bold">3:00:00</span>
         hours.
       </div>       
-      <div id="SchematicRadioButtons">
+      <div id="SchematicRadioButtons" style="margin-bottom: 0px;">
         <div id="radioButtonsLeft" class="column w-col w-col-3"></div>
-        <div id="radioButtonsMiddle" class="column w-col w-col-7">
+        <div id="radioButtonsMiddle" class="column w-col w-col-7" style="margin-bottom: 0px;">
           <div class="w-row">
             <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
-            <div class="column w-col w-col-2" style=""></div>
+            <div class="column w-col w-col-2" ></div>
             <div class="column w-col w-col-4" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
           </div>
-          <div id="radioButtonsSchematic" class="w-row">
-            <div class="column w-col w-col-1" style="color:darkgreen">
+          <div id="radioButtonsSchematic" class="w-row" >
+            <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
               <input type="radio" id="fineArm" name="ArmStepSize" value="1">
               <label for="fineArm">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-2" style="color:darkgreen">
+            <div class="column w-col w-col-2" style="color:darkgreen; margin-bottom: 0px;">
               <input type="radio" id="mediumArm" name="ArmStepSize" value="5">
               <label for="mediumArm">Medium</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-1" style="color:darkgreen">
+            <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
               <input type="radio" id="coarseArm" name="ArmStepSize" value="50" checked>
               <label for="coarseArm">Coarse</label>
             </div>
-            <div class="column w-col w-col-2" style=""></div>
-            <div class="column w-col w-col-1" style=" color:darkorchid">
+            <div class="column w-col w-col-2" style="margin-bottom: 0px;"></div>
+            <div class="column w-col w-col-1" style=" color:darkorchid; margin-bottom: 0px;">
               <input type="radio" id="fineTable" name="TableStepSize" value="20">
               <label for="fineTable">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-2" style="color:darkorchid">
+            <div class="column w-col w-col-2" style="color:darkorchid; margin-bottom: 0px;">
               <input type="radio" id="mediumTable" name="TableStepSize" value="200">
               <label for="mediumTable">Medium</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-1" style="color:darkorchid">
+            <div class="column w-col w-col-1" style="color:darkorchid; margin-bottom: 0px;">
               <input type="radio" id="coarseTable" name="TableStepSize" value="600" checked>
               <label for="coarseTable">Coarse</label>
             </div>
@@ -120,11 +116,18 @@
       </div>
       <div id="Controls" class="column w-row" style="margin-bottom: 0px;">
         <div id="LeftSide" class="column w-col w-col-2">
-
+          <div id="Toggle">
+            (click to toggle the<br> ambient Light)<br>
+            <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
+            <map name="image-map-ls">
+               <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
+            </map>
+          </div>
         </div>
-        <div id="Center" class="column w-col w-col-8" style="margin-bottom: 0px;">
-           <div id="Schematic">  
-            <div id="SchematicLeft" class="column w-col w-col-2"></div>
+        <div id="Center" class="column w-col w-col-8" style="margin-bottom:0px;">
+          <div id="Schematic">  
+            <div id="SchematicLeft" class="column w-col w-col-2">
+            </div>
             <div id="SchematicCenter" class="column w-col w-col-8">    
               <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
               <map name="image-map-schematic">
@@ -140,13 +143,19 @@
               </div>  
             </div>
             <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6);">
-            </br></br></br></br>
-            (click arrows </br>  to nudge </br> the lamp)
+              </br></br>
+              (click arrows </br>  to nudge </br> the lamp)
             </div>
           </div>  
         </div>  
         <div id="RightSide" class="column w-col w-col-2">
-
+          <div id="ToggleDark">
+            (click to toggle the <br> Background dark)<br>
+            <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
+            <map name="image-map-ds">
+               <area id="darkTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
+            </map>
+          </div>
         </div>
       </div>
       <div id="CameraSelectorButtons" >
@@ -163,13 +172,6 @@
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
-        <div id="Toggle">
-          (click to toggle the<br> ambient Light)<br>
-          <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
-          <map name="image-map-ls">
-             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
-          </map>
-        </div>
         <div id="Grating" >
           <strong>Transmission Grating</strong>
           <a target="_blank" href="https://www.patonhawksley.com/product-page/te215">
@@ -183,30 +185,18 @@
           <div class="click-note" style="margin-bottom: -50px;">
             (click to toggle crosshairs visibility; move mouse over video to position crosshairs)
           </div>
-          <br>
-          <br>
         </div>
- 
       </div>
-      <div  id="VideoCenter" class="column w-col w-col-8">
- 
+      <div  id="VideoCenter" class="column w-col w-col-8" style="margin-left: -10px;
+      margin-right: 10px;">
         <div class="video w-video w-embed" id="v_overlay">
             <div id="canvas-wrap">
               <video id='v' data-playing="false" autoplay="" muted></video>
               <canvas id='canvas' ></canvas>
             </div>
         </div>
-      
-        
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
-        <div id="ToggleDark">
-          (click to toggle the <br> Background dark)<br>
-          <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
-          <map name="image-map-ds">
-             <area id="darkTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
-          </map>
-        </div>
         <div id="Lamps">
             <strong>Spectrum Tube Lamps</strong> <br> 
             <img id="LampsAllOff" src="static/images/LampToggles/AllOff.jpg" usemap="#image-map-Lamps-off">
@@ -258,6 +248,10 @@
             (choose increment and click arrows to adjust slit width)
           </div> 
         </div>
+      </div>
+    </div>
+    <div id="PageBottom" class="column w-row"><!-- unused -->
+      <div id="BottomLeft" class="column w-col w-col-2">
         <div id="Manual" >
           <strong>Instrument: AO Spencer Spectrometer</strong> <br> 
             <a target="_blank" href="static/docs/AOSpencerSpectrometerUserManual.pdf">
@@ -267,10 +261,7 @@
             (click on image for a PDF of the Manual)
         </div>  
       </div>
-    </div>
-    <div id="PageBottom" class="column w-row"><!-- unused -->
-
-      <div id="Spectra" class="column w-row" >
+      <div id="Spectra" class="column w-col w-col-8" >
         <strong>Unknowns "A" and "B" are each one of the five Noble gases.</strong> <br>
         <img id="Gases1" src="static/images/Noble Gases.jpg" usemap="#image-map-gases1">
               <map name="image-map-gases1">
@@ -282,9 +273,8 @@
               </map>
               <div class="click-note">
                 (Click an element above to see its detailed emission spectrum.)<br>
-                (Click an element below to see a spectrum in which the major peaks relative intensities can be discerned.)
+                (Click an element below to see a spectrum in which the major peaks relative intensities can be discerned.)<br>
               </div>
-      <!-- <div id="Spectra" class="column w-row" ></div> -->
         <img id="Gases2" src="static/images/Noble Gases.jpg" usemap="#image-map-gases2">
               <map name="image-map-gases2">
                 <area target="_blank" id="He_majorPeaks" alt="He" href="static/docs/He_majorPeaks.png" coords="4,4,131,131" shape="rect">
@@ -293,12 +283,9 @@
                 <area target="_blank" id="Kr_majorPeaks" alt="Kr" href="static/docs/Kr_majorPeaks.jpg" coords="406,4,534,131" shape="rect">
                 <area target="_blank" id="Xe_majorPeaks" alt="Xe" href="static/docs/Xe_Spectrum.jpg" coords="540,4,668,131" shape="rect">
               </map>
-        <div id="MetersLeft" class="column w-col w-col-6">
-        <!-- Preserving 6-6 structure  -->
-        </div>
-        <div id="MetersRight" class="column w-col w-col-6">
-        <!-- Preserving 6-6 structure  -->
-        </div>
+      </div>
+      <div id="BottomRight" class="column w-col w-col-2">
+
       </div>
     </div>
     <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
