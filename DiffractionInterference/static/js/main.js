@@ -1,81 +1,57 @@
-
-// This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
-function connectStream(stream, videoElement) {
-    if (videoElement) {
-        console.log("got a stream! Putting stream in the following video" );
-        console.log(videoElement);
-        videoElement.srcObject = stream;
-        videoElement.setAttribute("data-playing", "true");
-        // videoElement.play();
-    }
-}
-
-//This function runs if there is an error returned from the websocket connecting to the stream.
-function errorStream(error){
-    alert(error);
-}
-
-// This functions gets run when the websocket is closed.
-function closeStream(videoElement) {
-    if (videoElement) {
-        videoElement.srcObject = null;
-        videoElement.setAttribute("data-playing", "false");
-        console.log("websocket closed. bye bye!");
-    }
-}
-
-// This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
-function onWebsocketMessage(message){
-    alert(message);
-}
-
-function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
-    var signalling_server_hostname = location.hostname || "192.168.0.2";
-    var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
-    var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-    // var address = url + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    var address = location.hostname + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    // protocol = "wss:";
-    // var address = url + "/webrtc";
-    var wsurl = protocol + '//' + address;
-
-    console.log(videoElement);
-    if (videoElement && videoElement.getAttribute('data-playing') == "false") {
-        var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
-    }
-    return signalObj
-}
-
-function setExposure(){
-    updateCameraSetting("shutter_speed", exposueSlider.value)
-    // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
-}
-
-function exposureValue(){
-    exposureDisplay.innerHTML=exposureSlider.value
-}
-
-function setBrightness(){
-    updateCameraSetting("brightness", brightnessSlider.value)
-    // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
-}
-
-function brightnessValue(){
-    brightnessDisplay.innerHTML=brightnessSlider.value + "%"
-}
-
-function setContrast(){
-    updateCameraSetting("contrast", contrastSlider.value)
-    // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
-}
-
-function contrastValue(){
-    contrastDisplay.innerHTML=contrastSlider.value + "%"
-}
-
-var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
-
 $("document").ready(function () {
+
+    
+    // This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
+    function connectStream(stream, videoElement) {
+        if (videoElement) {
+            console.log("got a stream! Putting stream in the following video" );
+            console.log(videoElement);
+            videoElement.srcObject = stream;
+            videoElement.setAttribute("data-playing", "true");
+            // videoElement.play();
+        }
+    }
+
+    //This function runs if there is an error returned from the websocket connecting to the stream.
+    function errorStream(error){
+        alert(error);
+    }
+
+    // This functions gets run when the websocket is closed.
+    function closeStream(videoElement) {
+        if (videoElement) {
+            videoElement.srcObject = null;
+            videoElement.setAttribute("data-playing", "false");
+            console.log("websocket closed. bye bye!");
+        }
+    }
+
+    // This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
+    function onWebsocketMessage(message){
+        alert(message);
+    }
+
+    function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
+        var signalling_server_hostname = location.hostname || "192.168.0.2";
+        var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
+        var protocol = location.protocol === "https:" ? "wss:" : "ws:";
+        // var address = url + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
+        var address = location.hostname + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
+        // protocol = "wss:";
+        // var address = url + "/webrtc";
+        var wsurl = protocol + '//' + address;
+
+        console.log(videoElement);
+        if (videoElement && videoElement.getAttribute('data-playing') == "false") {
+            var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
+        }
+        return signalObj
+    }
+
+
+
+    var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
+
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
@@ -628,6 +604,33 @@ $("document").ready(function () {
     }
 
     var currentCameraSettings = cameraDefaults
+
+    function setExposure(){
+        updateCameraSetting("shutter_speed", exposueSlider.value)
+        // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
+    }
+    
+    function exposureValue(){
+        exposureDisplay.innerHTML=exposureSlider.value
+    }
+    
+    function setBrightness(){
+        updateCameraSetting("brightness", brightnessSlider.value)
+        // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+    }
+    
+    function brightnessValue(){
+        brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+    }
+    
+    function setContrast(){
+        updateCameraSetting("contrast", contrastSlider.value)
+        // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+    }
+    
+    function contrastValue(){
+        contrastDisplay.innerHTML=contrastSlider.value + "%"
+    }
 
     viewCam.addEventListener("click", function() {
         console.log("Switched to view cam")
