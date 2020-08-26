@@ -95,7 +95,7 @@ if args.reset:
 elif args.admin:
     exp = Experiment("AtmoicSpectra", admin=True)
 else:
-    Experiment("AtomicSpectra")
+    exp = Experiment("AtomicSpectra")
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(grating)
