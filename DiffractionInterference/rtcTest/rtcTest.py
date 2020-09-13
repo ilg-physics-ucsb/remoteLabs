@@ -1,101 +1,67 @@
-import logging
-import argparse
-import asyncio
-import json
-import os
-import platform
-import ssl
-
 from aiohttp import web
+routes = web.RouteTableDef()
 
-from aiortc import RTCPeerConnection, RTCSessionDescription
-from aiortc.contrib.media import MediaPlayer
+from rtcbot import RTCConnection, getRTCBotJS
 
-ROOT = os.path.dirname(__file__)
+# For this example, we use just one global connection
+conn = RTCConnection()
+
+# Serve the RTCBot javascript library at /rtcbot.js
+@routes.get("/rtcbot.js")
+async def rtcbotjs(request):
+    return web.Response(content_type="application/javascript", text=getRTCBotJS())
 
 
+# This sets up the connection
+@routes.post("/connect")
+async def connect(request):
+    clientOffer = await request.json()
+    serverResponse = await conn.getLocalDescription(clientOffer)
+    return web.json_response(serverResponse)
+
+@routes.get("/")
 async def index(request):
-    content = open(os.path.join(ROOT, "index.html"), "r").read()
-    return web.Response(content_type="text/html", text=content)
-
-
-async def javascript(request):
-    content = open(os.path.join(ROOT, "client.js"), "r").read()
-    return web.Response(content_type="application/javascript", text=content)
-
-
-async def offer(request):
-    params = await request.json()
-    offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
-
-    pc = RTCPeerConnection()
-    pcs.add(pc)
-
-    @pc.on("iceconnectionstatechange")
-    async def on_iceconnectionstatechange():
-        print("ICE connection state is %s" % pc.iceConnectionState)
-        if pc.iceConnectionState == "failed":
-            await pc.close()
-            pcs.discard(pc)
-
-    # open media source
-    options = {"framerate": "30", "video_size": "640x480"}
-    player = MediaPlayer("/dev/video0", format="v4l2", options=options)
-
-    await pc.setRemoteDescription(offer)
-    for t in pc.getTransceivers():
-        if t.kind == "audio" and player.audio:
-            pc.addTrack(player.audio)
-        elif t.kind == "video" and player.video:
-            pc.addTrack(player.video)
-
-    answer = await pc.createAnswer()
-    await pc.setLocalDescription(answer)
-
     return web.Response(
-        content_type="application/json",
-        text=json.dumps(
-            {"sdp": pc.localDescription.sdp, "type": pc.localDescription.type}
-        ),
-    )
+        content_type="text/html",
+        text=r"""
+    <html>
+        <head>
+            <title>RTCBot: Skeleton</title>
+            <script src="/rtcbot.js"></script>
+        </head>
+        <body style="text-align: center;padding-top: 30px;">
+            <video autoplay playsinline controls></video> <audio autoplay></audio>
+            <p>
+            Open the browser's developer tools to see console messages (CTRL+SHIFT+C)
+            </p>
+            <script>
+                var conn = new rtcbot.RTCConnection();
 
+                async function connect() {
+                    let offer = await conn.getLocalDescription();
 
-pcs = set()
+                    // POST the information to /connect
+                    let response = await fetch("/connect", {
+                        method: "POST",
+                        cache: "no-cache",
+                        body: JSON.stringify(offer)
+                    });
 
+                    await conn.setRemoteDescription(await response.json());
 
-async def on_shutdown(app):
-    # close peer connections
-    coros = [pc.close() for pc in pcs]
-    await asyncio.gather(*coros)
-    pcs.clear()
+                    console.log("Ready!");
+                }
+                connect();
 
+            </script>
+        </body>
+    </html>
+    """)
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="WebRTC webcam demo")
-    parser.add_argument("--cert-file", help="SSL certificate file (for HTTPS)")
-    parser.add_argument("--key-file", help="SSL key file (for HTTPS)")
-    parser.add_argument("--play-from", help="Read the media from a file and sent it."),
-    parser.add_argument(
-        "--host", default="0.0.0.0", help="Host for HTTP server (default: 0.0.0.0)"
-    )
-    parser.add_argument(
-        "--port", type=int, default=8080, help="Port for HTTP server (default: 8080)"
-    )
-    parser.add_argument("--verbose", "-v", action="count")
-    args = parser.parse_args()
+async def cleanup(app):
+    await conn.close()
 
-    if args.verbose:
-        logging.basicConfig(level=logging.DEBUG)
-
-    if args.cert_file:
-        ssl_context = ssl.SSLContext()
-        ssl_context.load_cert_chain(args.cert_file, args.key_file)
-    else:
-        ssl_context = None
-
-    app = web.Application()
-    app.on_shutdown.append(on_shutdown)
-    app.router.add_get("/", index)
-    app.router.add_get("/client.js", javascript)
-    app.router.add_post("/offer", offer)
-    web.run_app(app, host=args.host, port=args.port, ssl_context=ssl_context)
+app = web.Application()
+app.add_routes(routes)
+app.on_shutdown.append(cleanup)
+web.run_app(app)
