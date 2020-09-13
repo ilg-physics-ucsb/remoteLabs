@@ -40,7 +40,7 @@ async def offer(request):
 
     # open media source
     options = {"framerate": "30", "video_size": "640x480"}
-    player = MediaPlayer("/dev/video1", format="v4l2", options=options)
+    player = MediaPlayer("/dev/video0", format="v4l2", options=options)
 
     await pc.setRemoteDescription(offer)
     for t in pc.getTransceivers():
