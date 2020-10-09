@@ -124,12 +124,18 @@
           hours.
           <hr>
         </div>
-        <div id="otherToggles" class="row">
-          <div id="Laser" class="column w-col w-col-4">
+        <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
+          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Overview</button>
+          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' show_image_crosshairs()'>Position</button>
+          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Screen</button>
+          <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
+          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+        </div><div id="otherToggles" class="row">
+          <div id="Laser" class="column w-col w-col-6">
             (click to toggle the Laser)<br>
             <img id="laserSwitch" src="static/images/laserIcon.png">
           </div>
-          <div id="Schema" class="column w-col w-col-8">
+          <div id="Schema" class="column w-col w-col-6">
             
             <img id="schematic" src="static/images/TrackSchematic.png" usemap="#image-map-schematic">
             <map name="image-map-schematic">
@@ -140,13 +146,7 @@
             </map>
           </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
-          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Overview</button>
-          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' show_image_crosshairs()'>Position</button>
-          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Screen</button>
-          <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
-          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
-        </div>
+        
         <div class="video w-video w-embed" id='embeded'>
               <div id="wrapper_v" height=100>
                 <img id="imgCrossHairs" src="static/images/crosshairs.png" width=100% alt="" srcset="">
