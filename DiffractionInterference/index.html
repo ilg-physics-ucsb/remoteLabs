@@ -124,11 +124,12 @@
           hours.
         </div>
         <div id="otherToggles" class="row">
-          <div id="Laser" class="column w-col">
+          <div id="Laser" class="column w-col w-col-3">
             <img id="laserSwitch" src="static/images/laserIcon.png">
             (click to toggle the Laser)
           </div>
-          <div id="Schema">
+          <div id="Schema" class="column w-col w-col-9">
+            
             <img id="schematic" src="static/images/TrackSchematic.png" usemap="#image-map-schematic">
             <map name="image-map-schematic">
               <area id="closer" title="move closer" href="#" coords="608,126,511,182,608,240,609,207,664,207,663,158,609,159" shape="poly">
@@ -137,7 +138,7 @@
               <area id="up" title="nudge up" href="#" coords="212,116,224,116,226,100,235,104,229,73,206,93,213,97,212,108" shape="poly">
             </map>
           </div>
-          </div>
+        </div>
         <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
           <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Overview</button>
           <button id="RulerCam" type="button" class="btn btn-primary" onclick=' show_image_crosshairs()'>Position</button>
@@ -146,7 +147,7 @@
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
         <div class="video w-video w-embed" id='embeded'>
-              <div id="wrapper_v" height=50>
+              <div id="wrapper_v" height=100>
                 <img id="imgCrossHairs" src="static/images/crosshairs.png" width=100% alt="" srcset="">
                 <video id='v' data-playing="false" autoplay="" muted></video>
                 <canvas id='chcv' width='100%'></canvas>
