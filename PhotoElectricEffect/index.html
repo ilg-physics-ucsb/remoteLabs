@@ -85,8 +85,8 @@
             (click each for its transmission curve)
         </figure>
         <figure class="Device embed wheel">
-            <img id="filterwheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-fw">
-            <map name="image-map-fw">
+            <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw">
+            <map name="image-map-cfw">
               <area id="f365" href="#" title="365 nm" coords="321,110,108" shape="circle">
               <area id="f436" href="#" title="436 nm" coords="536,232,106" shape="circle">
               <area id="f546" href="#" title="546 nm" coords="539,481,107" shape="circle">
@@ -95,7 +95,18 @@
             <br>
             (click on a filter to rotate it into position)
         </figure>
-      </div>      
+        <figure class="Device embed wheel">
+          <img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw">
+          <map name="image-map-dfw">
+            <area id="nd00" href="#" title="OPEN" coords="349,137,76" shape="circle">
+            <area id="nd03" href="#" title="ND 0.3" coords="554,263,71" shape="circle">
+            <area id="nd05" href="#" title="ND 0.5" coords="556,501,71" shape="circle">
+            <area id="nd10" href="#" title="ND 1.0" coords="352,621,77" shape="circle">
+            <area id="nd20" href="#" title="ND 2.0" coords="158,496,80" shape="circle">
+            <area id="nd40" href="#" title="ND 4.0" coords="154,266,77" shape="circle">
+          </map>   
+      </figure>
+    </div>      
       <div id="VideoCenter" class="column w-col w-col-8">
         <div class="video w-video w-embed">
           <video id='v' data-playing="false" autoplay="" muted></video>
