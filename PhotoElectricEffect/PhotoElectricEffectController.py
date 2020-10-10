@@ -61,7 +61,7 @@ if args.reset:
 elif args.admin:
     exp = Experiment("PhotoElectricEffect", admin=True)
 else:
-    Experiment("PhotoElectricEffect")
+    exp = Experiment("PhotoElectricEffect")
 exp.add_device(PEpdu)
 exp.add_device(potentiometer)
 exp.add_device(filterWheel)

@@ -32,19 +32,19 @@ function onWebsocketMessage(message){
 
 function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     var signalling_server_hostname = location.hostname || "192.168.0.2";
-    var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
+    // var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
+    var signalling_server_address = signalling_server_hostname + location.pathname + "ws"
     var protocol = location.protocol === "https:" ? "wss:" : "ws:";
     // var address = url + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    var address = location.hostname + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
+    // var address = location.hostname + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
     // protocol = "wss:";
     // var address = url + "/webrtc";
-    var wsurl = protocol + '//' + address;
+    var wsurl = protocol + '//' + signalling_server_address;
 
     console.log(videoElement);
     if (videoElement && videoElement.getAttribute('data-playing') == "false") {
         var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
     }
-
     return signalObj
 }
 
