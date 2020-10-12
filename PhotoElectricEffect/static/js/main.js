@@ -326,28 +326,28 @@ window.addEventListener('DOMContentLoaded', function () {
     f577.addEventListener('click', function(event) {
         console.log("f577 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/180deg");
+        dataChannel.send("colorWheel/goto/180deg");
         // filterwheel.style.transform='rotate(0deg)';
         return false
     })
     f546.addEventListener('click', function(event) {
         console.log("f546 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/120deg");
+        dataChannel.send("colorWheel/goto/120deg");
         // filterwheel.style.transform='rotate(-30deg)';
         return false
     })
     f436.addEventListener('click', function(event) {
         console.log("f436 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/60deg");
+        dataChannel.send("colorWheel/goto/60deg");
         // filterwheel.style.transform='rotate(-60deg)';
         return false
     })
     f365.addEventListener('click', function(event) {
         console.log("f365 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/0deg");
+        dataChannel.send("colorWheel/goto/0deg");
         // filterwheel.style.transform='rotate(-90deg)';
         return false
     })
@@ -365,42 +365,42 @@ function calculateWheelSteps(currentPosition, desiredPosition) {
 nd00.addEventListener('click', function(event) {
     console.log("ND OPEN was clicked");
     event.stopPropagation();
-    dataChannel.send("Wheel/goto/0deg");
+    dataChannel.send("densityWheel/goto/0deg");
     // filterwheel.style.transform='rotate(0deg)';
     return false
 })
 nd03.addEventListener('click', function(event) {
     console.log("ND 0.3 was clicked");
     event.stopPropagation();
-    dataChannel.send("Wheel/goto/600deg");
+    dataChannel.send("densityWheel/goto/60deg");
     // filterwheel.style.transform='rotate(-30deg)';
     return false
 })
 nd05.addEventListener('click', function(event) {
     console.log("ND 0.5 was clicked");
     event.stopPropagation();
-    dataChannel.send("Wheel/goto/120deg");
+    dataChannel.send("densityWheel/goto/120deg");
     // filterwheel.style.transform='rotate(-60deg)';
     return false
 })
 nd10.addEventListener('click', function(event) {
     console.log("ND 1.0 was clicked");
     event.stopPropagation();
-    dataChannel.send("Wheel/goto/180deg");
+    dataChannel.send("densityWheel/goto/180deg");
     // filterwheel.style.transform='rotate(-90deg)';
     return false
 })
 nd20.addEventListener('click', function(event) {
     console.log("ND 2.0 was clicked");
     event.stopPropagation();
-    dataChannel.send("Wheel/goto/240deg");
+    dataChannel.send("densityWheel/goto/240deg");
     // filterwheel.style.transform='rotate(-90deg)';
     return false
 })
 nd40.addEventListener('click', function(event) {
     console.log("ND 4.0 was clicked");
     event.stopPropagation();
-    dataChannel.send("Wheel/goto/300deg");
+    dataChannel.send("densityWheel/goto/300deg");
     // filterwheel.style.transform='rotate(-90deg)';
     return false
 })
