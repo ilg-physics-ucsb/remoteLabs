@@ -372,14 +372,14 @@ nd00.addEventListener('click', function(event) {
 nd03.addEventListener('click', function(event) {
     console.log("ND 0.3 was clicked");
     event.stopPropagation();
-    dataChannel.send("densityWheel/goto/60deg");
+    dataChannel.send("densityWheel/goto/300deg");
     // filterwheel.style.transform='rotate(-30deg)';
     return false
 })
 nd05.addEventListener('click', function(event) {
     console.log("ND 0.5 was clicked");
     event.stopPropagation();
-    dataChannel.send("densityWheel/goto/120deg");
+    dataChannel.send("densityWheel/goto/240deg");
     // filterwheel.style.transform='rotate(-60deg)';
     return false
 })
@@ -393,14 +393,14 @@ nd10.addEventListener('click', function(event) {
 nd20.addEventListener('click', function(event) {
     console.log("ND 2.0 was clicked");
     event.stopPropagation();
-    dataChannel.send("densityWheel/goto/240deg");
+    dataChannel.send("densityWheel/goto/120deg");
     // filterwheel.style.transform='rotate(-90deg)';
     return false
 })
 nd40.addEventListener('click', function(event) {
     console.log("ND 4.0 was clicked");
     event.stopPropagation();
-    dataChannel.send("densityWheel/goto/300deg");
+    dataChannel.send("densityWheel/goto/60deg");
     // filterwheel.style.transform='rotate(-90deg)';
     return false
 })
