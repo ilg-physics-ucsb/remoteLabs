@@ -72,6 +72,6 @@ exp.add_device(densityFilterWheel)
 exp.add_device(electrometer)
 exp.add_device(multimeter)
 exp.set_socket_path(socket_path)
-if not args.reset or not args.admin:
+if not args.reset and not args.admin:
     exp.recallState()
 exp.setup()
