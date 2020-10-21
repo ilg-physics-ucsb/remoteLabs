@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet
-import visa
+import pyvisa as visa
 import argparse, os, json
 
 parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
