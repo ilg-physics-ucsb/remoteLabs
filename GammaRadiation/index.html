@@ -1,0 +1,312 @@
+<!-- FRANCK-HERTZ EXPERIMENT CONTROL PAGE -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- <meta content="Webflow" name="generator"> -->
+  <title>UCSB Physics Remote Lab - Frank-Hertz Experiment</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="static/css/mdb.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="static/css/styleGrid.css">
+  <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/skeleton-3df96e.webflow.css" rel="stylesheet" type="text/css">
+  
+  <!-- Items below are from WebFlow, could make it easy to customize favicon and webclip icons -->
+  <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+  <!-- <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="static/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="static/images/webclip.png" rel="apple-touch-icon"> -->
+
+</head>
+<body>
+  <script src="static/js/signalling.js"></script>
+  <!-- jQuery - These are all the scripts to do all the styling -->
+  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="static/js/popper.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/js/webflow.js" type="text/javascript"></script>
+  <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
+  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
+
+  <script src="static/js/main.js"></script>
+  <!-- Start your project here--> 
+  <div class="pagecontainer w-row">
+    <div id="PageHead" class="column w-row">
+      <h1 class="Title">Franck-Hertz Experiment</h1>
+      <!-- <div class="text-block">
+        <h5 class="SubTitle">
+          <a target="_blank" href="https://gauchospace.ucsb.edu/courses/course/view.php?id=40788">Click here to access the lab guide for PHYS 5L</a>
+            <br> 
+          <a target="_blank" href="static/docs/FHLabGuide.pdf">Click here to access the lab guide for PHYS 25L</a>
+            <br>  
+          <span style="font-weight: 100;font-style: italic;"> This will become a link to the course's GauchoSpace.</span>
+        </h5>
+      </div> 
+        <div id="TopTextLeft" class="column w-col w-col-6">
+          <h2 class="SubTitle">Set-Up</h2>
+          <div class="text-block">
+            Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
+            as well as to equipment manuals and manufacturer websites.</div>
+        </div>
+        <div id="TopTextRight" class="column w-col w-col-6">
+          <h2 class="SubTitle">Get Help</h2>
+          <div class="text-block">
+            Here students will be advised of options for synchronous and asynchronous assistance. 
+            <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
+            so they can use the various Zoom features to request help in real time. 
+            There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.</div>
+        </div>
+      </div> -->
+    </div>
+    <div id="PageMiddle" class="column w-row">
+      <div  id="LeftSideImages" class="column w-col w-col-2">
+        <div id="OvenLeft" >
+          <div class="click-note" style="margin-bottom: -50px;">
+            (choose increment and click arrows to turn variac knob and adjust oven power)
+          </div>
+          <div id="radioButtonsVo" class="w-row">
+            <div class="column w-col w-col-3" style="top: 75px;">
+              <input type="radio" id="3.6_deg_Vo" name="angleStepVo" value="3.6">
+              <label for="3.6_deg_Vo">3.6&#176;</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-3" style="top: 75px;">
+              <input type="radio" id="36_deg_Vo" name="angleStepVo" value="36" checked>
+              <label for="36_deg_Vo">36&#176;</label>
+            </div>
+            <div class="column w-col w-col-6" style="top: 75px;"></div>
+          </div>
+          <img id="ovenKnob" src="static/images/bigVariacWarrows.png" usemap="#image-map-bigVariac"> <!--  -->
+          <map name="image-map-bigVariac">
+            <area id="oVccw" alt="CCW" title="decrease AC" href="#" coords="9,459,10,517,39,576,80,615,133,638,168,642,165,675,284,622,181,544,175,581,141,578,110,562,85,535,71,504,70,465" shape="poly">
+            <area id="oVcw" alt="CW" title="increase AC" href="#" coords="347,31,369,87,397,79,419,79,443,85,463,96,484,115,499,135,506,158,474,174,576,258,595,128,563,138,549,104,532,76,512,57,487,41,457,27,426,19,392,20" shape="poly">
+          </map>  
+        </div>
+        <div id="TubeLeft" >
+          <a target="_blank" href="static/images/FHCircuitDiagram.jpg">
+            <img src="static/images/FHbwIcon.jpg">
+          </a>
+          <div class="click-note">(click for circuit diagram)</div>
+          <br>
+          <br>
+          <br>
+        </div> 
+        <div id="ControlsLeft" >
+          <h1 class="heading-2"><em>V</em>(<em>a</em>)</h1>
+          <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
+          <map name="image-map-Va">
+            <area id="aCW" alt="" title="increase Va" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
+            <area id="aCCW" alt="" title="decrease Va" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+          </map>
+          <div id="radioButtonsVa" class="w-row">
+            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
+              <input type="radio" id="3.6_deg_Va" name="angleStepVa" value="3.6">
+              <label for="3.6_deg_Va">3.6&#176;</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
+              <input type="radio" id="36_deg_Va" name="angleStepVa" value="36" checked>
+              <label for="36_deg_Va">36&#176;</label>
+            </div>
+            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
+              <input type="radio" id="360_deg_Va" name="angleStepVa" value="360">
+              <label for="360_deg_Va">360&#176;</label>
+            </div>
+          </div>  
+          <div class="click-note">
+            (choose increment and click arrows to adjust accelerating voltage)
+          </div>
+        </div>
+        <div id="FilamentPower">
+          <img id="filamentSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-fTOGGLE">
+          <map name="image-map-fTOGGLE">
+            <area id="filamentTOGGLE" title="Click here to turn ON" coords="0,65,71,122" shape="rect">
+          </map>
+          <div class="click-note">(click to toggle filament power)</div>
+          <br>
+          <br>
+          <br>
+        </div>
+      </div>
+      <div  id="VideoCenter" class="column w-col w-col-8">
+        <div class="Warning">
+          This session will end and the system will reset in 
+          <span id="time" style="color:red;font-weight:bold">3:00:00</span>
+          hours.
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button id="TempCam" type="button" class="btn btn-primary">HEAT</button>
+          <button id="TubeCam" type="button" class="btn btn-primary">TUBE</button>
+          <button id="PotsCam" type="button" class="btn btn-primary">POTS</button>
+          <button id="DataCam" type="button" class="btn btn-primary">DATA</button>
+          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+        </div>
+        <div class="video w-video w-embed">
+          <video id='v' data-playing="false" autoplay="" muted></video>
+        </div>
+      </div>
+      <div id="RightSideImages" class="column w-col w-col-2">
+        <div id="OvenRight" >
+          <div class="click-note">(click to toggle oven power)</div>
+          <img id="ovenSwitchOFF" src="static/images/VariacSwitchOFF.jpg" usemap="#image-map-oTOGGLEon">
+          <map name="image-map-oTOGGLEon">
+            <area id="ovenON" title="ON" href="#" coords="260,15,450,192" shape="rect">
+          </map>
+          <img id="ovenSwitchON" src="static/images/VariacSwitchON.jpg" usemap="#image-map-oTOGGLEoff">
+          <map name="image-map-oTOGGLEoff">
+            <area id="ovenOFF" title="OFF" href="#" coords="69,15,259,192" shape="rect">
+          </map>
+        </div>
+        <div id="TubeRight" >
+          <a target="_blank" href="static/images/AnnotatedCloseUp.jpg">
+            <img src="static/images/closeUp.jpg" width="200" srcset="static/images/closeUp.jpg 800w, images/closeUp.jpg 1080w, images/closeUp.jpg 1600w, images/closeUp.jpg 2000w, images/closeUp.jpg 2600w, images/closeUp.jpg 3024w" sizes="(max-width: 479px) 100vw, (max-width: 767px) 168px, (max-width: 991px) 125.5875244140625px, 17vw" alt="" class="image-7">
+          </a>
+          <br>
+          <br>
+          <br> 
+          <div class="click-note">
+            (click for annotated image)
+          </div> <br>
+          <br>
+          <br> 
+        </div>
+        <div id="ControlsRight" >
+          <h1 class="heading-2"><em>V</em>(<em>r</em>)</h1>
+          <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
+          <map name="image-map-Vr">
+            <area id="rCW" alt="" title="increase Vr" href="#" coords="77,110,147,162,168,141,188,122,214,108,240,99,265,97,288,97,309,101,332,110,354,122,373,137,342,184,534,197,453,25,424,65,396,45,367,28,341,19,309,11,275,8,244,11,213,15,180,28,147,44,117,68" shape="poly">
+            <area id="rCCW" alt="" title="decrease Vr" href="#" coords="151,612,79,659,93,680,113,702,141,726,171,743,201,757,232,766,264,770,294,769,325,764,347,758,372,749,391,739,410,726,423,717,452,760,534,590,345,599,375,642,361,655,340,667,313,677,283,683,252,680,224,673,198,659,178,644,164,628" shape="poly">
+          </map>
+          <div id="radioButtonsVr" class="w-row">
+            <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+              <input type="radio" id="3.6_deg_Vr" name="angleStepVr" value="3.6">
+              <label for="3.6_deg_Vr">3.6&#176;</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-6" style="margin-bottom: 0px;">
+              <input type="radio" id="36_deg_Vr" name="angleStepVr" value="36" checked>
+              <label for="36_deg_Vr">36&#176;</label>
+            </div>
+          </div>  
+          <div class="click-note">
+            (choose increment and click arrows to adjust retarding voltage)
+          </div> 
+          <br>
+          <br> 
+        </div>
+        <div id="FilamentVariac" >
+          <br>
+          <div id="radioButtonsVf" class="w-row">
+            <div class="column w-col w-col-2" style=" bottom: -30px;"></div>
+            <div class="column w-col w-col-4" style=" bottom: -30px;">
+              <input type="radio" id="3.6_deg_Vf" name="angleStepVf" value="3.6">
+              <label for="3.6_deg_Vf">3.6&#176;</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-4" style="bottom: -30px;">
+              <input type="radio" id="36_deg_Vf" name="angleStepVf" value="36" checked>
+              <label for="36_deg_Vf">36&#176;</label>
+            </div>
+            <div class="column w-col w-col-2" style=" bottom: -30px;"></div>
+          </div>
+          <img id="fKnob" src="static/images/filament_knob.png" usemap="#image-map-filamentV">
+          <map name="image-map-filamentV">
+            <area id="fVcw" alt="CW" title="raise V" href="#" coords="73,3,7,36,21,47,15,61,7,77,3,95,2,109,4,125,10,143,18,157,27,169,38,177,46,182,64,155,55,146,47,138,40,125,37,108,39,93,44,79,51,68,68,75" shape="poly">
+            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="226,2,231,76,249,67,256,74,261,83,264,99,264,115,260,129,254,140,247,149,238,155,245,166,252,175,256,181,270,171,280,160,287,147,293,135,296,119,298,103,295,87,292,72,286,60,278,47,292,36" shape="poly">
+          </map>
+          <div class="click-note" style="margin-bottom: -20px;">(choose increment and click arrows to adjust filament potential)</div>
+        </div>
+        <div id="Keithley6514Manual">
+          <a target="_blank" href="static/docs/Keithley electrometer 6514.pdf">
+            <img src="static/images/6514ManualCover.png">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="PageBottom" class="column w-row">
+      <div id="MetersBottom" class="column w-row" >
+        <div id="MetersLeft" class="column w-col w-col-6">
+          <img id="powerSupplySwitchOFF" src="static/images/PowerSupplyOFF.jpg" usemap="#image-map-psTOGGLEon">
+          <map name="image-map-psTOGGLEon">
+            <area id="psON" title="ON" href="#" coords="73,78,132,117" shape="rect">
+           </map>
+          <img id="powerSupplySwitchON" src="static/images/PowerSupplyON.jpg" usemap="#image-map-psTOGGLEoff">
+          <map name="image-map-psTOGGLEoff">
+            <area id="psOFF" title="OFF" href="#" coords="73,118,132,156" shape="rect">
+          </map>
+        </div>
+        <div id="MetersRight" class="column w-col w-col-6">
+          <img id="electrometer" src="static/images/Keithley6514ElectrometerTXTcropped.jpg" usemap="#image-map-6514"> 
+          <map name="image-map-6514">
+            <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,218,17" shape="circle">
+            <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,285,17" shape="circle">
+            <area id="Power6514" 		    href="#"	title="Power" 		  coords="99,365,17" shape="circle">
+            <area id="Voltage" 		      href="#"	title="Voltage" 		coords="200,217,29" shape="circle">
+            <area id="Current" 		      href="#"	title="Current" 		coords="285,217,29" shape="circle">
+            <area id="Resistance" 	    href="#"	title="Resistance"  coords="381,217,29" shape="circle">
+            <area id="Charge" 		      href="#"	title="Charge" 		  coords="466,217,29" shape="circle">
+            <area id="ExternalFeedback" href="#"	title="ExternalFeedback" coords="562,217,29" shape="circle">
+            <area id="ZeroCheck" 		    href="#"	title="ZeroCheck" 	coords="647,217,29" shape="circle">
+            <area id="ZeroCorrect" 	    href="#"	title="ZeroCorrect" coords="743,217,29" shape="circle">
+            <area id="Ground" 		      href="#"	title="Ground" 		  coords="828,217,29" shape="circle">
+            <area id="Average" 		      href="#"	title="Average" 		coords="166,314,238,279" shape="rect">
+            <area id="Median" 		      href="#"	title="Median" 		  coords="242,279,316,314" shape="rect">
+            <area id="Relative" 		    href="#"	title="Relative" 	  coords="420,279,346,314" shape="rect">
+            <area id="Limit" 		        href="#"	title="Limit" 		  coords="423,279,499,314" shape="rect">
+            <area id="Digits6514" 	    href="#"	title="Digits"      coords="603,279,529,314" shape="rect">
+            <area id="Rate6514" 		    href="#"	title="Rate" 		    coords="606,279,678,314" shape="rect">
+            <area id="CursorLeft6514" 	href="#"	title="CursorLeft"  coords="786,279,712,314" shape="rect">
+            <area id="CursorRight6514" 	href="#"	title="CursorRight" coords="789,279,859,314" shape="rect">
+            <area id="Store6514" 		    href="#" title="Store" 		    coords="238,346,163,382" shape="rect">
+            <area id="Recall6514"		    href="#"	title="Recall" 		  coords="242,346,314,382" shape="rect">
+            <area id="Delay" 		        href="#"	title="Delay" 		  coords="420,346,346,382" shape="rect">
+            <area id="Damping" 		      href="#"	title="Damping" 		coords="423,346,495,382" shape="rect">
+            <area id="Halt" 		        href="#"	title="Halt" 		    coords="603,346,529,383" shape="rect">
+            <area id="Trigger6514" 	    href="#"	title="Trigger" 		coords="606,346,678,383" shape="rect">
+            <area id="Exit6514" 		    href="#"	title="Exit" 			  coords="786,346,712,384" shape="rect">
+            <area id="Enter6514" 		    href="#"	title="Enter" 		  coords="789,346,863,384" shape="rect">
+            <area id="UpRange6514" 	    href="#"	title="UpRange" 		coords="957,187,935,222,976,224" shape="poly">
+            <area id="DownRange6514" 	  href="#"	title="DownRange" 	coords="957,384,978,347,935,347" shape="poly">
+            <area id="AutoRange6514"	  href="#"	title="AutoRange" 	coords="908,267,1007,304" shape="rect">
+          </map>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="loadingModalLabel">Page Loading</h5>
+                </div>
+                <div class="modal-body">
+                        <div class="loader"></div>
+                        <p>Please wait while the page finishes loading.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="extremaModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="loadingModalLabel">Limit Reached!</h5>
+              </div>
+              <div class="modal-body">
+                      <p>This object can't move any more in that direction.</p>
+              </div>
+          </div>
+      </div>
+    </div>
+    
+ </body>
+</html>
