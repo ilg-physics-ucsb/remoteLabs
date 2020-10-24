@@ -171,7 +171,34 @@ class StepperSimple(stp.Motor, BaseController):
     
     def reset(self):
         super().reset()
-    
+
+
+class DCMotor(Motorkit, Basecontroller):
+    def __init__(name, terminal):
+        if terminal > 4: 
+            self.address=0x61
+        else:
+            self.address=0x60
+        super().__init__(address=self.address)
+        self.name = name
+        self.device_type = "controller"
+        self.experiment = None
+
+        self.terminal_options = {1: super().motor1, 2: super().motor2, 3:super().motor3, 4:super().motor4,
+            5: super().motor1, 6:super().motor2, 7:super().motor3, 8:super().motor4}
+        self.device = self.terminal_options[terminal]
+        self.currentPosition = 0
+        self.state = {"position": self.currentPosition}
+
+        def setup(self, style):
+            pass
+
+        def reset(self):
+            pass
+
+        def throttle(self, speed):
+            self.device.throttle = speed
+
 # Initialise the first hat on the default address
 # lowerBoard = MotorKit()
 # Initialise the second hat on a different address

@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet, ArduCamMultiCamera
+from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera
 import visa
 import argparse, os, json
 
@@ -17,7 +17,7 @@ labSettingsPath = os.path.join("home","pi", "remoteLabs", "GammaRadiation", args
 with open(labSettingsPath, "r") as f:
     labSettings = json.load(f)
 
-
+# Raffi make these settings match what is needed in the settings file
 outlets                 = labSettings["outlets"]
 outletMap               = labSettings["outletMap"]
 electrometer_address    = labSettings["electrometer_address"]
@@ -29,39 +29,25 @@ ovenGearRatio               = labSettings["ovenGearRatio"]
 
 if args.admin:
     bounds = (-1e6, 1e6)
-    filamentBounds=bounds
-    ovenBounds=bounds
-    VaBounds=bounds
-    VrBounds=bounds
-
-resource_manager = visa.ResourceManager("@py")
-visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ str(electrometer_address) +'::INSTR', baud_rate=19200)
-visa_electrometer.read_termination = "\r\n"
-visa_electrometer.write_termination = "\r\n"
+    stageBounds=bounds
 
 camera = ArduCamMultiCamera("Camera", 1)
 
 socket_path = "/tmp/uv4l.socket"
 
-filament = StepperI2C("Filament", 1,bounds=VaBounds, style="DOUBLE")  
-oven = StepperI2C("Oven", 2,bounds=ovenBounds, style="DOUBLE", gearRatio=ovenGearRatio)
-Va = StepperI2C("Va", 3,bounds=VaBounds)
-Vr = StepperI2C("Vr", 4,bounds=VrBounds)
+#Raffi check that the terminal numbers are correct for both of the motors.
 
+stage = StepperI2C("Stage", 2, bounds=VaBounds, style="DOUBLE")
 
+actuator = DCMotorI2C("Actuator", 1)
 
-
-FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+# Raffi, IDK if grpdu exists. 
+FHpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 FHpdu.login()
 
 
-electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
-
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
-filament.device.release()
-oven.device.release()
-Va.device.release()
-Vr.device.release()
+stage.device.release()
 
 if args.reset:
     exp = Experiment("GammaRadiation")
@@ -70,15 +56,9 @@ elif args.admin:
 else:
     exp=Experiment("GammaRadiation")
 exp.add_device(camera)
-exp.add_device(FHpdu)
-exp.add_device(oven)
-# exp.add_device(OvenPower)
-exp.add_device(filament)
-# exp.add_device(FilamentPower)
-# exp.add_device(PowerSupplyPower)
-exp.add_device(Va)
-exp.add_device(Vr)
-exp.add_device(electrometer)
+exp.add_device(stage)
+exp.add_device(actuator)
+
 exp.set_socket_path(socket_path)
 if not args.reset and not args.admin:
     exp.recallState()
