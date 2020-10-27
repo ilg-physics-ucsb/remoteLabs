@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera
+from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C
 import visa
 import argparse, os, json
 
@@ -20,12 +20,7 @@ with open(labSettingsPath, "r") as f:
 # Raffi make these settings match what is needed in the settings file
 outlets                 = labSettings["outlets"]
 outletMap               = labSettings["outletMap"]
-electrometer_address    = labSettings["electrometer_address"]
-filamentBounds          = labSettings["filamentBounds"]
-ovenBounds              = labSettings["ovenBounds"]
-VaBounds                = labSettings["VaBounds"]
-VrBounds                = labSettings["VrBounds"]
-ovenGearRatio               = labSettings["ovenGearRatio"]
+stageBounds             = labSettings["stageBounds"]
 
 if args.admin:
     bounds = (-1e6, 1e6)
@@ -35,15 +30,13 @@ camera = ArduCamMultiCamera("Camera", 1)
 
 socket_path = "/tmp/uv4l.socket"
 
-#Raffi check that the terminal numbers are correct for both of the motors.
 
-stage = StepperI2C("Stage", 2, bounds=VaBounds, style="DOUBLE")
+stage = StepperI2C("Stage", 1, bounds=stageBounds, style="DOUBLE")
 
-actuator = DCMotorI2C("Actuator", 1)
-
-# Raffi, IDK if grpdu exists. 
-FHpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
-FHpdu.login()
+actuator = DCMotorI2C("Actuator", 3)
+ 
+# GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+# GRpdu.login()
 
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.

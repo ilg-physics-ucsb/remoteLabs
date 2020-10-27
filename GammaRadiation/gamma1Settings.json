@@ -1,15 +1,8 @@
 {
-    "outlets":[1,2,3,4],
+    "outlets":[1,2],
     "outletMap":{
-        "Electrometer": 4,
-        "Oven": 1,
-        "Filament": 2,
-        "PowerSupply": 3
+        "PowerSupply": 1,
+        "ST160": 2
     },
-    "electrometer_address":0,
-    "filamentBounds": [0, 180],
-    "ovenBounds": [0, 500],
-    "VaBounds": [0, 2000],
-    "VrBounds": [0, 160],
-    "ovenGearRatio": 2.85714
+    "stageBounds": [-9750, 0]
 }
