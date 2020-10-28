@@ -173,7 +173,7 @@ class StepperSimple(stp.Motor, BaseController):
         super().reset()
 
 
-class DCMotor(Motorkit, Basecontroller):
+class DCMotor(MotorKit, BaseController):
     def __init__(name, terminal):
         if terminal > 4: 
             self.address=0x61
