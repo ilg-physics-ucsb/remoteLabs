@@ -173,7 +173,7 @@ class StepperSimple(stp.Motor, BaseController):
         super().reset()
 
 
-class DCMotor(MotorKit, BaseController):
+class DCMotorI2C(MotorKit, BaseController):
 
     def __init__(self, name, terminal):
         if terminal > 4: 
