@@ -191,14 +191,14 @@ class DCMotor(MotorKit, BaseController):
         self.currentPosition = 0
         self.state = {"position": self.currentPosition}
 
-        def setup(self, style):
-            pass
+    def setup(self, style):
+        pass
 
-        def reset(self):
-            pass
+    def reset(self):
+        pass
 
-        def throttle(self, speed):
-            self.device.throttle = speed
+    def throttle(self, speed):
+        self.device.throttle = speed
 
 # Initialise the first hat on the default address
 # lowerBoard = MotorKit()
