@@ -199,6 +199,12 @@ class DCMotorI2C(MotorKit, BaseController):
 
     def throttle(self, speed):
         self.device.throttle = speed
+        
+    def throttle_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "move")
+        print("Throttle is set to: {0}".format(params[0]))
+        return int(params[0])
 
 # Initialise the first hat on the default address
 # lowerBoard = MotorKit()
