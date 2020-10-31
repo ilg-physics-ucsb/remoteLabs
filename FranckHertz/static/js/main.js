@@ -450,7 +450,7 @@ $("document").ready(function () {
        console.log("Filament Variac was turned up");dataChannel.send("Filament/move/"+filamentSteps);})
    //END Filament Variac Buttons
    //BEGIN Accelerating Voltage Buttons 
-   threeDegVa.addEventListener('click', function(){VaSteps=2;})
+   threeDegVa.addEventListener('click', function(){VaSteps=5;})
    thirtySixDegVa.addEventListener('click', function(){VaSteps=20;})
    threeSixtyDegVa.addEventListener('click', function(){VaSteps=200;})
 
