@@ -1,0 +1,8 @@
+{
+    "outlets":[1,2],
+    "outletMap":{
+        "PowerSupply": 1,
+        "ST160": 2
+    },
+    "stageBounds": [-9750, 0]
+}
