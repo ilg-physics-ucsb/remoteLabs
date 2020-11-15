@@ -262,9 +262,40 @@
       <div id="BottomLeft" class="column w-col w-col-2">
        
       </div>
+
+      
+      
+
       <div id="Spectra" class="column w-col w-col-8" >
+
+
         <strong>Unknowns "A" and "B" are each one of the five Noble gases.</strong> <br>
-        <img id="Gases1" src="static/images/Noble Gases.jpg" usemap="#image-map-gases1">
+
+        <!-- buttons for fine and coarse -->
+        <div>
+          <div class = "column w-col w-col-1">
+            <strong style="color: gray;" >Select Picture type</strong><br>
+            <div class="coursePicture" style="color:gray; margin-bottom: 0px;">
+              <input type="radio" id="coarseElement" name="elementPic" value="coarsePicture" checked>
+              <label for="coraseElement">Coarse</label>
+            </div>
+            <div class="finePicture" style="color: gray; margin-bottom: 0px;">
+              <input type="radio" id="fineElement" name="elementPic" value="finePicture">
+              <label for="fineElement">Fine</label>
+            </div>
+          </div>
+          <div>
+            <img id="Gases1" src="static/images/Noble Gases.jpg" usemap="#image-map-gases1">
+              <map name="image-map-gases1">
+                <area target="_blank" id="He_fullSpectrum" alt="He" coords="4,4,131,131" shape="rect">
+                <area target="_blank" id="Ne_fullSpectrum" alt="Ne" coords="138,4,266,131" shape="rect">
+                <area target="_blank" id="Ar_fullSpectrum" alt="Ar" coords="272,4,401,131" shape="rect">
+                <area target="_blank" id="Kr_fullSpectrum" alt="Kr" coords="406,4,534,131" shape="rect">
+                <area target="_blank" id="Xe_fullSpectrum" alt="Xe" coords="540,4,668,131" shape="rect">
+              </map>
+          </div>
+        </div>
+        <!-- <img id="Gases1" src="static/images/Noble Gases.jpg" usemap="#image-map-gases1">
               <map name="image-map-gases1">
                 <area target="_blank" id="He_fullSpectrum" alt="He" href="static/docs/He_Spectrum.jpg" coords="4,4,131,131" shape="rect">
                 <area target="_blank" id="Ne_fullSpectrum" alt="Ne" href="static/docs/Ne_Spectrum.jpg" coords="138,4,266,131" shape="rect">
@@ -283,7 +314,7 @@
                 <area target="_blank" id="Ar_majorPeaks" alt="Ar" href="static/docs/Ar_majorPeaks.jpg" coords="272,4,401,131" shape="rect">
                 <area target="_blank" id="Kr_majorPeaks" alt="Kr" href="static/docs/Kr_majorPeaks.jpg" coords="406,4,534,131" shape="rect">
                 <area target="_blank" id="Xe_majorPeaks" alt="Xe" href="static/docs/Xe_Spectrum.jpg" coords="540,4,668,131" shape="rect">
-              </map>
+              </map> -->
       </div>
       <div id="BottomRight" class="column w-col w-col-2">
 

@@ -79,6 +79,7 @@ function sleep(ms){
 var c_wrap
 var liveStream
 var slitModal, extremaModal
+var pValue = "coarsePicture"
 
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
@@ -308,6 +309,73 @@ $("document").ready(function () {
     var gCoarse = document.getElementById('coarseTable');
     var gratingSteps=200; //roughly ten degrees
 
+    //for Element Picture Settings
+    var pCoarse = document.getElementById('coarseElement');
+    var pFine = document.getElementById('fineElement');
+    var He = document.getElementById('He_fullSpectrum')
+    var Ne = document.getElementById('Ne_fullSpectrum')
+    var Ar = document.getElementById('Ar_fullSpectrum')
+    var Kr = document.getElementById('Kr_fullSpectrum')
+    var Xe = document.getElementById('Xe_fullSpectrum')
+
+    //BEGIN picture toggling setting
+    pFine.addEventListener('click', function(){
+        pValue = pFine.value
+    })
+    pCoarse.addEventListener('click', function(){
+        pValue = pCoarse.value
+    })
+
+    //BEGIN picture toggling for Helium
+    He.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            He.href = "static/docs/He_majorPeaks.png";
+        }
+        else if(pValue == "coarsePicture"){
+            He.href = "static/docs/He_Spectrum.jpg";
+        }
+    })
+
+    //BEGIN picture toggling for Neon
+    Ne.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            Ne.href = "static/docs/Ne_majorPeaks.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Ne.href = "static/docs/Ne_Spectrum.jpg";
+        }
+    })
+
+    //BEGIN picture toggling for Argon
+    Ar.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            console.log("Fine should be clicked");
+            Ar.href = "static/docs/Ar_majorPeaks.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Ar.href = "static/docs/Ar_Spectrum.jpg";
+        }
+    })
+
+    //BEGIN picture toggling for Krypton
+    Kr.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            Kr.href = "static/docs/Kr_majorPeaks.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Kr.href = "static/docs/Kr_Spectrum.jpg";
+        }
+    })
+
+    //BEGIN picture toggling for Xenon
+    Xe.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            Xe.href = "static/docs/Xe_Spectrum.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Xe.href = "static/docs/Xe_Spectrum.jpg";
+        }
+    })
 
     //BEGIN Ambient Toggling 
      
