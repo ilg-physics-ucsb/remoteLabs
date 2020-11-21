@@ -567,7 +567,7 @@ class PushButton(BaseController):
             gpio.output(self.pin, gpio.LOW)
     
     def press(self, params):
-        if initialState:
+        if self.initialState:
             gpio.output(self.pin, gpio.LOW)
             time.sleep(self.delay)
             gpio.output(self.pin, gpio.HIGH)
