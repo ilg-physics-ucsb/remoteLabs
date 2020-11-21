@@ -557,6 +557,7 @@ class PushButton(BaseController):
         self.pin = pin
         self.name = name
         self.delay = delay
+        self.initialState = initialState 
         gpio.setup(self.pin, gpio.OUT)
         if initialState:
             self.state = "on"
