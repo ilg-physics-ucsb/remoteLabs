@@ -551,6 +551,34 @@ class SingleGPIO(BaseController):
     def reset(self):
         gpio.output(self.pin, gpio.LOW)
 
+class PushButton(BaseController):
+
+    def __init__(self, name, pin, initialState=False, delay=0.1):
+        self.pin = pin
+        self.name = name
+        self.delay = delay
+        gpio.setup(self.pin, gpio.OUT)
+        if initialState:
+            self.state = "on"
+            gpio.output(self.pin, gpio.HIGH)
+        else:
+            self.state = "off"
+            gpio.output(self.pin, gpio.LOW)
+    
+    def press(self, params):
+        if initialState:
+            gpio.output(self.pin, gpio.LOW)
+            time.sleep(self.delay)
+            gpio.output(self.pin, gpio.HIGH)
+        else:
+            gpio.output(self.pin, gpio.HIGH)
+            time.sleep(self.delay)
+            gpio.output(self.pin, gpio.LOW)
+    
+
+    def reset(self):
+        gpio.output(self.pin, gpio.LOW)
+
 class CommandError(Exception):
 
     def __init__(self, command, *args):

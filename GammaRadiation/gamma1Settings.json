@@ -4,5 +4,14 @@
         "PowerSupply": 1,
         "ST160": 2
     },
-    "stageBounds": [-9750, 0]
+    "stageBounds": [-9750, 0],
+
+    "countButtonPin": 5,
+    "stopButtonPin" : 6,
+    "hvButtonPin"   : 12,
+    "timeButtonPin" : 13,
+    "upButtonPin"   : 16,
+    "downButtonPin" : 26,
+    
+    "electroMagnetPin" : 25
 }
