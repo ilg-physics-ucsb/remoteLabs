@@ -760,7 +760,7 @@ $("document").ready(function () {
    //END Slit Buttons
 
  
-   $('.modal-dialog').draggable()
+   $('#myModalschem').draggable()
 
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     
