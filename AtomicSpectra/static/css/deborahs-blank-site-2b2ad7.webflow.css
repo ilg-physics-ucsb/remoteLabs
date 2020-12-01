@@ -20,3 +20,20 @@ h2 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+button.btn-settings {
+  background-color: #337ab7;
+  color: white;
+}
+button.btn-settings:active {
+  color: white;
+}
+.modal {
+    overflow: hidden;
+}
+.modal-header .close {
+  text-align: center;
+}
+.modal-body h3 {
+  text-align: center;
+}

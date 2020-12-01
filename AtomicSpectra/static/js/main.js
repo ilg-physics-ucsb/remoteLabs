@@ -329,20 +329,20 @@ $("document").ready(function () {
     //BEGIN picture toggling for Helium
     He.addEventListener('click', function(){
         if(pValue == "finePicture"){
-            He.href = "static/docs/He_majorPeaks.png";
+            He.href = "static/docs/He_Spectrum.jpg";
         }
         else if(pValue == "coarsePicture"){
-            He.href = "static/docs/He_Spectrum.jpg";
+            He.href = "static/docs/He_majorPeaks.png";
         }
     })
 
     //BEGIN picture toggling for Neon
     Ne.addEventListener('click', function(){
         if(pValue == "finePicture"){
-            Ne.href = "static/docs/Ne_majorPeaks.jpg";
+            Ne.href = "static/docs/Ne_Spectrum.jpg";
         }
         else if(pValue == "coarsePicture"){
-            Ne.href = "static/docs/Ne_Spectrum.jpg";
+            Ne.href = "static/docs/Ne_majorPeaks.jpg";
         }
     })
 
@@ -350,20 +350,20 @@ $("document").ready(function () {
     Ar.addEventListener('click', function(){
         if(pValue == "finePicture"){
             console.log("Fine should be clicked");
-            Ar.href = "static/docs/Ar_majorPeaks.jpg";
+            Ar.href = "static/docs/Ar_Spectrum.jpg";
         }
         else if(pValue == "coarsePicture"){
-            Ar.href = "static/docs/Ar_Spectrum.jpg";
+            Ar.href = "static/docs/Ar_majorPeaks.jpg";
         }
     })
 
     //BEGIN picture toggling for Krypton
     Kr.addEventListener('click', function(){
         if(pValue == "finePicture"){
-            Kr.href = "static/docs/Kr_majorPeaks.jpg";
+            Kr.href = "static/docs/Kr_Spectrum.jpg";
         }
         else if(pValue == "coarsePicture"){
-            Kr.href = "static/docs/Kr_Spectrum.jpg";
+            Kr.href = "static/docs/Kr_majorPeaks.jpg";
         }
     })
 
@@ -760,6 +760,8 @@ $("document").ready(function () {
    //END Slit Buttons
 
  
+   $('.modal-dialog').draggable()
+
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     
     $('#LampsAllOff').mapster({
@@ -823,6 +825,16 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
   
+  $('Arrows').mapster({
+    mapKey: 'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select:{
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"})
+
   window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
     mainCamSignal.hangup();
