@@ -73,7 +73,6 @@ window.addEventListener('DOMContentLoaded', function () {
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
     // var video2 = document.getElementById('v2');
-    
     // for Color Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
     var f365 = document.getElementById('f365');
     var f436 = document.getElementById('f436');
