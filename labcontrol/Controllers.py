@@ -204,7 +204,7 @@ class DCMotorI2C(MotorKit, BaseController):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
         print("Throttle is set to: {0}".format(params[0]))
-        return int(params[0])
+        return float(params[0])
 
 # Initialise the first hat on the default address
 # lowerBoard = MotorKit()
