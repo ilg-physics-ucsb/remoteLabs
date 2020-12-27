@@ -20,3 +20,18 @@ h2 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.list {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: black;
+  border-radius: 10px;
+  border-width: 3px;
+}
+
+.list .list-item {
+  background-color: blanchedalmond;
+  border: black;
+  border-radius: 5px;
+  border-width: 2px;
+  margin: 10px;
+}
