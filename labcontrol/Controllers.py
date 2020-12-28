@@ -366,7 +366,66 @@ class StepperI2C(MotorKit, BaseController):
     def customHome(self, motor):
         pass
 
-  
+class AbsorberController(MotorKit, BaseController):
+
+    def __init__(self, name, stepper, actuator):
+        self.name = name
+        self.device_type = "controller"
+        self.experiment = None
+        self.stepper = stepper
+        self.actuator = actuator
+        self.state = {
+            "loaded": {
+                "s0":-1,
+                "s1":-1,
+                "s2":-1,
+                "s3":-1,
+                "s4":-1,
+                "s5":-1
+            },
+
+            "total": {
+                "s0":-1,
+                "s1":-1,
+                "s2":-1,
+                "s3":-1,
+                "s4":-1,
+                "s5":-1,
+                "h0":-1,
+                "h1":-1,
+                "h2":-1,
+                "h3":-1,
+                "h4":-1,
+                "h5":-1,
+                "h6":-1,
+                "h7":-1,
+                "h8":-1,
+                "h9":-1,
+                "h10":-1,
+                "h11":-1,
+            }
+        }
+
+    def setup(self, style):
+        pass
+
+    def reset(self):
+        pass
+
+    def place(self, absorberList):
+        for slot, absorber in absorberList:
+            # If the slot is not already load with the correct absorber & and it's empty
+            if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] == -1:
+                # Get absorber from its current location
+                # Move it to new location
+            if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] != -1:
+
+        
+    def place_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "move")
+        print("Throttle is set to: {0}".format(params[0]))
+        return float(params[0])
 
 class Keithley6514Electrometer(BaseController):
 
