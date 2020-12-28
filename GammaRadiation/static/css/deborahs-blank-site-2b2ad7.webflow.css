@@ -22,16 +22,35 @@ h2 {
 }
 
 .list {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
   border: black;
   border-radius: 10px;
   border-width: 3px;
 }
 
-.list .list-item {
+.list .slot .list-item {
   background-color: blanchedalmond;
-  border: black;
+  border-color: black;
   border-radius: 5px;
-  border-width: 2px;
+  border-width: thick;
   margin: 10px;
+}
+
+.list .holder .list-item {
+  background-color: blanchedalmond;
+  border-color: black;
+  border-radius: 5px;
+  border-width: thick;
+  margin: 10px;
+}
+
+.slot {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: black;
+  border-radius: 2px;
+  margin: 5px;
+}
+
+.mybtn {
+  background-color: darkgreen;
 }

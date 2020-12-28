@@ -63,30 +63,56 @@
         </div>
       </div>
       <div class="column w-col w-col-4">
-        <div class="column w-col w-col-6 list" id="absorberList">
-          <div draggable="true" class="list-item">Absorber 1</div>
-          <div draggable="true" class="list-item">Absorber 2</div>
-          <div draggable="true" class="list-item">Absorber 3</div>
-          <div draggable="true" class="list-item">Absorber 4</div>
-          <div draggable="true" class="list-item">Absorber 5</div>
-          <div draggable="true" class="list-item">Absorber 6</div>
-          <div draggable="true" class="list-item">Absorber 7</div>
-          <div draggable="true" class="list-item">Absorber 8</div>
-          <div draggable="true" class="list-item">Absorber 9</div>
-          <div draggable="true" class="list-item">Absorber 10</div>
-          <div draggable="true" class="list-item">Absorber 11</div>
-          <div draggable="true" class="list-item">Absorber 12</div>
-          <div draggable="true" class="list-item">Absorber 13</div>
-          <div draggable="true" class="list-item">Absorber 14</div>
-          <div draggable="true" class="list-item">Source</div>
+        <div class="column w-col w-col-6 auto-list list" id="absorberList">
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 1</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 2</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 3</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 4</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 5</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 6</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 7</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 8</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 9</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 10</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Absorber 11</div>
+          </div>
+          <div class="holder">
+            <div draggable="true" class="list-item">Source</div>
+          </div>
         </div>
-        <div class="column w-col w-col-6" id="detectorList">
-          <div class="holder list">Empty</div>
-          <div class="holder list">Empty</div>
-          <div class="holder list">Empty</div>
-          <div class="holder list">Empty</div>
-          <div class="holder list">Empty</div>
-          <div class="holder list">Empty</div>
+        <div class="column w-col w-col-6 manual-list list" id="detectorList">
+          <div id="s0" class="slot">Empty</div>
+          <div id="s1" class="slot">Empty</div>
+          <div id="s2" class="slot">Empty</div>
+          <div id="s3" class="slot">Empty</div>
+          <div id="s4" class="slot">Empty</div>
+          <div id="s5" class="slot">Empty</div>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button id="CommitAbsorberButton" type="button" class="btn btn-primary mybtn">COMMIT</button>
+          <button id="ClearAbsorberButton" type="button" class="btn btn-primary mybtn">CLEAR</button>
+          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
       </div>
     </div>

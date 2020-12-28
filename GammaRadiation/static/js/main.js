@@ -115,15 +115,15 @@ $("document").ready(function () {
 
     //for LiveFeed  
     // TEMP CHANGE
-    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
-    //for Time Limit
-     window.setTimeout(timeOutHandler,10800000)
+    // //for Time Limit
+    //  window.setTimeout(timeOutHandler,10800000)
 
-     function timeOutHandler(){
-         mainCamSignal.hangup()
-         alert("Your session has timed out.")
-     }
+    //  function timeOutHandler(){
+    //      mainCamSignal.hangup()
+    //      alert("Your session has timed out.")
+    //  }
 
      function startTimer(duration, display) {
          var timer = duration, hours, minutes, seconds;
@@ -201,79 +201,143 @@ $("document").ready(function () {
     })
 
  //END ST160 Face Plate Buttons
+ 
+ //BEGIN Draggable List Functionality
+    const list_items = $(".list-item");
+    const slots = $(".slot");
+    const holder = $(".holder");
+    const autoLists = $(".auto-list");
+    const manualList = $(".manual-list");
+    const absorberLocations = {
+        "Absorber 1": 0,
+        "Absorber 2": 1,
+        "Absorber 3": 2,
+        "Absorber 4": 3,
+        "Absorber 5": 4,
+        "Absorber 6": 5,
+        "Absorber 7": 6,
+        "Absorber 8": 7,
+        "Absorber 9": 8,
+        "Absorber 10": 9,
+        "Absorber 11": 10,
+        "Source"    : 11
+    }
+    loaded = {
+        "s0": -1,
+        "s1": -1,
+        "s2": -1,
+        "s3": -1,
+        "s4": -1,
+        "s5": -1,
+    }
+    let draggedItem = null;
+    let parentSlot = null; 
+    for (let i=0; i < list_items.length; i++) {
+        const item = list_items[i];
+        console.log(item)
+        item.addEventListener('dragstart', function(){
+            draggedItem = item;
+            parentSlot = item.parentElement;
+            setTimeout(function() {
+                //item.style.display = "none";
+                parentSlot.innerHTML.textContent = "Empty"
+            }, 0)
+        })
 
+        item.addEventListener("dragend", function(){
+            setTimeout(function() {
+                // draggedItem.style.display = 'block';
+                // draggedItem = null;
+                // this.innerHTML = "Empty"
+            }, 0)
+        })
+
+        for (k=0; k<autoLists.length; k++) {
+            const aList = autoLists[k];
+            aList.addEventListener('dragover', function(e){
+                e.preventDefault();
+            })
+
+            aList.addEventListener('dragenter', function(e){
+                e.preventDefault();
+                this.style.backgroundColor = "rgba(0,0,0,0.2)";
+            })
+
+            aList.addEventListener("dragleave", function(e){
+                e.preventDefault();
+                this.style.backgroundColor = "rgba(0,0,0,0.1)";
+            })
+
+            aList.addEventListener('drop', function(e){
+                let key = draggedItem.textContent
+                let holder = this.children[absorberLocations[key]];
+                holder.innerHTML = "";
+                holder.appendChild(draggedItem);
+                loaded[parentSlot.id] = -1;
+                parentSlot.innerHTML = "Empty";
+                console.log(loaded);
+            })
+        }
+
+        for (let j=0; j<slots.length; j++) {
+            const slot = slots[j];
+            console.log(slot)
+            slot.addEventListener('dragover', function(e){
+                e.preventDefault();
+            })
+
+            slot.addEventListener('dragenter', function(e){
+                e.preventDefault();
+                this.style.backgroundColor = "rgba(0,0,0,0.2)";
+            })
+
+            slot.addEventListener("dragleave", function(e){
+                e.preventDefault();
+                this.style.backgroundColor = "rgba(0,0,0,0.1)";
+            })
+
+            slot.addEventListener('drop', function(e){
+                if (this.textContent == "Empty") {
+                    this.innerHTML = "";
+                    parentSlot.innerHTML = "Empty";
+                    this.append(draggedItem);
+                    this.style.backgroundColor = "rgba(0,0,0,0.1)";
+                    loaded[this.id] = absorberLocations[draggedItem.textContent];
+                    console.log(loaded);
+                }
+            })
+        }
+    }
+
+    $("#CommitAbsorberButton").click(function(){
+        sendString = "";
+        for (var s in loaded) {
+            if (loaded[s] != -1){
+                if (sendString == "") {
+                    sendString = sendString + "(" + s + "," + loaded[s] + ")"
+                } else {
+                    sendString = sendString + ",(" + s + "," + loaded[s] + ")"
+                }
+            }
+        }
+        console.log(sendString)
+        // Add datachannel send
+    })
+
+
+ //END Draggable List Functionality
  
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
-    
-    $('#CountButton').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#StopButton').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#HVButton').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0,
-    render_select: { 
-        fillOpacity: 0
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#TimeButton').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-
-  $('#UpButton').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-  
-  $('#DownButton').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
+   
 
 });
 
 
 window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
-    mainCamSignal.hangup();
+    // mainCamSignal.hangup();
     // TEMP CHANGE
-    dataChannel.close();
+    // dataChannel.close();
 })
 
 
