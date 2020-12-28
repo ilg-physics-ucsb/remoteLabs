@@ -115,15 +115,15 @@ $("document").ready(function () {
 
     //for LiveFeed  
     // TEMP CHANGE
-    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
-    // //for Time Limit
-    //  window.setTimeout(timeOutHandler,10800000)
+    //for Time Limit
+     window.setTimeout(timeOutHandler,10800000)
 
-    //  function timeOutHandler(){
-    //      mainCamSignal.hangup()
-    //      alert("Your session has timed out.")
-    //  }
+     function timeOutHandler(){
+         mainCamSignal.hangup()
+         alert("Your session has timed out.")
+     }
 
      function startTimer(duration, display) {
          var timer = duration, hours, minutes, seconds;
@@ -335,9 +335,9 @@ $("document").ready(function () {
 
 window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
-    // mainCamSignal.hangup();
+    mainCamSignal.hangup();
     // TEMP CHANGE
-    // dataChannel.close();
+    dataChannel.close();
 })
 
 
