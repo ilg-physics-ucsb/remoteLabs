@@ -419,7 +419,7 @@ class AbsorberController(MotorKit, BaseController):
                 # Get absorber from its current location
                 # Move it to new location
             if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] != -1:
-
+                pass
         
     def place_parser(self, params):
         if len(params) != 1:
