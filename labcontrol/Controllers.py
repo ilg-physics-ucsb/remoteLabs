@@ -418,6 +418,7 @@ class AbsorberController(MotorKit, BaseController):
             if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] == -1:
                 # Get absorber from its current location
                 # Move it to new location
+                pass
             if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] != -1:
                 pass
         
