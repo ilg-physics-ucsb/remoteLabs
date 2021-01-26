@@ -58,9 +58,11 @@ socket_path = "/tmp/uv4l.socket"
 ambient = SingleGPIO("Ambient", ambientPin)
 
 multiSlits = StepperI2C("MultiSlits", 1, bounds=multiSlitBounds, style="DOUBLE", delay=0.00004, refPoints=refPointsMulti)  #Multiple Slits
-singleSlits = StepperI2C("SingleSlits", 2,bounds=singleSlitBounds, style="DOUBLE", delay=0.00004, refPoints=refPointsSingle) #Single Slits
+singleSlits = StepperI2C("SingleSlits", 2,bounds=singleSlitBounds, style="MICROSTEP", delay=0.00004, refPoints=refPointsSingle) #Single Slits
 stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=0.004) #Screen
 
+# StepperI2C 'style' options are: 'SINGLE' 'DOUBLE' 'INTERLEAVE' 'MICROSTEP'
+# Default is 8 microsteps
 
 
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)

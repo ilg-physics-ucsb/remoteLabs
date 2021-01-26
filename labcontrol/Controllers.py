@@ -176,10 +176,12 @@ class StepperSimple(stp.Motor, BaseController):
 # lowerBoard = MotorKit()
 # Initialise the second hat on a different address
 # upperBoard = MotorKit(address=0x61)
+# style = 'SINGLE' 'DOUBLE' 'INTERLEAVE' 'MICROSTEP' (Added by Raffi)
+# Default number of microsteps is 16, 8 is recommended by adafruit, we set the default as 8
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8, gearRatio=1):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE", microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8, gearRatio=1):
         if terminal > 2: 
             self.address=0x61
         else:
