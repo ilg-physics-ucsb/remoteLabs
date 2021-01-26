@@ -13,18 +13,18 @@
 
     "refPointsSingle" : {
         "SingleOpen": 0,
-        "LineSlit": 600,
-        "LittleHole": 1250,
-        "BigHole": 1875,
-        "A02": 2775,
-        "A04": 3450,
-        "A08": 4075,
-        "A16": 4725,
-        "VaryWidth": 5875,
-        "Square": 8575,
-        "Hex": 9200,
-        "Dots": 9900,
-        "Holes": 10500
+        "LineSlit": 750,
+        "LittleHole": 1700,
+        "BigHole": 2550,
+        "A02": 3900,
+        "A04": 4800,
+        "A08": 5750,
+        "A16": 6650,
+        "VaryWidth": 8000,
+        "Square": 12100,
+        "Hex": 13000,
+        "Dots": 13950,
+        "Holes": 14900
     },
 
     "refPointsMulti": {
