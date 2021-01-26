@@ -65,7 +65,7 @@ stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=0.004) 
 # Default is 8 microsteps
 
 
-ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.sinst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 ASDIpdu.login()
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
