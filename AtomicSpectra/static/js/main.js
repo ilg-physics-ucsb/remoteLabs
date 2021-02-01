@@ -800,7 +800,7 @@ $("document").ready(function () {
     gMCoarse.addEventListener('click', function(){gratingSteps=600;})  
     gmCW.addEventListener('click', function(){
         console.log("Modal Grating turned CW");
-        dataChannel.send("grating/move/"+gratingSteps)
+        dataChannel.send("Grating/move/"+gratingSteps)
     })
     gmCCW.addEventListener('click', function(){
         console.log("Modal Grating turned CCW");
