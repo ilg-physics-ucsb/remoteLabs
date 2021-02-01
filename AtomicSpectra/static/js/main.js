@@ -76,6 +76,62 @@ function sleep(ms){
     return new Promise(r => setTimeout(r, ms));
 }
 
+//syncing page telescope radio button to modal telescope radio button
+function tHandleChange(src){
+    console.log(src.value);
+    if(src.value == 1){
+        document.getElementById('MfineArm').checked = true;
+    }
+    else if(src.value == 5){
+        document.getElementById('MmediumArm').checked = true;
+    }
+    else{
+        document.getElementById('McoarseArm').checked = true;
+    }
+}
+
+//syncing page grating radio button to modal grating radio button
+function gHandleChange(src){
+    console.log(src.value);
+    if(src.value == 20){
+        document.getElementById('MfineTable').checked = true;
+    }
+    else if(src.value == 200){
+        document.getElementById('MmediumTable').checked = true;
+    }
+    else{
+        document.getElementById("McoarseTable").checked = true;
+    }
+}
+
+// syncing modal telescope radio button to page telescope radio button
+function mtHandleChange(src){
+    console.log(src.value);
+    if(src.value == 1){
+        document.getElementById('fineArm').checked = true;
+    }
+    else if(src.value == 5){
+        document.getElementById('mediumArm').checked = true;
+    }
+    else{
+        document.getElementById('coarseArm').checked = true;
+    }
+}
+
+//syncing modal Grating radio button to page grating radio button
+function mgHandleChange(src){
+    console.log(src.value);
+    if(src.value == 20){
+        document.getElementById('fineTable').checked = true;
+    }
+    else if(src.value == 200){
+        document.getElementById('mediumTable').checked = true;
+    }
+    else{
+        document.getElementById('coarseTable').checked = true;
+    }
+}
+
 var c_wrap
 var liveStream
 var slitModal, extremaModal
@@ -308,6 +364,23 @@ $("document").ready(function () {
     var gMedium = document.getElementById('mediumTable')
     var gCoarse = document.getElementById('coarseTable');
     var gratingSteps=200; //roughly ten degrees
+
+    
+    //for Modal Telescope Settings
+    var tmCW = document.getElementById('arrowbuttonCW');
+    var tmCCW = document.getElementById('arrowbuttonCCW');
+    var tMfine = document.getElementById('MfineArm');
+    var tMmedium = document.getElementById('MmediumArm');
+    var tMcoarse = document.getElementById('McoarseArm');
+    //for Modal Grating Settings
+    var gmCW = document.getElementById('arrowCW');
+    var gmCCW = document.getElementById('arrowCCW');
+    var gMFine = document.getElementById('MfineTable');
+    var gMMedium = document.getElementById('MmediumTable');
+    var gMCoarse = document.getElementById('McoarseTable');
+    //for Modal Lamp Settings
+    var nudgeLeftModal = document.getElementById('uparrow');
+    var nudgeRightModal = document.getElementById('downarrow')
 
     //for Element Picture Settings
     var pCoarse = document.getElementById('coarseElement');
@@ -682,7 +755,7 @@ $("document").ready(function () {
 
     //END Lamp Toggling
 
-//BEGIN Lamp Nudging
+    //BEGIN Lamp Nudging
 
     nudgeLeft.addEventListener('click',function() {
         console.log("Lamp nudged left");
@@ -692,7 +765,18 @@ $("document").ready(function () {
         console.log("Lamp nudged right");
         dataChannel.send("Carousel/move/-20")
     })
-//END Lamp Nudging
+    //END Lamp Nudging
+
+    //BEGIN Modal Lamp Nudging
+    nudgeLeftModal.addEventListener('click',function(){
+        console.log("Modal Lamp nudged left");
+        dataChannel.send("Carousel/move/20")
+    })
+    nudgeRightModal.addEventListener('click',function() {
+        console.log("Modal Lamp nudged right");
+        dataChannel.send("Carousel/move/-20")
+    })
+    //END Modal Lamp Nudging
 
     //BEGIN Grating buttons
     gFine.addEventListener('click', function(){gratingSteps=20;})        //roughly one degree
@@ -710,6 +794,20 @@ $("document").ready(function () {
 
     //END  Grating Buttons
 
+    //BEGIN Modal Grating buttons
+    gMFine.addEventListener('click',function(){gratingSteps=20;})
+    gMMedium.addEventListener('click', function(){gratingSteps=200;})
+    gMCoarse.addEventListener('click', function(){gratingSteps=600;})  
+    gmCW.addEventListener('click', function(){
+        console.log("Modal Grating turned CW");
+        dataChannel.send("grating/move/"+gratingSteps)
+    })
+    gmCCW.addEventListener('click', function(){
+        console.log("Modal Grating turned CCW");
+        dataChannel.send("Grating/move/"+(-gratingSteps));
+    })
+    //End Modal Grating Buttons
+
    //BEGIN Arm Buttons 
    tFine.addEventListener('click', function(){telescopeSteps=10;})
    tMedium.addEventListener('click', function(){telescopeSteps=30;})
@@ -726,6 +824,21 @@ $("document").ready(function () {
        dataChannel.send("Arm/move/"+(-telescopeSteps));
     })
    //END Arm Buttons
+
+    //BEGIN Modal Arm Buttons
+    tMfine.addEventListener('click', function(){telescopeSteps=10;})
+    tMmedium.addEventListener('click', function(){telescope=30;})
+    tMcoarse.addEventListener('click', function(){telescopeSteps=100;})
+    tmCW.addEventListener('click', function(){
+        console.log("Modal Telescope turned CW");
+        dataChannel.send("Arm/move/"+telescopeSteps);
+    })
+    tmCCW.addEventListener('click', function() {
+        // Changed for AS 
+        console.log("Modal Telescope turned CCW");
+        dataChannel.send("Arm/move/"+(-telescopeSteps));
+     })
+    //END Modal Arm Buttons
 
    //BEGIN Slit Buttons 
    fineSlit.addEventListener('click', function(){
@@ -759,7 +872,17 @@ $("document").ready(function () {
 
    //END Slit Buttons
 
- 
+   // BEGIN help button function
+   $('#helpButton').click(function(){
+       var url = "https://hooks.slack.com/services/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";
+       var payload={"text": "hello?"};
+       $.post(url,JSON.stringify(payload),function(data){
+           $('#results').text(data);
+       })
+   })
+   //END help button function
+
+   // makes modal draggable
    $('#myModalschem').draggable()
 
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps

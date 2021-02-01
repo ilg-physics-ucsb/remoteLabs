@@ -41,7 +41,10 @@
   <script type="text/javascript" src="static/js/popper.min.js"></script>
   <script src="static/js/bootstrap.min.js"></script>
   <script src="static/js/webflow.js" type="text/javascript"></script>
-  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
+  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script>
+  <!-- draggable  -->
+  <script src="static/js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+  <script src="https://embed.small.chat/T01LL37HGMRC01LYGHBDL1.js" async>
  
    <!-- ruler - These scripts enable a canvas with cursor and coordinates -->
    <!-- <script src="static/js/jquery.ruler.js"></script> -->
@@ -75,7 +78,8 @@
         This session will end and the system will reset in 
         <span id="time" style="color:red;font-weight:bold">3:00:00</span>
         hours.
-      </div>       
+      </div>
+      <!-- <iframe allow="camera; microphone; fullscreen; display-capture" src="https://meet.jit.si/UCSBPhysicsTest123" style="height: 100%; width: 100%; border: 0px;"></iframe> -->
       <div id="SchematicRadioButtons" style="margin-bottom: 0px;">
         <div id="radioButtonsLeft" class="column w-col w-col-3"></div>
         <div id="radioButtonsMiddle" class="column w-col w-col-7" style="margin-bottom: 0px;">
@@ -86,33 +90,36 @@
           </div>
           <div id="radioButtonsSchematic" class="w-row" >
             <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
-              <input type="radio" id="fineArm" name="ArmStepSize" value="1">
+              <input type="radio" id="fineArm" name="ArmStepSize" value="1" onchange="tHandleChange(this);">
               <label for="fineArm">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-2" style="color:darkgreen; margin-bottom: 0px;">
-              <input type="radio" id="mediumArm" name="ArmStepSize" value="5">
+              <input type="radio" id="mediumArm" name="ArmStepSize" value="5" onchange="tHandleChange(this);">
               <label for="mediumArm">Medium</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
-              <input type="radio" id="coarseArm" name="ArmStepSize" value="50" checked>
+              <input type="radio" id="coarseArm" name="ArmStepSize" value="50" onchange="tHandleChange(this);" checked>
               <label for="coarseArm">Coarse</label>
             </div>
             <div class="column w-col w-col-2" style="margin-bottom: 0px;"></div>
             <div class="column w-col w-col-1" style=" color:darkorchid; margin-bottom: 0px;">
-              <input type="radio" id="fineTable" name="TableStepSize" value="20">
+              <input type="radio" id="fineTable" name="TableStepSize" value="20" onchange="gHandleChange(this);">
               <label for="fineTable">Fine</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-2" style="color:darkorchid; margin-bottom: 0px;">
-              <input type="radio" id="mediumTable" name="TableStepSize" value="200">
+              <input type="radio" id="mediumTable" name="TableStepSize" value="200" onchange="gHandleChange(this);">
               <label for="mediumTable">Medium</label>
             </div>  <!-- &nbsp;&nbsp;&nbsp; -->
             <div class="column w-col w-col-1" style="color:darkorchid; margin-bottom: 0px;">
-              <input type="radio" id="coarseTable" name="TableStepSize" value="600" checked>
+              <input type="radio" id="coarseTable" name="TableStepSize" value="600" onchange="gHandleChange(this);" checked>
               <label for="coarseTable">Coarse</label>
             </div>
           </div>
         </div>
-        <div id="radioButtonsRight" class="column w-col w-col-2"></div>
+        <div id="radioButtonsRight" class="column w-col w-col-2">
+          <div id="results"></div>
+          <button class="btn btn-settings" type="button" id="helpButton">Help!</button>
+        </div>
       </div>
       <div id="Controls" class="column w-row" style="margin-bottom: 0px;">
         <div id="LeftSide" class="column w-col w-col-2">
@@ -130,57 +137,91 @@
             <div id="SchematicLeft" class="column w-col w-col-2">
               </br></br>
               </br></br>
-              <button href="#myModalschem" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Open Modal</button>
+              <button href="#myModalschem" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Movable schematic</button>
               <div id="myModalschem" class="modal fade">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
                     <div class="modal-body">
-                      <p>Click to adjust settings on schematic</p>
-                      <img id="Arrows" src="static/images/Arrows.png" usemap="#image-map-Arrows">
-                      <map name="image-map-Arrows">
-                        <area target="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="104,175,134,196,95,263,60,362,63,368,130,386,138,382,169,299,203,236,230,258,238,258,246,250,252,97,249,90,237,92,105,159,98,167" shape="poly">
-                        <area target="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="312,110,307,117,340,215,379,284,350,305,346,313,350,318,487,387,496,387,498,379,493,229,489,220,481,218,449,240,420,186,385,98,374,89" shape="poly">
-                        <area target="gratingCW" alt="CW" title="Rotate Clockwise" href="" coords="858,264,882,285,889,286,901,268,918,260,928,274,935,277,972,203,967,198,892,201,887,206,898,224,874,242" shape="poly">
-                        <area target="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="753,224,766,301,775,301,833,254,833,246,815,240,821,215,832,204,833,196,809,178,800,182,788,201,778,221,760,220,754,216" shape="poly">
-                        <area target="lampNudgeLeft" alt="lampLeft" href="#" coords="1252,171,1252,219,1258,226,1299,226,1305,221,1306,171,1318,170,1324,161,1283,92,1277,92,1236,158,1240,167" shape="poly">
-                        <area target="lampNudgeRight" alt="lampRight" href="#" coords="1261,231,1252,236,1253,285,1241,288,1236,294,1273,362,1280,364,1288,364,1323,299,1319,288,1307,285,1305,240,1301,231" shape="poly">
-                      </map>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <!-- radio buttons inside modal -->
+                      <div class="w-row">
+                        <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
+                        <div class="column w-col w-col-6" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
+                        <div class="column w-col w-col-1" style="bottom: -15px; color:rgb(184, 134, 6); font-size: large">Lamp:</div>
+                      </div>
+                      <div id="radioButtonsSchematic" class="w-row" >
+                        <!-- Modal Radio buttons for Telescope -->
+                        <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
+                          <input type="radio" id="MfineArm" name="MArmStepSize" value="1" onchange="mtHandleChange(this);">
+                          <label for="MfineArm">Fine</label>
+                        </div>
+                        <div class="column w-col w-col-2" style="color:darkgreen; margin-bottom: 0px;">
+                          <input type="radio" id="MmediumArm" name="MArmStepSize" value="5" onchange="mtHandleChange(this);">
+                          <label for="MmediumArm">Medium</label>
+                        </div>
+                        <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
+                          <input type="radio" id="McoarseArm" name="MArmStepSize" onchange="mtHandleChange(this);" value="50" checked>
+                          <label for="McoarseArm">Coarse</label>
+                        </div>
+                        <div class="column w-col w-col-1" style="margin-bottom: 0px;"></div>
+                        <!-- Modal Radio buttons for grating -->
+                        <div class="column w-col w-col-1" style=" color:darkorchid; margin-bottom: 0px;">
+                          <input type="radio" id="MfineTable" name="MTableStepSize" value="20" onchange="mgHandleChange(this);">
+                          <label for="MfineTable">Fine</label>
+                        </div>
+                        <div class="column w-col w-col-2" style="color:darkorchid; margin-bottom: 0px;">
+                          <input type="radio" id="MmediumTable" name="MTableStepSize" value="200" onchange="mgHandleChange(this);">
+                          <label for="MmediumTable">Medium</label>
+                        </div>
+                        <div class="column w-col w-col-1" style="color:darkorchid; margin-bottom: 0px;">
+                          <input type="radio" id="McoarseTable" name="MTableStepSize" value="600" onchange="mgHandleChange(this);" checked>
+                          <label for="McoarseTable">Coarse</label>
+                        </div>
+                      </div>
+                      <!-- arrow buttons in modal -->
+                      <div>
+                        <div class="arrowbuttonCW">
+                          <img class="column w-col w-col-2" id="arrowbuttonCW" src="static/images/arrowbuttonCW.png">
+                        </div>
+                        <div class="arrowbuttonCCW">
+                          <img class="column w-col w-col-2" id="arrowbuttonCCW" src="static/images/arrowbuttonCCW.png">
+                        </div>
+                        <div class="column w-col w-col-1"></div>
+                        <div class="arrowCW">
+                          <img class="column w-col w-col-2" id="arrowCW" src="static/images/arrowCW.png">
+                        </div>
+                        <div class = "arrowCCW">
+                          <img class="column w-col w-col-1" id="arrowCCW" src="static/images/arrowCCW.png">
+                        </div>
+                        <div class="column w-col w-col-1"></div>
+                        <div class="column w-col w-col-1"></div>
+                        <div class="uparrow">
+                          <img class="column w-col w-col-1" id="uparrow" src="static/images/upArrow.png">
+                        </div>
+                        <div class="downarrow">
+                          <img class="column w-col w-col-1" id="downarrow" src="static/images/downArrow.png">
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            
             <div id="SchematicCenter" class="column w-col w-col-8">
-              <div class="collapse-list-wrapper" id="wrapper-id">
-
-                <div class="collapse-list-heading" data-toggle="collapse" data-target="#target-id" aria-controls="target-id" aria-expanded="true">
-                  <i class="arrow h3arrow"></i>
-                  <h3> Schematic </h3>
-                </div>
-
-                <div class="collapse-list-target collapse show" id="target-id" aria-labelledby="target-id" data-parent="#wrapper-id">
-                  <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
-                  <map name="image-map-schematic">
-                    <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
-                    <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="144,267,122,273,130,298,138,318,150,332,132,344,185,367,183,312,169,319,160,299,150,280" shape="poly">
-                    <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="405,135,412,145,424,135,431,139,444,113,414,113,421,123" shape="poly">
-                    <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
-                    <area id="lampNudgeLeft" alt="lampLeft" href="#" coords="978,156,978,135,968,135,987,108,1003,135,994,135,997,156" shape="poly">
-                    <area id="lampNudgeRight" alt="lampRight" href="#" coords="978,224,979,245,971,245,988,272,1003,245,995,245,995,224" shape="poly">
-                  </map>
-                  <div class="click-note" style="margin-bottom: -10px;">
-                    (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
-                  </div>
-                </div> 
-              </div>
+              <h3>Schematic</h3>
+              <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
+              <map name="image-map-schematic">
+                <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
+                <area id="telescopeCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="144,267,122,273,130,298,138,318,150,332,132,344,185,367,183,312,169,319,160,299,150,280" shape="poly">
+                <area id="gratingCW" alt="CW" title="Rotate Clockwise" href="#" coords="405,135,412,145,424,135,431,139,444,113,414,113,421,123" shape="poly">
+                <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
+                <area id="lampNudgeLeft" alt="lampLeft" href="#" coords="978,156,978,135,968,135,987,108,1003,135,994,135,997,156" shape="poly">
+                <area id="lampNudgeRight" alt="lampRight" href="#" coords="978,224,979,245,971,245,988,272,1003,245,995,245,995,224" shape="poly">
+              </map>
+              <div class="click-note" style="margin-bottom: -10px;">
+                (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
+              </div>  
             </div>
 
             <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6);">
