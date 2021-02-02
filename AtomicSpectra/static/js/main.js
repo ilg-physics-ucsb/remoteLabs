@@ -872,16 +872,6 @@ $("document").ready(function () {
 
    //END Slit Buttons
 
-   // BEGIN help button function
-   $('#helpButton').click(function(){
-       var url = "https://hooks.slack.com/services/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";
-       var payload={"text": "hello?"};
-       $.post(url,JSON.stringify(payload),function(data){
-           $('#results').text(data);
-       })
-   })
-   //END help button function
-
    // makes modal draggable
    $('#myModalschem').draggable()
 
