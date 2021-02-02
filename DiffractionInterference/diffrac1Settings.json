@@ -17,30 +17,30 @@
         "LittleHole": 2000,
         "BigHole": 2850,
         "A02": 4000,
-        "A04": 4900,
+        "A04": 4950,
         "A08": 5850,
         "A16": 6750,
         "VaryWidth": 8400,
-        "Square": 12100,
-        "Hex": 13000,
-        "Dots": 13950,
-        "Holes": 14900
+        "Square": 12400,
+        "Hex": 13300,
+        "Dots": 14300,
+        "Holes": 15200
     },
 
     "refPointsMulti": {
         "MultiOpen": 0,
-        "FarClose": 600,
-        "WideThin": 1200,
-        "ThreeTwo": 1850,
-        "TwoSlit": 2775,
-        "ThreeSlit": 3400,
-        "FourSlit": 4025,
-        "FiveSlit": 4725,
-        "A04D25": 5650,
-        "A04D50": 6300,
-        "A08D25": 6925,
-        "A08D50": 7550,
-        "VarySpacing": 8600
+        "FarClose": 900,
+        "WideThin": 1800,
+        "ThreeTwo": 2700,
+        "TwoSlit": 3900,
+        "ThreeSlit": 4800,
+        "FourSlit": 5700,
+        "FiveSlit": 6600,
+        "A04D25": 8000,
+        "A04D50": 8900,
+        "A08D25": 9900,
+        "A08D50": 10800,
+        "VarySpacing": 12200
     },
 
     "defaultCameraSettings":{
