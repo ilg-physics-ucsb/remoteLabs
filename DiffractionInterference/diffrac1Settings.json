@@ -13,8 +13,8 @@
 
     "refPointsSingle" : {
         "SingleOpen": 0,
-        "LineSlit": 1100,
-        "LittleHole": 2000,
+        "LineSlit": 900,
+        "LittleHole": 1800,
         "BigHole": 2850,
         "A02": 4000,
         "A04": 4950,
@@ -29,9 +29,9 @@
 
     "refPointsMulti": {
         "MultiOpen": 0,
-        "FarClose": 900,
+        "FarClose": 800,
         "WideThin": 1800,
-        "ThreeTwo": 2700,
+        "ThreeTwo": 2600,
         "TwoSlit": 3900,
         "ThreeSlit": 4800,
         "FourSlit": 5700,
