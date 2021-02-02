@@ -20,3 +20,70 @@ h2 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+button.btn-settings {
+  background-color: #337ab7;
+  color: white;
+}
+button.btn-settings:active {
+  color: white;
+}
+.modal {
+    overflow: hidden;
+}
+.modal-header .close {
+  text-align: center;
+}
+.modal-body h3 {
+  text-align: center;
+}
+
+#arrowbuttonCW{
+  margin-bottom: 0px;
+}
+
+#arrowbuttonCCW{
+  margin-bottom: 0px;
+}
+
+.arrowbuttonCW{
+  opacity: 1;
+}
+.arrowbuttonCW:hover #arrowbuttonCW{
+  opacity:.3;
+}
+
+.arrowbuttonCCW{
+  opacity: 1;
+}
+.arrowbuttonCCW:hover #arrowbuttonCCW{
+  opacity:.3;
+} 
+
+.arrowCW{
+  opacity:1;
+}
+.arrowCW:hover #arrowCW{
+  opacity:.3;
+}
+
+.arrowCCW{
+  opacity:1;
+}
+.arrowCCW:hover #arrowCCW{
+  opacity:0.3;
+}
+
+.uparrow{
+  opacity:1;
+}
+.uparrow:hover #uparrow{
+  opacity:0.3;
+}
+
+.downarrow{
+  opacity:1;
+}
+.downarrow:hover #downarrow{
+  opacity:0.3;
+}
