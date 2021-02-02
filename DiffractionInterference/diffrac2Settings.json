@@ -14,8 +14,8 @@
 
     "ambientPin": 5,
 
-    "multiSlitBounds":[-12000, 12000],
-    "singleSlitBounds":[-12000,12000],
+    "multiSlitBounds":[-16000, 16000],
+    "singleSlitBounds":[-16000,16000],
     "stageBounds":[-9750, 0],
 
     "refPointsSingle" : {
