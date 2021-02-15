@@ -190,6 +190,7 @@ $("document").ready(function () {
     var nudgeUp = document.getElementById("up")
     var nudgeDown = document.getElementById("down")
     var nudgeSteps = 25
+    var nudgeSingleSteps = 50
     var lastSlit = "none"
 
     //for Stage Motion
@@ -513,7 +514,7 @@ $("document").ready(function () {
     nudgeUp.addEventListener("click", function() {
         if (lastSlit == "single") {
             console.log("Nudging Single Slit Up")
-            dataChannel.send("SingleSlits/move/" + (-nudgeSteps))
+            dataChannel.send("SingleSlits/move/" + (-nudgeSingleSteps))
         } else if (lastSlit == "multi") {
             console.log("Nudging Multi Slit Up")
             dataChannel.send("MultiSlits/move/" + nudgeSteps)
@@ -525,7 +526,7 @@ $("document").ready(function () {
     nudgeDown.addEventListener("click", function() {
         if (lastSlit == "single") {
             console.log("Nudging Single Slit Down")
-            dataChannel.send("SingleSlits/move/" + nudgeSteps)
+            dataChannel.send("SingleSlits/move/" + nudgeSingleSteps)
         } else if (lastSlit == "multi") {
             console.log("Nudging Multi Slit Down")
             dataChannel.send("MultiSlits/move/" + (-nudgeSteps))
