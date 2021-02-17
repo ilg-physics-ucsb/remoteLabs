@@ -149,7 +149,7 @@ $("document").ready(function () {
     brightnessSlider = $("#brightnessSlider")[0]
     contrastDisplay = $("#conVal")[0]
     contrastSlider = $("#contrastSlider")[0]
-    cameraControl = $("#cameraControl")[0]
+    cameraControl = $("#myModalCamera")[0]
     
     
 
