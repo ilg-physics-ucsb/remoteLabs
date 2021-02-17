@@ -872,6 +872,11 @@ $("document").ready(function () {
 
    //END Slit Buttons
 
+   async function updateCameraSetting(setting, newValue) {
+        dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
+        currentCameraSettings[setting] = newValue
+    }
+
    async function updateManyCameraSettings(currentSettings, newSettings) {
        for (const setting in newSettings) {
             var newValue = newSettings[setting]
