@@ -137,10 +137,19 @@ var liveStream
 var slitModal, extremaModal
 var pValue = "coarsePicture"
 
+var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
+
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     liveStream = document.getElementById("v");
+    exposureDisplay = $("#expVal")[0]
+    exposureSlider = $("#exposureSlider")[0]
+    brightnessDisplay = $("#briVal")[0]
+    brightnessSlider = $("#brightnessSlider")[0]
+    contrastDisplay = $("#conVal")[0]
+    contrastSlider = $("#contrastSlider")[0]
+    cameraControl = $("#cameraControl")[0]
     
     
 
@@ -221,18 +230,6 @@ $("document").ready(function () {
         SlitControl.style.visibility = "hidden";
         hide_crosshair()
         
-    })
-
-    ArmCam.addEventListener('click', function() {
-        //show_crosshair()
-        resize_canvas()
-        Crosshairs.style.visibility='visible';
-        
-        Lamps.style.visibility='visible';
-        
-        SlitControl.style.visibility='visible';
-        currentCam = "c"       
-        dataChannel.send("Camera/camera/c");
     })
 
     V1Cam.addEventListener('click', function() {
@@ -872,8 +869,98 @@ $("document").ready(function () {
 
    //END Slit Buttons
 
+   async function updateManyCameraSettings(currentSettings, newSettings) {
+       for (const setting in newSettings) {
+            var newValue = newSettings[setting]
+            var oldValue = currentSettings[setting]
+            if (newValue !== oldValue) {
+                console.log("Updating " + setting)
+                updateCameraSetting(setting, newValue)
+                await sleep(50)
+            }
+        }
+
+    }
+
+   var cameraDefaults = {
+       "frame_rate":15,
+       "brightness": 50,
+       "contrast": 0,
+       "saturation": 0,
+       "red_balance": 100,
+       "blue_balance": 100,
+       "shutter_speed": 0,
+       "iso_sensitivity": 400,
+       "awb_mode": 0,
+       "exposure_mode": 1,
+       "drc_strength": 0
+    }
+
+    var defaultScreenCameraSettings = {
+        "frame_rate":2,
+        "brightness": 50,
+        "contrast": 0,
+        "saturation": 0,
+        "red_balance": 100,
+        "blue_balance": 100,
+        "shutter_speed": 6000,
+        "iso_sensitivity": 400,
+        "awb_mode": 6,
+        "exposure_mode": 5,
+        "drc_strength": 0
+    }
+
+    var currentCameraSettings = JSON.parse(JSON.stringify(cameraDefaults))
+    var screenCameraSettings = JSON.parse(JSON.stringify(defaultScreenCameraSettings))
+
+    setExposure = function(){
+        updateCameraSetting("shutter_speed", exposureSlider.value)
+        screenCameraSettings["shutter_speed"] = exposureSlider.value
+        // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
+    }
+    
+    exposureValue = function(){
+        exposureDisplay.innerHTML=exposureSlider.value
+    }
+    
+    setBrightness = function(){
+        updateCameraSetting("brightness", brightnessSlider.value)
+        screenCameraSettings["brightness"] = brightnessSlider.value
+        // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+    }
+    
+    brightnessValue = function(){
+        brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+    }
+    
+    setContrast = function(){
+        updateCameraSetting("contrast", contrastSlider.value)
+        screenCameraSettings["contrast"] = contrastSlider.value
+        // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+    }
+    
+    contrastValue = function(){
+        contrastDisplay.innerHTML=contrastSlider.value + "%"
+    }
+    
+    ArmCam.addEventListener('click', function() {
+        //show_crosshair()
+        resize_canvas()
+        Crosshairs.style.visibility='visible';
+        
+        Lamps.style.visibility='visible';
+        
+        SlitControl.style.visibility='visible';
+
+        cameraControl.style.visiblity='visible';
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        currentCam = "c"       
+        dataChannel.send("Camera/camera/c");
+    })
+
    // makes modal draggable
    $('#myModalschem').draggable()
+   $('#myModalCamera').draggable()
 
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     
