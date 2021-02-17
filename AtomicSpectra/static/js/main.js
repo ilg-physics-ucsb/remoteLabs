@@ -212,7 +212,7 @@ $("document").ready(function () {
     var Schematic = document.getElementById("Schematic");
     var Lamps = document.getElementById("Lamps");
     var SlitControl = document.getElementById("SlitControl");
-    var cameraControl = document.getElementById("myModalCamera")
+    var cameraControl = document.getElementById("ModalCamera")
     
     OverviewCam.addEventListener('click', function() {
         
