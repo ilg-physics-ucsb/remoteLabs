@@ -954,7 +954,7 @@ $("document").ready(function () {
         Lamps.style.visibility='visible';
         
         SlitControl.style.visibility='visible';
-        cameraControl.style.visiblity='visible';
+        cameraControl.style.visibility='visible';
         console.log(cameraControl);
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         currentCam = "c"       
