@@ -955,6 +955,7 @@ $("document").ready(function () {
         
         SlitControl.style.visibility='visible';
         cameraControl.style.visiblity='visible';
+        console.log(cameraControl);
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         currentCam = "c"       
         dataChannel.send("Camera/camera/c");
