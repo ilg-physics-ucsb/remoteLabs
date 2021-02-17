@@ -212,6 +212,7 @@ $("document").ready(function () {
     var Schematic = document.getElementById("Schematic");
     var Lamps = document.getElementById("Lamps");
     var SlitControl = document.getElementById("SlitControl");
+    var cameraControl = document.getElementById("myModalCamera")
     
     OverviewCam.addEventListener('click', function() {
         
@@ -228,6 +229,7 @@ $("document").ready(function () {
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
         hide_crosshair()
         
     })
@@ -239,6 +241,7 @@ $("document").ready(function () {
         Lamps.style.visibility = "hidden";
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
         currentCam = "b"
         hide_crosshair()
         dataChannel.send("Camera/camera/b");
@@ -249,7 +252,7 @@ $("document").ready(function () {
         Lamps.style.visibility='visible';
         Crosshairs.style.visibility='visible';
         SlitControl.style.visibility='visible';
-
+        cameraControl.style.visibility = "hidden"; 
         currentCam = "d"
         hide_crosshair()
         dataChannel.send("Camera/camera/d");
@@ -951,7 +954,6 @@ $("document").ready(function () {
         Lamps.style.visibility='visible';
         
         SlitControl.style.visibility='visible';
-
         cameraControl.style.visiblity='visible';
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         currentCam = "c"       
