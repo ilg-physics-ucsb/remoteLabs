@@ -63,6 +63,7 @@ $("document").ready(function () {
     contrastDisplay = $("#conVal")[0]
     contrastSlider = $("#contrastSlider")[0]
     cameraControl = $("#cameraControl")[0]
+    mcameraControl = $("#ModalCamera")[0]
 
   
 //for modal
@@ -648,6 +649,7 @@ $("document").ready(function () {
         updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
         liveStream.style.transform = "rotate(0deg)"
         cameraControl.style.display = "None"
+        mcameraControl.style.display = "None"
     })
 
     rulerCam.addEventListener("click", function() {
@@ -657,6 +659,7 @@ $("document").ready(function () {
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         liveStream.style.transform = "rotate(0deg)"
         cameraControl.style.display = "None"
+        mcameraControl.style.display = "None"
     })
 
     screenCam.addEventListener("click", function() {
@@ -665,6 +668,7 @@ $("document").ready(function () {
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
         cameraControl.style.display = "Block"
+        mcameraControl.style.display = "Block"
     })
     // END Camera Switching
 
