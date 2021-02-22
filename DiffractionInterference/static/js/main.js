@@ -697,6 +697,8 @@ $("document").ready(function () {
     //     // scaleMap: true
     // }).parent().css({"margin":"0 auto"});
 
+    $('#myModalCamera').draggable()
+
     $('#diffractionSlitsPic').mapster({
     mapKey:'id',
     fillColor: 'f5f5b5',
