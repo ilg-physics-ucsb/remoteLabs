@@ -145,19 +145,23 @@
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
+        
         <div class="Warning">
           This session will end and the system will reset in 
           <span id="time" style="color:red;font-weight:bold">3:00:00</span>
           hours.
           <hr>
         </div>
+
         <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
           <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Overview</button>
           <button id="RulerCam" type="button" class="btn btn-primary" onclick=' show_image_crosshairs()'>Position</button>
           <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Screen</button>
           <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
-        </div><div id="otherToggles" class="row">
+        </div>
+        
+        <div id="otherToggles" class="row">
           <div id="Laser" class="column w-col w-col-3">
             (click to toggle the Laser)<br>
             <img id="laserSwitch" src="static/images/laserIcon.png">
@@ -171,6 +175,19 @@
               <area id="down" title="nudge down" href="#" coords="211,168,213,185,205,188,229,211,235,181,225,184,222,166" shape="poly">
               <area id="up" title="nudge up" href="#" coords="212,116,224,116,226,100,235,104,229,73,206,93,213,97,212,108" shape="poly">
             </map>
+          </div>
+        </div>
+
+        <div class= "row">
+          <div id="laserSwitchSpacing" class="column w-col w-col-7">
+          </div>
+          <div id="cartSliderSpacingStart" class="column w-col w-col-2">
+            <!-- <input type="range" min="-67" max="107" value="107" class="sliders" id='cartSlider'> -->
+            <button id="Start" type="button" class="btn btn-primary">Start</button>
+          </div>
+          <div id="cartSliderSpacingEnd" class="column w-col w-col-2">
+            <!-- <input type="range" min="-67" max="107" value="107" class="sliders" id='cartSlider'> -->
+            <button id="End" type="button" class="btn btn-primary">End</button>
           </div>
         </div>
         

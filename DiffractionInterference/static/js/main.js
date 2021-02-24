@@ -199,6 +199,10 @@ $("document").ready(function () {
     var stageFarther=document.getElementById('farther')
     var stageSteps=250;
 
+    var stageStart=document.getElementById("Start")
+    var stageEnd = document.getElementById("End")
+    var currentStageSteps=0;
+
     //for Laser Power
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
     var laser = document.getElementById("laserSwitch")
@@ -501,11 +505,34 @@ $("document").ready(function () {
     stageCloser.addEventListener('click', function() {
         console.log("Stage moved closer to slits.")
         dataChannel.send("Stage/move/" + (-stageSteps))
+        //check if stage is all the way to the right
+        if(currentStageSteps == 0){
+            currentStageSteps = currentStageSteps + stageSteps
+        }
+        else{
+            //do nothing
+        }
+    })
+
+    stageStart.addEventListener('click', function(){
+        console.log("stage moved closest to slits")
+        dataChannel.send("stage/move/"+ (-currentStageSteps+1666))
     })
 
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
         dataChannel.send("Stage/move/" + stageSteps)
+        if(currentStageSteps == 0){
+            //do nothing
+        }
+        else{
+            currentStageSteps = currentStageSteps - stageSteps
+        }
+    })
+
+    stageEnd.addEventListener('click', function(){
+        console.log("stage moved farthest from slits")
+        dataChannel.send("Stage/move/"+currentStageSteps)
     })
 
     // END Stage Motion
