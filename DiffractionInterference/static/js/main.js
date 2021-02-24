@@ -521,7 +521,7 @@ $("document").ready(function () {
 
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
-        dataChannel.send("Stage/move/" + currentStageSteps)
+        dataChannel.send("Stage/move/" + stageSteps)
         if(currentStageSteps == 0){
             //do nothing
         }
@@ -532,7 +532,7 @@ $("document").ready(function () {
 
     stageEnd.addEventListener('click', function(){
         console.log("stage moved farthest from slits")
-        dataChannel.send("Stage/move/"+currentStageSteps)
+        dataChannel.send("Stage/move/" + currentStageSteps)
     })
 
     // END Stage Motion
