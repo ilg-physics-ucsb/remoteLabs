@@ -514,10 +514,11 @@ $("document").ready(function () {
         }
     })
 
-    stageStart.addEventListener('click', function(){
-        console.log("Stage moved closest to slits")
-        dataChannel.send("Stage/move/"+ (currentStageSteps-16666))
-    })
+    // stageStart.addEventListener('click', function(){
+    //     console.log("Stage moved closest to slits")
+    //     currentStageSteps = currentStageSteps -16666
+    //     dataChannel.send("Stage/move/"+ (currentStageSteps))
+    // })
 
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
@@ -530,10 +531,10 @@ $("document").ready(function () {
         }
     })
 
-    stageEnd.addEventListener('click', function(){
-        console.log("stage moved farthest from slits")
-        dataChannel.send("Stage/move/" + currentStageSteps)
-    })
+    // stageEnd.addEventListener('click', function(){
+    //     console.log("stage moved farthest from slits")
+    //     dataChannel.send("Stage/move/" + currentStageSteps)
+    // })
 
     // END Stage Motion
 
