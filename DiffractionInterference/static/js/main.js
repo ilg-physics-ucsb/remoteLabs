@@ -516,7 +516,7 @@ $("document").ready(function () {
     setCart = function(){
         console.log("move cart to "+cartSlider.value)
         moveStageTo = Math.round(9750*((cartSlider.value-currValue)/100))
-        dataChannel("Stage/move/"+ moveStageTo)
+        dataChannel.send("Stage/move/"+ moveStageTo)
         currValue = cartSlider.value
     }
     
