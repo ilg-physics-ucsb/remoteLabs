@@ -49,7 +49,7 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 
 var setExposure, exposureValue, setBrightness, brightnessValue, setContrast, contrastValue
 var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
-
+var cartSlider, cartDisplay, cartValue, setCart
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
@@ -64,6 +64,8 @@ $("document").ready(function () {
     contrastSlider = $("#contrastSlider")[0]
     cameraControl = $("#cameraControl")[0]
     mcameraControl = $("#ModalCamera")[0]
+    cartDisplay = $("#cartVal")[0]
+    cartSlider = $('#cartSlider')[0]
 
   
 //for modal
@@ -198,10 +200,9 @@ $("document").ready(function () {
     var stageCloser=document.getElementById('closer')
     var stageFarther=document.getElementById('farther')
     var stageSteps=250;
-
-    // var stageStart=document.getElementById("Start")
-    // var stageEnd = document.getElementById("End")
-    // var currentStageSteps=0;
+    var moveStageTo=0;
+    var currValue = cartSlider.value
+    var valueDiff=0;
 
     //for Laser Power
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
@@ -505,37 +506,24 @@ $("document").ready(function () {
     stageCloser.addEventListener('click', function() {
         console.log("Stage moved closer to slits.")
         dataChannel.send("Stage/move/" + (-stageSteps))
-        //check if stage is all the way to the right
-        // if(currentStageSteps == 0){
-        //     currentStageSteps = currentStageSteps + stageSteps
-        // }
-        // else{
-        //     //do nothing
-        // }
     })
-
-    // stageStart.addEventListener('click', function(){
-    //     console.log("Stage moved closest to slits")
-    //     currentStageSteps = currentStageSteps -16666
-    //     dataChannel.send("Stage/move/"+ (currentStageSteps))
-    // })
 
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
         dataChannel.send("Stage/move/" + stageSteps)
-        // if(currentStageSteps == 0){
-        //     //do nothing
-        // }
-        // else{
-        //     currentStageSteps = currentStageSteps - stageSteps
-        // }
     })
 
-    // stageEnd.addEventListener('click', function(){
-    //     console.log("stage moved farthest from slits")
-    //     dataChannel.send("Stage/move/" + currentStageSteps)
-    // })
-
+    setCart = function(){
+        console.log("move cart to "+cartSlider.value)
+        moveStageTo = Math.round(9750*((cartSlider.value-currValue)/100))
+        dataChannel("Stage/move/"+ moveStageTo)
+        currValue = cartSlider.value
+    }
+    
+    cartValue = function(){
+        cartDisplay.innerHTML=cartSlider.value
+    }
+    
     // END Stage Motion
 
     // BEGIN Nudge of Slits
