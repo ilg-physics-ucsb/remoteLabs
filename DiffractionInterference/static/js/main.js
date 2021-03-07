@@ -505,7 +505,6 @@ $("document").ready(function () {
     stageCloser.addEventListener('click', function() {
         console.log("Stage moved closer to slits.")
         moveStageTo = Math.round(currValue - ((stageSteps*100)/9750))
-        console.log(moveStageTo)
         dataChannel.send("Stage/move/" + (-stageSteps))
         cartSlider.value = moveStageTo
         cartDisplay.innerHTML = cartSlider.value
@@ -515,7 +514,6 @@ $("document").ready(function () {
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
         moveStageTo = Math.round(+currValue+((stageSteps*100)/9750))
-        console.log(moveStageTo)
         dataChannel.send("Stage/move/" + stageSteps)
         cartSlider.value = moveStageTo
         cartDisplay.innerHTML = cartSlider.value
