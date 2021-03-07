@@ -202,7 +202,6 @@ $("document").ready(function () {
     var stageSteps=250;
     var moveStageTo=0;
     var currValue = cartSlider.value
-    var valueDiff=0;
 
     //for Laser Power
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
@@ -505,12 +504,22 @@ $("document").ready(function () {
     // BEGIN Stage Motion
     stageCloser.addEventListener('click', function() {
         console.log("Stage moved closer to slits.")
+        moveStageTo = Math.round(currValue - ((stageSteps*100)/9750))
+        console.log(moveStageTo)
         dataChannel.send("Stage/move/" + (-stageSteps))
+        cartSlider.value = moveStageTo
+        cartDisplay.innerHTML = cartSlider.value
+        currValue = cartSlider.value
     })
 
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
+        moveStageTo = Math.round(+currValue+((stageSteps*100)/9750))
+        console.log(moveStageTo)
         dataChannel.send("Stage/move/" + stageSteps)
+        cartSlider.value = moveStageTo
+        cartDisplay.innerHTML = cartSlider.value
+        currValue = cartSlider.value
     })
 
     setCart = function(){
@@ -522,6 +531,7 @@ $("document").ready(function () {
     
     cartValue = function(){
         cartDisplay.innerHTML=cartSlider.value
+        currValue = cartSlider.value
     }
     
     // END Stage Motion
