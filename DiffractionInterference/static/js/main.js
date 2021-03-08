@@ -505,7 +505,7 @@ $("document").ready(function () {
     // BEGIN Stage Motion
     stageCloser.addEventListener('click', function() {
         console.log("Stage moved closer to slits.")
-        moveStageTo = Math.ceil(currValue - ((stageSteps*100)/9750))
+        moveStageTo = Math.round(currValue - ((stageSteps*100)/9750))
         dataChannel.send("Stage/move/" + (-stageSteps))
         cartSlider.value = moveStageTo
         cartDisplay.innerHTML = cartSlider.value
@@ -514,7 +514,7 @@ $("document").ready(function () {
 
     stageFarther.addEventListener('click', function() {
         console.log("Stage moved farther from slits.")
-        moveStageTo = Math.ceil(+currValue+((stageSteps*100)/9750))
+        moveStageTo = Math.round(+currValue+((stageSteps*100)/9750))
         dataChannel.send("Stage/move/" + stageSteps)
         cartSlider.value = moveStageTo
         cartDisplay.innerHTML = cartSlider.value
@@ -528,7 +528,7 @@ $("document").ready(function () {
 
     setCart = function(){
         console.log("move cart to "+cartSlider.value)
-        moveStageTo = Math.ceil(9750*((cartSlider.value-prevValue)/100))
+        moveStageTo = Math.round(9750*((cartSlider.value-prevValue)/100))
         dataChannel.send("Stage/move/"+ moveStageTo)
         currValue = cartSlider.value
     }
