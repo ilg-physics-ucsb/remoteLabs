@@ -199,9 +199,10 @@ $("document").ready(function () {
     //for Stage Motion
     var stageCloser=document.getElementById('closer')
     var stageFarther=document.getElementById('farther')
-    var stageSteps=250;
-    var moveStageTo=0;
-    var currValue = cartSlider.value
+    var stageSteps = 250;
+    var moveStageTo = 0;
+    var currValue = cartSlider.value;
+    var prevValue;
 
     //for Laser Power
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
@@ -520,9 +521,14 @@ $("document").ready(function () {
         currValue = cartSlider.value
     })
 
+    getCartSliderValue = function(){
+        currValue = cartSlider.value
+        prevValue = currValue
+    }
+
     setCart = function(){
         console.log("move cart to "+cartSlider.value)
-        moveStageTo = Math.round(9750*((cartSlider.value-currValue)/100))
+        moveStageTo = Math.round(9750*((cartSlider.value-prevValue)/100))
         dataChannel.send("Stage/move/"+ moveStageTo)
         currValue = cartSlider.value
     }
