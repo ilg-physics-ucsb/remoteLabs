@@ -861,7 +861,7 @@ class Multiplexer(BaseController):
             gpio.output(pin, pinstate)
     
     def press(self, channel):
-        __setChannel(channel)
+        self.__setChannel(channel)
         gpio.output(self.inhibitorPin, gpio.LOW)
         time.sleep(self.delay)
         gpio.output(self.inhibitorPin, gpio.HIGH)
