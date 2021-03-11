@@ -1,17 +1,16 @@
 {
-    "outlets":[1,2],
+    "outlets":[5],
     "outletMap":{
-        "PowerSupply": 1,
-        "ST160": 2
+        "ST160": 5
     },
 
-    "multiplexerPins": [5, 6, 12],
-    "inhibitorPin" : 13,
+    "multiplexerPins": [6, 12, 13],
+    "inhibitorPin" : 16,
     "multiplexerChannels": [1,2,3,4,5,6],
     "multiplexerDelay": 0.1,
 
-    "magnetTerminal" : 3,
-    "actuatorTerminal" : 4,
+    "magnetTerminal" : 4,
+    "actuatorTerminal" : 3,
     "stageTerminal": 1,
 
     "stageBounds": [-9750, 0],
