@@ -56,7 +56,7 @@ magnet = DCMotorI2C("Magnet", magnetTerminal)
 absorberController = AbsorberController("AbsorberController", stage, actuator, magnet,
                                             fullTime=absorberFullTime, midTime=absorberMidTime)
 
-buttons= = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
+buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup 
 # GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 # GRpdu.login()
