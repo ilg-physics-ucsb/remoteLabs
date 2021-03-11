@@ -13,7 +13,7 @@
     "actuatorTerminal" : 3,
     "stageTerminal": 1,
 
-    "stageBounds": [-9750, 0],
+    "stageBounds": [0, 9750],
     "stageRefPoints": {
         "s0": -100,
         "s1": -200,
