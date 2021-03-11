@@ -4,14 +4,39 @@
         "PowerSupply": 1,
         "ST160": 2
     },
-    "stageBounds": [-9750, 0],
 
-    "countButtonPin": 5,
-    "stopButtonPin" : 6,
-    "hvButtonPin"   : 12,
-    "timeButtonPin" : 13,
-    "upButtonPin"   : 16,
-    "downButtonPin" : 26,
-    
-    "electroMagnetPin" : 25
+    "multiplexerPins": [5, 6, 12],
+    "inhibitorPin" : 13,
+    "multiplexerChannels": [1,2,3,4,5,6],
+    "multiplexerDelay": 0.1,
+
+    "magnetTerminal" : 3,
+    "actuatorTerminal" : 4,
+    "stageTerminal": 1,
+
+    "stageBounds": [-9750, 0],
+    "stageRefPoints": {
+        "s0": -100,
+        "s1": -200,
+        "s2": -300,
+        "s3": -400,
+        "s4": -500,
+        "s5": -600,
+        "h0": -1000,
+        "h1": -1100,
+        "h2": -1200,
+        "h3": -1300,
+        "h4": -1400,
+        "h5": -1500,
+        "h6": -1600,
+        "h7": -1700,
+        "h8": -1800,
+        "h9": -1900,
+        "h10": -2000,
+        "h11": -2100
+    },
+
+    "absorberFullTime": 10,
+    "absorberMidTime": 2
+
 }

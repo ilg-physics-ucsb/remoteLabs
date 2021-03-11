@@ -213,7 +213,7 @@ class DCMotorI2C(MotorKit, BaseController):
 
 class StepperI2C(MotorKit, BaseController):
 
-    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE",microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8, gearRatio=1):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE", microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8, gearRatio=1):
         if terminal > 2: 
             self.address=0x61
         else:
@@ -368,65 +368,517 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator):
+    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
+        self.fulltime = fulltime
+        self.midtime = midtime
         self.stepper = stepper
         self.actuator = actuator
+        self.magnet = magnet
         self.state = {
             "loaded": {
-                "s0":-1,
-                "s1":-1,
-                "s2":-1,
-                "s3":-1,
-                "s4":-1,
-                "s5":-1
+                "s0":False,
+                "s1":False,
+                "s2":False,
+                "s3":False,
+                "s4":False,
+                "s5":False
             },
 
             "total": {
-                "s0":-1,
-                "s1":-1,
-                "s2":-1,
-                "s3":-1,
-                "s4":-1,
-                "s5":-1,
-                "h0":-1,
-                "h1":-1,
-                "h2":-1,
-                "h3":-1,
-                "h4":-1,
-                "h5":-1,
-                "h6":-1,
-                "h7":-1,
-                "h8":-1,
-                "h9":-1,
-                "h10":-1,
-                "h11":-1,
+                "s0":'',
+                "s1":'',
+                "s2":'',
+                "s3":'',
+                "s4":''
+                "s5":'',
+                "h0":'A1',
+                "h1":'A2',
+                "h2":'A3',
+                "h3":'A4',
+                "h4":'A5',
+                "h5":'A6',
+                "h6":'A7',
+                "h7":'A8',
+                "h8":'A9',
+                "h9":'A10',
+                "h10":'A11',
+                "h11":'Source',
             }
         }
+
+        self.holderMap = {
+                "A1": "h0",
+                "A2": "h1",
+                "A3": "h2",
+                "A4": "h3",
+                "A5": "h4",
+                "A6": "h5",
+                "A7": "h6",
+                "A8": "h7",
+                "A9": "h8",
+                "A10": "h9",
+                "A11": "h10",
+                "Source": "h11",
+            }
+
 
     def setup(self, style):
         pass
 
     def reset(self):
         pass
+    
+    def __transfer(self, slot1, slot2):
+    
+        absorber = self.state["total"][slot1]
+        # print(f"Transfer {absorber} from {slot1} --> {slot2}")
+        if self.state['total'][slot2] != '':
+            print(f'!!!!!!!!!!!WARNING:  Slot {slot2} already full with {self.state["total"][slot2]}')
+            raise
+        # global x
+        # x += 1
+        self.stepper.goto(slot1)
+        self.actuator.throttle(-1.0)
+        time.sleep(self.midtime)
+        self.actuator.throttle(0)
+        self.magnet.throttle(1.0)
+        self.actuator.throttle(1.0)
+        time.sleep(self.fulltime)
+        self.actuator.throttle(0)
+        self.stepper.goto(slot2)
+        self.actuator.throttle(-1.0)
+        time.sleep(self.fulltime)
+        self.actuator.throttle(0)
+        self.magnet.throttle(0)
+        self.actuator.throttle(1.0)
+        time.sleep(self.midtime)
+        self.actuator.throttle(0)
 
-    def place(self, absorberList):
-        for slot, absorber in absorberList:
-            # If the slot is not already load with the correct absorber & and it's empty
-            if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] == -1:
-                # Get absorber from its current location
-                # Move it to new location
-                pass
-            if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] != -1:
-                pass
+
+        self.state["total"][slot1] = ''
+        self.state["total"][slot2] = absorber
+        if slot1 in self.state["loaded"]:
+            self.state["loaded"][slot1] = False
+        if slot2 in self.state["loaded"]:
+            self.state["loaded"][slot2] = True
+
+    def __getSlot(self, absorber):
+        # print(f"GET SLOT: {absorber}")
+        if absorber == '':
+            return -1
+        for holderSlot, ab in self.state["total"].items():
+            if ab == absorber:
+                return holderSlot
+    
+    def __getAbsorber(self, slot):
+        return self.state["total"][slot]
+    
+    def __makeMovesList(self, newPositions):
+        moveList = {
+            "load": [],
+            "unload": [],
+            "internal": [],
+            "chains": []
+        }
+
+        absorbers = [item[1] for item in newPositions if item[1] != '']
+        for slot, ab in newPositions:
+            # slot is one of the counter slots. We will loop through all slots in the coutner.
+            # ab is the absorber we want to end up in slot.
+
+            # Get the absorber that is currently in the slot
+            currentAbsInSlot = self.__getAbsorber(slot)
+            # Get the location of the current absorber
+            currentAbsLocation = self.__getSlot(ab)
+            # print(f"Absorber: {ab}  Location: {currentAbsLocation}")
+
+            # Determine if the absorber is used later down the line
+            absorberUsed = currentAbsInSlot in absorbers
+            if ab == currentAbsInSlot:
+                ## If the absorber is already in the correct slot there is nothing todo.
+                continue
+
+            elif ab == '' and self.state["loaded"][slot]:
+                # If we want the slot to be empty, it is current loaded and the
+                # loaded absorber is not used later, then unload it.
+                if not absorberUsed:
+                    moveList["unload"].append( (slot, self.holderMap[currentAbsInSlot]) )
+            
+            elif ab != '' and self.state["loaded"][slot]:
+                # If we want the slot to be full and it is already full with a 
+                # different absorber.
+                if not absorberUsed:
+                    # If the currently loaded absorber is not needed, unload it.
+                    # If it is used later, we will handle that one later in the loop 
+                    moveList["unload"].append( (slot, self.holderMap[currentAbsInSlot]) )
+                if currentAbsLocation[0] == "s":
+                    # If the absorbr we want is already in the counter
+                    # add it to an internal movement
+                    moveList["internal"].append( (currentAbsLocation, slot) )
+                else:
+                    # If it isn't already in the counter it must be in the holder
+                    # so add it to the load movement list. 
+                    moveList["load"].append( (currentAbsLocation, slot) )
+
+            elif ab != '' and not self.state["loaded"][slot]:
+                # If we want to fill the slot and nothing is there already just move
+                # if following the same rules above without an unload first.
+                if currentAbsLocation[0] == "s":
+                    moveList["internal"].append( (currentAbsLocation, slot) )
+                else:
+                    moveList["load"].append( (currentAbsLocation, slot) )
+
+        ## Now we should identify chains.
+        chains = self.__chainDetect(moveList["internal"])
+        internalStarts = [ item[0] for item in moveList["internal"] ]
+        for chain in chains:
+            for move in chain:
+                moveList["internal"].remove(move)
+
+        moveList["chains"] = chains     
+
+        return moveList
+    
+    def __chainDetect(self, movements):
+        chains = []
+        checked = []
+        internalStarts = [ item[0] for item in movements ]
+        internalFinish = [ item[1] for item in movements ]
+        intersection = [slot for slot in internalStarts if slot in internalFinish]
+
+        for move in movements:
+            temp = []
+            if move[0] in checked:
+                continue
+            # checked.append(move[0])
+            if move[0] in intersection and move[1] in intersection:
+                start = move[0]
+                checked.append(start)
+                nextSlot = move[1]
+                temp.append(move)
+                while nextSlot != start:
+                    i=0
+                    for nextMove in movements:
+                        if nextMove[0] == nextSlot:
+                            checked.append(nextMove[0])
+                            nextSlot = nextMove[1]
+                            temp.append(nextMove)
+                            i -= 1
+                            break
+                        # print(f"{nextMove} and {nextSlot}")
+                    i += 1
+                    if i > 0:
+                        break
+                if i <= 0:
+                    chains.append(temp)
+        # print(f"CHAINS: {chains}")
+        return chains
+    
+    def __chaseInternal(self, internals, startingMove):
+        moves = [startingMove]
+        internalStarts = [item[0] for item in internals]
+        # internalStartsTemp = internalStarts.copy()
+        nextSlot = startingMove[1]
+        while nextSlot in internalStarts:
+            index = internalStarts.index(nextSlot)
+            iMove = internals.pop(index)
+            internalStarts.pop(index)
+            moves.insert(0, iMove)
+            nextSlot = iMove[1]
+        return moves
+
+    def __handleChains(self, chains, currentMoves):
+        currentFinish = [item[1] for item in currentMoves]
+        slots = ['s0', 's1', 's2', 's3', 's4', 's5']
+        for chain in chains:
+            move1 = chain.pop(0)
+            ab = self.__getAbsorber(move1[0])
+            home = self.holderMap[ab]
+            # for slot in slots:
+            #     if slot not in currentFinish:
+            #         home = slot
+            #         break
+            # print(f"CHAIN HOME: ({move1[0]}, {home})")
+            currentMoves.append( (move1[0], home) )
+            chain.reverse()
+            for move in chain:
+                currentMoves.append(move)
+                # print(f"CHAIN MOVE REVERSE: {move}")
+            currentMoves.append( (home, move1[1]) )
+            # print(f"CHAIN BACK: ({home}, {move1[1]})")
+            currentFinish = [item[1] for item in currentMoves]
+        return currentMoves
+    
+    def __handleInternal(self, internals):
+        moves = []
+        if len(internals) == 0:
+            return moves
+        
+        internalGroups = []
+        while len(internals) != 0:
+            start = internals.pop(0)
+            temp = self.__chaseInternal(internals, start)
+            internalGroups.append(temp)
+        
+        for group in internalGroups:
+            moves += group
+        
+        return moves
+    
+    def __buildGroups(self, moveList):
+        unloads = moveList["unload"]
+        loads = moveList["load"]
+        internals = moveList["internal"]
+        unloadStarts = [item[0] for item in unloads]
+        UILGroups = []
+        ILGroups = []
+        LGroups = []
+        UIGroups = []
+        IGroups = []
+        moves = []
+
+        for load in loads:
+            temp = self.__chaseInternal(internals, load)
+            internalStarts = [item[0] for item in internals]
+
+            if len(temp) == 1:
+                LGroups.append(temp)
+            
+            else:
+                nextSlot = temp[0][1]
+                # print(f"Checking for conflict with unload. Slot {nextSlot}")
+                if nextSlot in unloadStarts:
+                    # print("Internal Movement Conflict with Following Unload")
+                    index = unloadStarts.index(nextSlot)
+                    uMove = unloads.pop(index)
+                    unloadStarts.remove(uMove[0])
+                    temp.insert(0, uMove)
+                    UILGroups.append(temp)
+                else:
+                    ILGroups.append(temp)
+        
+        if len(internals) > 0:
+            
+            internalStarts = [item[0] for item in internals]
+            internalFinish = [item[1] for item in internals]
+            intersection = [item for item in internalFinish if item in internalStarts]
+            starts = [internal for internal in internals if internal[1] in intersection]
+            for start in starts:
+                internals.remove(start)
+        
+            for startingI in starts:
+                temp = self.__chaseInternal(internals, startingI)
+                internalStarts = [item[0] for item in internals]
+                nextSlot = temp[0][1]
+                # print(f"Checking for conflict with unload. Slot {nextSlot}")
+                if nextSlot in unloadStarts:
+                    # print("Internal Movement Conflict with Following Unload")
+                    index = unloadStarts.index(nextSlot)
+                    uMove = unloads.pop(index)
+                    unloadStarts.remove(uMove[0])
+                    temp.insert(0, uMove)
+                    UIGroups.append(temp)
+                else:
+                    IGroups.append(temp)
+
+                
+        for uil in UILGroups:
+            uMove = [uil.pop(0)]
+            lMove = [uil.pop(-1)]
+            igroup = uil
+
+            if len(unloads) > 0:
+                uTemp = unloads.pop(0)
+                igroup.append(uTemp)
+            
+            elif len(UIGroups) > 0:
+                uiTemp = UIGroups.pop(0)
+                uTempMove = uiTemp.pop(0)
+                igroup.append(uTempMove)
+                lMove = lMove + uiTemp
+            
+            if len(LGroups) > 0:
+                lTemp = LGroups.pop(0)
+                igroup.insert(0, lTemp[0])
+            
+            elif len(ILGroups) > 0:
+                ilTemp = ILGroups.pop(0)
+                lTempMove = ilTemp.pop(-1)
+                igroup.insert(0,lTempMove)
+                uMove = ilTemp + uMove
+
+            # moves.append(uMove + igroup + lMove)
+            moves += uMove + igroup + lMove
+        
+        for il in ILGroups:
+            uMove = []
+            lMove = [il.pop(-1)]
+            igroup = il
+
+            if len(unloads) > 0:
+                uTemp = unloads.pop(0)
+                igroup.append(uTemp)
+            
+            elif len(UIGroups) > 0:
+                uiTemp = UIGroups.pop(0)
+                uTempMove = uiTemp.pop(0)
+                igroup.append(uTempMove)
+                lMove = lMove + uiTemp
+
+            # moves.append(igroup + lMove)
+            moves += igroup + lMove
+
+        for l in LGroups:
+            uMove = []
+            lMove = l
+            igroup = []
+
+            if len(unloads) > 0:
+                uTemp = unloads.pop(0)
+                igroup.append(uTemp)
+            
+            elif len(UIGroups) > 0:
+                uiTemp = UIGroups.pop(0)
+                uTempMove = uiTemp.pop(0)
+                igroup.append(uTempMove)
+                lMove = lMove + uiTemp
+
+            # moves.append(igroup + lMove)
+            moves += igroup + lMove
+        
+        while len(unloads) > 0 or len(UIGroups) > 0:
+
+            if len(UIGroups) > 0:
+                moves = UIGroups.pop(0) + moves
+            elif len(unloads) > 0:
+                print(unloads)
+                moves.insert(0, unloads.pop(0))
+        
+        return moves
+
+    def place(self, moveList):
+
+        moves = []
+        internalStarts = [ item[0] for item in moveList["internal"]]
+        internalFinish = [ item[1] for item in moveList["internal"]]
+        unloadStarts = [ item[0] for item in moveList["unload"]]
+
+        # print("\r\n ### Pairing Checks")
+        uMovesTemp = moveList["unload"].copy()
+        lMovesTemp = moveList["load"].copy()
+        for uMove in moveList["unload"]:
+            # print(f"PAIRING CHECK: {uMove}, {moveList['unload']}, {moveList['load']},")
+            for lMove in moveList["load"]:
+                # print(f"PARING CHECK2: {lMove}")
+                if uMove[0] == lMove[1]:
+                    moves.append(uMove)
+                    moves.append(lMove)
+                    uMovesTemp.remove(uMove)
+                    lMovesTemp.remove(lMove)
+                    # print(f"PARING: {uMove} with {lMove}")
+        
+        moveList["unload"] = uMovesTemp
+        moveList["load"] = lMovesTemp
+        unloadStarts = [ item[0] for item in moveList["unload"]]
+
+        # print("## Pairings Complete")
+        pp.pprint(moveList) 
+
+        # print("## ORGANIZING EVERYTING BUT CHAINS")
+        moves += self.__buildUILGroups(moveList)
+
+        if len(moveList["chains"]) > 0:
+            # print("## Handling Chains")
+            moves = self. __handleChains(moveList["chains"], moves)
+        
+        pp.pprint(moveList)
+        # print(moves)
+        for move in moves:
+            self.__transfer(move[0], move[1])
+
+    # def place(self, absorberList):
+    #     for slot, absorber in absorberList:
+    #         # If the slot is not already load with the correct absorber & and it's empty
+    #         if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] == -1:
+    #             # Get absorber from its current location
+    #             # Move it to new location
+    #             pass
+    #         if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] != -1:
+    #             pass
         
     def place_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
-        print("Throttle is set to: {0}".format(params[0]))
-        return float(params[0])
+        # print("Throttle is set to: {0}".format(params[0]))
+        temp = [item.replace("(","").replace(")","") for item in params]
+        absorberList = []
+        i = 0
+        while i < len(temp):
+            absorberList.append((temp[i], temp[i+1]))
+            i += 2
+
+        moveList = self.__makeMovesList(absorberList)
+
+        return moveList
+
+class Multiplexer(BaseController):
+
+    def __init__(self, name, pins, inhibitorPin, channels=[0,1,2,3,4,5,6,7] defaultChannel=None, defaultState=gpio.HIGH, delay=0.1):
+        self.pin = pin
+        self.name = name
+        self.experiment = None
+        self.device_type = "controller"
+        self.delay = delay
+        self.initialState = initialState 
+        self.pins = pins
+        self.channels = channels
+        self.defaultState = defaultState
+        self.defaultChannel = defaultChannel
+        self.inhibitorPin = inhibitorPin
+
+        gpio.setup(self.pins, gpio.OUT)
+        gpio.setup(self.inhibitorPin, gpio.OUT)
+
+        if self.defaultChannel is not None:
+            self.__setChannel(self.defaultChannel)
+            gpio.output(self.inhibitorPin, self.defaultState)
+        else:
+            gpio.output(self.inhibitorPin, gpio.HIGH)
+   
+
+    def __setChannel(self, channel):
+        binary = "{0:0{1}b}".format(channel, len(self.pins))
+        gpio.output(self.inhibitorPin, gpio.HIGH)
+        for i in range(len(self.pins)):
+            pin = self.pins[i]
+            state = bool(int(binary[i]))
+            pinstate = gpio.LOW
+            if state:
+                pinstate = gpio.HIGH
+
+            gpio.output(pin, pinstate)
+    
+    def press(self, channel):
+        __setChannel(channel)
+        gpio.output(self.inhibitorPin, gpio.LOW)
+        time.sleep(self.delay)
+        gpio.output(self.inhibitorPin, gpio.HIGH)
+    
+    def press_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "press")
+        if param[0] not in self.channels:
+            raise ArgumentError(self.name, "press", params[0], self.channels)
+        return int(param[0])
+    
+
+    def reset(self):
+        if self.defaultChannel is not None:
+            self.__setChannel(self.defaultChannel)
+        gpio.output(self.inhibitorPin, self.defaultState)
 
 class Keithley6514Electrometer(BaseController):
 

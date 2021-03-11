@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C, SingleGPIO, PushButton
+from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController
 import visa
 import argparse, os, json
 
@@ -20,15 +20,23 @@ with open(labSettingsPath, "r") as f:
 # Raffi make these settings match what is needed in the settings file
 outlets         = labSettings["outlets"]
 outletMap       = labSettings["outletMap"]
-stageBounds     = labSettings["stageBounds"]
-magnetPin       = labSettings["electroMagnetPin"]
 
-countButtonPin  = labSettings["countButtonPin"]
-stopButtonPin   = labSettings["stopButtonPin"]
-hvButtonPin     = labSettings["hvButtonPin"]
-timeButtonPin   = labSettings["timeButtonPin"]
-upButtonPin     = labSettings["upButtonPin"]
-downButtonPin   = labSettings["downButtonPin"]
+stageBounds     = labSettings["stageBounds"]
+stageRefPoints  = labSettings["stageRefPoints"]
+stageTerminal   = labSettings['stageTerminal']
+
+magnetTerminal      = labSettings["magnetTerminal"]
+
+actuatorTerminal    = labSettings["actuatorTerminal"]
+
+multiplexerPins     = labSettings["multiplexerPins"]
+inhibitorPin        = labSettings["inhibitorPin"]
+multiplexerChannels = labSettings["multiplexerChannels"]
+multiplexerDelay    = labSettings["multiplexerDelay"]
+
+absorberFullTime = labSettings["absorberFullTime"]
+absorberMidTime  = labSettings["absorberMidTime"]
+
 
 if args.admin:
     bounds = (-1e6, 1e6)
@@ -39,20 +47,16 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 
-stage = StepperI2C("Stage", 1, bounds=stageBounds, style="DOUBLE", delay=0.004)
+stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.004, refPoints=stageRefPoints)
 
-actuator = DCMotorI2C("Actuator", 3)
+actuator = DCMotorI2C("Actuator", actuatorTerminal)
 
-magnet = SingleGPIO("Magnet", magnetPin)
+magnet = DCMotorI2C("Magnet", magnetTerminal)
 
-countButton = PushButton("CountButton", countButtonPin)
-stopButton  = PushButton("StopButton", stopButtonPin)
-hvButton    = PushButton("HVButton", hvButtonPin)
-timeButton  = PushButton("TimeButton", timeButtonPin)
-upButton    = PushButton("UpButton", upButtonPin)
-downButton  = PushButton("DownButton", downButtonPin)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet,
+                                            fullTime=absorberFullTime, midTime=absorberMidTime)
 
-
+buttons= = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup 
 # GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 # GRpdu.login()
@@ -71,12 +75,8 @@ exp.add_device(camera)
 exp.add_device(stage)
 exp.add_device(actuator)
 exp.add_device(magnet)
-exp.add_device(countButton)
-exp.add_device(stopButton)
-exp.add_device(hvButton)
-exp.add_device(timeButton)
-exp.add_device(upButton)
-exp.add_device(downButton)
+exp.add_device(absorberController)
+exp.add_device(buttons)
 
 
 exp.set_socket_path(socket_path)
