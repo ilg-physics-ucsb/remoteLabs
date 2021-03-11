@@ -1,7 +1,7 @@
 {
     "outlets":[5],
     "outletMap":{
-        "ST160": 5
+        "ST160": 6
     },
 
     "multiplexerPins": [6, 12, 13],
