@@ -867,6 +867,8 @@ class Multiplexer(BaseController):
         gpio.output(self.inhibitorPin, gpio.HIGH)
     
     def press_parser(self, params):
+        print("press_parser")
+        print(params[0])
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "press")
         if params[0] not in self.channels:
