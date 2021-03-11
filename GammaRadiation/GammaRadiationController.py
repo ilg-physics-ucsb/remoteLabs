@@ -53,7 +53,7 @@ actuator = DCMotorI2C("Actuator", actuatorTerminal)
 
 magnet = DCMotorI2C("Magnet", magnetTerminal)
 
-absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fullTime=absorberFullTime, midTime=absorberMidTime)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup 
