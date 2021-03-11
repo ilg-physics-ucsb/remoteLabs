@@ -831,7 +831,6 @@ class Multiplexer(BaseController):
         self.experiment = None
         self.device_type = "controller"
         self.delay = delay
-        self.initialState = initialState 
         self.pins = pins
         self.channels = channels
         self.defaultState = defaultState
