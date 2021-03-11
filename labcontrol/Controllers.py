@@ -827,7 +827,6 @@ class AbsorberController(MotorKit, BaseController):
 class Multiplexer(BaseController):
 
     def __init__(self, name, pins, inhibitorPin, channels=[0,1,2,3,4,5,6,7], defaultChannel=None, defaultState=gpio.HIGH, delay=0.1):
-        self.pin = pin
         self.name = name
         self.experiment = None
         self.device_type = "controller"
