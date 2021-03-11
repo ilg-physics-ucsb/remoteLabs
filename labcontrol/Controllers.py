@@ -869,9 +869,9 @@ class Multiplexer(BaseController):
     def press_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "press")
-        if param[0] not in self.channels:
+        if params[0] not in self.channels:
             raise ArgumentError(self.name, "press", params[0], self.channels)
-        return int(param[0])
+        return int(params[0])
     
 
     def reset(self):
