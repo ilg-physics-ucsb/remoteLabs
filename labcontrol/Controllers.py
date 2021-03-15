@@ -1101,7 +1101,7 @@ class PWMChannel(BaseController):
         self.frequency = frequency
         self.defaultDutyCycle = defaultDutyCycle
         self.dutyCycle = defaultDutyCycle
-        self.pwm = GPIO.PWM(self.pin, self.frequency)
+        self.pwm = gpio.PWM(self.pin, self.frequency)
         self.pwm.start(self.dutyCycle)
 
     def power(self, dutyCycle):
