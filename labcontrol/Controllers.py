@@ -2,7 +2,7 @@ import time
 import tplink_smarthome as tp
 import dlipower
 import RPistepper as stp
-from adafruit_motorkit import MotorKit 
+from adafruit_motorkit import MotorKit
 from adafruit_motor import stepper
 import RPi.GPIO as gpio
 import os
@@ -14,7 +14,7 @@ from adafruit_bus_device.i2c_device import I2CDevice
 gpio.setmode(gpio.BCM)
 
 class BaseController(object):
-    
+
     def cmd_handler(self, cmd, params):
         # Make the parser name, it should follow the naming convention <cmd>_parser. If there is no parser return None.
         parser = getattr(self, cmd+"_parser", None)
@@ -22,27 +22,27 @@ class BaseController(object):
         # If parser exists, use it to parse the params.
         if parser is not None:
             params = parser(params)
-        # If there is no parser print this statement for user. 
+        # If there is no parser print this statement for user.
         else:
             print("No Parser Found. Will just pass params to command.")
 
         # No get the command method. If there isn't a method, it should through an AttributeError.
         method = getattr(self, cmd)
-        
+
         if callable(method):
             response = method(params)
-        
+
         return response
 
     def cleanup(self):
         pass
-    
+
     def reset(self):
         pass
 
     def getState(self):
         return self.state
-        
+
     def setState(self, state):
         self.state = state
 
@@ -58,7 +58,7 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
         self.state = {1:"Off", 2:"Off", 3:"Off", 4:"Off", 5:"Off", 6:"Off", 7:"Off", 8:"Off" }
         self.outlets = outlets
         self.outletMap = outletMap
-        
+
     def on(self, outletNumber):
         super().on(outletNumber)
         self.state[outletNumber] = "On"
@@ -77,11 +77,11 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
             if outlet_name not in self.outletMap:
                 raise ArgumentError(outlet_name, self.outletMap, self.name, "On")
             outlet = self.outletMap[outlet_name]
-        
+
         if outlet not in self.outlets:
             raise ArgumentError(self.name, "On", "Outlet "+ params[0], allowed="Outlets " + str(self.outlets))
         return outlet
-    
+
     def off_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "off")
@@ -96,7 +96,7 @@ class PDUOutlet(dlipower.PowerSwitch, BaseController):
         if outlet not in self.outlets:
             raise ArgumentError(self.name, "Off", "Outlet "+ params[0], allowed="Outlets " + str(self.outlets))
         return outlet
-    
+
     def reset(self):
         for outlet in self.outlets:
             self.off(outlet)
@@ -118,7 +118,7 @@ class Plug(tp.TPLinkSmartDevice, BaseController):
         elif newRelay=="ON":
             super().send({'system': {'set_relay_state': {'state': 1}}})
         self.state["relayState"] = newRelay
-        
+
     def setRelay_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "setRelay")
@@ -126,7 +126,7 @@ class Plug(tp.TPLinkSmartDevice, BaseController):
 
     def cleanup(self):
         super().close()
-    
+
     def reset(self):
         super().send({'system': {'set_relay_state': {'state': 0}}})
         super().close()
@@ -142,7 +142,7 @@ class StepperSimple(stp.Motor, BaseController):
         self.currentPosition = 0
         self.experiment = None
         self.state = {"position": self.currentPosition}
-    
+
     def move(self, steps):
         print(steps)
         super().move(steps)
@@ -150,7 +150,7 @@ class StepperSimple(stp.Motor, BaseController):
         self.currentPosition+=steps
         self.state["position"] = self.currentPosition
         self.device.release()
-        
+
     def move_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
@@ -158,17 +158,17 @@ class StepperSimple(stp.Motor, BaseController):
 
     def goto(self, position):
         print(position)
-        endPoint=self.refPoints[position]   
+        endPoint=self.refPoints[position]
         self.move(endPoint-self.currentPosition)
 
     def goto_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
-        
+
     def cleanup(self):
         super().cleanup()
-    
+
     def reset(self):
         super().reset()
 
@@ -176,7 +176,7 @@ class StepperSimple(stp.Motor, BaseController):
 class DCMotorI2C(MotorKit, BaseController):
 
     def __init__(self, name, terminal):
-        if terminal > 4: 
+        if terminal > 4:
             self.address=0x61
         else:
             self.address=0x60
@@ -199,7 +199,7 @@ class DCMotorI2C(MotorKit, BaseController):
 
     def throttle(self, speed):
         self.device.throttle = speed
-        
+
     def throttle_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
@@ -214,7 +214,7 @@ class DCMotorI2C(MotorKit, BaseController):
 class StepperI2C(MotorKit, BaseController):
 
     def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE", microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8, gearRatio=1):
-        if terminal > 2: 
+        if terminal > 2:
             self.address=0x61
         else:
             self.address=0x60
@@ -222,7 +222,7 @@ class StepperI2C(MotorKit, BaseController):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
-        
+
         self.terminal_options = {1: super().stepper1, 2: super().stepper2, 3:super().stepper1, 4:super().stepper2}
         self.refPoints = refPoints
         self.currentPosition = 0
@@ -245,15 +245,15 @@ class StepperI2C(MotorKit, BaseController):
         self.degPerStep = degPerStep
         self.gearRatio = gearRatio
         self.device.release()
-               
+
     def setup(self, style):
         pass
 
     def move(self, steps):
-        print(steps)        
+        print(steps)
         if steps >= 0:
             direction = stepper.BACKWARD
-        else: 
+        else:
             direction = stepper.FORWARD
         if self.currentPosition+steps <self.lowerBound and steps < 0:
             steps = self.lowerBound-self.currentPosition
@@ -271,7 +271,7 @@ class StepperI2C(MotorKit, BaseController):
                             return "{0}/{1}/{2}".format(self.name, "position", "limit")
                         else:
                             return response
-            
+
             if self.homing:
                 homeStatus = self.homeSwitch.getStatus(1)
                 if homeStatus == gpio.HIGH:
@@ -287,16 +287,16 @@ class StepperI2C(MotorKit, BaseController):
             return "{0}/{1}/{2}".format(self.name, "position", "limit")
         else:
             return "{0}/{1}/{2}".format(self.name, "position", self.currentPosition)
-        
+
     def move_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
         return int(params[0])
-    
+
     def adminMove(self, steps):
         if steps >= 0:
             direction = stepper.BACKWARD
-        else: 
+        else:
             direction = stepper.FORWARD
         if self.currentPosition+steps <self.lowerBound and steps < 0:
             steps = self.lowerBound-self.currentPosition
@@ -308,25 +308,25 @@ class StepperI2C(MotorKit, BaseController):
         self.currentPosition+=steps
         self.state["position"] = self.currentPosition
         self.device.release()
-       
+
     def goto(self, position):
         print(position)
-        endPoint=self.refPoints[position]   
+        endPoint=self.refPoints[position]
         self.move(endPoint-self.currentPosition)
 
     def goto_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
-        
+
     def degMove_parser(self, params):
         try:
             steps = float(params[0])
         except ValueError:
             raise ArgumentError(self.name, "degMove", params)
         return steps
-        
-        
+
+
     def degMove(self, deg):
         print("{0} degrees".format(deg))
         step = deg / self.degPerStep
@@ -343,18 +343,18 @@ class StepperI2C(MotorKit, BaseController):
             direction = 1
         else:
             return
-        
+
         self.move(direction*stepLimit)
         self.move(direction*additionalSteps)
-        
-         
+
+
     def reset(self):
         if self.homeSwitch is not None:
             self.home(1)
         else:
             self.move(-self.currentPosition)
         # pass
-    
+
     def home(self, params):
         if self.homeSwitch is not None:
             self.homing = True
@@ -430,9 +430,9 @@ class AbsorberController(MotorKit, BaseController):
 
     def reset(self):
         pass
-    
+
     def __transfer(self, slot1, slot2):
-    
+
         absorber = self.state["total"][slot1]
         # print(f"Transfer {absorber} from {slot1} --> {slot2}")
         if self.state['total'][slot2] != '':
@@ -472,10 +472,10 @@ class AbsorberController(MotorKit, BaseController):
         for holderSlot, ab in self.state["total"].items():
             if ab == absorber:
                 return holderSlot
-    
+
     def __getAbsorber(self, slot):
         return self.state["total"][slot]
-    
+
     def __makeMovesList(self, newPositions):
         moveList = {
             "load": [],
@@ -506,13 +506,13 @@ class AbsorberController(MotorKit, BaseController):
                 # loaded absorber is not used later, then unload it.
                 if not absorberUsed:
                     moveList["unload"].append( (slot, self.holderMap[currentAbsInSlot]) )
-            
+
             elif ab != '' and self.state["loaded"][slot]:
-                # If we want the slot to be full and it is already full with a 
+                # If we want the slot to be full and it is already full with a
                 # different absorber.
                 if not absorberUsed:
                     # If the currently loaded absorber is not needed, unload it.
-                    # If it is used later, we will handle that one later in the loop 
+                    # If it is used later, we will handle that one later in the loop
                     moveList["unload"].append( (slot, self.holderMap[currentAbsInSlot]) )
                 if currentAbsLocation[0] == "s":
                     # If the absorbr we want is already in the counter
@@ -520,7 +520,7 @@ class AbsorberController(MotorKit, BaseController):
                     moveList["internal"].append( (currentAbsLocation, slot) )
                 else:
                     # If it isn't already in the counter it must be in the holder
-                    # so add it to the load movement list. 
+                    # so add it to the load movement list.
                     moveList["load"].append( (currentAbsLocation, slot) )
 
             elif ab != '' and not self.state["loaded"][slot]:
@@ -538,10 +538,10 @@ class AbsorberController(MotorKit, BaseController):
             for move in chain:
                 moveList["internal"].remove(move)
 
-        moveList["chains"] = chains     
+        moveList["chains"] = chains
 
         return moveList
-    
+
     def __chainDetect(self, movements):
         chains = []
         checked = []
@@ -576,7 +576,7 @@ class AbsorberController(MotorKit, BaseController):
                     chains.append(temp)
         # print(f"CHAINS: {chains}")
         return chains
-    
+
     def __chaseInternal(self, internals, startingMove):
         moves = [startingMove]
         internalStarts = [item[0] for item in internals]
@@ -611,23 +611,23 @@ class AbsorberController(MotorKit, BaseController):
             # print(f"CHAIN BACK: ({home}, {move1[1]})")
             currentFinish = [item[1] for item in currentMoves]
         return currentMoves
-    
+
     def __handleInternal(self, internals):
         moves = []
         if len(internals) == 0:
             return moves
-        
+
         internalGroups = []
         while len(internals) != 0:
             start = internals.pop(0)
             temp = self.__chaseInternal(internals, start)
             internalGroups.append(temp)
-        
+
         for group in internalGroups:
             moves += group
-        
+
         return moves
-    
+
     def __buildGroups(self, moveList):
         unloads = moveList["unload"]
         loads = moveList["load"]
@@ -646,7 +646,7 @@ class AbsorberController(MotorKit, BaseController):
 
             if len(temp) == 1:
                 LGroups.append(temp)
-            
+
             else:
                 nextSlot = temp[0][1]
                 # print(f"Checking for conflict with unload. Slot {nextSlot}")
@@ -659,16 +659,16 @@ class AbsorberController(MotorKit, BaseController):
                     UILGroups.append(temp)
                 else:
                     ILGroups.append(temp)
-        
+
         if len(internals) > 0:
-            
+
             internalStarts = [item[0] for item in internals]
             internalFinish = [item[1] for item in internals]
             intersection = [item for item in internalFinish if item in internalStarts]
             starts = [internal for internal in internals if internal[1] in intersection]
             for start in starts:
                 internals.remove(start)
-        
+
             for startingI in starts:
                 temp = self.__chaseInternal(internals, startingI)
                 internalStarts = [item[0] for item in internals]
@@ -684,7 +684,7 @@ class AbsorberController(MotorKit, BaseController):
                 else:
                     IGroups.append(temp)
 
-                
+
         for uil in UILGroups:
             uMove = [uil.pop(0)]
             lMove = [uil.pop(-1)]
@@ -693,17 +693,17 @@ class AbsorberController(MotorKit, BaseController):
             if len(unloads) > 0:
                 uTemp = unloads.pop(0)
                 igroup.append(uTemp)
-            
+
             elif len(UIGroups) > 0:
                 uiTemp = UIGroups.pop(0)
                 uTempMove = uiTemp.pop(0)
                 igroup.append(uTempMove)
                 lMove = lMove + uiTemp
-            
+
             if len(LGroups) > 0:
                 lTemp = LGroups.pop(0)
                 igroup.insert(0, lTemp[0])
-            
+
             elif len(ILGroups) > 0:
                 ilTemp = ILGroups.pop(0)
                 lTempMove = ilTemp.pop(-1)
@@ -712,7 +712,7 @@ class AbsorberController(MotorKit, BaseController):
 
             # moves.append(uMove + igroup + lMove)
             moves += uMove + igroup + lMove
-        
+
         for il in ILGroups:
             uMove = []
             lMove = [il.pop(-1)]
@@ -721,7 +721,7 @@ class AbsorberController(MotorKit, BaseController):
             if len(unloads) > 0:
                 uTemp = unloads.pop(0)
                 igroup.append(uTemp)
-            
+
             elif len(UIGroups) > 0:
                 uiTemp = UIGroups.pop(0)
                 uTempMove = uiTemp.pop(0)
@@ -739,7 +739,7 @@ class AbsorberController(MotorKit, BaseController):
             if len(unloads) > 0:
                 uTemp = unloads.pop(0)
                 igroup.append(uTemp)
-            
+
             elif len(UIGroups) > 0:
                 uiTemp = UIGroups.pop(0)
                 uTempMove = uiTemp.pop(0)
@@ -748,7 +748,7 @@ class AbsorberController(MotorKit, BaseController):
 
             # moves.append(igroup + lMove)
             moves += igroup + lMove
-        
+
         while len(unloads) > 0 or len(UIGroups) > 0:
 
             if len(UIGroups) > 0:
@@ -756,7 +756,7 @@ class AbsorberController(MotorKit, BaseController):
             elif len(unloads) > 0:
                 print(unloads)
                 moves.insert(0, unloads.pop(0))
-        
+
         return moves
 
     def place(self, moveList):
@@ -779,13 +779,13 @@ class AbsorberController(MotorKit, BaseController):
                     uMovesTemp.remove(uMove)
                     lMovesTemp.remove(lMove)
                     # print(f"PARING: {uMove} with {lMove}")
-        
+
         moveList["unload"] = uMovesTemp
         moveList["load"] = lMovesTemp
         unloadStarts = [ item[0] for item in moveList["unload"]]
 
         # print("## Pairings Complete")
-        pp.pprint(moveList) 
+        pp.pprint(moveList)
 
         # print("## ORGANIZING EVERYTING BUT CHAINS")
         moves += self.__buildUILGroups(moveList)
@@ -793,7 +793,7 @@ class AbsorberController(MotorKit, BaseController):
         if len(moveList["chains"]) > 0:
             # print("## Handling Chains")
             moves = self. __handleChains(moveList["chains"], moves)
-        
+
         pp.pprint(moveList)
         # print(moves)
         for move in moves:
@@ -808,10 +808,10 @@ class AbsorberController(MotorKit, BaseController):
     #             pass
     #         if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] != -1:
     #             pass
-        
+
     def place_parser(self, params):
         if len(params) != 1:
-            raise ArgumentNumberError(len(params), 1, "move")
+            raise ArgumentNumberError(len(params), 1, "place")
         # print("Throttle is set to: {0}".format(params[0]))
         temp = [item.replace("(","").replace(")","") for item in params]
         absorberList = []
@@ -846,7 +846,7 @@ class Multiplexer(BaseController):
             gpio.output(self.inhibitorPin, self.defaultState)
         else:
             gpio.output(self.inhibitorPin, gpio.HIGH)
-   
+
 
     def __setChannel(self, channel):
         binary = "{0:0{1}b}".format(channel, len(self.pins))
@@ -859,13 +859,13 @@ class Multiplexer(BaseController):
                 pinstate = gpio.HIGH
 
             gpio.output(pin, pinstate)
-    
+
     def press(self, channel):
         self.__setChannel(channel)
         gpio.output(self.inhibitorPin, gpio.LOW)
         time.sleep(self.delay)
         gpio.output(self.inhibitorPin, gpio.HIGH)
-    
+
     def press_parser(self, params):
         channel = int(params[0])
         if len(params) != 1:
@@ -873,7 +873,7 @@ class Multiplexer(BaseController):
         if channel not in self.channels:
             raise ArgumentError(self.name, "press", channel, self.channels)
         return channel
-    
+
 
     def reset(self):
         if self.defaultChannel is not None:
@@ -899,9 +899,9 @@ class Keithley6514Electrometer(BaseController):
     def press_parser(self, params):
         print(">>", params)
         return params[0]
-        
-        
-    
+
+
+
 class Keithley2000Multimeter(BaseController): #copied unaltered from Electrometer on 200423
 
     def __init__(self, name, visa_resource):
@@ -911,16 +911,16 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
         self.state = {"setting": ""}
 
         self.inst = visa_resource
-    
+
 
     def press(self, params):
         self.inst.write("SYST:REM")
         self.inst.write(params)
-    
+
     def press_parser(self, params):
         print(">>", params)
         return params[0]
-        
+
 
 class ArduCamMultiCamera(BaseController):
 
@@ -968,7 +968,7 @@ class ArduCamMultiCamera(BaseController):
         print("Switching to camera "+param)
         os.system(self.camerai2c[param])
         gpio.output(self.channels, self.cameraDict[param])
-    
+
     def camera_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "camera")
@@ -976,7 +976,7 @@ class ArduCamMultiCamera(BaseController):
         if param not in self.cameraDict:
             raise ArgumentError(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
         return params[0].lower()
-    
+
     def imageMod(self, params):
         imageControl = params[0]
         controlValue = params[1]
@@ -987,7 +987,7 @@ class ArduCamMultiCamera(BaseController):
         if len(params) != 2:
             raise ArgumentNumberError(len(params), 2, "imageMod")
         return params
-    
+
     def reset(self):
         if self.defaultSettings is not None:
             for setting, value in self.defaultSettings.items():
@@ -1001,30 +1001,30 @@ class ElectronicScreen(BaseController):
         self.name = name
         self.state = "off"
         gpio.setup(self.pin, gpio.OUT)
-    
+
     def on(self, params):
         gpio.output(self.pin, gpio.HIGH)
-    
+
     def off(self, params):
         gpio.output(self.pin, gpio.LOW)
 
     def reset(self):
         gpio.output(self.pin, gpio.LOW)
-        
-        
-        
+
+
+
 class LimitSwitch(BaseController):
     def __init__(self, name, pin, state=False):
         self.name = name
         self.pin = pin
         self.state = state
         gpio.setup(self.pin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
-        
+
     def getStatus(self, params):
         state = gpio.input(self.pin)
         self.state = state
         return state
-        
+
     def switchAction(self, motor, steps):
         pass
 
@@ -1034,12 +1034,12 @@ class HomeSwitch(BaseController):
         self.pin = pin
         self.state = state
         gpio.setup(self.pin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
-        
+
     def getStatus(self, params):
         state = gpio.input(self.pin)
         self.state = state
         return state
-        
+
 
 class SingleGPIO(BaseController):
 
@@ -1053,10 +1053,10 @@ class SingleGPIO(BaseController):
         else:
             self.state = "off"
             gpio.output(self.pin, gpio.LOW)
-    
+
     def on(self, params):
         gpio.output(self.pin, gpio.HIGH)
-    
+
     def off(self, params):
         gpio.output(self.pin, gpio.LOW)
 
@@ -1069,7 +1069,7 @@ class PushButton(BaseController):
         self.pin = pin
         self.name = name
         self.delay = delay
-        self.initialState = initialState 
+        self.initialState = initialState
         gpio.setup(self.pin, gpio.OUT)
         if initialState:
             self.state = "on"
@@ -1077,7 +1077,7 @@ class PushButton(BaseController):
         else:
             self.state = "off"
             gpio.output(self.pin, gpio.LOW)
-    
+
     def press(self, params):
         if self.initialState:
             gpio.output(self.pin, gpio.LOW)
@@ -1087,10 +1087,37 @@ class PushButton(BaseController):
             gpio.output(self.pin, gpio.HIGH)
             time.sleep(self.delay)
             gpio.output(self.pin, gpio.LOW)
-    
+
 
     def reset(self):
         gpio.output(self.pin, gpio.LOW)
+
+class PWMChannel(BaseController):
+
+    def __init__(self, name, pin, frequency, defaultDutyCycle=0 ):
+        self.name = name
+        self.device_type = "controller"
+        self.pin = pin
+        self.frequency = frequency
+        self.defaultDutyCycle = defaultDutyCycle
+        self.dutyCycle = defaultDutyCycle
+        self.pwm = GPIO.PWM(self.pin, self.frequency)
+        self.pwm.start(self.dutyCycle)
+
+    def power(self, dutyCycle):
+        self.pwm.ChangeDuty(dutyCycle)
+
+    def power_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "power")
+        dutyCycle = float(params[0])
+        if dutyCycle < 0 or dutyCycle > 1:
+            raise ArgumentError(self.name, "power", dutyCycle, allowed="0 <= dutyCycle <= 1")
+        return defaultDutyCycle
+
+    def reset(self):
+        self.pwm.ChangeDuty(self.defaultDutyCycle)
+
 
 class CommandError(Exception):
 
@@ -1100,7 +1127,7 @@ class CommandError(Exception):
             self.message = args[0]
         else:
             self.message = "No command named '{0}' found".format(self.command)
-    
+
     def __str__(self):
         return "CommandError, {0}".format(self.message)
 
@@ -1109,7 +1136,7 @@ class ArgumentNumberError(Exception):
         self.total_args = total_args
         self.allowed = allowed
         self.command = command
-    
+
     def __str__(self):
         if self.command is None:
             return "ArgumentNumberError, received {0} when {1} was expected.".format(self.total_args, self.allowed)
@@ -1123,11 +1150,9 @@ class ArgumentError(Exception):
         self.command = command
         self.allowed = allowed
         self.received = received
-    
+
     def __str__(self):
         if self.allowed is None:
             return "ArgumentError, Device, {0}, can't process command argument {1} by command {2}.".format(self.device_name, self.received, self.command)
         else:
             return "ArgumentError, Argument {0}, is not one of the allowed commands, {1}, for device, {2}, running command {3}.".format(self.received, self.allowed, self.device_name, self.command)
-
-

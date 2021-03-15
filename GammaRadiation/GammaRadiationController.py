@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController
+from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController, PWMChannel
 import visa
 import argparse, os, json
 
@@ -25,7 +25,9 @@ stageBounds     = labSettings["stageBounds"]
 stageRefPoints  = labSettings["stageRefPoints"]
 stageTerminal   = labSettings['stageTerminal']
 
-magnetTerminal      = labSettings["magnetTerminal"]
+# magnetTerminal      = labSettings["magnetTerminal"]
+magnetPin           = labSettings["magnetPin"]
+magnetFrequency     = labSettings["magnetFrequency"]
 
 actuatorTerminal    = labSettings["actuatorTerminal"]
 
@@ -51,12 +53,13 @@ stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", d
 
 actuator = DCMotorI2C("Actuator", actuatorTerminal)
 
-magnet = DCMotorI2C("Magnet", magnetTerminal)
+# magnet = DCMotorI2C("Magnet", magnetTerminal)
+magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
 
 absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
-# Need to talk to PCS about getting GRpdu Setup 
+# Need to talk to PCS about getting GRpdu Setup
 # GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 # GRpdu.login()
 
@@ -82,6 +85,3 @@ exp.set_socket_path(socket_path)
 if not args.reset and not args.admin:
     exp.recallState()
 exp.setup()
-        
-        
-    
