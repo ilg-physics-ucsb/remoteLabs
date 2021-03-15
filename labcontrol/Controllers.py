@@ -1118,7 +1118,7 @@ class PWMChannel(BaseController):
         return defaultDutyCycle
 
     def reset(self):
-        self.pwm.ChangeDuty(self.defaultDutyCycle)
+        self.pwm.ChangeDutyCycle(self.defaultDutyCycle)
 
 
 class CommandError(Exception):
