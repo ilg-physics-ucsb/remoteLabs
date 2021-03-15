@@ -1107,7 +1107,7 @@ class PWMChannel(BaseController):
         self.state = {}
 
     def power(self, dutyCycle):
-        self.pwm.ChangeDuty(dutyCycle)
+        self.pwm.ChangeDutyCycle(dutyCycle)
 
     def power_parser(self, params):
         if len(params) != 1:
