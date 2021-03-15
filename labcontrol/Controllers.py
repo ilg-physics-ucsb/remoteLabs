@@ -1113,8 +1113,8 @@ class PWMChannel(BaseController):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "power")
         dutyCycle = float(params[0])
-        if dutyCycle < 0 or dutyCycle > 1:
-            raise ArgumentError(self.name, "power", dutyCycle, allowed="0 <= dutyCycle <= 1")
+        if dutyCycle < 0 or dutyCycle > 100:
+            raise ArgumentError(self.name, "power", dutyCycle, allowed="0 <= dutyCycle <= 100")
         return dutyCycle
 
     def reset(self):
