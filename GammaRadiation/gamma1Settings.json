@@ -13,7 +13,7 @@
     "actuatorTerminal" : 3,
     "stageTerminal": 1,
 
-    "stageBounds": [0, 9750],
+    "stageBounds": [0, 15000],
     "stageRefPoints": {
         "s0": -100,
         "s1": -200,
@@ -21,18 +21,19 @@
         "s3": -400,
         "s4": -500,
         "s5": -600,
-        "h0": -1000,
-        "h1": -1100,
-        "h2": -1200,
-        "h3": -1300,
-        "h4": -1400,
-        "h5": -1500,
-        "h6": -1600,
-        "h7": -1700,
-        "h8": -1800,
-        "h9": -1900,
-        "h10": -2000,
-        "h11": -2100
+        "h0": -1000, #Magnet Throttle:
+        "h1": -1100, #Magnet Throttle:
+        "h2": -1200, #Magnet Throttle:
+        "h3": -1300, #Magnet Throttle:
+        "h4": -1400, #Magnet Throttle:
+        "h5": -1500, #Magnet Throttle:
+        "h6": -1600, #Magnet Throttle:
+        "h7": -1700, #Magnet Throttle:
+        "h8": -1800, #Magnet Throttle:
+        "h9": -1900, #Magnet Throttle:
+        "h10": -2000, #Magnet Throttle:
+        "h11": -2100, #Magnet Throttle:
+        "h12": 3320 #Magnet Throttle:
     },
 
     "absorberFullTime": 10,
