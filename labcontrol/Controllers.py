@@ -1104,6 +1104,7 @@ class PWMChannel(BaseController):
         gpio.setup(self.pin, gpio.OUT)
         self.pwm = gpio.PWM(self.pin, self.frequency)
         self.pwm.start(self.dutyCycle)
+        self.state = {}
 
     def power(self, dutyCycle):
         self.pwm.ChangeDuty(dutyCycle)
