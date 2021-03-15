@@ -10,7 +10,7 @@
     "multiplexerDelay": 0.1,
 
     "magnetPin" : 5,
-    "magnetFrequency": 300,
+    "magnetFrequency": 3000,
 
     "actuatorTerminal" : 3,
     "stageTerminal": 1,
