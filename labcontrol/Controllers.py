@@ -813,6 +813,7 @@ class AbsorberController(MotorKit, BaseController):
         # if len(params) != 1:
         #     raise ArgumentNumberError(len(params), 1, "place")
         # print("Throttle is set to: {0}".format(params[0]))
+        print(params)
         temp = [item.replace("(","").replace(")","") for item in params]
         absorberList = []
         i = 0
