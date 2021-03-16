@@ -816,10 +816,12 @@ class AbsorberController(MotorKit, BaseController):
         temp = [item.replace("(","").replace(")","") for item in params]
         absorberList = []
         i = 0
+        print("RAFFI LOOK AT ME: {0}".format(temp))
         while i < len(temp):
             absorberList.append((temp[i], temp[i+1]))
             i += 2
 
+        print("NEVER THOUGHT I'D BE ON A BOAT: {0}".format(absorberList))
         moveList = self.__makeMovesList(absorberList)
 
         return moveList
