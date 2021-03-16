@@ -209,18 +209,18 @@ $("document").ready(function () {
     const autoLists = $(".auto-list");
     const manualList = $(".manual-list");
     const absorberLocations = {
-        "Absorber 1": 0,
-        "Absorber 2": 1,
-        "Absorber 3": 2,
-        "Absorber 4": 3,
-        "Absorber 5": 4,
-        "Absorber 6": 5,
-        "Absorber 7": 6,
-        "Absorber 8": 7,
-        "Absorber 9": 8,
-        "Absorber 10": 9,
-        "Absorber 11": 10,
-        "Source"    : 11
+        "Absorber 1": "A1",
+        "Absorber 2": "A2",
+        "Absorber 3": "A3",
+        "Absorber 4": "A4",
+        "Absorber 5": "A5",
+        "Absorber 6": "A6",
+        "Absorber 7": "A7",
+        "Absorber 8": "A8",
+        "Absorber 9": "A9",
+        "Absorber 10": "A10",
+        "Absorber 11": "A11",
+        "Source"    : "Source"
     }
     loaded = {
         "s0": -1,
