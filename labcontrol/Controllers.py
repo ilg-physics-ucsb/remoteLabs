@@ -788,7 +788,7 @@ class AbsorberController(MotorKit, BaseController):
         # pp.pprint(moveList)
 
         # print("## ORGANIZING EVERYTING BUT CHAINS")
-        moves += self.__buildUILGroups(moveList)
+        moves += self.__buildGroups(moveList)
 
         if len(moveList["chains"]) > 0:
             # print("## Handling Chains")
