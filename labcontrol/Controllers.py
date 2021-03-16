@@ -785,7 +785,7 @@ class AbsorberController(MotorKit, BaseController):
         unloadStarts = [ item[0] for item in moveList["unload"]]
 
         # print("## Pairings Complete")
-        pp.pprint(moveList)
+        # pp.pprint(moveList)
 
         # print("## ORGANIZING EVERYTING BUT CHAINS")
         moves += self.__buildUILGroups(moveList)
@@ -794,7 +794,7 @@ class AbsorberController(MotorKit, BaseController):
             # print("## Handling Chains")
             moves = self. __handleChains(moveList["chains"], moves)
 
-        pp.pprint(moveList)
+        # pp.pprint(moveList)
         # print(moves)
         for move in moves:
             self.__transfer(move[0], move[1])
