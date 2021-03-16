@@ -34,10 +34,6 @@
         "h10": 200,
         "h11": 600
     },
-    #Distance between holder slots: 810 (this is two slots)
-    #Distance between holder slots:415
-    #Distance between h0 and s5: 1160
-    #Max Magnet Strength needed: 
     
 
     "absorberFullTime": 10,
