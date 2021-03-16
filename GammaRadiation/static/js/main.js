@@ -320,7 +320,7 @@ $("document").ready(function () {
                 }
             }
         }
-        // console.log(sendString)
+        console.log(sendString)
         dataChannel.send("AbsorberController/place/" + sendString)
         // Add datachannel send
     })
