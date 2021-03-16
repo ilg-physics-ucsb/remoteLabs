@@ -13,28 +13,32 @@
     "actuatorTerminal" : 3,
     "stageTerminal": 1,
 
-    "stageBounds": [0, 15000],
+    "stageBounds": [0, 12500],
     "stageRefPoints": {
-        "s0": 100,
-        "s1": 200,
-        "s2": 300,
-        "s3": 400,
-        "s4": 500,
-        "s5": 600,
-        "h0": 1000,
-        "h1": 1100,
-        "h2": 1200,
-        "h3": 1300,
-        "h4": 1400,
-        "h5": 1500,
-        "h6": 1600,
-        "h7": 1700,
-        "h8": 1800,
-        "h9": 1900,
-        "h10": 2000,
-        "h11": 2100,
-        "h12": 3320
+        "s0": 11510,
+        "s1": 11110,
+        "s2": 10695,
+        "s3": 10280,
+        "s4": 9865,
+        "s5": 9450,
+        "h0": 8290,
+        "h1": 7480,
+        "h2": 6670,
+        "h3": 5860,
+        "h4": 5050,
+        "h5": 4240,
+        "h6": 3430,
+        "h7": 2620,
+        "h8": 1810,
+        "h9": 1000,
+        "h10": 200,
+        "h11": 600
     },
+    #Distance between holder slots: 810 (this is two slots)
+    #Distance between holder slots:415
+    #Distance between h0 and s5: 1160
+    #Max Magnet Strength needed: 
+    
 
     "absorberFullTime": 10,
     "absorberMidTime": 2
