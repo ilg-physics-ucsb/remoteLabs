@@ -80,23 +80,23 @@ $("document").ready(function () {
                 if ($(mWrap).length == 0) {
                     return
                 }
-            } 
-            
+            }
+
             //Run when all mwraps exist.
 
-    
+
             // Do clicks here
             console.log("hiding modal")
             //Hide Loading Screen
             loadingModal.modal("hide")
             //Stop repeating check
             clearInterval(intervalId)
-    
+
         }, 500)
     })
     loadingModal.modal('show')
 
-    
+
 
 
     //for multi-camera switching
@@ -113,10 +113,10 @@ $("document").ready(function () {
     })
 
 
-    //for LiveFeed  
+    //for LiveFeed
     // TEMP CHANGE
     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
- 
+
     //for Time Limit
      window.setTimeout(timeOutHandler,10800000)
 
@@ -131,25 +131,25 @@ $("document").ready(function () {
              hours = Math.floor(parseInt(timer / 3600, 10));
              minutes = Math.floor(parseInt(timer % 3600 / 60 , 10));
              seconds = Math.floor(parseInt(timer % 3600 % 60, 10));
-     
+
              hours = hours <10 ? "0" + hours : hours;
              minutes = minutes < 10 ? "0" + minutes : minutes;
              seconds = seconds < 10 ? "0" + seconds : seconds;
-     
+
              display.textContent = hours + ":" + minutes + ":" + seconds;
-     
+
              if (--timer < 0) {
                  timer = duration;
              }
          }, 1000);
      }
-     
+
      window.onload = function () {
          var threeHours = 3 * 60 * 60,
              display = document.querySelector('#time');
          startTimer(threeHours, display);
      }
- 
+
 
     //for FacePlate of ST160 Nuclear Lab Station
     var countButton = document.getElementById('CountButton')
@@ -159,8 +159,8 @@ $("document").ready(function () {
     var upButton = document.getElementById("UpButton")
     var downButton = document.getElementById('DownButton')
 
-    
- 
+
+
    //BEGIN ST160 Face Plate Buttons
 
 
@@ -201,7 +201,7 @@ $("document").ready(function () {
     })
 
  //END ST160 Face Plate Buttons
- 
+
  //BEGIN Draggable List Functionality
     const list_items = $(".list-item");
     const slots = $(".slot");
@@ -231,7 +231,7 @@ $("document").ready(function () {
         "s5": -1,
     }
     let draggedItem = null;
-    let parentSlot = null; 
+    let parentSlot = null;
     for (let i=0; i < list_items.length; i++) {
         const item = list_items[i];
         console.log(item)
@@ -320,15 +320,16 @@ $("document").ready(function () {
                 }
             }
         }
-        console.log(sendString)
+        // console.log(sendString)
+        dataChannel.send("AbsorberController/place/" + sendString)
         // Add datachannel send
     })
 
 
  //END Draggable List Functionality
- 
+
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
-   
+
 
 });
 

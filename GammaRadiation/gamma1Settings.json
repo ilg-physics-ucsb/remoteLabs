@@ -10,7 +10,7 @@
     "multiplexerDelay": 0.1,
 
     "magnetPin" : 5,
-    "magnetFrequency": 3000,
+    "magnetFrequency": 440,
 
     "actuatorTerminal" : 3,
     "stageTerminal": 1,
@@ -38,7 +38,7 @@
     },
 
 
-    "absorberFullTime": 10,
-    "absorberMidTime": 2
+    "absorberFullTime": 11,
+    "absorberMidTime": 1
 
 }

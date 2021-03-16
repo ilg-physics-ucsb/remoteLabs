@@ -49,7 +49,7 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 
-stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.00004, refPoints=stageRefPoints)
+stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
 
 actuator = DCMotorI2C("Actuator", actuatorTerminal)
 
