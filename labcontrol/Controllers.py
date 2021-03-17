@@ -801,7 +801,7 @@ class AbsorberController(MotorKit, BaseController):
         for move in moves:
             self.__transfer(move[0], move[1])
             
-        self.stepper.move(100)
+        self.stepper.move(350)
 
     # def place(self, absorberList):
     #     for slot, absorber in absorberList:
