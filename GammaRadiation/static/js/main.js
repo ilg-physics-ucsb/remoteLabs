@@ -353,6 +353,12 @@ $("document").ready(function () {
                 } else {
                     sendString = sendString + ",(" + s + "," + loaded[s] + ")"
                 }
+            } else if (loaded[s]== -1) {
+              if (sendString == "") {
+                  sendString = sendString + "(" + s + "," + "''" + ")"
+              } else {
+                  sendString = sendString + ",(" + s + "," + "''" + ")"
+              }
             }
         }
         console.log(sendString)
