@@ -355,9 +355,9 @@ $("document").ready(function () {
                 }
             } else if (loaded[s]== -1) {
               if (sendString == "") {
-                  sendString = sendString + "(" + s + "," + "''" + ")"
+                  sendString = sendString + "(" + s + "," + "" + ")"
               } else {
-                  sendString = sendString + ",(" + s + "," + "''" + ")"
+                  sendString = sendString + ",(" + s + "," + "" + ")"
               }
             }
         }
