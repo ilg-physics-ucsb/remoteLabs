@@ -800,6 +800,8 @@ class AbsorberController(MotorKit, BaseController):
         # print(moves)
         for move in moves:
             self.__transfer(move[0], move[1])
+            
+        self.stage.move(100)
 
     # def place(self, absorberList):
     #     for slot, absorber in absorberList:
