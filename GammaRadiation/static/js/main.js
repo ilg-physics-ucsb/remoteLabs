@@ -209,18 +209,18 @@ $("document").ready(function () {
     const autoLists = $(".auto-list");
     const manualList = $(".manual-list");
     const absorberLocations = {
-        "Absorber 1": "A1",
-        "Absorber 2": "A2",
-        "Absorber 3": "A3",
-        "Absorber 4": "A4",
-        "Absorber 5": "A5",
-        "Absorber 6": "A6",
-        "Absorber 7": "A7",
-        "Absorber 8": "A8",
-        "Absorber 9": "A9",
-        "Absorber 10": "A10",
-        "Absorber 11": "A11",
-        "Source"    : "Source"
+        "Absorber 1": 0,
+        "Absorber 2": 1,
+        "Absorber 3": 2,
+        "Absorber 4": 3,
+        "Absorber 5": 4,
+        "Absorber 6": 5,
+        "Absorber 7": 6,
+        "Absorber 8": 7,
+        "Absorber 9": 8,
+        "Absorber 10": 9,
+        "Absorber 11": 10,
+        "Source"    : 11
     }
     loaded = {
         "s0": -1,
@@ -229,6 +229,21 @@ $("document").ready(function () {
         "s3": -1,
         "s4": -1,
         "s5": -1,
+    }
+
+    const absorberShortHand = {
+      "Absorber 1": "A1",
+      "Absorber 2": "A2",
+      "Absorber 3": "A3",
+      "Absorber 4": "A4",
+      "Absorber 5": "A5",
+      "Absorber 6": "A6",
+      "Absorber 7": "A7",
+      "Absorber 8": "A8",
+      "Absorber 9": "A9",
+      "Absorber 10": "A10",
+      "Absorber 11": "A11",
+      "Source"    : "Source"
     }
     let draggedItem = null;
     let parentSlot = null;
@@ -270,12 +285,18 @@ $("document").ready(function () {
 
             aList.addEventListener('drop', function(e){
                 let key = draggedItem.textContent
+                console.log("KEY:" + key)
+                console.log("LOCATIONS:" + absorberLocations[key])
+                console.log("THIS:")
+                console.log(this)
+                console.log("Children:")
+                console.log(this.children)
                 let holder = this.children[absorberLocations[key]];
+                console.log("holder:" + holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
                 loaded[parentSlot.id] = -1;
                 parentSlot.innerHTML = "Empty";
-                console.log(loaded);
             })
         }
 
@@ -302,8 +323,22 @@ $("document").ready(function () {
                     parentSlot.innerHTML = "Empty";
                     this.append(draggedItem);
                     this.style.backgroundColor = "rgba(0,0,0,0.1)";
-                    loaded[this.id] = absorberLocations[draggedItem.textContent];
-                    console.log(loaded);
+                    // loaded[this.id] = absorberLocations[draggedItem.textContent];
+                    // console.log("Test")
+                    // console.log(Object.values(loaded))
+                    // console.log
+                    // console.log(absorberShortHand[draggedItem.textContent])
+                    if (Object.values(loaded).includes(absorberShortHand[draggedItem.textContent])) {
+                      Object.keys(loaded).forEach(item => {
+                        if (loaded[item] == absorberShortHand[draggedItem.textContent]) {
+                          loaded[item] = -1
+                        }
+                      });
+
+                    }
+                    loaded[this.id] = absorberShortHand[draggedItem.textContent];
+                    console.log(loaded)
+
                 }
             })
         }
