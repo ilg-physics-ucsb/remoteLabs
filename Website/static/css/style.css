@@ -1,0 +1,44 @@
+.LeftSideContainer{
+    position: relative;
+    padding: 1rem 4rem 0rem;
+}
+
+.LeftContent{
+    border-bottom: 1px solid gray;
+}
+
+.RightSideContainer{
+    padding: 1rem 4rem;
+
+}
+
+.rightContent{
+    padding: 2rem 2rem 15%;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25vmax, 1fr));
+    grid-gap: 2rem;
+    background-color:rgba(0,0,0,.2);
+}
+
+.Container{
+    border: 2px solid black;
+    display: grid;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.Container::before{
+    padding-bottom: 100%;
+    display: block;
+}
+
+.Container:hover{
+    scale: 1.05;
+}
+
+.content{
+    grid-area: 1 / 1 / 2 / 2;
+}
