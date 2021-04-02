@@ -1097,7 +1097,7 @@ class PololuDCMotor(BaseController):
         self.device_type = "controller"
         self.pwmPin = pwmPin
         self.directionPin = directionPin
-        self.notEnablePin = enablePin
+        self.notEnablePin = notEnablePin
         self.frequency = frequency
         self.dutyCycle = dutyCycle
 
