@@ -55,7 +55,7 @@ stage = PololuStepperMotor("Stage", 13, 19, bounds=stageBounds, delay=5000, refP
 actuator = PololuDCMotor("Actuator", 12, 24, 5)
 
 # magnet = DCMotorI2C("Magnet", magnetTerminal)
-# magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
+magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
 
 absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
 
