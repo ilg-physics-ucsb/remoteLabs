@@ -1092,15 +1092,17 @@ class PololuStepperMotor(BaseController):
 
 class PololuDCMotor(BaseController):
 
-    def __init__(self, name, pwmPin, directionPin, frequency=100, dutyCycle=0):
+    def __init__(self, name, pwmPin, directionPin, notEnablePin, frequency=100, dutyCycle=0):
         self.name = name
         self.device_type = "controller"
         self.pwmPin = pwmPin
         self.directionPin = directionPin
+        self.notEnablePin = enablePin
         self.frequency = frequency
         self.dutyCycle = dutyCycle
 
-        gpio.setup([self.pwmPin, self.directionPin], gpio.OUT)#, pull_up_down=gpio.PUD_DOWN)
+        gpio.setup([self.pwmPin, self.directionPin, self.notEnablePin], gpio.OUT)#, pull_up_down=gpio.PUD_DOWN)
+        gpio.output(self.notEnablePin, gpio.LOW)
         self.pwm = gpio.PWM(self.pwmPin, self.frequency)
         self.pwm.start(dutyCycle)
 
