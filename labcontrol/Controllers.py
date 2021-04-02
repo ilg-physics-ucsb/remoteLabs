@@ -935,7 +935,7 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
 class PololuStepperMotor(BaseController):
 
     def __init__(self, name, pwmPin, directionPin, bounds, delay=5000,
-                    refpoints={}, limitSwitches=[], homeSwitch=None,
+                    refPoints={}, limitSwitches=[], homeSwitch=None,
                     degPerStep=1.8, gearRatio=1):
         self.name = name
         self.device_type = "controller"
