@@ -120,7 +120,7 @@
             <img id="openEye" src="static/images/OpenEye.png" title="Click here to make the screen opaque">
           </div>
         </div>
-        <div id="ModalCamera" style="display: none;">
+        <!-- <div id="ModalCamera" style="display: none;">
           <button href="#myModalCamera" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Camera Controls Modal</button>
           <div id="myModalCamera" class="modal fade">
             <div class="modal-dialog">
@@ -142,7 +142,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
         
@@ -198,22 +198,45 @@
               </div>
               <div style="clear: both;"></div>
         </div>
-        
-        <div id="cameraControl" style="display: none;">
-          <b> Camera Controls</b>
-          <hr>
-          <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
-          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
-           <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
-           <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
-          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
-           <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
-           <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
-          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
-           <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
+
+        <div id="ModalCamera" style="display: none;">
+          <button href="#myModalCamera" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Camera Controls Modal</button>
+          <div id="myModalCamera" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
+                  </br>
+                  <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
+                  </br>
+                  <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
+                  </br>
+                  <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
+                  </br>
+                  <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
+                  </br>
+                  <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <hr>
         
+        <!-- <div id="cameraControl" style="display: none;"> -->
+          <!-- <b> Camera Controls</b> -->
+          <!-- <hr> -->
+          <!-- <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br> -->
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <!-- <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()"> -->
+           <!-- <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br> -->
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <!-- <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()"> -->
+           <!-- <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br> -->
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <!-- <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()"> -->
+        <!-- </div> -->
+        <hr>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2" style="justify-content: start">
         <div id="ToggleDark" style="margin-top: 52mm;" >
