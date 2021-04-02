@@ -1,7 +1,5 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera,
-    DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController, PWMChannel,
-    PololuDCMotor, PololuStepperMotor
+from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController, PWMChannel, PololuDCMotor, PololuStepperMotor
 import visa
 import argparse, os, json
 
