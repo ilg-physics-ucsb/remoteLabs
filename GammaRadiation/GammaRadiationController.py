@@ -44,7 +44,7 @@ if args.admin:
     bounds = (-1e6, 1e6)
     stageBounds=bounds
 
-camera = ArduCamMultiCamera("Camera", 1)
+camera = ArduCamMultiCamera("Camera", 1, i2cbus=1)
 
 socket_path = "/tmp/uv4l.socket"
 
@@ -55,11 +55,11 @@ stage = PololuStepperMotor("Stage", 13, 19, bounds=stageBounds, delay=5000, refP
 actuator = PololuDCMotor("Actuator", 12, 24)
 
 # magnet = DCMotorI2C("Magnet", magnetTerminal)
-magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
+# magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
 
 absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
 
-buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
+# buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
 # GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 # GRpdu.login()

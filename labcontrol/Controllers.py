@@ -940,19 +940,19 @@ class PololuStepperMotor(BaseController):
         self.name = name
         self.device_type = "controller"
         self.pwmPin = pwmPin
-        self.directionPin = directionPin,
+        self.directionPin = directionPin
 
         pi.set_mode(self.pwmPin, pigpio.OUTPUT)
         pi.set_pull_up_down(self.pwmPin, pigpio.PUD_DOWN)
         pi.set_mode(self.directionPin, pigpio.OUTPUT)
         pi.set_pull_up_down(self.directionPin, pigpio.PUD_DOWN)
 
-        self.state={
-            'position': self.currentPosition
-        }
 
         self.refPoints = refPoints
         self.currentPosition = 0
+        self.state={
+            'position': self.currentPosition
+        }
         self.delay = delay
         self.lowerBound = bounds[0]
         self.upperBound = bounds[1]
@@ -1093,15 +1093,15 @@ class PololuStepperMotor(BaseController):
 class PololuDCMotor(BaseController):
 
     def __init__(self, name, pwmPin, directionPin, frequency=100, dutyCycle=0):
-        self.name = named
+        self.name = name
         self.device_type = "controller"
         self.pwmPin = pwmPin
-        self.directionPin = directionPin,
+        self.directionPin = directionPin
         self.frequency = frequency
         self.dutyCycle = dutyCycle
 
-        gpio.setup([self.pwmPin, self.directionPin], gpio.OUT, pull_up_down=gpio.PUD_DOWN)
-        self.pwm = gpio.PWM(self.pwmPin, frequency=self.frequency)
+        gpio.setup([self.pwmPin, self.directionPin], gpio.OUT)#, pull_up_down=gpio.PUD_DOWN)
+        self.pwm = gpio.PWM(self.pwmPin, self.frequency)
         self.pwm.start(dutyCycle)
 
         self.state={}
