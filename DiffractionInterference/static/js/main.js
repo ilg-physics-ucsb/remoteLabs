@@ -678,7 +678,7 @@ $("document").ready(function () {
         // await sleep(100);
         updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
         liveStream.style.transform = "rotate(0deg)"
-        cameraControl.style.display = "None"
+        // cameraControl.style.display = "None"
         mcameraControl.style.display = "None"
     })
 
@@ -688,7 +688,7 @@ $("document").ready(function () {
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         liveStream.style.transform = "rotate(0deg)"
-        cameraControl.style.display = "None"
+        // cameraControl.style.display = "None"
         mcameraControl.style.display = "None"
     })
 
@@ -697,7 +697,7 @@ $("document").ready(function () {
         dataChannel.send("Camera/camera/c")
         // await sleep(100)
         updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
-        cameraControl.style.display = "Block"
+        // cameraControl.style.display = "Block"
         mcameraControl.style.display = "Block"
     })
     // END Camera Switching
