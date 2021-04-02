@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController, PWMChannel
+from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera,
+    DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController, PWMChannel,
+    PololuDCMotor, PololuStepperMotor
 import visa
 import argparse, os, json
 
@@ -49,9 +51,10 @@ camera = ArduCamMultiCamera("Camera", 1)
 socket_path = "/tmp/uv4l.socket"
 
 
-stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
-
-actuator = DCMotorI2C("Actuator", actuatorTerminal)
+# stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
+stage = PololuStepperMotor("Stage", 13, 19, bounds=stageBounds, delay=5000, refPoint=stageRefPoints)
+# actuator = DCMotorI2C("Actuator", actuatorTerminal)
+actuator = PololuDCMotor("Actuator", 12, 24)
 
 # magnet = DCMotorI2C("Magnet", magnetTerminal)
 magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
@@ -65,7 +68,7 @@ buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChann
 
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
-stage.device.release()
+# stage.device.release()
 
 if args.reset:
     exp = Experiment("GammaRadiation")

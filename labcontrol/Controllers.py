@@ -932,7 +932,7 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
         return params[0]
 
 
-class PoluluStepperMotor(BaseController):
+class PololuStepperMotor(BaseController):
 
     def __init__(self, name, pwmPin, directionPin, bounds, delay=5000,
                     refpoints={}, limitSwitches=[], homeSwitch=None,
