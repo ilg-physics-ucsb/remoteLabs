@@ -1114,8 +1114,8 @@ class PololuDCMotor(BaseController):
         else:
             gpio.output(self.directionPin, gpio.HIGH)
 
-        self.dutyCyle = speed
-        self.pwm.ChangeDutyCycle(speed)
+        self.dutyCyle = abs(speed)
+        self.pwm.ChangeDutyCycle(self.dutyCycle)
 
     def throttle_parser(self, params):
         if len(params) != 1:
