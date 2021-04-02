@@ -10,7 +10,10 @@ import subprocess
 import busio
 import board
 from adafruit_bus_device.i2c_device import I2CDevice
+import pigpio
 
+
+pi = pigpio.pi()
 gpio.setmode(gpio.BCM)
 
 class BaseController(object):
@@ -800,7 +803,7 @@ class AbsorberController(MotorKit, BaseController):
         # print(moves)
         for move in moves:
             self.__transfer(move[0], move[1])
-            
+
         self.stepper.move(350)
 
     # def place(self, absorberList):
@@ -929,15 +932,212 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
         return params[0]
 
 
+class PoluluStepperMotor(BaseController):
+
+    def __init__(self, name, pwmPin, directionPin, bounds, delay=5000,
+                    refpoints={}, limitSwitches=[], homeSwitch=None,
+                    degPerStep=1.8, gearRatio=1):
+        self.name = name
+        self.device_type = "controller"
+        self.pwmPin = pwmPin
+        self.directionPin = directionPin,
+
+        pi.set_mode(self.pwmPin, pigpio.OUTPUT)
+        pi.set_pull_up_down(self.pwmPin, pigpio.PUD_DOWN)
+        pi.set_mode(self.directionPin, pigpio.OUTPUT)
+        pi.set_pull_up_down(self.directionPin, pigpio.PUD_DOWN)
+
+        self.state={
+            'position': self.currentPosition
+        }
+
+        self.refPoints = refPoints
+        self.currentPosition = 0
+        self.delay = delay
+        self.lowerBound = bounds[0]
+        self.upperBound = bounds[1]
+        # self.styles = {
+        #     "SINGLE": stepper.SINGLE,
+        #     "DOUBLE": stepper.DOUBLE,
+        #     "MICROSTEP": stepper.MICROSTEP,
+        #     "INTERLEAVE": stepper.INTERLEAVE
+        # }
+        # self.style = self.styles[style]
+
+        self.state = {"position": self.currentPosition}
+        self.limitSwitches = limitSwitches
+        self.homeSwitch = homeSwitch
+        self.homing = False
+        self.degPerStep = degPerStep
+        self.gearRatio = gearRatio
+
+
+    def move(self, steps):
+
+        # Choose direction
+        if steps > 0:
+            pi.write(self.directionPin, 1)
+        else:
+            pi.write(self.directionPin, 0)
+
+        if self.currentPosition+steps <self.lowerBound and steps < 0:
+            steps = self.lowerBound-self.currentPosition
+        elif self.currentPosition+steps >self.upperBound and steps > 0:
+            steps = self.upperBound-self.currentPosition
+
+        #Create a train of pulses separated by delay
+        pulse = [pigpio.pulse(1<<self.pwmPin, 1<<self.pwmPin, self.delay//2+1)]
+        pi.wave_clear()
+        pi.wave_add_generic(pulse)
+        stepWave = pi.wave_create()
+        wait = self.delay//2
+        wait_y = wait//256
+        wait_x = wait%256
+
+        absteps = abs(steps)
+        step_y = absteps//256
+        step_x = absteps%256
+
+        ## Wave Chains seems incredibly stupid.
+        ## To see how to do it check out http://abyz.me.uk/rpi/pigpio/python.html#wave_chain
+        pi.wave_chain([
+            255, 0,                     # Starts a loop
+                stepWave,               # What wave to send
+                255, 2, wait_x, wait_y, # Adds Delay = x + 256*y microseconds
+            255, 1, step_x, step_y      # Repeat loop x + 256*y times.
+        ])
+
+        self.currentPosition += steps
+        self.state['position'] = self.currentPosition
+
+
+    def move_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "move")
+        return int(params[0])
+
+    # def adminMove(self, steps):
+    #     if steps >= 0:
+    #         direction = stepper.BACKWARD
+    #     else:
+    #         direction = stepper.FORWARD
+    #     if self.currentPosition+steps <self.lowerBound and steps < 0:
+    #         steps = self.lowerBound-self.currentPosition
+    #     elif self.currentPosition+steps >self.upperBound and steps > 0:
+    #         steps = self.upperBound-self.currentPosition
+    #     for i in range(abs(steps)):
+    #         self.device.onestep(style=self.style, direction=direction)
+    #         time.sleep(self.delay)
+    #     self.currentPosition+=steps
+    #     self.state["position"] = self.currentPosition
+    #     self.device.release()
+
+    def goto(self, position):
+        print(position)
+        endPoint=self.refPoints[position]
+        self.move(endPoint-self.currentPosition)
+
+    def goto_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "goto")
+        return params[0]
+
+    def degMove_parser(self, params):
+        try:
+            steps = float(params[0])
+        except ValueError:
+            raise ArgumentError(self.name, "degMove", params)
+        return steps
+
+
+    def degMove(self, deg):
+        print("{0} degrees".format(deg))
+        step = deg / self.degPerStep
+        step = int(step * self.gearRatio)
+        step = round(step)
+        response = self.move(step)
+        return response
+
+
+    def homeMove(self, stepLimit=5000, additionalSteps=10):
+        if self.currentPosition > 0:
+            direction = -1
+        elif self.currentPosition < 0:
+            direction = 1
+        else:
+            return
+
+        self.move(direction*stepLimit)
+        self.move(direction*additionalSteps)
+
+
+    def reset(self):
+        if self.homeSwitch is not None:
+            self.home(1)
+        else:
+            self.move(-self.currentPosition)
+        # pass
+
+    def home(self, params):
+        if self.homeSwitch is not None:
+            self.homing = True
+            self.customHome(self)
+            self.homing = False
+        else:
+            print("No homing switch is attached to this motor")
+
+    def customHome(self, motor):
+        pass
+
+
+class PololuDCMotor(BaseController):
+
+    def __init__(self, name, pwmPin, directionPin, frequency=100, dutyCycle=0):
+        self.name = named
+        self.device_type = "controller"
+        self.pwmPin = pwmPin
+        self.directionPin = directionPin,
+        self.frequency = frequency
+        self.dutyCycle = dutyCycle
+
+        gpio.setup([self.pwmPin, self.directionPin], gpio.OUT, pull_up_down=gpio.PUD_DOWN)
+        self.pwm = gpio.PWM(self.pwmPin, frequency=self.frequency)
+        self.pwm.start(dutyCycle)
+
+        self.state={}
+
+    def throttle(self, speed):
+        if speed >= 0:
+            gpio.output(self.directionPin, gpio.LOW)
+        else:
+            gpio.output(self.directionPin, gpio.HIGH)
+
+        self.dutyCyle = speed
+        self.pwm.ChangeDutyCycle(speed)
+
+    def throttle_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "throttle")
+
+        speed = float(params[0])*100
+
+        if speed < -100 or speed > 100:
+            raise ArgumentError(self.name, "throttle", speed, "-100 <= speed <= 100")
+
+        return speed
+
+
+
 class ArduCamMultiCamera(BaseController):
 
-    def __init__(self, name, videoNumber=0, defaultSettings=None):
+    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11):
         self.name = name
         self.videoNumber = videoNumber
         self.device_type = "measurement"
         self.experiment = None
         self.state = {}
         self.defaultSettings = defaultSettings
+        self.i2cbus = i2cbus
 
         # Define Pins
         # Board Pin 7 = BCM Pin 4 = Selection
@@ -961,10 +1161,10 @@ class ArduCamMultiCamera(BaseController):
         }
 
         self.camerai2c = {
-            'a': "i2cset -y 11 0x70 0x00 0x04",
-            'b': "i2cset -y 11 0x70 0x00 0x05",
-            'c': "i2cset -y 11 0x70 0x00 0x06",
-            'd': "i2cset -y 11 0x70 0x00 0x07",
+            'a': "i2cset -y {0} 0x70 0x00 0x04".format(self.i2cbus),
+            'c': "i2cset -y {0} 0x70 0x00 0x06".format(self.i2cbus),
+            'd': "i2cset -y {0} 0x70 0x00 0x07".format(self.i2cbus),
+            'b': "i2cset -y {0} 0x70 0x00 0x05".format(self.i2cbus),
         }
 
         # Set camera for A
