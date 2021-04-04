@@ -102,6 +102,16 @@
           <br>
           <br>
         </div> 
+        <div id="FilamentPower">
+          <img id="filamentSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-fTOGGLE">
+          <map name="image-map-fTOGGLE">
+            <area id="filamentTOGGLE" title="Click here to turn ON" coords="0,65,71,122" shape="rect">
+          </map>
+          <div class="click-note">(click to toggle filament power)</div>
+          <br>
+          <br>
+          <br>
+        </div>
         <div id="ControlsLeft" >
           <h1 class="heading-2"><em>V_a</em></h1>
           <img id="Va" src="static/images/Va_knob.png" usemap="#image-map-Va">
@@ -126,16 +136,6 @@
           <div class="click-note">
             (choose increment and click arrows to adjust accelerating voltage)
           </div>
-        </div>
-        <div id="FilamentPower">
-          <img id="filamentSwitch" src="static/images/toggleSwitch.png"  alt="image-26" usemap="#image-map-fTOGGLE">
-          <map name="image-map-fTOGGLE">
-            <area id="filamentTOGGLE" title="Click here to turn ON" coords="0,65,71,122" shape="rect">
-          </map>
-          <div class="click-note">(click to toggle filament power)</div>
-          <br>
-          <br>
-          <br>
         </div>
       </div>
       <div  id="VideoCenter" class="column w-col w-col-8">
@@ -180,6 +180,27 @@
           <br>
           <br> 
         </div>
+        <div id="FilamentVariac" >
+          <br>
+          <div id="radioButtonsVf" class="w-row">
+            <div class="column w-col w-col-2" style=" bottom: -30px;"></div>
+            <div class="column w-col w-col-4" style=" bottom: -30px;">
+              <input type="radio" id="3.6_deg_Vf" name="angleStepVf" value="3.6">
+              <label for="3.6_deg_Vf">3.6&#176;</label>
+            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+            <div class="column w-col w-col-4" style="bottom: -30px;">
+              <input type="radio" id="36_deg_Vf" name="angleStepVf" value="36" checked>
+              <label for="36_deg_Vf">36&#176;</label>
+            </div>
+            <div class="column w-col w-col-2" style=" bottom: -30px;"></div>
+          </div>
+          <img id="fKnob" src="static/images/filament_knob.png" usemap="#image-map-filamentV">
+          <map name="image-map-filamentV">
+            <area id="fVcw" alt="CW" title="raise V" href="#" coords="73,3,7,36,21,47,15,61,7,77,3,95,2,109,4,125,10,143,18,157,27,169,38,177,46,182,64,155,55,146,47,138,40,125,37,108,39,93,44,79,51,68,68,75" shape="poly">
+            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="226,2,231,76,249,67,256,74,261,83,264,99,264,115,260,129,254,140,247,149,238,155,245,166,252,175,256,181,270,171,280,160,287,147,293,135,296,119,298,103,295,87,292,72,286,60,278,47,292,36" shape="poly">
+          </map>
+          <div class="click-note" style="margin-bottom: -20px;">(choose increment and click arrows to adjust filament potential)</div>
+        </div>
         <div id="ControlsRight" >
           <h1 class="heading-2"><em>V_r</em></h1>
           <img id="Vr" src="static/images/Va_knob.png" usemap="#image-map-Vr">
@@ -202,27 +223,6 @@
           </div> 
           <br>
           <br> 
-        </div>
-        <div id="FilamentVariac" >
-          <br>
-          <div id="radioButtonsVf" class="w-row">
-            <div class="column w-col w-col-2" style=" bottom: -30px;"></div>
-            <div class="column w-col w-col-4" style=" bottom: -30px;">
-              <input type="radio" id="3.6_deg_Vf" name="angleStepVf" value="3.6">
-              <label for="3.6_deg_Vf">3.6&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-4" style="bottom: -30px;">
-              <input type="radio" id="36_deg_Vf" name="angleStepVf" value="36" checked>
-              <label for="36_deg_Vf">36&#176;</label>
-            </div>
-            <div class="column w-col w-col-2" style=" bottom: -30px;"></div>
-          </div>
-          <img id="fKnob" src="static/images/filament_knob.png" usemap="#image-map-filamentV">
-          <map name="image-map-filamentV">
-            <area id="fVcw" alt="CW" title="raise V" href="#" coords="73,3,7,36,21,47,15,61,7,77,3,95,2,109,4,125,10,143,18,157,27,169,38,177,46,182,64,155,55,146,47,138,40,125,37,108,39,93,44,79,51,68,68,75" shape="poly">
-            <area id="fVccw" alt="CCW" title="lower V" href="#" coords="226,2,231,76,249,67,256,74,261,83,264,99,264,115,260,129,254,140,247,149,238,155,245,166,252,175,256,181,270,171,280,160,287,147,293,135,296,119,298,103,295,87,292,72,286,60,278,47,292,36" shape="poly">
-          </map>
-          <div class="click-note" style="margin-bottom: -20px;">(choose increment and click arrows to adjust filament potential)</div>
         </div>
         <div id="Keithley6514Manual">
           <a target="_blank" href="static/docs/Keithley electrometer 6514.pdf">
