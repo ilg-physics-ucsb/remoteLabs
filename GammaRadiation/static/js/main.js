@@ -105,11 +105,11 @@ $("document").ready(function () {
 
 
     CounterCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/a");
+        dataChannel.send("Camera/camera/b");
     })
 
     OverviewCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+        dataChannel.send("Camera/camera/a");
     })
 
 
@@ -166,37 +166,37 @@ $("document").ready(function () {
 
     countButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("CountButton/press/");
+        dataChannel.send("Buttons/press/1");
         return false
     })
 
     stopButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("StopButton/press/");
+        dataChannel.send("Buttons/press/2");
         return false
     })
 
     hvButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("HVButton/press/");
+        dataChannel.send("Buttons/press/3");
         return false
     })
 
     timeButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("TimeButton/press/");
+        dataChannel.send("Buttons/press/4");
         return false
     })
 
     upButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("UpButton/press/");
+        dataChannel.send("Buttons/press/5");
         return false
     })
 
     downButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("DownButton/press/");
+        dataChannel.send("Buttons/press/6");
         return false
     })
 
@@ -362,7 +362,8 @@ $("document").ready(function () {
             }
         }
         console.log(sendString)
-        dataChannel.send("AbsorberController/place/" + sendString)
+        //TEMP CHANGE
+        // dataChannel.send("AbsorberController/place/" + sendString)
         // Add datachannel send
     })
 
