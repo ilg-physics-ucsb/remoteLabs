@@ -105,11 +105,11 @@ $("document").ready(function () {
 
 
     CounterCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/a");
+        dataChannel.send("Camera/camera/b");
     })
 
     OverviewCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+        dataChannel.send("Camera/camera/a");
     })
 
 
@@ -166,37 +166,37 @@ $("document").ready(function () {
 
     countButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Multiplexer/press/1");
+        dataChannel.send("Buttons/press/1");
         return false
     })
 
     stopButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Multiplexer/press/2");
+        dataChannel.send("Buttons/press/2");
         return false
     })
 
     hvButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Multiplexer/press/3");
+        dataChannel.send("Buttons/press/3");
         return false
     })
 
     timeButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Multiplexer/press/4");
+        dataChannel.send("Buttons/press/4");
         return false
     })
 
     upButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Multiplexer/press/5");
+        dataChannel.send("Buttons/press/5");
         return false
     })
 
     downButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("Multiplexer/press/6");
+        dataChannel.send("Buttons/press/6");
         return false
     })
 

@@ -46,6 +46,8 @@ if args.admin:
 
 camera = ArduCamMultiCamera("Camera", 1, i2cbus=1)
 
+camera.camera('b')
+
 socket_path = "/tmp/uv4l.socket"
 
 
