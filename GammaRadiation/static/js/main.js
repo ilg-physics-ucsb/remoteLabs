@@ -166,37 +166,37 @@ $("document").ready(function () {
 
     countButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("CountButton/press/");
+        dataChannel.send("Multiplexer/press/1");
         return false
     })
 
     stopButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("StopButton/press/");
+        dataChannel.send("Multiplexer/press/2");
         return false
     })
 
     hvButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("HVButton/press/");
+        dataChannel.send("Multiplexer/press/3");
         return false
     })
 
     timeButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("TimeButton/press/");
+        dataChannel.send("Multiplexer/press/4");
         return false
     })
 
     upButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("UpButton/press/");
+        dataChannel.send("Multiplexer/press/5");
         return false
     })
 
     downButton.addEventListener('click', function(event) {
         event.stopPropagation();
-        dataChannel.send("DownButton/press/");
+        dataChannel.send("Multiplexer/press/6");
         return false
     })
 
