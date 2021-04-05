@@ -362,7 +362,8 @@ $("document").ready(function () {
             }
         }
         console.log(sendString)
-        dataChannel.send("AbsorberController/place/" + sendString)
+        //TEMP CHANGE
+        // dataChannel.send("AbsorberController/place/" + sendString)
         // Add datachannel send
     })
 
