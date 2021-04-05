@@ -40,7 +40,8 @@ if args.admin:
     armBounds = bounds
     carouselBounds = bounds
 
-camera = ArduCamMultiCamera("Camera", 1)
+defaultCameraSettings = labSettings["defaultCameraSettings"]
+camera = ArduCamMultiCamera("Camera", 1, defaultSettings=defaultCameraSettings)
 socket_path = "/tmp/uv4l.socket"
 
 leftSwitch = LimitSwitch("LeftSwitch", leftSwitchPin)
