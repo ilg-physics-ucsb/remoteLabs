@@ -7,7 +7,7 @@
     "multiplexerPins": [13, 11, 6],
     "inhibitorPin" : 21,
     "multiplexerChannels": [1,2,3,4,5,6],
-    "multiplexerDelay": 0.2,
+    "multiplexerDelay": 0.5,
 
     "magnetPin" : 21,
     "magnetFrequency": 440,
