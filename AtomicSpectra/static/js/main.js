@@ -249,9 +249,9 @@ $("document").ready(function () {
 
     V2Cam.addEventListener('click', function() {
        
-        Lamps.style.visibility='visible';
-        Crosshairs.style.visibility='visible';
-        SlitControl.style.visibility='visible';
+        Lamps.style.visibility = "hidden";
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
         cameraControl.style.visibility = "hidden"; 
         currentCam = "d"
         hide_crosshair()
