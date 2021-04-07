@@ -122,6 +122,9 @@
       </div>
       <div id="Controls" class="column w-row" style="margin-bottom: 0px;">
         <div id="LeftSide" class="column w-col w-col-2">
+          </br></br>
+          </br></br>
+          </br></br>
           <div id="Toggle">
             (click to toggle the<br> ambient Light)<br>
             <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
@@ -133,78 +136,7 @@
         <div id="Center" class="column w-col w-col-8" style="margin-bottom:0px;">
           <div id="Schematic">
             
-            <div id="SchematicLeft" class="column w-col w-col-2">
-              </br></br>
-              </br></br>
-              <button href="#myModalschem" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Movable schematic</button>
-              <div id="myModalschem" class="modal fade">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <!-- radio buttons inside modal -->
-                      <div class="w-row">
-                        <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
-                        <div class="column w-col w-col-6" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
-                        <div class="column w-col w-col-1" style="bottom: -15px; color:rgb(184, 134, 6); font-size: large">Lamp:</div>
-                      </div>
-                      <div id="radioButtonsSchematic" class="w-row" >
-                        <!-- Modal Radio buttons for Telescope -->
-                        <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
-                          <input type="radio" id="MfineArm" name="MArmStepSize" value="1" onchange="mtHandleChange(this);">
-                          <label for="MfineArm">Fine</label>
-                        </div>
-                        <div class="column w-col w-col-2" style="color:darkgreen; margin-bottom: 0px;">
-                          <input type="radio" id="MmediumArm" name="MArmStepSize" value="5" onchange="mtHandleChange(this);">
-                          <label for="MmediumArm">Medium</label>
-                        </div>
-                        <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
-                          <input type="radio" id="McoarseArm" name="MArmStepSize" onchange="mtHandleChange(this);" value="50" checked>
-                          <label for="McoarseArm">Coarse</label>
-                        </div>
-                        <div class="column w-col w-col-1" style="margin-bottom: 0px;"></div>
-                        <!-- Modal Radio buttons for grating -->
-                        <div class="column w-col w-col-1" style=" color:darkorchid; margin-bottom: 0px;">
-                          <input type="radio" id="MfineTable" name="MTableStepSize" value="20" onchange="mgHandleChange(this);">
-                          <label for="MfineTable">Fine</label>
-                        </div>
-                        <div class="column w-col w-col-2" style="color:darkorchid; margin-bottom: 0px;">
-                          <input type="radio" id="MmediumTable" name="MTableStepSize" value="200" onchange="mgHandleChange(this);">
-                          <label for="MmediumTable">Medium</label>
-                        </div>
-                        <div class="column w-col w-col-1" style="color:darkorchid; margin-bottom: 0px;">
-                          <input type="radio" id="McoarseTable" name="MTableStepSize" value="600" onchange="mgHandleChange(this);" checked>
-                          <label for="McoarseTable">Coarse</label>
-                        </div>
-                      </div>
-                      <!-- arrow buttons in modal -->
-                      <div>
-                        <div class="arrowbuttonCW">
-                          <img class="column w-col w-col-2" id="arrowbuttonCW" src="static/images/arrowbuttonCW.png">
-                        </div>
-                        <div class="arrowbuttonCCW">
-                          <img class="column w-col w-col-2" id="arrowbuttonCCW" src="static/images/arrowbuttonCCW.png">
-                        </div>
-                        <div class="column w-col w-col-1"></div>
-                        <div class="arrowCW">
-                          <img class="column w-col w-col-2" id="arrowCW" src="static/images/arrowCW.png">
-                        </div>
-                        <div class = "arrowCCW">
-                          <img class="column w-col w-col-1" id="arrowCCW" src="static/images/arrowCCW.png">
-                        </div>
-                        <div class="column w-col w-col-1"></div>
-                        <div class="column w-col w-col-1"></div>
-                        <div class="uparrow">
-                          <img class="column w-col w-col-1" id="uparrow" src="static/images/upArrow.png">
-                        </div>
-                        <div class="downarrow">
-                          <img class="column w-col w-col-1" id="downarrow" src="static/images/downArrow.png">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div id="SchematicLeft" class="column w-col w-col-2">              
             </div>
 
             <div id="SchematicCenter" class="column w-col w-col-8">
@@ -223,14 +155,17 @@
               </map>  
             </div>
 
-            <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6);">
-              </br></br>
-              </br></br>
+            <div id="SchematicRight" class="column w-col w-col-2" style="color:rgb(184, 134, 6);">
+              <br><br><br><br>
+              <br><br><br><br>
               (click arrows </br>  to nudge </br> the lamp)
             </div>
           </div>  
         </div>  
         <div id="RightSide" class="column w-col w-col-2">
+          </br></br>
+          </br></br>
+          </br></br>
           <div id="ToggleDark">
             (click to toggle the <br> Background dark)<br>
             <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
@@ -241,7 +176,78 @@
         </div>
       </div>
       <div id="CameraSelectorButtons" >
-
+        <button href="#myModalschem" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Movable schematic</button>
+        <div id="myModalschem" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <!-- radio buttons inside modal -->
+                <div class="w-row">
+                  <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
+                  <div class="column w-col w-col-6" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
+                  <div class="column w-col w-col-1" style="bottom: -15px; color:rgb(184, 134, 6); font-size: large">Lamp:</div>
+                </div>
+                <div id="radioButtonsSchematic" class="w-row" >
+                  <!-- Modal Radio buttons for Telescope -->
+                  <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
+                    <input type="radio" id="MfineArm" name="MArmStepSize" value="1" onchange="mtHandleChange(this);">
+                    <label for="MfineArm">Fine</label>
+                  </div>
+                  <div class="column w-col w-col-2" style="color:darkgreen; margin-bottom: 0px;">
+                    <input type="radio" id="MmediumArm" name="MArmStepSize" value="5" onchange="mtHandleChange(this);">
+                    <label for="MmediumArm">Medium</label>
+                  </div>
+                  <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
+                    <input type="radio" id="McoarseArm" name="MArmStepSize" onchange="mtHandleChange(this);" value="50" checked>
+                    <label for="McoarseArm">Coarse</label>
+                  </div>
+                  <div class="column w-col w-col-1" style="margin-bottom: 0px;"></div>
+                  <!-- Modal Radio buttons for grating -->
+                  <div class="column w-col w-col-1" style=" color:darkorchid; margin-bottom: 0px;">
+                    <input type="radio" id="MfineTable" name="MTableStepSize" value="20" onchange="mgHandleChange(this);">
+                    <label for="MfineTable">Fine</label>
+                  </div>
+                  <div class="column w-col w-col-2" style="color:darkorchid; margin-bottom: 0px;">
+                    <input type="radio" id="MmediumTable" name="MTableStepSize" value="200" onchange="mgHandleChange(this);">
+                    <label for="MmediumTable">Medium</label>
+                  </div>
+                  <div class="column w-col w-col-1" style="color:darkorchid; margin-bottom: 0px;">
+                    <input type="radio" id="McoarseTable" name="MTableStepSize" value="600" onchange="mgHandleChange(this);" checked>
+                    <label for="McoarseTable">Coarse</label>
+                  </div>
+                </div>
+                <!-- arrow buttons in modal -->
+                <div class="w-row">
+                  <div class="mTelescopeImg">
+                    <div class="arrowbuttonCW">
+                      <img id="arrowbuttonCW" src="static/images/arrowbuttonCW.png">
+                    </div>
+                    <div class="arrowbuttonCCW">
+                      <img id="arrowbuttonCCW" src="static/images/arrowbuttonCCW.png">
+                    </div>
+                  </div>
+                  <div class="mGratingImg">
+                    <div class="arrowCW">
+                      <img  id="arrowCW" src="static/images/arrowCW.png">
+                    </div>
+                    <div class = "arrowCCW">
+                      <img id="arrowCCW" src="static/images/arrowCCW.png">
+                    </div>
+                  </div>
+                  <div class="mLampImg">
+                    <div class="uparrow">
+                      <img id="uparrow" src="static/images/upArrow.png">
+                    </div>
+                    <div class="downarrow">
+                      <img  id="downarrow" src="static/images/downArrow.png">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="btn-group" role="group"  aria-label="Basic example">
           <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
           <button id="EyepieceCam" type="button" class="btn btn-primary">Eyepiece</button>
