@@ -986,13 +986,12 @@ class PololuStepperMotor(BaseController):
             steps = self.upperBound-self.currentPosition
 
         #Create a train of pulses separated by delay
-        pulse = [pigpio.pulse(1<<self.pwmPin, 1<<self.pwmPin, self.delay//2+1)]
+        pOn = pigpio.pulse(1<<self.pwmPin, 0, self.delay//2)
+        pOff = pigpio.pulse(0, 1<<self.pwmPin, 0, self.delay//2)
+        pulse = [pOn, pOff]
         pi.wave_clear()
         pi.wave_add_generic(pulse)
         stepWave = pi.wave_create()
-        wait = self.delay//2
-        wait_y = wait//256
-        wait_x = wait%256
 
         absteps = abs(steps)
         step_y = absteps//256
@@ -1003,7 +1002,6 @@ class PololuStepperMotor(BaseController):
         pi.wave_chain([
             255, 0,                     # Starts a loop
                 stepWave,               # What wave to send
-                255, 2, wait_x, wait_y, # Adds Delay = x + 256*y microseconds
             255, 1, step_x, step_y      # Repeat loop x + 256*y times.
         ])
 
