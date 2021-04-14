@@ -23,13 +23,14 @@ outletMap       = labSettings["outletMap"]
 
 stageBounds     = labSettings["stageBounds"]
 stageRefPoints  = labSettings["stageRefPoints"]
-stageTerminal   = labSettings['stageTerminal']
+stageStepPin, stageDirPin, stageEnPin   = labSettings['stageTerminal']
+stageDelay      = labSettings["stageDelay"]
 
 # magnetTerminal      = labSettings["magnetTerminal"]
 magnetPin           = labSettings["magnetPin"]
 magnetFrequency     = labSettings["magnetFrequency"]
 
-actuatorTerminal    = labSettings["actuatorTerminal"]
+actuatorPwmPin, actuatorDirPin, actuatorNotEnPin   = labSettings["actuatorPins"]
 
 multiplexerPins     = labSettings["multiplexerPins"]
 inhibitorPin        = labSettings["inhibitorPin"]
@@ -46,20 +47,18 @@ if args.admin:
 
 camera = ArduCamMultiCamera("Camera", 1, i2cbus=1)
 
-camera.camera('b')
-
 socket_path = "/tmp/uv4l.socket"
 
 
 ## stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
-stage = PololuStepperMotor("Stage", 21, 20, bounds=stageBounds, delay=5000, refPoints=stageRefPoints)
+stage = PololuStepperMotor("Stage", stageStepPin, stageDirPin, stageEnPin, bounds=stageBounds, delay=stageDelay, refPoints=stageRefPoints)
 ## actuator = DCMotorI2C("Actuator", actuatorTerminal)
-# actuator = PololuDCMotor("Actuator", 12, 24, 5)
+actuator = PololuDCMotor("Actuator", actuatorPwmPin, actuatorDirPin, actuatorEnPin)
 
 ## magnet = DCMotorI2C("Magnet", magnetTerminal)
 # magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
 
-# absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
 
 # buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
@@ -78,9 +77,9 @@ else:
     exp=Experiment("GammaRadiation")
 exp.add_device(camera)
 exp.add_device(stage)
-# exp.add_device(actuator)
-# exp.add_device(magnet)
-# exp.add_device(absorberController)
+exp.add_device(actuator)
+exp.add_device(magnet)
+exp.add_device(absorberController)
 # exp.add_device(buttons)
 
 

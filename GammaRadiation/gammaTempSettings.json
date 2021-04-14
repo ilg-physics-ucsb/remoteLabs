@@ -9,13 +9,14 @@
     "multiplexerChannels": [1,2,3,4,5,6],
     "multiplexerDelay": 0.1,
 
-    "magnetPin" : 21,
-    "magnetFrequency": 440,
+    "magnetPin" : 12,
+    "magnetFrequency": 100,
 
-    "actuatorTerminal" : 6,
-    "stageTerminal": 21,
+    "actuatorPins" : [16, 19, 13],
+    "stagePins": [20, 21, 26],
 
-    "stageBounds": [0, 12500],
+    "stageBounds": [-12500, 12500],
+    "stageDelay": 1050,
     "stageRefPoints": {
         "s0": 11510,
         "s1": 11110,
@@ -37,8 +38,7 @@
         "h11": 5455
     },
 
-
-    "absorberFullTime": 11,
+    "absorberFullTime": 6,
     "absorberMidTime": 1
 
 }
