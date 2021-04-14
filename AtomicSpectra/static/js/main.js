@@ -214,49 +214,50 @@ $("document").ready(function () {
     var SlitControl = document.getElementById("SlitControl");
     var cameraControl = document.getElementById("ModalCamera")
     
-    OverviewCam.addEventListener('click', function() {
+    // OverviewCam.addEventListener('click', function() {
         
-        if(FirstTimeCam){
-            console.log("Overview cam was clicked for the first time");
-            FirstTimeCam=false;
-        }
-        else{
-            dataChannel.send("Camera/camera/a");
-            currentCam = "a"
-        }
+    //     if(FirstTimeCam){
+    //         console.log("Overview cam was clicked for the first time");
+    //         FirstTimeCam=false;
+    //     }
+    //     else{
+    //         dataChannel.send("Camera/camera/a");
+    //         currentCam = "a"
+    //     }
         
+    //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+    //     Lamps.style.visibility='visible';
+    //     Crosshairs.style.visibility = "hidden";
+    //     SlitControl.style.visibility = "hidden";
+    //     cameraControl.style.visibility = "hidden"; 
+    //     hide_crosshair()
         
-        Lamps.style.visibility='visible';
-        Crosshairs.style.visibility = "hidden";
-        SlitControl.style.visibility = "hidden";
-        cameraControl.style.visibility = "hidden"; 
-        hide_crosshair()
-        
-    })
+    // })
 
-    V1Cam.addEventListener('click', function() {
+    // V1Cam.addEventListener('click', function() {
        
-        
+    //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
                 
-        Lamps.style.visibility = "hidden";
-        Crosshairs.style.visibility = "hidden";
-        SlitControl.style.visibility = "hidden";
-        cameraControl.style.visibility = "hidden"; 
-        currentCam = "b"
-        hide_crosshair()
-        dataChannel.send("Camera/camera/b");
-    })
+    //     Lamps.style.visibility = "hidden";
+    //     Crosshairs.style.visibility = "hidden";
+    //     SlitControl.style.visibility = "hidden";
+    //     cameraControl.style.visibility = "hidden"; 
+    //     currentCam = "b"
+    //     hide_crosshair()
+    //     dataChannel.send("Camera/camera/b");
+    // })
 
-    V2Cam.addEventListener('click', function() {
+    // V2Cam.addEventListener('click', function() {
        
-        Lamps.style.visibility = "hidden";
-        Crosshairs.style.visibility = "hidden";
-        SlitControl.style.visibility = "hidden";
-        cameraControl.style.visibility = "hidden"; 
-        currentCam = "d"
-        hide_crosshair()
-        dataChannel.send("Camera/camera/d");
-    })
+    //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+    //     Lamps.style.visibility = "hidden";
+    //     Crosshairs.style.visibility = "hidden";
+    //     SlitControl.style.visibility = "hidden";
+    //     cameraControl.style.visibility = "hidden"; 
+    //     currentCam = "d"
+    //     hide_crosshair()
+    //     dataChannel.send("Camera/camera/d");
+    // })
 
     // OffCam.addEventListener('click', function() {
     //     dataChannel.send("Camera/camera/off")
@@ -950,6 +951,51 @@ $("document").ready(function () {
     contrastValue = function(){
         contrastDisplay.innerHTML=contrastSlider.value + "%"
     }
+
+    OverviewCam.addEventListener('click', function() {
+        
+        if(FirstTimeCam){
+            console.log("Overview cam was clicked for the first time");
+            FirstTimeCam=false;
+        }
+        else{
+            dataChannel.send("Camera/camera/a");
+            currentCam = "a"
+        }
+        
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
+        hide_crosshair()
+        
+    })
+
+    V1Cam.addEventListener('click', function() {
+       
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+                
+        Lamps.style.visibility = "hidden";
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
+        currentCam = "b"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/b");
+    })
+
+    V2Cam.addEventListener('click', function() {
+       
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        Lamps.style.visibility = "hidden";
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
+        currentCam = "d"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/d");
+    })
     
     ArmCam.addEventListener('click', function() {
         //show_crosshair()
