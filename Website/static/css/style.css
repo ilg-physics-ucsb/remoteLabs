@@ -1,19 +1,27 @@
-.LeftSideContainer{
+.Title{
     position: relative;
     padding: 1rem 4rem 0rem;
 }
 
-.LeftContent{
+.nav-bar{
+    position: relative;
+    padding: 0rem 4rem 0rem;
+}
+.tabs{
     border-bottom: 1px solid gray;
 }
 
-.RightSideContainer{
-    padding: 1rem 4rem;
-
+.tablinks{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
-.rightContent{
-    padding: 2rem 2rem 15%;
+.TabContainers{
+    padding: 1rem 4rem;
+}
+
+.TabContent{
+    padding: 2rem 2rem;
     border-radius: 8px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25vmax, 1fr));
@@ -21,7 +29,7 @@
     background-color:rgba(0,0,0,.2);
 }
 
-.Container{
+#Container{
     border: 2px solid black;
     display: grid;
     text-align: center;
@@ -36,9 +44,57 @@
 }
 
 .Container:hover{
-    scale: 1.05;
+    scale: 1.1;
 }
 
 .content{
     grid-area: 1 / 1 / 2 / 2;
+}
+
+.PeopleTab{
+    padding: 1rem 4rem;
+}
+
+.PeopleTabGrid{
+    padding: 2rem 2rem;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30vmax, 1fr));
+    grid-gap: 2rem;
+    background-color:rgba(0,0,0,.2);
+}
+
+.Contact{
+    border: 2px solid black;
+    display: grid;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.row{
+    display: flex;
+}
+
+.column{
+    width: 50%;
+}
+
+.Photo img{
+    max-width:100%;
+    max-height:100%;
+}
+
+.Photo{
+    padding-right: 10px;
+}
+
+.content img{
+    width:  20%;
+    height: auto;
+}
+
+.cLabs > * {
+    display: inline-block;
 }

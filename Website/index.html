@@ -4,77 +4,237 @@
         <title>UCSB Remote Labs</title>
         <link href="static/css/style.css" rel="stylesheet" type="text/css">
     </head>
-    <style>
-        body{
-            /* background-color: #b3cde0; */
-        }
-    </style>
+    
+    <script type="text/javascript" src="static/js/main.js">
+    </script>
     <body>
         <script src="https://embed.small.chat/TL66KT5QFC01UAE8QBRN.js" async></script>
-        <div class="LeftSideContainer">
+        <div class="Title">
             <div class="LeftContent">
                 <h1>UCSB Physics: Remote Labs</h1>
                 <p>Disclaimer: Please do not use Safari!</p>
             </div>
         </div>
-        <div class="RightSideContainer">
-            <div class="rightContent">
-                <div class="Container">
-                    <div class="content">
-                        <div class="cTitle">
-                            <h2>Photoelectric Effect</h1>
+        <div class="nav-bar">
+            <div class="tabs">
+                <button class="tablinks active" onclick="opentab(event, 'Labs')">Labs</button>
+                <button class="tablinks" onclick="opentab(event, 'Manuals')">Lab Manuals</button>
+                <button class="tablinks" onclick="opentab(event,'People')">People</button>
+            </div>
+        </div>
+        <!-- Labs Tab -->
+        <div id="Labs" class="tabcontent" style="display: block">
+            <div class="TabContainers">
+                <div class="TabContent">
+                    <div id="Container" class="PE">
+                        <div class="content">
+                            <div class="cTitle">
+                                <h2>Photoelectric Effect</h2>
+                            </div>
+                            <img src="static/images/peIcon.png">
+                            <div class="cLabs">
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/photo1">Photo 1</a></p>
+                                <p>|</p>
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/photo2">Photo 2</a></p>
+                            </div>
                         </div>
-                        <div class="cLabs">
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/photo1">Photo 1</a></p>
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/photo2">Photo 2</a></p>
+                    </div>
+        
+                    <div id="Container" class="AS">
+                        <div class="content">
+                            <div class="cTitle">
+                                <h2>Atomic Spectroscopy</h2>
+                            </div>
+                            <img src="static/images/AtomicIcon.png">
+                            <div class="cLabs">
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/atomic1">Atomic 1</a></p>
+                                <p>|</p>
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/atomic2">Atomic 2</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="Container" class=FH>
+                        <div class="content">
+                            <div class="cTitle">
+                                <h2>Franck-Hertz</h2>
+                            </div>
+                            <img src="static/images/FH-clear.png">
+                            <div class="cLabs">
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/franck1">Franck 1</a></p>
+                                <p>|</p>
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/franck2">Franck 2</a></p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div id="Container" class="DI">
+                        <div class="content">
+                            <div class="cTitle">
+                                <h2>Diffraction & Interference</h2>
+                            </div>
+                            <img src="static/images/DIiconXparent.png">
+                            <div class="cLabs">
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/diffrac1">Diffrac 1</a></p>
+                                <p>|</p>
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/diffrac2">Diffrac 2</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="Container" class="GR">
+                        <div class="content">
+                            <div class="cTitle">
+                                <h2>Gamma Radiation Absorption</h1>
+                            </div>
+                            <img src="static/images/radiation.png">
+                            <div class="cLabs">
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/gamma1">Gamma 1</a></p>
+                                <p>|</p>
+                                <p><a href="http://saxophone.inst.physics.ucsb.edu/gamma2">Gamma 2</a></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-    
-                <div class="Container">
-                    <div class="content">
-                        <div class="cTitle">
-                            <h2>Atomic Spectroscopy</h2>
+            </div>
+        </div>
+        <div id="Manuals" class="tabcontent" style="display: none;">
+            <div class="TabContainers">
+                <div class="TabContent">
+                    <div id="Container">
+                        <div class="content">
+                            <div class="cTitle">
+                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/PhotoElectricLabManual/PE5L.html">
+                                    <h2>Photoelectric Effect</h1>
+                                </a>
+                            </div>
                         </div>
-                        <div class="cLabs">
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/atomic1">Atomic 1</a></p>
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/atomic2">Atomic 2</a></p>
+                    </div>
+        
+                    <div id="Container">
+                        <div class="content">
+                            <div class="cTitle">
+                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/AtomicSpectraLabManual/AS5L.html" >
+                                    <h2>Atomic Spectroscopy</h2>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="Container">
+                        <div class="content">
+                            <div class="cTitle">
+                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/FranckHertzLabManual/FH5L.html">
+                                    <h2>Franck-Hertz</h2>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div id="Container">
+                        <div class="content">
+                            <div class="cTitle">
+                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/DiffractionInterferenceLabManual/DI5L.html" >
+                                    <h2>Diffraction & Interference</h2>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="Container">
+                        <div class="content">
+                            <div class="cTitle">
+                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/RadiationAbsorptionLabManual/GR5L.html">
+                                    <h2>Gamma Radiation Absorption</h1>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="Container">
-                    <div class="content">
-                        <div class="cTitle">
-                            <h2>Franck-Hertz</h2>
-                        </div>
-                        <div class="cLabs">
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/franck1">Franck 1</a></p>
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/franck2">Franck 2</a></p>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="Container">
-                    <div class="content">
-                        <div class="cTitle">
-                            <h2>Diffraction & Interference</h2>
-                        </div>
-                        <div class="cLabs">
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/diffrac1">Diffrac 1</a></p>
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/diffrac2">Diffrac 2</a></p>
+            </div>
+        </div>
+        <div id="People" class="tabcontent" style="display: none;">
+            <div class="PeopleTab">
+                <div class="PeopleTabGrid">
+                    <div class="Contact">
+                        <div class="row">
+                            <div class="column">
+                                <div class="Photo">
+                                    <img src="static/images/Zak.jpg">
+                                </div>
+                            </div>
+                            <div class="column" style="text-align: left;">
+                                <h3>Zak Espley</h3>
+                                <p>Upper Division Instructional Lab Coordinator</p>
+                                <p>zespley@physics.ucsb.edu</p>
+                                <p>805.893.2627</p>
+                                <!-- <p>Website</p> -->
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="Container">
-                    <div class="content">
-                        <div class="cTitle">
-                            <h2>Gamma Radiation Absorption</h1>
+                    <div class="Contact">
+                        <div class="row">
+                            <div class="column">
+                                <div class="Photo">
+                                    <img src="static/images/Deborah.jpg">
+                                </div>
+                            </div>
+                            <div class="column" style="text-align: left;">
+                                <h3>Deborah Fygenson</h3>
+                                <p>Professor</p>
+                                <p>fygenson@ucsb.edu</p>
+                                <p>805.893.2449</p>
+                                <p>http://nanobio.physics.ucsb.edu/</p>
+                            </div>
                         </div>
-                        <div class="cLabs">
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/gamma1">Gamma 1</a></p>
-                            <p><a href="http://saxophone.inst.physics.ucsb.edu/gamma2">Gamma 2</a></p>
+                    </div>
+                    <div class="Contact">
+                        <div class="row">
+                            <div class="column">
+                                <div class="Photo">
+                                    <img src="static/images/Raffi.jpg">
+                                </div>
+                            </div>
+                            <div class="column" style="text-align: left;">
+                                <h3>Raffi Shirinian</h3>
+                                <p>Learning Assistant Coordinator</p>
+                                <p>Lecture Demonstration Coordinator</p>
+                                <p>rshirin@physics.ucsb.edu</p>
+                                <p>805.893.3217</p>
+                                <!-- <p>Website</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Contact">
+                        <div class="row">
+                            <div class="column">
+                                <div class="Photo">
+                                    <img src="static/images/Balfred.jpg">
+                                </div>
+                            </div>
+                            <div class="column" style="text-align: left;">
+                                <h3>Balfred Carrillo Martinez</h3>
+                                <p>Student Lab Assistant</p>
+                                <p>bcarrillomartinez@ucsb.edu</p>
+                                <!-- <p>Number</p> -->
+                                <!-- <p>Website</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Contact">
+                        <div class="row">
+                            <div class="column">
+                                <div class="Photo">
+                                    <img src="static/images/Cher.jpg">
+                                </div>
+                            </div>
+                            <div class="column" style="text-align: left;">
+                                <h3>Cher Lin</h3>
+                                <p>Student Lab Assistant</p>
+                                <p>cher@ucsb.edu</p>
+                                <!-- <p>Number</p> -->
+                                <!-- <p>Website</p> -->
+                            </div>
                         </div>
                     </div>
                 </div>
