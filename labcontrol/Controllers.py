@@ -934,18 +934,23 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
 
 class PololuStepperMotor(BaseController):
 
-    def __init__(self, name, pwmPin, directionPin, bounds, delay=5000,
+    def __init__(self, name, stepPin, directionPin, enablePin, bounds, delay=5000,
                     refPoints={}, limitSwitches=[], homeSwitch=None,
                     degPerStep=1.8, gearRatio=1):
         self.name = name
         self.device_type = "controller"
-        self.pwmPin = pwmPin
+        self.stepPin = stepPin
         self.directionPin = directionPin
+        self.enablePin = enablePin
 
-        pi.set_mode(self.pwmPin, pigpio.OUTPUT)
-        pi.set_pull_up_down(self.pwmPin, pigpio.PUD_DOWN)
+        pi.set_mode(self.stepPin, pigpio.OUTPUT)
+        pi.set_pull_up_down(self.stepPin, pigpio.PUD_DOWN)
+        pi.set_mode(self.enablePin, pigpio.OUTPUT)
+        pi.set_pull_up_down(self.enablePini, pigpio.PUD_DOWN)
         pi.set_mode(self.directionPin, pigpio.OUTPUT)
         pi.set_pull_up_down(self.directionPin, pigpio.PUD_DOWN)
+
+        pi.write(self.enablePin, 0)
 
 
         self.refPoints = refPoints
@@ -986,8 +991,8 @@ class PololuStepperMotor(BaseController):
             steps = self.upperBound-self.currentPosition
 
         #Create a train of pulses separated by delay
-        pOn = pigpio.pulse(1<<self.pwmPin, 0, self.delay//2)
-        pOff = pigpio.pulse(0, 1<<self.pwmPin, self.delay//2)
+        pOn = pigpio.pulse(1<<self.stepPin, 0, self.delay//2)
+        pOff = pigpio.pulse(0, 1<<self.stepPin, self.delay//2)
         pulse = [pOn, pOff]
         pi.wave_clear()
         pi.wave_add_generic(pulse)
@@ -997,6 +1002,7 @@ class PololuStepperMotor(BaseController):
         step_y = absteps//256
         step_x = absteps%256
 
+        pi.write(self.enablePin, 1)
         ## Wave Chains seems incredibly stupid.
         ## To see how to do it check out http://abyz.me.uk/rpi/pigpio/python.html#wave_chain
         pi.wave_chain([
@@ -1004,6 +1010,11 @@ class PololuStepperMotor(BaseController):
                 stepWave,               # What wave to send
             255, 1, step_x, step_y      # Repeat loop x + 256*y times.
         ])
+
+        while pi.wave_tx_busy():
+            time.sleep(0.1)
+
+        pi.write(self.enablePin, 0)
 
         self.currentPosition += steps
         self.state['position'] = self.currentPosition
