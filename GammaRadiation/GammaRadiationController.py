@@ -23,7 +23,7 @@ outletMap       = labSettings["outletMap"]
 
 stageBounds     = labSettings["stageBounds"]
 stageRefPoints  = labSettings["stageRefPoints"]
-stageStepPin, stageDirPin, stageEnPin   = labSettings['stageTerminal']
+stageStepPin, stageDirPin, stageEnPin   = labSettings['stagePins']
 stageDelay      = labSettings["stageDelay"]
 
 # magnetTerminal      = labSettings["magnetTerminal"]
