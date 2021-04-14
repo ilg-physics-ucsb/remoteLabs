@@ -987,7 +987,7 @@ class PololuStepperMotor(BaseController):
 
         #Create a train of pulses separated by delay
         pOn = pigpio.pulse(1<<self.pwmPin, 0, self.delay//2)
-        pOff = pigpio.pulse(0, 1<<self.pwmPin, 0, self.delay//2)
+        pOff = pigpio.pulse(0, 1<<self.pwmPin, self.delay//2)
         pulse = [pOn, pOff]
         pi.wave_clear()
         pi.wave_add_generic(pulse)
