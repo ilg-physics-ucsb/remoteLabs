@@ -15,7 +15,7 @@
     "actuatorPins" : [16, 19, 13],
     "stagePins": [20, 21, 26],
 
-    "stageBounds": [-12500, 12500],
+    "stageBounds": [0, 12000],
     "stageDelay": 1050,
     "stageRefPoints": {
         "s0": 11510,
