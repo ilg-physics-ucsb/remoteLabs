@@ -444,23 +444,23 @@ class AbsorberController(MotorKit, BaseController):
         # global x
         # x += 1
         self.stepper.goto(slot1)
-        self.actuator.throttle_parser([-1.0])
+        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
         time.sleep(self.midtime)
-        self.actuator.throttle_parser([0])
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(1.0)
         self.magnet.power(90)
-        self.actuator.throttle_parser([1.0])
+        self.actuator.throttle(self.actuator.throttle_parser([1.0]))
         time.sleep(self.fulltime)
-        self.actuator.throttle_parser([0])
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
         self.stepper.goto(slot2)
-        self.actuator.throttle_parser([-1.0])
+        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
         time.sleep(self.fulltime)
-        self.actuator.throttle_parser([0])
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(0)
         self.magnet.power(0)
-        self.actuator.throttle_parser([1.0])
+        self.actuator.throttle(self.actuator.throttle_parser([1.0]))
         time.sleep(self.midtime)
-        self.actuator.throttle_parser([0])
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
 
 
         self.state["total"][slot1] = ''
