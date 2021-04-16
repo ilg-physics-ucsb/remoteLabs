@@ -934,18 +934,23 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
 
 class PololuStepperMotor(BaseController):
 
-    def __init__(self, name, pwmPin, directionPin, bounds, delay=5000,
+    def __init__(self, name, stepPin, directionPin, enablePin, bounds, delay=5000,
                     refPoints={}, limitSwitches=[], homeSwitch=None,
                     degPerStep=1.8, gearRatio=1):
         self.name = name
         self.device_type = "controller"
-        self.pwmPin = pwmPin
+        self.stepPin = stepPin
         self.directionPin = directionPin
+        self.enablePin = enablePin
 
-        pi.set_mode(self.pwmPin, pigpio.OUTPUT)
-        pi.set_pull_up_down(self.pwmPin, pigpio.PUD_DOWN)
+        pi.set_mode(self.stepPin, pigpio.OUTPUT)
+        pi.set_pull_up_down(self.stepPin, pigpio.PUD_DOWN)
+        pi.set_mode(self.enablePin, pigpio.OUTPUT)
+        pi.set_pull_up_down(self.enablePin, pigpio.PUD_DOWN)
         pi.set_mode(self.directionPin, pigpio.OUTPUT)
         pi.set_pull_up_down(self.directionPin, pigpio.PUD_DOWN)
+
+        pi.write(self.enablePin, 0)
 
 
         self.refPoints = refPoints
@@ -986,26 +991,30 @@ class PololuStepperMotor(BaseController):
             steps = self.upperBound-self.currentPosition
 
         #Create a train of pulses separated by delay
-        pulse = [pigpio.pulse(1<<self.pwmPin, 1<<self.pwmPin, self.delay//2+1)]
+        pOn = pigpio.pulse(1<<self.stepPin, 0, self.delay//2)
+        pOff = pigpio.pulse(0, 1<<self.stepPin, self.delay//2)
+        pulse = [pOn, pOff]
         pi.wave_clear()
         pi.wave_add_generic(pulse)
         stepWave = pi.wave_create()
-        wait = self.delay//2
-        wait_y = wait//256
-        wait_x = wait%256
 
         absteps = abs(steps)
         step_y = absteps//256
         step_x = absteps%256
 
+        pi.write(self.enablePin, 1)
         ## Wave Chains seems incredibly stupid.
         ## To see how to do it check out http://abyz.me.uk/rpi/pigpio/python.html#wave_chain
         pi.wave_chain([
             255, 0,                     # Starts a loop
                 stepWave,               # What wave to send
-                255, 2, wait_x, wait_y, # Adds Delay = x + 256*y microseconds
             255, 1, step_x, step_y      # Repeat loop x + 256*y times.
         ])
+
+        while pi.wave_tx_busy():
+            time.sleep(0.1)
+
+        pi.write(self.enablePin, 0)
 
         self.currentPosition += steps
         self.state['position'] = self.currentPosition

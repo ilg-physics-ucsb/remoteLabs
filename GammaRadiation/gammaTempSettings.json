@@ -12,8 +12,8 @@
     "magnetPin" : 21,
     "magnetFrequency": 440,
 
-    "actuatorTerminal" : 3,
-    "stageTerminal": 1,
+    "actuatorTerminal" : 6,
+    "stageTerminal": 21,
 
     "stageBounds": [0, 12500],
     "stageRefPoints": {
