@@ -302,10 +302,10 @@ $("document").ready(function () {
    //END Laser
     
     //BEGIN SnapShot
-    snapShot.addEventListener("click", function () {
-        console.log("Snapshot was taken")
-        // Do unknown stuff here to make a picture happen.
-    })
+    // snapShot.addEventListener("click", function () {
+    //     console.log("Snapshot was taken")
+    //     // Do unknown stuff here to make a picture happen.
+    // })
     //END SnapShot
 
     // END Switches
