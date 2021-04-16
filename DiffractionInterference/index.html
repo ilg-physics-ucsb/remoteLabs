@@ -199,29 +199,7 @@
               <div style="clear: both;"></div>
         </div>
 
-        <div id="ModalCamera" style="display: none;">
-          <button href="#myModalCamera" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Camera Controls Modal</button>
-          <div id="myModalCamera" class="modal fade">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-body">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
-                  </br>
-                  <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
-                  </br>
-                  <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
-                  </br>
-                  <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
-                  </br>
-                  <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
-                  </br>
-                  <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
         
         <!-- <div id="cameraControl" style="display: none;"> -->
           <!-- <b> Camera Controls</b> -->
@@ -268,6 +246,29 @@
               <area id="wideThin" alt="wide vs thin" title="wide vs thin" href="#" coords="150,611,20" shape="circle">
               <area id="threeTwo" alt="three vs two" title="three vs two" href="#" coords="193,626,18" shape="circle">          
             </map>
+        </div>
+        <div id="ModalCamera" style="display: none;">
+          <button href="#myModalCamera" class="btn btn-settings" data-backdrop="false" data-toggle="modal" style="color: blue">Camera Controls Modal</button>
+          <div id="myModalCamera" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
+                  </br>
+                  <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
+                  </br>
+                  <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
+                  </br>
+                  <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
+                  </br>
+                  <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
+                  </br>
+                  <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- <br>
         (click the button to take a snap shot)<br><br><br>
