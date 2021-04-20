@@ -12,6 +12,7 @@ import board
 import signal
 from adafruit_bus_device.i2c_device import I2CDevice
 import pigpio
+import sys
 
 
 pi = pigpio.pi()
