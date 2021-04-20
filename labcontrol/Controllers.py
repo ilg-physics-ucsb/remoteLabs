@@ -1153,9 +1153,9 @@ class PololuDCMotor(BaseController):
     
     def __stop(self, gpio, level, tick):
         print("MOTOR IS CRASHING! HALTING!")
-        self.throttle(self.throttle_parser(1))
+        self.throttle(self.throttle_parser([1]))
         time.sleep(2)
-        self.throttle(self.throttle_parser(0))
+        self.throttle(self.throttle_parser([0]))
         pi.stop()
         sys.exit(0)
         # self.pulseCount += 1
