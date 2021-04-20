@@ -1127,7 +1127,7 @@ class PololuDCMotor(BaseController):
                 # gpio.add_event_detect(self.stopPin, gpio.RISING, callback=self.__stop, bouncetime=100)
             else:
                 pi.set_mode(stopPin, pigpio.INPUT)
-                pi.set_pull_up_down(stopPin, self.steadyState)
+                pi.set_pull_up_down(stopPin, pigpio.PUD_UP)
                 pi.set_glitch_filter(stopPin, self.steadyState)
                 pi.callback(stopPin, pigpio.FALLING_EDGE, self.__stop)
                 # gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_UP)
