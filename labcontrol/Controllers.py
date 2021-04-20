@@ -1112,7 +1112,7 @@ class PololuDCMotor(BaseController):
         self.frequency = frequency
         self.dutyCycle = dutyCycle
         self.stopPin = stopPin
-        self.steadState = steadyState
+        self.steadyState = steadyState
         self.pulseCount = 0
         self.pwmScaler = pwmScaler
 
