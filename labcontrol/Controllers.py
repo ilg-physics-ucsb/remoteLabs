@@ -1103,7 +1103,7 @@ class PololuStepperMotor(BaseController):
 
 class PololuDCMotor(BaseController):
 
-    def __init__(self, name, pwmPin, directionPin, notEnablePin, stopPin=None, rising=True, frequency=100, dutyCycle=0):
+    def __init__(self, name, pwmPin, directionPin, notEnablePin, stopPin=None, rising=True, steadyState=20000, frequency=100, dutyCycle=0, pwmScaler=255):
         self.name = name
         self.device_type = "controller"
         self.pwmPin = pwmPin
@@ -1112,15 +1112,26 @@ class PololuDCMotor(BaseController):
         self.frequency = frequency
         self.dutyCycle = dutyCycle
         self.stopPin = stopPin
+        self.steadState = steadyState
         self.pulseCount = 0
+        self.pwmScaler = pwmScaler
+
 
         if  self.stopPin is not None:
             if rising:
-                gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
-                gpio.add_event_detect(self.stopPin, gpio.RISING, callback=self.__stop, bouncetime=100)
+                pi.set_mode(stopPin, pigpio.INPUT)
+                pi.set_pull_up_down(stopPin, pigpio.PUD_DOWN)
+                pi.set_glitch_filter(stopPin, self.steadyState)
+                pi.callback(stopPin, pigpio.RISING_EDGE, self.__stop)
+                # gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+                # gpio.add_event_detect(self.stopPin, gpio.RISING, callback=self.__stop, bouncetime=100)
             else:
-                gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_UP)
-                gpio.add_event_detect(self.stopPin, gpio.FALLING, callback=self.__stop, bouncetime=100)
+                pi.set_mode(stopPin, pigpio.INPUT)
+                pi.set_pull_up_down(stopPin, self.steadyState)
+                pi.set_glitch_filter(stopPin, self.steadyState)
+                pi.callback(stopPin, pigpio.FALLING_EDGE, self.__stop)
+                # gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_UP)
+                # gpio.add_event_detect(self.stopPin, gpio.FALLING, callback=self.__stop, bouncetime=100)
 
             
             
@@ -1128,14 +1139,18 @@ class PololuDCMotor(BaseController):
 
 
 
-        gpio.setup([self.pwmPin, self.directionPin, self.notEnablePin], gpio.OUT)#, pull_up_down=gpio.PUD_DOWN)
-        gpio.output(self.notEnablePin, gpio.LOW)
-        self.pwm = gpio.PWM(self.pwmPin, self.frequency)
-        self.pwm.start(dutyCycle)
+        # gpio.setup([self.pwmPin, self.directionPin, self.notEnablePin], gpio.OUT)
+        pi.setMode(pin, pigpio.OUTPUT) for pin in [self.pwmPin, self.directionPin, self.notEnablePin]
+        # gpio.output(self.notEnablePin, gpio.LOW)
+        pi.write(self.notEnablePin, 0)
+        pi.set_PWM_frequency(self.pwmPin, self.frequency)
+        pi.set_PWM_dutycycle(dutyCycle)
+        # self.pwm = gpio.PWM(self.pwmPin, self.frequency)
+        # self.pwm.start(dutyCycle)
 
         self.state={}
     
-    def __stop(self, channel):
+    def __stop(self, gpio, level, tick):
         # print("MOTOR IS CRASHING! HALTING!")
         self.pulseCount += 1
         print("PULSED {0}".format(self.pulseCount))
@@ -1143,23 +1158,24 @@ class PololuDCMotor(BaseController):
         # sys.exit(0)
 
     def throttle(self, speed):
-        if speed >= 0:
-            gpio.output(self.directionPin, gpio.LOW)
-        else:
-            gpio.output(self.directionPin, gpio.HIGH)
-
+        # if speed >= 0:
+        #     # gpio.output(self.directionPin, gpio.LOW)
+        # else:
+        #     # gpio.output(self.directionPin, gpio.HIGH)
+        pi.write(self.directionPin, speed<=0)
 
         self.dutyCycle = abs(speed)
-        self.pwm.ChangeDutyCycle(self.dutyCycle)
+        # self.pwm.ChangeDutyCycle(self.dutyCycle)
+        pi.set_PWM_dutycycle(self.pwmPin, self.dutyCycle)
 
     def throttle_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "throttle")
 
-        speed = float(params[0])*100
+        speed = float(params[0])*self.pwmScaler
 
-        if speed < -100 or speed > 100:
-            raise ArgumentError(self.name, "throttle", speed, "-100 <= speed <= 100")
+        if speed < -self.pwmScaler or speed > self.pwmScaler:
+            raise ArgumentError(self.name, "throttle", speed/self.pwmScaler, "-1 <= speed <= 1")
 
         return speed
 
