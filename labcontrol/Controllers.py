@@ -1145,7 +1145,7 @@ class PololuDCMotor(BaseController):
         # gpio.output(self.notEnablePin, gpio.LOW)
         pi.write(self.notEnablePin, 0)
         pi.set_PWM_frequency(self.pwmPin, self.frequency)
-        pi.set_PWM_dutycycle(dutyCycle)
+        pi.set_PWM_dutycycle(self.pwmPin, dutyCycle)
         # self.pwm = gpio.PWM(self.pwmPin, self.frequency)
         # self.pwm.start(dutyCycle)
 
