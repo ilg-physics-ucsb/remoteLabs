@@ -12,7 +12,7 @@
     "magnetPin" : 12,
     "magnetFrequency": 100,
 
-    "actuatorPins" : [16, 19, 13],
+    "actuatorPins" : [16, 19, 13, 6],
     "stagePins": [20, 21, 26],
 
     "stageBounds": [-12000, 0],
