@@ -14,7 +14,7 @@
 
     "actuatorPins" : [16, 19, 13, 6],
     "actuatorTriggerEdge": false,
-    "actuatorSteadyState": 10000,
+    "actuatorSteadyState": 70000,
     "actuatorPWMScaler"  : 255,
     
     "stagePins": [20, 21, 26],
@@ -42,7 +42,7 @@
         "h11": -5455
     },
 
-    "absorberFullTime": 6,
-    "absorberMidTime": 1
+    "absorberFullTime": 10,
+    "absorberMidTime": 2
 
 }
