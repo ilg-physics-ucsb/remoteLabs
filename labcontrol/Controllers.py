@@ -9,6 +9,7 @@ import os
 import subprocess
 import busio
 import board
+import signal
 from adafruit_bus_device.i2c_device import I2CDevice
 import pigpio
 
@@ -1101,7 +1102,7 @@ class PololuStepperMotor(BaseController):
 
 class PololuDCMotor(BaseController):
 
-    def __init__(self, name, pwmPin, directionPin, notEnablePin, frequency=100, dutyCycle=0):
+    def __init__(self, name, pwmPin, directionPin, notEnablePin, stopPin=None, rising=True, frequency=100, dutyCycle=0):
         self.name = name
         self.device_type = "controller"
         self.pwmPin = pwmPin
@@ -1109,6 +1110,21 @@ class PololuDCMotor(BaseController):
         self.notEnablePin = notEnablePin
         self.frequency = frequency
         self.dutyCycle = dutyCycle
+        self.stopPin = stopPin
+
+        if  self.stopPin is not None:
+            if rising:
+                gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+                gpio.add_event_detect(self.stopPin, gpio.RISING, callback=self.__stop, bouncetime=100)
+            else:
+                gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_UP)
+                gpio.add_event_detect(self.stopPin, gpio.FALLING, callback=self.__stop, bouncetime=100)
+
+            
+            
+            
+
+
 
         gpio.setup([self.pwmPin, self.directionPin, self.notEnablePin], gpio.OUT)#, pull_up_down=gpio.PUD_DOWN)
         gpio.output(self.notEnablePin, gpio.LOW)
@@ -1116,6 +1132,11 @@ class PololuDCMotor(BaseController):
         self.pwm.start(dutyCycle)
 
         self.state={}
+    
+    def __stop(self, channel):
+        print("MOTOR IS CRASHING! HALTING!")
+        gpio.cleanup()
+        sys.exit(0)
 
     def throttle(self, speed):
         if speed >= 0:
