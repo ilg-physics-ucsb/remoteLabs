@@ -31,6 +31,9 @@ magnetPin           = labSettings["magnetPin"]
 magnetFrequency     = labSettings["magnetFrequency"]
 
 actuatorPwmPin, actuatorDirPin, actuatorNotEnPin, actuatorStopPin   = labSettings["actuatorPins"]
+actuatorTriggerEdge = labSettings["actuatorTriggerEdge"]
+actuatorSteadyState = labSettings["actuatorSteadyState"]
+actuatorPWMScaler   = labSettings["actuatorPWMScaler"]
 
 multiplexerPins     = labSettings["multiplexerPins"]
 inhibitorPin        = labSettings["inhibitorPin"]
@@ -53,7 +56,7 @@ socket_path = "/tmp/uv4l.socket"
 ## stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
 stage = PololuStepperMotor("Stage", stageStepPin, stageDirPin, stageEnPin, bounds=stageBounds, delay=stageDelay, refPoints=stageRefPoints)
 ## actuator = DCMotorI2C("Actuator", actuatorTerminal)
-actuator = PololuDCMotor("Actuator", actuatorPwmPin, actuatorDirPin, actuatorNotEnPin, actuatorStopPin, rising=False)
+actuator = PololuDCMotor("Actuator", actuatorPwmPin, actuatorDirPin, actuatorNotEnPin, actuatorStopPin, rising=actuatorTriggerEdge, pwmScaler=actuatorPWMScaler, steadyState=actuatorSteadyState)
 
 ## magnet = DCMotorI2C("Magnet", magnetTerminal)
 magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)

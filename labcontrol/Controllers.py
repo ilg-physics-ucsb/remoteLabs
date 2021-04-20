@@ -1140,7 +1140,8 @@ class PololuDCMotor(BaseController):
 
 
         # gpio.setup([self.pwmPin, self.directionPin, self.notEnablePin], gpio.OUT)
-        pi.setMode(pin, pigpio.OUTPUT) for pin in [self.pwmPin, self.directionPin, self.notEnablePin]
+        for pin in [self.pwmPin, self.directionPin, self.notEnablePin]:
+            pi.setMode(pin, pigpio.OUTPUT) 
         # gpio.output(self.notEnablePin, gpio.LOW)
         pi.write(self.notEnablePin, 0)
         pi.set_PWM_frequency(self.pwmPin, self.frequency)
