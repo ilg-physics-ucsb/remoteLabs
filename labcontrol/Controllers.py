@@ -1112,6 +1112,7 @@ class PololuDCMotor(BaseController):
         self.frequency = frequency
         self.dutyCycle = dutyCycle
         self.stopPin = stopPin
+        self.pulseCount = 0
 
         if  self.stopPin is not None:
             if rising:
@@ -1135,9 +1136,11 @@ class PololuDCMotor(BaseController):
         self.state={}
     
     def __stop(self, channel):
-        print("MOTOR IS CRASHING! HALTING!")
-        gpio.cleanup()
-        sys.exit(0)
+        # print("MOTOR IS CRASHING! HALTING!")
+        self.pulseCount += 1
+        print("PULSED {0}".format(self.pulseCount))
+        # gpio.cleanup()
+        # sys.exit(0)
 
     def throttle(self, speed):
         if speed >= 0:
