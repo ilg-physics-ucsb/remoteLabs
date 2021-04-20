@@ -14,7 +14,7 @@
 
     "actuatorPins" : [16, 19, 13, 6],
     "actuatorTriggerEdge": false,
-    "actuatorSteadyState": 20000,
+    "actuatorSteadyState": 10000,
     "actuatorPWMScaler"  : 255,
     
     "stagePins": [20, 21, 26],
