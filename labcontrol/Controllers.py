@@ -1022,6 +1022,12 @@ class PololuStepperMotor(BaseController):
         self.state['position'] = self.currentPosition
 
 
+        if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
+            return "{0}/{1}/{2}".format(self.name, "position", "limit")
+        else:
+            return "{0}/{1}/{2}".format(self.name, "position", self.currentPosition)
+
+
     def move_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
