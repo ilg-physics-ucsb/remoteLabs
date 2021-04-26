@@ -4,8 +4,8 @@
         "ST160": 4
     },
 
-    "multiplexerPins": [13, 11, 6],
-    "inhibitorPin" : 21,
+    "multiplexerPins": [9, 11, 8],
+    "inhibitorPin" : 25,
     "multiplexerChannels": [1,2,3,4,5,6],
     "multiplexerDelay": 0.1,
 
