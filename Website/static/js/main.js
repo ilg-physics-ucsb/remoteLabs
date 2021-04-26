@@ -11,3 +11,7 @@ function opentab(evt, Name) {
   document.getElementById(Name).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+function PermissionRequest(){
+  console.log("PermissionRequest")
+}
