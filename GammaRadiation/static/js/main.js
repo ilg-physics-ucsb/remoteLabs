@@ -299,8 +299,11 @@ $("document").ready(function () {
                 console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
-                loaded[parentSlot.id] = -1;
-                parentSlot.innerHTML = "Empty";
+                if (parentSlot.class == "slot") {
+                    loaded[parentSlot.id] = -1;
+                    parentSlot.innerHTML = "Empty";
+                }
+                
             })
         }
 
