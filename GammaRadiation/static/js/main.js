@@ -285,18 +285,25 @@ $("document").ready(function () {
 
             aList.addEventListener('drop', function(e){
                 let key = draggedItem.textContent
-                console.log("KEY:" + key)
-                console.log("LOCATIONS:" + absorberLocations[key])
-                console.log("THIS:")
-                console.log(this)
-                console.log("Children:")
-                console.log(this.children)
+                // console.log(draggedItem)
+                // console.log(e)
+                // console.log(parentSlot)
+                // console.log("KEY:" + key)
+                // console.log("LOCATIONS:" + absorberLocations[key])
+                // console.log("THIS:")
+                // console.log(this)
+                // console.log("Children:")
+                // console.log(this.children)
                 let holder = this.children[absorberLocations[key]];
-                console.log("holder:" + holder)
+                // console.log("holder:")
+                // console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
-                loaded[parentSlot.id] = -1;
-                parentSlot.innerHTML = "Empty";
+                if (parentSlot.class == "slot") {
+                    loaded[parentSlot.id] = -1;
+                    parentSlot.innerHTML = "Empty";
+                }
+                
             })
         }
 
