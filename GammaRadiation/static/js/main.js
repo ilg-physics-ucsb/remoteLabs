@@ -285,6 +285,9 @@ $("document").ready(function () {
 
             aList.addEventListener('drop', function(e){
                 let key = draggedItem.textContent
+                console.log(draggedItem)
+                console.log(e)
+                console.log(parentSlot)
                 console.log("KEY:" + key)
                 console.log("LOCATIONS:" + absorberLocations[key])
                 console.log("THIS:")
