@@ -52,7 +52,7 @@ socket_path = "/tmp/uv4l.socket"
 
 
 ## stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
-stage = PololuStepperMotor("Stage", 21, 20, bounds=stageBounds, delay=5000, refPoints=stageRefPoints)
+# stage = PololuStepperMotor("Stage", 13, 19, bounds=stageBounds, delay=5000, refPoints=stageRefPoints)
 ## actuator = DCMotorI2C("Actuator", actuatorTerminal)
 # actuator = PololuDCMotor("Actuator", 12, 24, 5)
 
@@ -61,7 +61,7 @@ stage = PololuStepperMotor("Stage", 21, 20, bounds=stageBounds, delay=5000, refP
 
 # absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
 
-# buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
+buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
 # GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 # GRpdu.login()
@@ -77,11 +77,11 @@ elif args.admin:
 else:
     exp=Experiment("GammaRadiation")
 exp.add_device(camera)
-exp.add_device(stage)
+# exp.add_device(stage)
 # exp.add_device(actuator)
 # exp.add_device(magnet)
 # exp.add_device(absorberController)
-# exp.add_device(buttons)
+exp.add_device(buttons)
 
 
 exp.set_socket_path(socket_path)
