@@ -292,7 +292,8 @@ $("document").ready(function () {
                 console.log("Children:")
                 console.log(this.children)
                 let holder = this.children[absorberLocations[key]];
-                console.log("holder:" + holder)
+                console.log("holder:")
+                console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
                 loaded[parentSlot.id] = -1;
