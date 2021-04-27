@@ -288,6 +288,7 @@ $("document").ready(function () {
                 // console.log(draggedItem)
                 // console.log(e)
                 // console.log(parentSlot)
+                // console.log(parentSlot.className)
                 // console.log("KEY:" + key)
                 // console.log("LOCATIONS:" + absorberLocations[key])
                 // console.log("THIS:")
@@ -299,7 +300,7 @@ $("document").ready(function () {
                 // console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
-                if (parentSlot.class == "slot") {
+                if (parentSlot.className == "slot") {
                     loaded[parentSlot.id] = -1;
                     parentSlot.innerHTML = "Empty";
                 }
