@@ -695,7 +695,8 @@ class AbsorberController(MotorKit, BaseController):
                     UIGroups.append(temp)
                 else:
                     IGroups.append(temp)
-            print("IGROUPS:{0}".format(IGroups))
+            for internal in internals:
+                IGroups.append([internal])
 
         for uil in UILGroups:
             uMove = [uil.pop(0)]
@@ -769,8 +770,8 @@ class AbsorberController(MotorKit, BaseController):
                 print(unloads)
                 moves.insert(0, unloads.pop(0))
 
-        while len(internals) > 0:
-            moves.append(internals.pop(0))
+        while len(IGroups) > 0:
+            moves += IGroups.pop(0)
 
         return moves
 
