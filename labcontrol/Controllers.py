@@ -674,6 +674,7 @@ class AbsorberController(MotorKit, BaseController):
             internalStarts = [item[0] for item in internals]
             internalFinish = [item[1] for item in internals]
             intersection = [item for item in internalFinish if item in internalStarts]
+            print("Intersections: {0}".format(intersection))
             starts = [internal for internal in internals if internal[1] in intersection]
             for start in starts:
                 internals.remove(start)
@@ -694,7 +695,6 @@ class AbsorberController(MotorKit, BaseController):
                     UIGroups.append(temp)
                 else:
                     IGroups.append(temp)
-
 
         for uil in UILGroups:
             uMove = [uil.pop(0)]
@@ -767,6 +767,9 @@ class AbsorberController(MotorKit, BaseController):
             elif len(unloads) > 0:
                 print(unloads)
                 moves.insert(0, unloads.pop(0))
+
+        while len(internals) > 0:
+            moves.append(internals.pop(0))
 
         return moves
 
