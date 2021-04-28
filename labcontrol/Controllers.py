@@ -803,11 +803,11 @@ class AbsorberController(MotorKit, BaseController):
             moves = self. __handleChains(moveList["chains"], moves)
 
         # pp.pprint(moveList)
-        # print(moves)
+        print("Moves:{0}".format(moves))
         for move in moves:
             self.__transfer(move[0], move[1])
 
-        self.stepper.move(350)
+        self.stepper.move(700)
 
     # def place(self, absorberList):
     #     for slot, absorber in absorberList:
