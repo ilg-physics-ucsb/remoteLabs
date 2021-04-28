@@ -541,12 +541,13 @@ class AbsorberController(MotorKit, BaseController):
         ## Now we should identify chains.
         chains = self.__chainDetect(moveList["internal"])
         internalStarts = [ item[0] for item in moveList["internal"] ]
+        print("Pre-chains: {0}".format(moveList))
         for chain in chains:
             for move in chain:
                 moveList["internal"].remove(move)
 
         moveList["chains"] = chains
-
+        print("Post-chains: {0}".format(moveList))
         return moveList
 
     def __chainDetect(self, movements):
