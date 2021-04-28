@@ -640,6 +640,7 @@ class AbsorberController(MotorKit, BaseController):
         unloads = moveList["unload"]
         loads = moveList["load"]
         internals = moveList["internal"]
+        print("INTERNALS:{0}".format(internals))
         unloadStarts = [item[0] for item in unloads]
         UILGroups = []
         ILGroups = []
@@ -669,16 +670,18 @@ class AbsorberController(MotorKit, BaseController):
                     ILGroups.append(temp)
 
         if len(internals) > 0:
-
+            print("Starting Internals")
             internalStarts = [item[0] for item in internals]
             internalFinish = [item[1] for item in internals]
             intersection = [item for item in internalFinish if item in internalStarts]
             starts = [internal for internal in internals if internal[1] in intersection]
             for start in starts:
                 internals.remove(start)
-
+            print("INTERNALS2:{0}".format(internals))
+            print("STARTS:{0}".format(starts))
             for startingI in starts:
                 temp = self.__chaseInternal(internals, startingI)
+                print("CHASEINTERNALS:{0}".format(temp))
                 internalStarts = [item[0] for item in internals]
                 nextSlot = temp[0][1]
                 # print(f"Checking for conflict with unload. Slot {nextSlot}")
