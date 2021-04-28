@@ -500,7 +500,7 @@ class AbsorberController(MotorKit, BaseController):
             currentAbsInSlot = self.__getAbsorber(slot)
             # Get the location of the current absorber
             currentAbsLocation = self.__getSlot(ab)
-            # print(f"Absorber: {ab}  Location: {currentAbsLocation}")
+            print(f"Absorber: {ab}  Location: {currentAbsLocation}")
 
             # Determine if the absorber is used later down the line
             absorberUsed = currentAbsInSlot in absorbers
