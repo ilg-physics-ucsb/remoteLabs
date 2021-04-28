@@ -695,6 +695,7 @@ class AbsorberController(MotorKit, BaseController):
                     UIGroups.append(temp)
                 else:
                     IGroups.append(temp)
+            print("IGROUPS:{0}".format(IGroups))
 
         for uil in UILGroups:
             uMove = [uil.pop(0)]
