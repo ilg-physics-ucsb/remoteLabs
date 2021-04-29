@@ -419,7 +419,7 @@ class AbsorberController(MotorKit, BaseController):
                 "A2": "h9",
                 "A3": "h8",
                 "A4": "h7",
-                "A5": "h9",
+                "A5": "h6",
                 "A6": "h5",
                 "A7": "h4",
                 "A8": "h3",
