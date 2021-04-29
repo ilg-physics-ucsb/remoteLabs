@@ -379,6 +379,7 @@ class AbsorberController(MotorKit, BaseController):
         self.experiment = None
         self.fulltime = fulltime
         self.midtime = midtime
+        self.downtime = fulltime - midtime
         self.stepper = stepper
         self.actuator = actuator
         self.magnet = magnet
@@ -456,12 +457,12 @@ class AbsorberController(MotorKit, BaseController):
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         self.stepper.goto(slot2)
         self.actuator.throttle(self.actuator.throttle_parser([1.0]))
-        time.sleep(self.fulltime)
+        time.sleep(self.downtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(0)
         self.magnet.power(0)
-        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
-        time.sleep(self.midtime)
+        # self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
+        # time.sleep(self.midtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
 
 
