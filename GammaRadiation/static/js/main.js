@@ -219,8 +219,8 @@ $("document").ready(function () {
         "Absorber 8": 7,
         "Absorber 9": 8,
         "Absorber 10": 9,
-        "Absorber 11": 10,
-        "Source"    : 11
+        // "Absorber 11": 10,
+        "Source"    : 10
     }
     loaded = {
         "s0": -1,
@@ -285,19 +285,19 @@ $("document").ready(function () {
 
             aList.addEventListener('drop', function(e){
                 let key = draggedItem.textContent
-                // console.log(draggedItem)
-                // console.log(e)
-                // console.log(parentSlot)
-                // console.log(parentSlot.className)
-                // console.log("KEY:" + key)
-                // console.log("LOCATIONS:" + absorberLocations[key])
-                // console.log("THIS:")
-                // console.log(this)
-                // console.log("Children:")
-                // console.log(this.children)
+                console.log(draggedItem)
+                console.log(e)
+                console.log(parentSlot)
+                console.log(parentSlot.className)
+                console.log("KEY:" + key)
+                console.log("LOCATIONS:" + absorberLocations[key])
+                console.log("THIS:")
+                console.log(this)
+                console.log("Children:")
+                console.log(this.children)
                 let holder = this.children[absorberLocations[key]];
-                // console.log("holder:")
-                // console.log(holder)
+                console.log("holder:")
+                console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
                 if (parentSlot.className == "slot") {

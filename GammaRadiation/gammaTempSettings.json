@@ -42,7 +42,7 @@
         "h11": -1275
     },
 
-    "absorberFullTime": 10,
-    "absorberMidTime": 2
+    "absorberFullTime": 9,
+    "absorberMidTime": 1.5
 
 }
