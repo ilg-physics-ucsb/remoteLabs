@@ -104,9 +104,20 @@
                     <div id="Container">
                         <div class="content">
                             <div class="cTitle">
-                                <a target="_blank" onclick="PermissionRequest()" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/PhotoElectricLabManual/PE5L.html">
-                                    <h2>Photoelectric Effect</h1>
-                                </a>
+                                <!-- <a target="_blank" onclick="PermissionRequest()" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/PhotoElectricLabManual/PE5L.html"> -->
+                                <h2>Photoelectric Effect</h1>
+                                <form id="Prompt_Password">
+                                    Password: <input type="password" name="password"><br>
+                                    <button type="submit">Log in</button>
+                                </form>
+                                <script>
+                                    var form = document.querySelector("form");
+                                    console.log(form.elements[1].type);
+                                    if(form.elements[1].type == "hello"){
+                                        console.log("correct")
+                                    }
+                                </script>
+                                <!-- </a> -->
                             </div>
                         </div>
                     </div>
@@ -168,7 +179,6 @@
                                 <p>Upper Division Instructional Lab Coordinator</p>
                                 <p>zespley@physics.ucsb.edu</p>
                                 <p>805.893.2627</p>
-                                <!-- <p>Website</p> -->
                             </div>
                         </div>
                     </div>
@@ -200,7 +210,6 @@
                                 <p>Lecture Demonstration Coordinator</p>
                                 <p>rshirin@physics.ucsb.edu</p>
                                 <p>805.893.3217</p>
-                                <!-- <p>Website</p> -->
                             </div>
                         </div>
                     </div>
@@ -216,7 +225,6 @@
                                 <p>Student Lab Assistant</p>
                                 <p>bcarrillomartinez@ucsb.edu</p>
                                 <!-- <p>Number</p> -->
-                                <!-- <p>Website</p> -->
                             </div>
                         </div>
                     </div>
@@ -232,7 +240,6 @@
                                 <p>Student Lab Assistant</p>
                                 <p>cher@ucsb.edu</p>
                                 <!-- <p>Number</p> -->
-                                <!-- <p>Website</p> -->
                             </div>
                         </div>
                     </div>

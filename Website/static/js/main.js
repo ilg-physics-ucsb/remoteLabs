@@ -12,6 +12,22 @@ function opentab(evt, Name) {
   evt.currentTarget.className += " active";
 }
 
-function PermissionRequest(){
-  console.log("PermissionRequest")
+// function CreateForm(){
+//   console.log("PermissionRequest");
+//   var f = document.createElement("FORM");
+//   document.body.appendChild(f);
+//   var i = document.createElement("INPUT");
+//   // i.setAttribute("type", "Submit");
+//   document.body.appendChild(i);
+//   i.setAttribute("type", SubmitForm(i.value));
+// }
+
+// function SubmitForm(x){
+//   console.log(x);
+  
+// }
+
+function submitform(){
+  var i = getElementById("password_Input").value
+  console.log(i)
 }
