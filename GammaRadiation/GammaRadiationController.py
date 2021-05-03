@@ -65,8 +65,8 @@ absorberController = AbsorberController("AbsorberController", stage, actuator, m
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
-# GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
-# GRpdu.login()
+GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+GRpdu.login()
 
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.

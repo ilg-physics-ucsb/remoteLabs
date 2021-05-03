@@ -219,8 +219,8 @@ $("document").ready(function () {
         "Absorber 8": 7,
         "Absorber 9": 8,
         "Absorber 10": 9,
-        // "Absorber 11": 10,
-        "Source"    : 10
+        "Absorber 11": 10,
+        "Source"    : 11
     }
     loaded = {
         "s0": -1,
