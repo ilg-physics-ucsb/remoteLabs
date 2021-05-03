@@ -12,22 +12,36 @@ function opentab(evt, Name) {
   evt.currentTarget.className += " active";
 }
 
-// function CreateForm(){
-//   console.log("PermissionRequest");
-//   var f = document.createElement("FORM");
-//   document.body.appendChild(f);
-//   var i = document.createElement("INPUT");
-//   // i.setAttribute("type", "Submit");
-//   document.body.appendChild(i);
-//   i.setAttribute("type", SubmitForm(i.value));
-// }
+function validatePassword(P){
+  var i = "physics";
+  if(i == P){
+    return true
+  }
+  else{
+    return false
+  }
+}
 
-// function SubmitForm(x){
-//   console.log(x);
-  
-// }
+function validateForm(evt, Name){
+  evt.preventDefault();
+  var i = document.getElementById("passwordInput");
+  console.log(i.value);
+  if(validatePassword(i.value)){
+    window.open("https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/"+Name, "_blank");
+    return true;
+  }
+  else{
+    alert("incorrect password");
+    return false;
+  }
+}
 
-function submitform(){
-  var i = getElementById("password_Input").value
-  console.log(i)
+function openForm(LabName){
+  var f = document.getElementById(LabName);
+  if(f.style.display === "none"){
+    f.style.display = "block"
+  }
+  else{
+    f.style.display = "none"
+  }
 }

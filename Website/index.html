@@ -104,20 +104,11 @@
                     <div id="Container">
                         <div class="content">
                             <div class="cTitle">
-                                <!-- <a target="_blank" onclick="PermissionRequest()" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/PhotoElectricLabManual/PE5L.html"> -->
-                                <h2>Photoelectric Effect</h1>
-                                <form id="Prompt_Password">
-                                    Password: <input type="password" name="password"><br>
-                                    <button type="submit">Log in</button>
+                                <h2 onclick="openForm('Photo')">Photoelectric Effect</h2>
+                                <form id="Photo" style="display: none;" onsubmit="validateForm(event, 'PhotoElectricLabManual/PE5L.html')">
+                                    Password: <input type="password" id="passwordInput" placeholder="Enter Password"><br>
+                                    <button type="submit">Enter</button>
                                 </form>
-                                <script>
-                                    var form = document.querySelector("form");
-                                    console.log(form.elements[1].type);
-                                    if(form.elements[1].type == "hello"){
-                                        console.log("correct")
-                                    }
-                                </script>
-                                <!-- </a> -->
                             </div>
                         </div>
                     </div>
@@ -125,8 +116,11 @@
                     <div id="Container">
                         <div class="content">
                             <div class="cTitle">
-                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/AtomicSpectraLabManual/AS5L.html" >
-                                    <h2>Atomic Spectroscopy</h2>
+                                    <h2 onclick="openForm('Atomic')" >Atomic Spectroscopy</h2>
+                                    <form id="Atomic" style="display: none;" onsubmit="validateForm(event, 'AtomicSpectraLabManual/AS5L.html')">
+                                        Password: <input type="password" id="passwordInput" placeholder="Enter Password"><br>
+                                        <button type="submit">Enter</button>
+                                    </form>
                                 </a>
                             </div>
                         </div>
