@@ -43,6 +43,7 @@
     },
 
     "absorberFullTime": 8,
-    "absorberMidTime": 2
+    "absorberMidTime": 2,
+    "magnetPower": 95
 
 }

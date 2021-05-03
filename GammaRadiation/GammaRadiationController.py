@@ -42,6 +42,7 @@ multiplexerDelay    = labSettings["multiplexerDelay"]
 
 absorberFullTime = labSettings["absorberFullTime"]
 absorberMidTime  = labSettings["absorberMidTime"]
+magnetPower      = labSettings["magnetPower"]
 
 
 if args.admin:
@@ -61,7 +62,7 @@ actuator = PololuDCMotor("Actuator", actuatorPwmPin, actuatorDirPin, actuatorNot
 ## magnet = DCMotorI2C("Magnet", magnetTerminal)
 magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
 
-absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime, magnetPower=magnetPower)
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup

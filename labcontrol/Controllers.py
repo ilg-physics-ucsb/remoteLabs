@@ -373,7 +373,7 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1):
+    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1, magnetPower=90):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
@@ -383,6 +383,7 @@ class AbsorberController(MotorKit, BaseController):
         self.stepper = stepper
         self.actuator = actuator
         self.magnet = magnet
+        self.magnetPower = magnetPower
         self.state = {
             "loaded": {
                 "s0":False,
@@ -451,7 +452,7 @@ class AbsorberController(MotorKit, BaseController):
         time.sleep(self.midtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(1.0)
-        self.magnet.power(90)
+        self.magnet.power(self.magnetPower)
         self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
         time.sleep(self.fulltime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
