@@ -184,7 +184,7 @@ parser_stop = subparsers.add_parser("stop")
 parser_stop.set_defaults(func=stop)
 
 parser_message = subparsers.add_parser("message")
-parser_essage.set_defaults(func=message)
+parser_message.set_defaults(func=message)
 
 args = parser.parse_args()
 try:
