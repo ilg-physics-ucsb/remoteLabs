@@ -74,7 +74,7 @@ class Experiment(object):
                 self.connection, self.client_address = self.socket.accept()
                 # print("Client Address is {0}".format(self.client_address))
                 logging.info("Client Connected")
-                if self.messeneger_socket_path != '':
+                if self.messenger_socket_path != '':
                     self.messenger_connection, self.messeneger_client_address = self.messenger_socket.accept()
                 self.__data_connection(self.connection)
                 time.sleep(0.01)
