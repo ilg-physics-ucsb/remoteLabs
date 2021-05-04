@@ -30,6 +30,7 @@ function controllerResponseHandler(cmd) {
     var device = components[0]
     var info = components[1]
     var infoValue = components[2]
+    console.log(cmd)
 
     if (infoValue == "limit") {
         extremaModal.modal("show")
