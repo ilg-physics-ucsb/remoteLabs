@@ -52,6 +52,7 @@ if args.admin:
 camera = ArduCamMultiCamera("Camera", 1, i2cbus=1)
 
 socket_path = "/tmp/uv4l.socket"
+messenger_socket_path = "/tmp/remla.socket"
 
 
 ## stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
@@ -74,7 +75,7 @@ GRpdu.login()
 # stage.device.release()
 
 if args.reset:
-    exp = Experiment("GammaRadiation")
+    exp = Experiment("GammaRadiation", messenger_socket_path=messenger_socket_path)
 elif args.admin:
     exp = Experiment("GammaRadiation", admin=True)
 else:

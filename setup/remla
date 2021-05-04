@@ -132,7 +132,7 @@ def run(args):
 
 def message(args):
     connection = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
-    socket_path = "/tmp/uv4l.socket"
+    socket_path = "/tmp/remla.socket"
     try:
         connection.connect(socket_path)
         time.sleep(0.2)

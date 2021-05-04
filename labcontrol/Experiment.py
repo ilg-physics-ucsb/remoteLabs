@@ -17,12 +17,15 @@ class NoDeviceError(Exception):
 
 class Experiment(object):
 
-    def __init__(self, name, root_directory="remoteLabs", admin=False):
+    def __init__(self, name, root_directory="remoteLabs", admin=False, messenger_socket_path=''):
         self.devices = {}
         self.allStates = {}
         self.socket_path = ''
         self.socket = None
         self.connection = None
+        self.messenger_socket_path = messenger_socket_path
+        self.messenger_socket = None
+        self.messenger_connection = None
         self.client_address = None
         self.name = name
         self.initializedStates = False
@@ -71,6 +74,8 @@ class Experiment(object):
                 self.connection, self.client_address = self.socket.accept()
                 # print("Client Address is {0}".format(self.client_address))
                 logging.info("Client Connected")
+                if self.messeneger_socket_path != '':
+                    self.messenger_connection, self.messeneger_client_address = self.messenger_socket.accept()
                 self.__data_connection(self.connection)
                 time.sleep(0.01)
             except socket.timeout:
@@ -86,6 +91,11 @@ class Experiment(object):
             try:
                 while True:
                     data = self.connection.recv(1024)
+                    if self.messenger_socket_path != '':
+                        messenger_data = self.messenger_connection.recv(1024)
+                        if messenger_data:
+                            self.connection.send(messenger_data)
+                            self.messenger_connection.close()
                     if data:
                         self.command_handler(data)
                     else:
@@ -160,6 +170,16 @@ class Experiment(object):
             self.socket.bind(self.socket_path)
             self.socket.listen(1)
             self.socket.settimeout(1)
+            if self.messenger_socket_path != '':
+                if not os.path.exists(self.messenger_socket_path):
+                    f = open(self.messenger_socket_path, 'w')
+                    f.close()
+                os.unlink(self.messenger_socket_path)
+                self.messenger_socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
+                signal(SIGINT, self.exit_handler)
+                self.messenger_socket.bind(self.socket_path)
+                self.messenger_socket.listen(1)
+                self.messenger_socket.settimeout(1)
             self.__wait_to_connect()
         except OSError:
             if os.path.exists(self.socket_path):
