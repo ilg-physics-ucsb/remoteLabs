@@ -138,7 +138,7 @@ def message(args):
         time.sleep(0.2)
         connection.send("Messenger/contactModal/show")
 
-    except socket.error, msg:
+    except socket.error as msg:
         print("Socket Error:  {0}".format(msg))
        
 
