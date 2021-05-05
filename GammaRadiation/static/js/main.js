@@ -112,7 +112,7 @@ $("document").ready(function () {
     var counterTOGGLE = document.getElementById('counterTOGGLE');
     counterTOGGLE.style.transform='scaleY(1)'
     var counterState = false;
-
+    var counterSwitch = document.getElementById('CounterSwitch')
     counterTOGGLE.addEventListener('click', function(){
         console.log("counter switch was switched");
         if(counterState){
