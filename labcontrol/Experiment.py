@@ -132,6 +132,11 @@ class Experiment(object):
         if self.socket is not None:
             self.socket.close()
             logging.info("Socket is closed")
+        
+        if self.messenger_socket is not None:
+            self.messenger_socket.close()
+            logging.info("Messenger socket closed")
+        
         logging.info("Looping through devices shutting them down.")
         if not self.admin:
             for device_name, device in self.devices.items():
@@ -233,10 +238,10 @@ class Messenger:
                 f.close()
             os.unlink(self.socket_path)
             self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
-            signal(SIGINT, self.exit_handler)
             self.socket.bind(self.socket_path)
             self.socket.listen(1)
             self.socket.settimeout(1)
+            self.experiment.messenger_socket = self.socket
             self.__wait_to_connect()
         except OSError:
             if os.path.exists(self.socket_path):
@@ -250,15 +255,6 @@ class Messenger:
             # logging.error("Socket Error!", exc_info=True)
             print("socket error: {0}".format(err))
     
-    def exit_handler(self, signal_received, frame):
-        print("\r\nAttempting to exit messenger")
-        # logging.info("Attempting to exit")
-        if self.socket is not None:
-            self.socket.close()
-            # logging.info("Socket is closed")
-        print("Messenger shutdown properly. Exiting.")
-        # logging.info("Everything shutdown properly. Exiting")
-        # exit(0)
     
     def close_handler(self):
         # logging.info("Client Disconnected. Handling Close.")
