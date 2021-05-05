@@ -86,6 +86,7 @@ exp.add_device(actuator)
 exp.add_device(magnet)
 exp.add_device(absorberController)
 exp.add_device(buttons)
+exp.add_device(GRpdu)
 
 
 exp.set_socket_path(socket_path)
