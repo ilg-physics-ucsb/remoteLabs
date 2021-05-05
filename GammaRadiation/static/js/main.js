@@ -110,7 +110,7 @@ $("document").ready(function () {
 
     //for ambientLight
     var counterTOGGLE = document.getElementById('counterTOGGLE');
-    counterTOGGLE.style.transform='scaleX(1)'
+    counterTOGGLE.style.transform='scaleY(1)'
     var counterState = false;
     var counterSwitch = document.getElementById('CounterSwitch')
     counterTOGGLE.addEventListener('click', function(){
@@ -119,13 +119,13 @@ $("document").ready(function () {
             dataChannel.send("GRpdu/off/ST160")
             counterState=false;
             counterTOGGLE.title = "Click here to turn ON";
-            counterSwitch.style.transform='rotate(0deg)';
+            counterSwitch.style.transform='scaleY(1)';
         }
         else{
             dataChannel.send("GRpdu/on/ST160");
             counterState=true;
             counterTOGGLE.title="Click here to turn OFF";
-            counterSwitch.style.transform='rotate(180deg)';
+            counterSwitch.style.transform='scaleY(-1)';
         }
     })
 
