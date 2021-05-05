@@ -110,7 +110,7 @@ $("document").ready(function () {
 
     //for ambientLight
     var counterTOGGLE = document.getElementById('counterTOGGLE');
-    counterTOGGLE.style.transform='scaleY(1)'
+    counterTOGGLE.style.transform='scaleX(1)'
     var counterState = false;
     var counterSwitch = document.getElementById('CounterSwitch')
     counterTOGGLE.addEventListener('click', function(){
