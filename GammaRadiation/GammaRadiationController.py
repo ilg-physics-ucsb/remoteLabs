@@ -42,6 +42,7 @@ multiplexerDelay    = labSettings["multiplexerDelay"]
 
 absorberFullTime = labSettings["absorberFullTime"]
 absorberMidTime  = labSettings["absorberMidTime"]
+magnetPower      = labSettings["magnetPower"]
 
 
 if args.admin:
@@ -51,6 +52,7 @@ if args.admin:
 camera = ArduCamMultiCamera("Camera", 1, i2cbus=1)
 
 socket_path = "/tmp/uv4l.socket"
+messenger_socket_path = "/tmp/remla.socket"
 
 
 ## stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
@@ -61,19 +63,19 @@ actuator = PololuDCMotor("Actuator", actuatorPwmPin, actuatorDirPin, actuatorNot
 ## magnet = DCMotorI2C("Magnet", magnetTerminal)
 magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
 
-absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime, magnetPower=magnetPower)
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
-# GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
-# GRpdu.login()
+GRpdu = PDUOutlet("GRpdu", "grpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+GRpdu.login()
 
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
 # stage.device.release()
 
 if args.reset:
-    exp = Experiment("GammaRadiation")
+    exp = Experiment("GammaRadiation", messenger=True)
 elif args.admin:
     exp = Experiment("GammaRadiation", admin=True)
 else:

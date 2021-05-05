@@ -30,9 +30,19 @@ function controllerResponseHandler(cmd) {
     var device = components[0]
     var info = components[1]
     var infoValue = components[2]
+    console.log(cmd)
 
     if (infoValue == "limit") {
         extremaModal.modal("show")
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
     }
 
 }
@@ -60,12 +70,13 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
-var extremaModal
+var extremaModal, contactModal
 
 $("document").ready(function () {
 
     var liveStream = document.getElementById("v");
     extremaModal = $("#extremaModal")
+    contactModal = $("#contactModal")
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7
@@ -219,8 +230,8 @@ $("document").ready(function () {
         "Absorber 8": 7,
         "Absorber 9": 8,
         "Absorber 10": 9,
-        "Absorber 11": 10,
-        "Source"    : 11
+        // "Absorber 11": 10,
+        "Source"    : 10
     }
     loaded = {
         "s0": -1,
@@ -285,21 +296,22 @@ $("document").ready(function () {
 
             aList.addEventListener('drop', function(e){
                 let key = draggedItem.textContent
-                // console.log(draggedItem)
-                // console.log(e)
-                // console.log(parentSlot)
-                // console.log("KEY:" + key)
-                // console.log("LOCATIONS:" + absorberLocations[key])
-                // console.log("THIS:")
-                // console.log(this)
-                // console.log("Children:")
-                // console.log(this.children)
+                console.log(draggedItem)
+                console.log(e)
+                console.log(parentSlot)
+                console.log(parentSlot.className)
+                console.log("KEY:" + key)
+                console.log("LOCATIONS:" + absorberLocations[key])
+                console.log("THIS:")
+                console.log(this)
+                console.log("Children:")
+                console.log(this.children)
                 let holder = this.children[absorberLocations[key]];
-                // console.log("holder:")
-                // console.log(holder)
+                console.log("holder:")
+                console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
-                if (parentSlot.class == "slot") {
+                if (parentSlot.className == "slot") {
                     loaded[parentSlot.id] = -1;
                     parentSlot.innerHTML = "Empty";
                 }

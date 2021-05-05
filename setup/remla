@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import os, sys, subprocess, signal
+import os, sys, subprocess, signal, socket
 import argparse
 import json
 import time
@@ -130,6 +130,19 @@ def run(args):
     else:
         print('No lab has been setup yet. Run "remla setup <lab>"')
 
+def message(args):
+    connection = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
+    socket_path = "/tmp/remla.socket"
+    try:
+        connection.connect(socket_path)
+        time.sleep(0.2)
+        connection.send("Messenger/contactModal/show".encode())
+
+    except socket.error as msg:
+        print("Socket Error:  {0}".format(msg))
+       
+
+
 
 def stop(args):
     os.system("sudo pkill uv4l")
@@ -169,6 +182,9 @@ group_run.add_argument("-a", "--admin", action="store_true")
 
 parser_stop = subparsers.add_parser("stop")
 parser_stop.set_defaults(func=stop)
+
+parser_message = subparsers.add_parser("message")
+parser_message.set_defaults(func=message)
 
 args = parser.parse_args()
 try:

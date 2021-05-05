@@ -373,15 +373,17 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1):
+    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1, magnetPower=90):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
         self.fulltime = fulltime
         self.midtime = midtime
+        self.downtime = fulltime - midtime
         self.stepper = stepper
         self.actuator = actuator
         self.magnet = magnet
+        self.magnetPower = magnetPower
         self.state = {
             "loaded": {
                 "s0":False,
@@ -419,7 +421,7 @@ class AbsorberController(MotorKit, BaseController):
                 "A2": "h9",
                 "A3": "h8",
                 "A4": "h7",
-                "A5": "h9",
+                "A5": "h6",
                 "A6": "h5",
                 "A7": "h4",
                 "A8": "h3",
@@ -450,18 +452,18 @@ class AbsorberController(MotorKit, BaseController):
         time.sleep(self.midtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(1.0)
-        self.magnet.power(90)
+        self.magnet.power(self.magnetPower)
         self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
         time.sleep(self.fulltime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         self.stepper.goto(slot2)
         self.actuator.throttle(self.actuator.throttle_parser([1.0]))
-        time.sleep(self.fulltime)
+        time.sleep(self.downtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(0)
         self.magnet.power(0)
-        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
-        time.sleep(self.midtime)
+        # self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
+        # time.sleep(self.midtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
 
 
@@ -500,7 +502,7 @@ class AbsorberController(MotorKit, BaseController):
             currentAbsInSlot = self.__getAbsorber(slot)
             # Get the location of the current absorber
             currentAbsLocation = self.__getSlot(ab)
-            # print(f"Absorber: {ab}  Location: {currentAbsLocation}")
+            print(f"Absorber: {ab}  Location: {currentAbsLocation}")
 
             # Determine if the absorber is used later down the line
             absorberUsed = currentAbsInSlot in absorbers
@@ -541,12 +543,13 @@ class AbsorberController(MotorKit, BaseController):
         ## Now we should identify chains.
         chains = self.__chainDetect(moveList["internal"])
         internalStarts = [ item[0] for item in moveList["internal"] ]
+        print("Pre-chains: {0}".format(moveList))
         for chain in chains:
             for move in chain:
                 moveList["internal"].remove(move)
 
         moveList["chains"] = chains
-
+        print("Post-chains: {0}".format(moveList))
         return moveList
 
     def __chainDetect(self, movements):
@@ -639,6 +642,7 @@ class AbsorberController(MotorKit, BaseController):
         unloads = moveList["unload"]
         loads = moveList["load"]
         internals = moveList["internal"]
+        print("INTERNALS:{0}".format(internals))
         unloadStarts = [item[0] for item in unloads]
         UILGroups = []
         ILGroups = []
@@ -668,16 +672,19 @@ class AbsorberController(MotorKit, BaseController):
                     ILGroups.append(temp)
 
         if len(internals) > 0:
-
+            print("Starting Internals")
             internalStarts = [item[0] for item in internals]
             internalFinish = [item[1] for item in internals]
             intersection = [item for item in internalFinish if item in internalStarts]
+            print("Intersections: {0}".format(intersection))
             starts = [internal for internal in internals if internal[1] in intersection]
             for start in starts:
                 internals.remove(start)
-
+            print("INTERNALS2:{0}".format(internals))
+            print("STARTS:{0}".format(starts))
             for startingI in starts:
                 temp = self.__chaseInternal(internals, startingI)
+                print("CHASEINTERNALS:{0}".format(temp))
                 internalStarts = [item[0] for item in internals]
                 nextSlot = temp[0][1]
                 # print(f"Checking for conflict with unload. Slot {nextSlot}")
@@ -690,7 +697,8 @@ class AbsorberController(MotorKit, BaseController):
                     UIGroups.append(temp)
                 else:
                     IGroups.append(temp)
-
+            for internal in internals:
+                IGroups.append([internal])
 
         for uil in UILGroups:
             uMove = [uil.pop(0)]
@@ -764,6 +772,9 @@ class AbsorberController(MotorKit, BaseController):
                 print(unloads)
                 moves.insert(0, unloads.pop(0))
 
+        while len(IGroups) > 0:
+            moves += IGroups.pop(0)
+
         return moves
 
     def place(self, moveList):
@@ -802,11 +813,11 @@ class AbsorberController(MotorKit, BaseController):
             moves = self. __handleChains(moveList["chains"], moves)
 
         # pp.pprint(moveList)
-        # print(moves)
+        print("Moves:{0}".format(moves))
         for move in moves:
             self.__transfer(move[0], move[1])
 
-        self.stepper.move(350)
+        self.stepper.move(700)
 
     # def place(self, absorberList):
     #     for slot, absorber in absorberList:
