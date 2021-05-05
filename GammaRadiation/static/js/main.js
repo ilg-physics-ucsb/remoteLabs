@@ -108,7 +108,26 @@ $("document").ready(function () {
     loadingModal.modal('show')
 
 
+    //for ambientLight
+    var counterTOGGLE = document.getElementById('counterTOGGLE');
+    counterTOGGLE.style.transform='scaleY(1)'
+    var counterState = true;
 
+    counterTOGGLE.addEventListener('click', function(){
+        console.log("counter switch was switched");
+        if(counterState){
+            dataChannel.send("GRpdu/off/ST160")
+            counterState=false;
+            counterTOGGLE.title = "Click here to turn ON";
+            counterSwitch.style.transform='rotate(0deg)';
+        }
+        else{
+            dataChannel.send("GRpdu/on/ST160");
+            counterState=true;
+            counterTOGGLE.title="Click here to turn OFF";
+            counterSwitch.style.transform='rotate(180deg)';
+        }
+    })
 
     //for multi-camera switching
     var CounterCam = document.getElementById("CounterCam");
