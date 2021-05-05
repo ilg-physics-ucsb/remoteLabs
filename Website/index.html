@@ -104,34 +104,13 @@
                     <div id="Container">
                         <div class="content">
                             <div class="cTitle">
-                                <h2 onclick="openForm('Photo')">Photoelectric Effect</h2>
-                                <form id="Photo" style="display: none;" onsubmit="validateForm(event, 'PhotoElectricLabManual/PE5L.html')">
-                                    Password: <input type="password" id="passwordInput" placeholder="Enter Password"><br>
-                                    <button type="submit">Enter</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <div id="Container">
-                        <div class="content">
-                            <div class="cTitle">
-                                    <h2 onclick="openForm('Atomic')" >Atomic Spectroscopy</h2>
-                                    <form id="Atomic" style="display: none;" onsubmit="validateForm(event, 'AtomicSpectraLabManual/AS5L.html')">
-                                        Password: <input type="password" id="passwordInput" placeholder="Enter Password"><br>
+                                <h2 class="formLinks active" onclick="openForm(event, 'Photo')">Photoelectric Effect</h2>
+                                <div id="Photo"class="formContent" style="display: none;">
+                                    <form onsubmit="validateForm(event, 'PhotoElectricLabManual/PE5L.html', 'Photo')">
+                                        Password: <input type="password" id="passwordInputPhoto" placeholder="Enter Password"><br>
                                         <button type="submit">Enter</button>
                                     </form>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="Container">
-                        <div class="content">
-                            <div class="cTitle">
-                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/FranckHertzLabManual/FH5L.html">
-                                    <h2>Franck-Hertz</h2>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -139,9 +118,13 @@
                     <div id="Container">
                         <div class="content">
                             <div class="cTitle">
-                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/DiffractionInterferenceLabManual/DI5L.html" >
-                                    <h2>Diffraction & Interference</h2>
-                                </a>
+                                <h2 class="formLinks" onclick="openForm(event, 'Atomic')" >Atomic Spectroscopy</h2>
+                                <div id="Atomic" class="formContent" style="display: none;">
+                                    <form onsubmit="validateForm(event, 'AtomicSpectraLabManual/AS5L.html', 'Atomic')">
+                                        Password: <input type="password" id="passwordInputAtomic" placeholder="Enter Password"><br>
+                                        <button type="submit">Enter</button>
+                                    </form>
+                                </div>  
                             </div>
                         </div>
                     </div>
@@ -149,9 +132,44 @@
                     <div id="Container">
                         <div class="content">
                             <div class="cTitle">
-                                <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/RadiationAbsorptionLabManual/GR5L.html">
-                                    <h2>Gamma Radiation Absorption</h1>
-                                </a>
+                                <!-- <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/FranckHertzLabManual/FH5L.html"> -->
+                                <h2 class="formLinks" onclick="openForm(event, 'Franck')">Franck-Hertz</h2>
+                                <div id="Franck" class = "formContent" style="display: none;" >
+                                    <form onsubmit="validateForm(event, 'FranckHertzLabManual/FH5L.html', 'Franck')">
+                                        Password: <input type="password" id="passwordInputFranck" placeholder="Enter Password"><br>
+                                        <button type="submit">Enter</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div id="Container">
+                        <div class="content">
+                            <div class="cTitle">
+                                <!-- <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/DiffractionInterferenceLabManual/DI5L.html" > -->
+                                <h2 class="formLinks" onclick="openForm(event, 'Diffrac')">Diffraction & Interference</h2>
+                                <div id="Diffrac" class = "formContent" style="display: none;" >
+                                    <form onsubmit="validateForm(event, 'DiffractionInterferenceLabManual/DI5L.html', 'Diffrac')">
+                                        Password: <input type="password" id="passwordInputDiffrac" placeholder="Enter Password"><br>
+                                        <button type="submit">Enter</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="Container">
+                        <div class="content">
+                            <div class="cTitle">
+                            <!-- <a target="_blank" href="https://ilg-physics-ucsb.github.io/physics5l-remotelabs-manual/RadiationAbsorptionLabManual/GR5L.html"> -->
+                                <h2 class="formLinks" onclick="openForm(event, 'Gamma')">Gamma Radiation Absorption</h1>
+                                <div id="Gamma" class = "formContent" style="display: none;" >
+                                    <form onsubmit="validateForm(event, 'RadiationAbsorptionLabManual/GR5L.html', 'Gamma')">
+                                        Password: <input type="password" id="passwordInputGamma" placeholder="Enter Password"><br>
+                                        <button type="submit">Enter</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
