@@ -249,7 +249,22 @@ class Messenger:
         except socket.error as err:
             # logging.error("Socket Error!", exc_info=True)
             print("socket error: {0}".format(err))
-
+    
+    def exit_handler(self, signal_received, frame):
+        print("\r\nAttempting to exit messenger")
+        # logging.info("Attempting to exit")
+        if self.socket is not None:
+            self.socket.close()
+            # logging.info("Socket is closed")
+        print("Messenger shutdown properly. Exiting.")
+        # logging.info("Everything shutdown properly. Exiting")
+        # exit(0)
+    
+    def close_handler(self):
+        # logging.info("Client Disconnected. Handling Close.")
+        if self.connection is not None:
+            self.connection.close()
+            # logging.info("Connection to client closed.")
 
 
     
