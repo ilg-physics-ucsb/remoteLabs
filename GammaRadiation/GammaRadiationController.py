@@ -75,7 +75,7 @@ GRpdu.login()
 # stage.device.release()
 
 if args.reset:
-    exp = Experiment("GammaRadiation", messenger_socket_path=messenger_socket_path)
+    exp = Experiment("GammaRadiation", messenger=True)
 elif args.admin:
     exp = Experiment("GammaRadiation", admin=True)
 else:
