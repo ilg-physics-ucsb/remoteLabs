@@ -75,7 +75,7 @@ rightSwitch.switchAction = rightSwitchHit
 
 slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.1)  
 grating = StepperI2C("Grating", 2, bounds=gratingBounds, style="DOUBLE")
-arm = StepperI2C("Arm", 3,bounds=armBounds, style="DOUBLE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch)
+arm = StepperI2C("Arm", 3,bounds=armBounds, style="DOUBLE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch, delay=0.0001)
 arm.customHome = homing
 carousel = StepperI2C("Carousel", 4,bounds=carouselBounds, style="MICROSTEP", delay=0.0001, refPoints=refPoints, microsteps=16)
 
