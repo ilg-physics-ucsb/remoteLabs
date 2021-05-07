@@ -26,6 +26,7 @@ class Experiment(object):
         else:
             self.messenger = None
         self.messenger_thread = None
+        self.messenger_socket = None
         self.socket_path = ''
         self.socket = None
         self.connection = None

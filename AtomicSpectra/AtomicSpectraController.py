@@ -60,7 +60,7 @@ def rightSwitchHit(motor, steps):
 
 def homing(motor):
     print("Home switch hit.")
-    homeSwitch = motor.move(20000)
+    homeSwitch = motor.move(-20000)
     print("Here I am at left switch")
     print(homeSwitch)
     if homeSwitch is True:
