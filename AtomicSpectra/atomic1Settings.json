@@ -24,9 +24,9 @@
 
     "slitBounds": [0,600],
     "gratingBounds": [-450,450],
-    "armBounds": [-21000, 21000],
+    "armBounds": [-10000, 9200],
     "carouselBounds": [-160, 15520],
     
-    "limitBounce": 100,
+    "limitBounce": 250,
     "homeOvershoot": 5
 }

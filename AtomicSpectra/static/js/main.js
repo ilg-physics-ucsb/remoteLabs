@@ -810,9 +810,9 @@ $("document").ready(function () {
     //End Modal Grating Buttons
 
    //BEGIN Arm Buttons 
-   tFine.addEventListener('click', function(){telescopeSteps=10;})
-   tMedium.addEventListener('click', function(){telescopeSteps=30;})
-   tCoarse.addEventListener('click', function(){telescopeSteps=100;})
+   tFine.addEventListener('click', function(){telescopeSteps=25;})
+   tMedium.addEventListener('click', function(){telescopeSteps=250;})
+   tCoarse.addEventListener('click', function(){telescopeSteps=1000;})
 
    tCW.addEventListener('click', function() {
        // Changed for AS 
@@ -827,9 +827,9 @@ $("document").ready(function () {
    //END Arm Buttons
 
     //BEGIN Modal Arm Buttons
-    tMfine.addEventListener('click', function(){telescopeSteps=10;})
-    tMmedium.addEventListener('click', function(){telescope=30;})
-    tMcoarse.addEventListener('click', function(){telescopeSteps=100;})
+    tMfine.addEventListener('click', function(){telescopeSteps=25;})
+    tMmedium.addEventListener('click', function(){telescope=250;})
+    tMcoarse.addEventListener('click', function(){telescopeSteps=1000;})
     tmCW.addEventListener('click', function(){
         console.log("Modal Telescope turned CW");
         dataChannel.send("Arm/move/"+telescopeSteps);
