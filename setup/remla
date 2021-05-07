@@ -224,7 +224,7 @@ parser_stop.set_defaults(func=stop)
 parser_message = subparsers.add_parser("message")
 parser_message.set_defaults(func=message)
 
-parser_update = subparsers.add_parsesr("update")
+parser_update = subparsers.add_parser("update")
 parser_update.set_defaults(func=update)
 
 parser_restart = subparsers.add_parser("restart")
