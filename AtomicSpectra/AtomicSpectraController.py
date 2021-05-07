@@ -11,7 +11,7 @@ group.add_argument("-a", "--admin", action="store_true")
 
 args = parser.parse_args()
 
-labSettingsPath = os.path.join("home","pi", "remoteLabs", "PhotoElectricEffect", args.settings)
+labSettingsPath = os.path.join("home","pi", "remoteLabs", "AtomicSpectra", args.settings)
 
 with open(labSettingsPath, "r") as f:
     labSettings = json.load(f)
@@ -94,7 +94,7 @@ carousel.device.release()
 if args.reset:
     exp = Experiment("AtomicSpectra")
 elif args.admin:
-    exp = Experiment("AtmoicSpectra", admin=True)
+    exp = Experiment("AtomicSpectra", admin=True)
 else:
     exp = Experiment("AtomicSpectra")
 exp.add_device(camera)
