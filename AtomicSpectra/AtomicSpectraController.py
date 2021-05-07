@@ -92,11 +92,11 @@ arm.device.release()
 carousel.device.release()
 
 if args.reset:
-    exp = Experiment("AtomicSpectra")
+    exp = Experiment("AtomicSpectra", messenger=True)
 elif args.admin:
     exp = Experiment("AtomicSpectra", admin=True)
 else:
-    exp = Experiment("AtomicSpectra")
+    exp = Experiment("AtomicSpectra", messenger=True)
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(grating)
