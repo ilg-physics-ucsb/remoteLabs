@@ -28,5 +28,7 @@
     "carouselBounds": [-160, 15520],
     
     "limitBounce": -100,
-    "homeOvershoot": 5
+    "homeOvershoot": 5,
+
+    "videoNumber": 1
 }

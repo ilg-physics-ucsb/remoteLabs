@@ -356,7 +356,7 @@ $("document").ready(function () {
     var tFine = document.getElementById('fineArm');
     var tMedium = document.getElementById('mediumArm')
     var tCoarse = document.getElementById('coarseArm');
-    var telescopeSteps=100; ///unknown number of degrees
+    var telescopeSteps=1000; ///unknown number of degrees
     var telescopeCurrentPosition = 0;
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');

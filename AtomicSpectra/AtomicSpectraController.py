@@ -33,6 +33,8 @@ carouselBounds  = labSettings["carouselBounds"]
 limitBounce     = labSettings["limitBounce"]
 homeOvershoot   = labSettings["homeOvershoot"]
 
+videoNumber     = labSettings["videoNumber"]
+
 if args.admin:
     bounds = (-1e6, 1e6)
     slitBounds = bounds
@@ -41,7 +43,7 @@ if args.admin:
     carouselBounds = bounds
 
 defaultCameraSettings = labSettings["defaultCameraSettings"]
-camera = ArduCamMultiCamera("Camera", 1, defaultSettings=defaultCameraSettings)
+camera = ArduCamMultiCamera("Camera", videoNumber, defaultSettings=defaultCameraSettings)
 socket_path = "/tmp/uv4l.socket"
 
 leftSwitch = LimitSwitch("LeftSwitch", leftSwitchPin)
