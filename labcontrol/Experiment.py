@@ -5,6 +5,7 @@ import time
 from signal import signal, SIGINT
 import json
 import logging
+import threading
 
 
 class NoDeviceError(Exception):
@@ -17,9 +18,14 @@ class NoDeviceError(Exception):
 
 class Experiment(object):
 
-    def __init__(self, name, root_directory="remoteLabs", admin=False):
+    def __init__(self, name, root_directory="remoteLabs", admin=False, messenger=False):
         self.devices = {}
         self.allStates = {}
+        if messenger:
+            self.messenger = Messenger(self)
+        else:
+            self.messenger = None
+        self.messenger_thread = None
         self.socket_path = ''
         self.socket = None
         self.connection = None
@@ -126,6 +132,11 @@ class Experiment(object):
         if self.socket is not None:
             self.socket.close()
             logging.info("Socket is closed")
+        
+        if self.messenger_socket is not None:
+            self.messenger_socket.close()
+            logging.info("Messenger socket closed")
+        
         logging.info("Looping through devices shutting them down.")
         if not self.admin:
             for device_name, device in self.devices.items():
@@ -154,6 +165,10 @@ class Experiment(object):
             if not os.path.exists(self.socket_path):
                 f = open(self.socket_path, 'w')
                 f.close()
+            
+            if self.messenger is not None:
+                self.messenger_thread = threading.Thread(target=self.messenger.setup, daemon=True)
+                self.messenger_thread.start()
             os.unlink(self.socket_path)
             self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
             signal(SIGINT, self.exit_handler)
@@ -174,7 +189,78 @@ class Experiment(object):
             print("socket error: {0}".format(err))
 
 
+class Messenger:
 
+    def __init__(self, experiment):
+        self.experiment = experiment
+        self.socket_path = "/tmp/remla.socket"
+        self.socket = None
+    
+    def __wait_to_connect(self):
+
+        print("Messenger running... waiting for messages")
+        while True:
+            try:
+                self.connection, self.client_address = self.socket.accept()
+                # print("Client Address is {0}".format(self.client_address))
+                # logging.info("Client Connected")
+                self.__data_connection(self.connection)
+                time.sleep(0.01)
+            except socket.timeout:
+                logging.debug("Socket Timeout")
+                continue
+            except socket.error as err:
+                # print("Socket Error: {0}".format(err))
+                logging.error("Socket Error!", exc_info=True)
+                break
+
+    def __data_connection(self, connection):
+        while True:
+            try:
+                while True:
+                    data = self.connection.recv(1024)
+                    if data:
+                        self.experiment.connection.send(data)
+                    else:
+                        break
+                    time.sleep(0.1)
+            except socket.error as err:
+                # logging.error("Connected Socket Error!", exc_info=True)
+                print("Connected Socket Error: {0}".format(err))
+                return
+            finally:
+                self.close_handler()
+    
+    def setup(self):
+        try:
+            if not os.path.exists(self.socket_path):
+                f = open(self.socket_path, 'w')
+                f.close()
+            os.unlink(self.socket_path)
+            self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
+            self.socket.bind(self.socket_path)
+            self.socket.listen(1)
+            self.socket.settimeout(1)
+            self.experiment.messenger_socket = self.socket
+            self.__wait_to_connect()
+        except OSError:
+            if os.path.exists(self.socket_path):
+                print("Error accessing {0}\nTry running 'sudo chown pi: {0}'".format(self.socket_path))
+                os._exit(0)
+                return
+            else:
+                print("Socket file not found. Did you configure uv4l-uvc.conf to use {0}?".format(self.socket_path))
+                raise
+        except socket.error as err:
+            # logging.error("Socket Error!", exc_info=True)
+            print("socket error: {0}".format(err))
+    
+    
+    def close_handler(self):
+        # logging.info("Client Disconnected. Handling Close.")
+        if self.connection is not None:
+            self.connection.close()
+            # logging.info("Connection to client closed.")
 
 
     

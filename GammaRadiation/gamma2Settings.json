@@ -1,0 +1,49 @@
+{
+    "outlets":[4],
+    "outletMap":{
+        "ST160": 4
+    },
+
+    "multiplexerPins": [9, 11, 8],
+    "inhibitorPin" : 25,
+    "multiplexerChannels": [1,2,3,4,5,6],
+    "multiplexerDelay": 0.1,
+
+    "magnetPin" : 12,
+    "magnetFrequency": 100,
+
+    "actuatorPins" : [16, 19, 13, 6],
+    "actuatorTriggerEdge": false,
+    "actuatorSteadyState": 70000,
+    "actuatorPWMScaler"  : 255,
+    
+    "stagePins": [20, 21, 26],
+
+    "stageBounds": [-12200, 0],
+    "stageDelay": 1050,
+    "stageRefPoints": {
+        "s0": -11400,
+        "s1": -11000,
+        "s2": -10600,
+        "s3": -10200,
+        "s4": -9800,
+        "s5": -9950,
+        "h0": -5775,
+        "h1": -5350,
+        "h2": -4950,
+        "h3": -4550,
+        "h4": -4125,
+        "h5": -3775,
+        "h6": -3375,
+        "h7": -2925,
+        "h8": -2525,
+        "h9": -2125,
+        "h10": -1725,
+        "h11": -1275
+    },
+
+    "absorberFullTime": 8,
+    "absorberMidTime": 2,
+    "magnetPower": 95
+
+}
