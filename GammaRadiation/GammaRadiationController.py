@@ -35,7 +35,7 @@ actuatorTriggerEdge = labSettings["actuatorTriggerEdge"]
 actuatorSteadyState = labSettings["actuatorSteadyState"]
 actuatorPWMScaler   = labSettings["actuatorPWMScaler"]
 
-initialState        = labeSettings["initialState"]
+initialState        = labSettings["initialState"]
 holderMap           = labSettings["holderMap"]
 
 multiplexerPins     = labSettings["multiplexerPins"]
