@@ -404,8 +404,9 @@ class AbsorberController(MotorKit, BaseController):
         pass
 
     def reset(self):
-        emptyCounter = [ "(s0,),(s1,),(s2,),(s3,),(s4,)"  ]
-        self.place(self.place_parser(emptyCounter))
+        emptyCounter = [ ("s0", ""), ("s1", ""), ("s2", ""), ("s3", ""), ("s4", ""), ("s5", "") ]
+        movesList = self.__makeMovesList(emptyCounter)
+        self.place(movesList)
 
     def __transfer(self, slot1, slot2):
 
