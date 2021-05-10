@@ -373,7 +373,7 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1, magnetPower=90):
+    def __init__(self, name, stepper, actuator, magnet, initialState, holderMap, fulltime=10, midtime=1, magnetPower=90, ):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
@@ -384,6 +384,8 @@ class AbsorberController(MotorKit, BaseController):
         self.actuator = actuator
         self.magnet = magnet
         self.magnetPower = magnetPower
+        self.initialState = initialState
+        self.holderMap = holderMap
         self.state = {
             "loaded": {
                 "s0":False,
@@ -394,49 +396,16 @@ class AbsorberController(MotorKit, BaseController):
                 "s5":False
             },
 
-            "total": {
-                "s0":'',
-                "s1":'',
-                "s2":'',
-                "s3":'',
-                "s4":'',
-                "s5":'',
-                "h0":'A11',
-                "h1":'A10',
-                "h2":'A9',
-                "h3":'A8',
-                "h4":'A7',
-                "h5":'A6',
-                "h6":'A5',
-                "h7":'A4',
-                "h8":'A3',
-                "h9":'A2',
-                "h10":'A1',
-                "h11":'Source',
-            }
+            "total": self.intialState
         }
-
-        self.holderMap = {
-                "A1": "h10",
-                "A2": "h9",
-                "A3": "h8",
-                "A4": "h7",
-                "A5": "h6",
-                "A6": "h5",
-                "A7": "h4",
-                "A8": "h3",
-                "A9": "h2",
-                "A10": "h1",
-                "A11": "h0",
-                "Source": "h11",
-            }
 
 
     def setup(self, style):
         pass
 
     def reset(self):
-        pass
+        emptyCounter = [ "(s0,),(s1,),(s2,),(s3,),(s4,)"  ]
+        self.place(self.place_parser(emptyCounter))
 
     def __transfer(self, slot1, slot2):
 
@@ -817,7 +786,8 @@ class AbsorberController(MotorKit, BaseController):
         for move in moves:
             self.__transfer(move[0], move[1])
 
-        self.stepper.move(700)
+        if len(moves) != 0:
+            self.stepper.move(700)
 
     # def place(self, absorberList):
     #     for slot, absorber in absorberList:

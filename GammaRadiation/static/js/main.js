@@ -249,8 +249,11 @@ $("document").ready(function () {
         "Absorber 8": 7,
         "Absorber 9": 8,
         "Absorber 10": 9,
-        // "Absorber 11": 10,
-        "Source"    : 10
+        "Absorber 11a": 11,
+        "Absorber 11b": 12,
+        "Absorber 11c": 13,
+        "Absorber 11d": 14,
+        "Source"    : 15
     }
     loaded = {
         "s0": -1,
@@ -272,7 +275,10 @@ $("document").ready(function () {
       "Absorber 8": "A8",
       "Absorber 9": "A9",
       "Absorber 10": "A10",
-      "Absorber 11": "A11",
+      "Absorber 11a": "A11",
+      "Absorber 11b": "A12",
+      "Absorber 11c": "A13",
+      "Absorber 11d": "A14",
       "Source"    : "Source"
     }
     let draggedItem = null;

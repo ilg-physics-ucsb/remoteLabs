@@ -35,6 +35,9 @@ actuatorTriggerEdge = labSettings["actuatorTriggerEdge"]
 actuatorSteadyState = labSettings["actuatorSteadyState"]
 actuatorPWMScaler   = labSettings["actuatorPWMScaler"]
 
+initialState        = labeSettings["initialState"]
+holderMap           = labSettings["holderMap"]
+
 multiplexerPins     = labSettings["multiplexerPins"]
 inhibitorPin        = labSettings["inhibitorPin"]
 multiplexerChannels = labSettings["multiplexerChannels"]
@@ -63,7 +66,7 @@ actuator = PololuDCMotor("Actuator", actuatorPwmPin, actuatorDirPin, actuatorNot
 ## magnet = DCMotorI2C("Magnet", magnetTerminal)
 magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
 
-absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, fulltime=absorberFullTime, midtime=absorberMidTime, magnetPower=magnetPower)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, initialState, holderMap, fulltime=absorberFullTime, midtime=absorberMidTime, magnetPower=magnetPower)
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
