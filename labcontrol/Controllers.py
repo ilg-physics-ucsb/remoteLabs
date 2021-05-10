@@ -396,7 +396,7 @@ class AbsorberController(MotorKit, BaseController):
                 "s5":False
             },
 
-            "total": self.intialState
+            "total": self.initialState
         }
 
 
