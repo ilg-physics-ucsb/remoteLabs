@@ -239,21 +239,21 @@ $("document").ready(function () {
     const autoLists = $(".auto-list");
     const manualList = $(".manual-list");
     const absorberLocations = {
-        "Absorber 1": 0,
-        "Absorber 2": 1,
-        "Absorber 3": 2,
-        "Absorber 4": 3,
-        "Absorber 5": 4,
-        "Absorber 6": 5,
-        "Absorber 7": 6,
-        "Absorber 8": 7,
-        "Absorber 9": 8,
-        "Absorber 10": 9,
-        "Absorber 11a": 11,
-        "Absorber 11b": 12,
-        "Absorber 11c": 13,
-        "Absorber 11d": 14,
-        "Source"    : 15
+        "Source"    : 14,
+        "Absorber 1": 13,
+        "Absorber 2": 12,
+        "Absorber 3": 11,
+        "Absorber 4": 10,
+        "Absorber 5": 9,
+        "Absorber 6": 8,
+        "Absorber 7": 7,
+        "Absorber 8": 6,
+        "Absorber 9": 5,
+        "Absorber 10": 4,
+        "Absorber 11a": 3,
+        "Absorber 11b": 2,
+        "Absorber 11c": 1,
+        "Absorber 11d": 0
     }
     loaded = {
         "s0": -1,
