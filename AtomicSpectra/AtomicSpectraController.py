@@ -69,7 +69,7 @@ def homing(motor):
         motor.adminMove(homeOvershoot)
     else:
         print("Moving Towards home.")
-        motor.homeMove()
+        motor.homeMove(stepLimit=15000)
     motor.currentPosition = 0
 
 leftSwitch.switchAction = leftSwitchHit
