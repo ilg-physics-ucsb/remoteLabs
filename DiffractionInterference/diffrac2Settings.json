@@ -57,5 +57,7 @@
         "shutter_speed": 0,
         "awb_mode": 0,
         "exposure_mode": 1
-    }
+    },
+
+    "videoNumber": 0
 }
