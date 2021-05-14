@@ -4,5 +4,93 @@
         "PowerSupply": 3,
         "ST160": 4
     },
-    "stageBounds": [-9750, 0]
+
+    "multiplexerPins": [9, 11, 8],
+    "inhibitorPin" : 25,
+    "multiplexerChannels": [1,2,3,4,5,6],
+    "multiplexerDelay": 0.1,
+
+    "magnetPin" : 12,
+    "magnetFrequency": 100,
+
+    "actuatorPins" : [16, 19, 13, 6],
+    "actuatorTriggerEdge": false,
+    "actuatorSteadyState": 70000,
+    "actuatorPWMScaler"  : 255,
+    
+    "stagePins": [20, 21, 26],
+
+    "stageBounds": [-12200, 0],
+    "stageDelay": 1050,
+    "stageRefPoints": {
+        "s0": -11450,
+        "s1": -11050,
+        "s2": -10650,
+        "s3": -10250,
+        "s4": -9850,
+        "s5": -9450,
+        "h0": -7025,
+        "h1": -6625,
+        "h2": -6225,
+        "h3": -5825,
+        "h4": -5450,
+        "h5": -5050,
+        "h6": -4650,
+        "h7": -4250,
+        "h8": -3825,
+        "h9": -3425,
+        "h10": -3000,
+        "h11": -2600,
+        "h12": -2175,
+        "h13": -1775,
+        "h14": -1325
+    },
+
+    "initialState":{
+        "s0":"",
+        "s1":"",
+        "s2":"",
+        "s3":"",
+        "s4":"",
+        "s5":"",
+        "h0":"A14",
+        "h1":"A13",
+        "h2":"A12",
+        "h3":"A11",
+        "h4":"A10",
+        "h5":"A9",
+        "h6":"A8",
+        "h7":"A7",
+        "h8":"A6",
+        "h9":"A5",
+        "h10":"A4",
+        "h11":"A3",
+        "h12":"A2",
+        "h13":"A1",
+        "h14":"Source"
+    },
+
+    "holderMap" : {
+        "Source": "h14",
+        "A1": "h13",
+        "A2": "h12",
+        "A3": "h11",
+        "A4": "h10",
+        "A5": "h9",
+        "A6": "h8",
+        "A7": "h7",
+        "A8": "h6",
+        "A9": "h5",
+        "A10": "h4",
+        "A11": "h3",
+        "A12": "h2",
+        "A13": "h1",
+        "A14": "h0"
+        
+    },
+
+    "absorberFullTime": 8,
+    "absorberMidTime": 2,
+    "magnetPower": 95
+
 }

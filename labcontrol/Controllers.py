@@ -9,8 +9,10 @@ import os
 import subprocess
 import busio
 import board
+import signal
 from adafruit_bus_device.i2c_device import I2CDevice
 import pigpio
+import sys
 
 
 pi = pigpio.pi()
@@ -371,15 +373,19 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1):
+    def __init__(self, name, stepper, actuator, magnet, initialState, holderMap, fulltime=10, midtime=1, magnetPower=90, ):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
         self.fulltime = fulltime
         self.midtime = midtime
+        self.downtime = fulltime - midtime
         self.stepper = stepper
         self.actuator = actuator
         self.magnet = magnet
+        self.magnetPower = magnetPower
+        self.initialState = initialState
+        self.holderMap = holderMap
         self.state = {
             "loaded": {
                 "s0":False,
@@ -390,49 +396,17 @@ class AbsorberController(MotorKit, BaseController):
                 "s5":False
             },
 
-            "total": {
-                "s0":'',
-                "s1":'',
-                "s2":'',
-                "s3":'',
-                "s4":'',
-                "s5":'',
-                "h0":'A1',
-                "h1":'A2',
-                "h2":'A3',
-                "h3":'A4',
-                "h4":'A5',
-                "h5":'A6',
-                "h6":'A7',
-                "h7":'A8',
-                "h8":'A9',
-                "h9":'A10',
-                "h10":'A11',
-                "h11":'Source',
-            }
+            "total": self.initialState
         }
-
-        self.holderMap = {
-                "A1": "h0",
-                "A2": "h1",
-                "A3": "h2",
-                "A4": "h3",
-                "A5": "h4",
-                "A6": "h5",
-                "A7": "h6",
-                "A8": "h7",
-                "A9": "h8",
-                "A10": "h9",
-                "A11": "h10",
-                "Source": "h11",
-            }
 
 
     def setup(self, style):
         pass
 
     def reset(self):
-        pass
+        emptyCounter = [ ("s0", ""), ("s1", ""), ("s2", ""), ("s3", ""), ("s4", ""), ("s5", "") ]
+        movesList = self.__makeMovesList(emptyCounter)
+        self.place(movesList)
 
     def __transfer(self, slot1, slot2):
 
@@ -444,23 +418,23 @@ class AbsorberController(MotorKit, BaseController):
         # global x
         # x += 1
         self.stepper.goto(slot1)
-        self.actuator.throttle(-1.0)
+        self.actuator.throttle(self.actuator.throttle_parser([1.0]))
         time.sleep(self.midtime)
-        self.actuator.throttle(0)
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(1.0)
-        self.magnet.power(90)
-        self.actuator.throttle(1.0)
+        self.magnet.power(self.magnetPower)
+        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
         time.sleep(self.fulltime)
-        self.actuator.throttle(0)
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
         self.stepper.goto(slot2)
-        self.actuator.throttle(-1.0)
-        time.sleep(self.fulltime)
-        self.actuator.throttle(0)
+        self.actuator.throttle(self.actuator.throttle_parser([1.0]))
+        time.sleep(self.downtime)
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
         # self.magnet.throttle(0)
         self.magnet.power(0)
-        self.actuator.throttle(1.0)
-        time.sleep(self.midtime)
-        self.actuator.throttle(0)
+        # self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
+        # time.sleep(self.midtime)
+        self.actuator.throttle(self.actuator.throttle_parser([0]))
 
 
         self.state["total"][slot1] = ''
@@ -498,7 +472,7 @@ class AbsorberController(MotorKit, BaseController):
             currentAbsInSlot = self.__getAbsorber(slot)
             # Get the location of the current absorber
             currentAbsLocation = self.__getSlot(ab)
-            # print(f"Absorber: {ab}  Location: {currentAbsLocation}")
+            print(f"Absorber: {ab}  Location: {currentAbsLocation}")
 
             # Determine if the absorber is used later down the line
             absorberUsed = currentAbsInSlot in absorbers
@@ -539,12 +513,13 @@ class AbsorberController(MotorKit, BaseController):
         ## Now we should identify chains.
         chains = self.__chainDetect(moveList["internal"])
         internalStarts = [ item[0] for item in moveList["internal"] ]
+        print("Pre-chains: {0}".format(moveList))
         for chain in chains:
             for move in chain:
                 moveList["internal"].remove(move)
 
         moveList["chains"] = chains
-
+        print("Post-chains: {0}".format(moveList))
         return moveList
 
     def __chainDetect(self, movements):
@@ -637,6 +612,7 @@ class AbsorberController(MotorKit, BaseController):
         unloads = moveList["unload"]
         loads = moveList["load"]
         internals = moveList["internal"]
+        print("INTERNALS:{0}".format(internals))
         unloadStarts = [item[0] for item in unloads]
         UILGroups = []
         ILGroups = []
@@ -666,16 +642,19 @@ class AbsorberController(MotorKit, BaseController):
                     ILGroups.append(temp)
 
         if len(internals) > 0:
-
+            print("Starting Internals")
             internalStarts = [item[0] for item in internals]
             internalFinish = [item[1] for item in internals]
             intersection = [item for item in internalFinish if item in internalStarts]
+            print("Intersections: {0}".format(intersection))
             starts = [internal for internal in internals if internal[1] in intersection]
             for start in starts:
                 internals.remove(start)
-
+            print("INTERNALS2:{0}".format(internals))
+            print("STARTS:{0}".format(starts))
             for startingI in starts:
                 temp = self.__chaseInternal(internals, startingI)
+                print("CHASEINTERNALS:{0}".format(temp))
                 internalStarts = [item[0] for item in internals]
                 nextSlot = temp[0][1]
                 # print(f"Checking for conflict with unload. Slot {nextSlot}")
@@ -688,7 +667,8 @@ class AbsorberController(MotorKit, BaseController):
                     UIGroups.append(temp)
                 else:
                     IGroups.append(temp)
-
+            for internal in internals:
+                IGroups.append([internal])
 
         for uil in UILGroups:
             uMove = [uil.pop(0)]
@@ -762,6 +742,9 @@ class AbsorberController(MotorKit, BaseController):
                 print(unloads)
                 moves.insert(0, unloads.pop(0))
 
+        while len(IGroups) > 0:
+            moves += IGroups.pop(0)
+
         return moves
 
     def place(self, moveList):
@@ -800,11 +783,12 @@ class AbsorberController(MotorKit, BaseController):
             moves = self. __handleChains(moveList["chains"], moves)
 
         # pp.pprint(moveList)
-        # print(moves)
+        print("Moves:{0}".format(moves))
         for move in moves:
             self.__transfer(move[0], move[1])
 
-        self.stepper.move(350)
+        if len(moves) != 0:
+            self.stepper.move(700)
 
     # def place(self, absorberList):
     #     for slot, absorber in absorberList:
@@ -1011,6 +995,12 @@ class PololuStepperMotor(BaseController):
         self.state['position'] = self.currentPosition
 
 
+        if self.currentPosition == self.upperBound or self.currentPosition == self.lowerBound:
+            return "{0}/{1}/{2}".format(self.name, "position", "limit")
+        else:
+            return "{0}/{1}/{2}".format(self.name, "position", self.currentPosition)
+
+
     def move_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "move")
@@ -1092,7 +1082,7 @@ class PololuStepperMotor(BaseController):
 
 class PololuDCMotor(BaseController):
 
-    def __init__(self, name, pwmPin, directionPin, notEnablePin, frequency=100, dutyCycle=0):
+    def __init__(self, name, pwmPin, directionPin, notEnablePin, stopPin=None, rising=True, steadyState=20000, frequency=100, dutyCycle=0, pwmScaler=255):
         self.name = name
         self.device_type = "controller"
         self.pwmPin = pwmPin
@@ -1100,32 +1090,77 @@ class PololuDCMotor(BaseController):
         self.notEnablePin = notEnablePin
         self.frequency = frequency
         self.dutyCycle = dutyCycle
+        self.stopPin = stopPin
+        self.steadyState = steadyState
+        self.pulseCount = 0
+        self.pwmScaler = pwmScaler
 
-        gpio.setup([self.pwmPin, self.directionPin, self.notEnablePin], gpio.OUT)#, pull_up_down=gpio.PUD_DOWN)
-        gpio.output(self.notEnablePin, gpio.LOW)
-        self.pwm = gpio.PWM(self.pwmPin, self.frequency)
-        self.pwm.start(dutyCycle)
+
+        if  self.stopPin is not None:
+            if rising:
+                pi.set_mode(stopPin, pigpio.INPUT)
+                pi.set_pull_up_down(stopPin, pigpio.PUD_DOWN)
+                pi.set_glitch_filter(stopPin, self.steadyState)
+                pi.callback(stopPin, pigpio.RISING_EDGE, self.__stop)
+                # gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_DOWN)
+                # gpio.add_event_detect(self.stopPin, gpio.RISING, callback=self.__stop, bouncetime=100)
+            else:
+                pi.set_mode(stopPin, pigpio.INPUT)
+                pi.set_pull_up_down(stopPin, pigpio.PUD_UP)
+                pi.set_glitch_filter(stopPin, self.steadyState)
+                pi.callback(stopPin, pigpio.FALLING_EDGE, self.__stop)
+                # gpio.setup(self.stopPin, gpio.IN, pull_up_down=gpio.PUD_UP)
+                # gpio.add_event_detect(self.stopPin, gpio.FALLING, callback=self.__stop, bouncetime=100)
+
+            
+            
+            
+
+
+
+        # gpio.setup([self.pwmPin, self.directionPin, self.notEnablePin], gpio.OUT)
+        for pin in [self.pwmPin, self.directionPin, self.notEnablePin]:
+            pi.set_mode(pin, pigpio.OUTPUT) 
+        # gpio.output(self.notEnablePin, gpio.LOW)
+        pi.write(self.notEnablePin, 0)
+        pi.set_PWM_frequency(self.pwmPin, self.frequency)
+        pi.set_PWM_dutycycle(self.pwmPin, dutyCycle)
+        # self.pwm = gpio.PWM(self.pwmPin, self.frequency)
+        # self.pwm.start(dutyCycle)
 
         self.state={}
+    
+    def __stop(self, gpio, level, tick):
+        print("MOTOR IS CRASHING! HALTING!")
+        self.throttle(self.throttle_parser([1]))
+        time.sleep(2)
+        self.throttle(self.throttle_parser([0]))
+        pi.stop()
+        sys.exit(0)
+        # self.pulseCount += 1
+        # print("PULSED {0}".format(self.pulseCount))
+        # gpio.cleanup()
+        # sys.exit(0)
 
     def throttle(self, speed):
-        if speed >= 0:
-            gpio.output(self.directionPin, gpio.LOW)
-        else:
-            gpio.output(self.directionPin, gpio.HIGH)
-
+        # if speed >= 0:
+        #     # gpio.output(self.directionPin, gpio.LOW)
+        # else:
+        #     # gpio.output(self.directionPin, gpio.HIGH)
+        pi.write(self.directionPin, speed<=0)
 
         self.dutyCycle = abs(speed)
-        self.pwm.ChangeDutyCycle(self.dutyCycle)
+        # self.pwm.ChangeDutyCycle(self.dutyCycle)
+        pi.set_PWM_dutycycle(self.pwmPin, self.dutyCycle)
 
     def throttle_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "throttle")
 
-        speed = float(params[0])*100
+        speed = float(params[0])*self.pwmScaler
 
-        if speed < -100 or speed > 100:
-            raise ArgumentError(self.name, "throttle", speed, "-100 <= speed <= 100")
+        if speed < -self.pwmScaler or speed > self.pwmScaler:
+            raise ArgumentError(self.name, "throttle", speed/self.pwmScaler, "-1 <= speed <= 1")
 
         return speed
 

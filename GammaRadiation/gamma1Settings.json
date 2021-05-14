@@ -1,44 +1,95 @@
 {
-    "outlets":[8],
+    "outlets":[6],
     "outletMap":{
         "ST160": 6
     },
 
-    "multiplexerPins": [13, 11, 6],
-    "inhibitorPin" : 21,
+    "multiplexerPins": [9, 11, 8],
+    "inhibitorPin" : 25,
     "multiplexerChannels": [1,2,3,4,5,6],
     "multiplexerDelay": 0.1,
 
-    "magnetPin" : 21,
-    "magnetFrequency": 440,
+    "magnetPin" : 12,
+    "magnetFrequency": 100,
 
-    "actuatorTerminal" : 3,
-    "stageTerminal": 1,
+    "actuatorPins" : [16, 19, 13, 6],
+    "actuatorTriggerEdge": false,
+    "actuatorSteadyState": 70000,
+    "actuatorPWMScaler"  : 255,
+    
+    "stagePins": [20, 21, 26],
 
-    "stageBounds": [0, 12500],
+    "stageBounds": [-12200, 0],
+    "stageDelay": 1050,
     "stageRefPoints": {
-        "s0": 11510,
-        "s1": 11110,
-        "s2": 10695,
-        "s3": 10280,
-        "s4": 9865,
-        "s5": 9450,
-        "h0": 8290,
-        "h1": 7480,
-        "h2": 6670,
-        "h3": 5860,
-        "h4": 5050,
-        "h5": 4240,
-        "h6": 3430,
-        "h7": 2620,
-        "h8": 1810,
-        "h9": 1000,
-        "h10": 200,
-        "h11": 5455
+        "s0": -11635,
+        "s1": -11230,
+        "s2": -10725,
+        "s3": -10420,
+        "s4": -10010,
+        "s5": -9605,
+        "h0": -7210,
+        "h1": -6800,
+        "h2": -6390,
+        "h3": -5980,
+        "h4": -5570,
+        "h5": -5160,
+        "h6": -4755,
+        "h7": -4350,
+        "h8": -3940,
+        "h9": -3535,
+        "h10": -3130,
+        "h11": -2725,
+        "h12": -2310,
+        "h13": -1905,
+        "h14": -1500
     },
 
+    "initialState":{
+        "s0":"",
+        "s1":"",
+        "s2":"",
+        "s3":"",
+        "s4":"",
+        "s5":"",
+        "h0":"A14",
+        "h1":"A13",
+        "h2":"A12",
+        "h3":"A11",
+        "h4":"A10",
+        "h5":"A9",
+        "h6":"A8",
+        "h7":"A7",
+        "h8":"A6",
+        "h9":"A5",
+        "h10":"A4",
+        "h11":"A3",
+        "h12":"A2",
+        "h13":"A1",
+        "h14":"Source"
+    },
 
-    "absorberFullTime": 11,
-    "absorberMidTime": 1
+    "holderMap" : {
+        "Source": "h14",
+        "A1": "h13",
+        "A2": "h12",
+        "A3": "h11",
+        "A4": "h10",
+        "A5": "h9",
+        "A6": "h8",
+        "A7": "h7",
+        "A8": "h6",
+        "A9": "h5",
+        "A10": "h4",
+        "A11": "h3",
+        "A12": "h2",
+        "A13": "h1",
+        "A14": "h0"
+        
+    },
+
+    "absorberFullTime": 9,
+    "absorberMidTime": 1.5,
+    "magnetPower": 90
 
 }

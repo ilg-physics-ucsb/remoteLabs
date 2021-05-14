@@ -41,6 +41,7 @@
   <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
 
   <script src="static/js/main.js"></script>
+  <!-- small chat bot -->
   <script src="https://embed.small.chat/T01LL37HGMRC01LYGHBDL1.js" async></script>
 
   <!-- Start your project here--> 
@@ -60,6 +61,16 @@
     </div>
     <div id="PageMiddle" class="column w-row">
       <div  id="LeftSideImages" class="column w-col w-col-2">
+
+        <div id="ToggleCounter">
+          <img id="CounterSwitch" src="static/images/toggleSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+             <area id="counterTOGGLE" title="Click here to turn ON" coords="72,45,128,95" shape="rect">
+          </map>
+          <p>Turn on Counter</p>
+          <br><br>     
+        </div>
+
         <div class="spectech">
           <a target="_blank" href="static/images/spectrum_techniques_spectrum_techniques_st160spectrum_techniques.pdf">
             <img src="static/images/ST160_cropped.jpg">
@@ -88,7 +99,7 @@
             <div id="s2" class="slot">Empty</div>
             <div id="s3" class="slot">Empty</div>
             <div id="s4" class="slot">Empty</div>
-            <div id="s5" class="slot">Empty</div>
+            <div id="" class="">Unavailable</div>
           </div>
           <div class="btn-group" role="group" aria-label="Basic example">
             <button id="CommitAbsorberButton" type="button" class="btn btn-primary mybtn">COMMIT</button>
@@ -97,37 +108,46 @@
           </div>
           <div class="auto-list list" id="absorberList">
             <div class="holder">
-              <div draggable="true" class="list-item">Absorber 1</div>
+              <div draggable="true" class="list-item">Absorber 11d</div>
             </div>
             <div class="holder">
-              <div draggable="true" class="list-item">Absorber 2</div>
+              <div draggable="true" class="list-item">Absorber 11c</div>
             </div>
             <div class="holder">
-              <div draggable="true" class="list-item">Absorber 3</div>
+              <div draggable="true" class="list-item">Absorber 11b</div>
             </div>
             <div class="holder">
-              <div draggable="true" class="list-item">Absorber 4</div>
-            </div>
-            <div class="holder">
-              <div draggable="true" class="list-item">Absorber 5</div>
-            </div>
-            <div class="holder">
-              <div draggable="true" class="list-item">Absorber 6</div>
-            </div>
-            <div class="holder">
-              <div draggable="true" class="list-item">Absorber 7</div>
-            </div>
-            <div class="holder">
-              <div draggable="true" class="list-item">Absorber 8</div>
-            </div>
-            <div class="holder">
-              <div draggable="true" class="list-item">Absorber 9</div>
+              <div draggable="true" class="list-item">Absorber 11a</div>
             </div>
             <div class="holder">
               <div draggable="true" class="list-item">Absorber 10</div>
             </div>
             <div class="holder">
-              <div draggable="true" class="list-item">Absorber 11</div>
+              <div draggable="true" class="list-item">Absorber 9</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 8</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 7</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 6</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 5</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 4</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 3</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 2</div>
+            </div>
+            <div class="holder">
+              <div draggable="true" class="list-item">Absorber 1</div>
             </div>
             <div class="holder">
               <div draggable="true" class="list-item">Source</div>
@@ -190,6 +210,20 @@
           </div>
       </div>
     </div>
+
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="loadingModalLabel">STOP!</h5>
+              </div>
+              <div class="modal-body">
+                      <p>Before continuing the lab please send a message to the equipment help</p>
+              </div>
+          </div>
+      </div>
+    </div>
+
     <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
     <script type="text/javascript">
           $(document).ready(function () {

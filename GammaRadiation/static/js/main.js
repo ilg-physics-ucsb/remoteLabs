@@ -30,9 +30,19 @@ function controllerResponseHandler(cmd) {
     var device = components[0]
     var info = components[1]
     var infoValue = components[2]
+    console.log(cmd)
 
     if (infoValue == "limit") {
         extremaModal.modal("show")
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
     }
 
 }
@@ -60,12 +70,13 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
-var extremaModal
+var extremaModal, contactModal
 
 $("document").ready(function () {
 
     var liveStream = document.getElementById("v");
     extremaModal = $("#extremaModal")
+    contactModal = $("#contactModal")
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7
@@ -97,7 +108,26 @@ $("document").ready(function () {
     loadingModal.modal('show')
 
 
-
+    //for ambientLight
+    var counterTOGGLE = document.getElementById('counterTOGGLE');
+    counterTOGGLE.style.transform='scaleY(1)'
+    var counterState = false;
+    var counterSwitch = document.getElementById('CounterSwitch')
+    counterTOGGLE.addEventListener('click', function(){
+        console.log("counter switch was switched");
+        if(counterState){
+            dataChannel.send("GRpdu/off/ST160")
+            counterState=false;
+            counterTOGGLE.title = "Click here to turn ON";
+            counterSwitch.style.transform='scaleY(1)';
+        }
+        else{
+            dataChannel.send("GRpdu/on/ST160");
+            counterState=true;
+            counterTOGGLE.title="Click here to turn OFF";
+            counterSwitch.style.transform='scaleY(-1)';
+        }
+    })
 
     //for multi-camera switching
     var CounterCam = document.getElementById("CounterCam");
@@ -209,18 +239,21 @@ $("document").ready(function () {
     const autoLists = $(".auto-list");
     const manualList = $(".manual-list");
     const absorberLocations = {
-        "Absorber 1": 0,
-        "Absorber 2": 1,
-        "Absorber 3": 2,
-        "Absorber 4": 3,
-        "Absorber 5": 4,
-        "Absorber 6": 5,
-        "Absorber 7": 6,
-        "Absorber 8": 7,
-        "Absorber 9": 8,
-        "Absorber 10": 9,
-        "Absorber 11": 10,
-        "Source"    : 11
+        "Source"    : 14,
+        "Absorber 1": 13,
+        "Absorber 2": 12,
+        "Absorber 3": 11,
+        "Absorber 4": 10,
+        "Absorber 5": 9,
+        "Absorber 6": 8,
+        "Absorber 7": 7,
+        "Absorber 8": 6,
+        "Absorber 9": 5,
+        "Absorber 10": 4,
+        "Absorber 11a": 3,
+        "Absorber 11b": 2,
+        "Absorber 11c": 1,
+        "Absorber 11d": 0
     }
     loaded = {
         "s0": -1,
@@ -242,7 +275,10 @@ $("document").ready(function () {
       "Absorber 8": "A8",
       "Absorber 9": "A9",
       "Absorber 10": "A10",
-      "Absorber 11": "A11",
+      "Absorber 11a": "A11",
+      "Absorber 11b": "A12",
+      "Absorber 11c": "A13",
+      "Absorber 11d": "A14",
       "Source"    : "Source"
     }
     let draggedItem = null;
@@ -285,21 +321,22 @@ $("document").ready(function () {
 
             aList.addEventListener('drop', function(e){
                 let key = draggedItem.textContent
-                console.log(draggedItem)
-                console.log(e)
-                console.log(parentSlot)
-                console.log("KEY:" + key)
-                console.log("LOCATIONS:" + absorberLocations[key])
-                console.log("THIS:")
-                console.log(this)
-                console.log("Children:")
-                console.log(this.children)
+                // console.log(draggedItem)
+                // console.log(e)
+                // console.log(parentSlot)
+                // console.log(parentSlot.className)
+                // console.log("KEY:" + key)
+                // console.log("LOCATIONS:" + absorberLocations[key])
+                // console.log("THIS:")
+                // console.log(this)
+                // console.log("Children:")
+                // console.log(this.children)
                 let holder = this.children[absorberLocations[key]];
-                console.log("holder:")
-                console.log(holder)
+                // console.log("holder:")
+                // console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
-                if (parentSlot.class == "slot") {
+                if (parentSlot.className == "slot") {
                     loaded[parentSlot.id] = -1;
                     parentSlot.innerHTML = "Empty";
                 }
@@ -369,8 +406,7 @@ $("document").ready(function () {
             }
         }
         console.log(sendString)
-        //TEMP CHANGE
-        // dataChannel.send("AbsorberController/place/" + sendString)
+        dataChannel.send("AbsorberController/place/" + sendString)
         // Add datachannel send
     })
 
