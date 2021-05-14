@@ -34,6 +34,23 @@ function controllerResponseHandler(cmd) {
     if (infoValue == "limit") {
         extremaModal.modal("show")
     }
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "bootModal") {
+            if (infoValue == "show") {
+                bootModal.modal("show")
+            }
+        }
+    }
 
 }
 
@@ -60,7 +77,7 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
-var extremaModal
+var extremaModal, contactModal, bootModal
 
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
@@ -72,6 +89,8 @@ $("document").ready(function () {
     var FirstTimePSoff = true;
     var FirstTimeTempCam = true;
     extremaModal = $("#extremaModal")
+    contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7
