@@ -62,11 +62,11 @@ colorFilterWheel.device.release()
 densityFilterWheel.device.release()
 
 if args.reset:
-    exp = Experiment("PhotoElectricEffect")
+    exp = Experiment("PhotoElectricEffect", messenger=True)
 elif args.admin:
     exp = Experiment("PhotoElectricEffect", admin=True)
 else:
-    exp = Experiment("PhotoElectricEffect")
+    exp = Experiment("PhotoElectricEffect", messenger=True)
 exp.add_device(PEpdu)
 exp.add_device(potentiometer)
 exp.add_device(colorFilterWheel)

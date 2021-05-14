@@ -78,11 +78,11 @@ singleSlits.device.release()
 stage.device.release()
 
 if args.reset:
-    exp = Experiment("DiffractionInterference")
+    exp = Experiment("DiffractionInterference", messenger=True)
 elif args.admin:
     exp = Experiment("DiffractionInterference", admin=True)
 else:
-    exp = Experiment("DiffractionInterference")
+    exp = Experiment("DiffractionInterference", messenger=True)
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(multiSlits)

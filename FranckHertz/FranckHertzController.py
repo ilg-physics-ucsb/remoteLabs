@@ -66,11 +66,11 @@ Va.device.release()
 Vr.device.release()
 
 if args.reset:
-    exp = Experiment("FranckHertz")
+    exp = Experiment("FranckHertz", messenger=True)
 elif args.admin:
     exp = Experiment("FranckHertz", admin=True)
 else:
-    exp=Experiment("FranckHertz")
+    exp=Experiment("FranckHertz", messenger=True)
 exp.add_device(camera)
 exp.add_device(FHpdu)
 exp.add_device(oven)
