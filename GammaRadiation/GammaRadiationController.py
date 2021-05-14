@@ -79,7 +79,7 @@ if args.reset:
 elif args.admin:
     exp = Experiment("GammaRadiation", admin=True)
 else:
-    exp=Experiment("GammaRadiation")
+    exp=Experiment("GammaRadiation", messenger=True)
 exp.add_device(camera)
 exp.add_device(stage)
 exp.add_device(actuator)

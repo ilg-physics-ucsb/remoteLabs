@@ -215,6 +215,8 @@ class DCMotorI2C(MotorKit, BaseController):
 # lowerBoard = MotorKit()
 # Initialise the second hat on a different address
 # upperBoard = MotorKit(address=0x61)
+# style = 'SINGLE' 'DOUBLE' 'INTERLEAVE' 'MICROSTEP' (Added by Raffi)
+# Default number of microsteps is 16, 8 is recommended by adafruit, we set the default as 8
 
 class StepperI2C(MotorKit, BaseController):
 
