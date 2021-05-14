@@ -11,7 +11,7 @@ group.add_argument("-a", "--admin", action="store_true")
 
 args = parser.parse_args()
 
-labSettingsPath = os.path.join("home","pi", "remoteLabs", "PhotoElectricEffect", args.settings)
+labSettingsPath = os.path.join("home","pi", "remoteLabs", "AtomicSpectra", args.settings)
 
 with open(labSettingsPath, "r") as f:
     labSettings = json.load(f)
@@ -33,6 +33,8 @@ carouselBounds  = labSettings["carouselBounds"]
 limitBounce     = labSettings["limitBounce"]
 homeOvershoot   = labSettings["homeOvershoot"]
 
+videoNumber     = labSettings["videoNumber"]
+
 if args.admin:
     bounds = (-1e6, 1e6)
     slitBounds = bounds
@@ -40,7 +42,8 @@ if args.admin:
     armBounds = bounds
     carouselBounds = bounds
 
-camera = ArduCamMultiCamera("Camera", 1)
+defaultCameraSettings = labSettings["defaultCameraSettings"]
+camera = ArduCamMultiCamera("Camera", videoNumber, defaultSettings=defaultCameraSettings)
 socket_path = "/tmp/uv4l.socket"
 
 leftSwitch = LimitSwitch("LeftSwitch", leftSwitchPin)
@@ -66,7 +69,7 @@ def homing(motor):
         motor.adminMove(homeOvershoot)
     else:
         print("Moving Towards home.")
-        motor.homeMove()
+        motor.homeMove(stepLimit=15000)
     motor.currentPosition = 0
 
 leftSwitch.switchAction = leftSwitchHit
@@ -74,7 +77,7 @@ rightSwitch.switchAction = rightSwitchHit
 
 slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.1)  
 grating = StepperI2C("Grating", 2, bounds=gratingBounds, style="DOUBLE")
-arm = StepperI2C("Arm", 3,bounds=armBounds, style="DOUBLE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch)
+arm = StepperI2C("Arm", 3,bounds=armBounds, style="DOUBLE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch, delay=0.0001)
 arm.customHome = homing
 carousel = StepperI2C("Carousel", 4,bounds=carouselBounds, style="MICROSTEP", delay=0.0001, refPoints=refPoints, microsteps=16)
 
@@ -91,11 +94,11 @@ arm.device.release()
 carousel.device.release()
 
 if args.reset:
-    exp = Experiment("AtomicSpectra")
+    exp = Experiment("AtomicSpectra", messenger=True)
 elif args.admin:
-    exp = Experiment("AtmoicSpectra", admin=True)
+    exp = Experiment("AtomicSpectra", admin=True)
 else:
-    exp = Experiment("AtomicSpectra")
+    exp = Experiment("AtomicSpectra", messenger=True)
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(grating)

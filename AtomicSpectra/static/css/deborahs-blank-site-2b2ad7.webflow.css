@@ -38,6 +38,11 @@ button.btn-settings:active {
   text-align: center;
 }
 
+#myModalschem{
+  width: 500px;
+  height: 300px;
+}
+
 #arrowbuttonCW{
   margin-bottom: 0px;
 }
@@ -48,6 +53,8 @@ button.btn-settings:active {
 
 .arrowbuttonCW{
   opacity: 1;
+  width: 50%;
+  float:left;
 }
 .arrowbuttonCW:hover #arrowbuttonCW{
   opacity:.3;
@@ -55,6 +62,8 @@ button.btn-settings:active {
 
 .arrowbuttonCCW{
   opacity: 1;
+  width: 50%;
+  float: left;
 }
 .arrowbuttonCCW:hover #arrowbuttonCCW{
   opacity:.3;
@@ -62,6 +71,8 @@ button.btn-settings:active {
 
 .arrowCW{
   opacity:1;
+  width: 50%;
+  float:left;
 }
 .arrowCW:hover #arrowCW{
   opacity:.3;
@@ -69,6 +80,8 @@ button.btn-settings:active {
 
 .arrowCCW{
   opacity:1;
+  width: 50%;
+  float:left;
 }
 .arrowCCW:hover #arrowCCW{
   opacity:0.3;
@@ -86,4 +99,25 @@ button.btn-settings:active {
 }
 .downarrow:hover #downarrow{
   opacity:0.3;
+}
+
+.mTelescopeImg{
+  display:inline-block;
+  width: 175px;
+  padding-right: 8%;
+}
+
+.mGratingImg{
+  display:inline-block;
+  width: 125px;
+  margin-left: 6%;
+  margin-right:6%;
+  vertical-align: top;
+}
+
+.mLampImg{
+  display:inline-block;
+  width:100px;
+  padding-left: 2%;
+  vertical-align: top;
 }

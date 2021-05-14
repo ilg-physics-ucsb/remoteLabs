@@ -7,7 +7,15 @@
         "h2":0,
         "a":7860,
         "b": 15720
-        },
+    },
+    "defaultCameraSettings":{
+        "frame_rate":15,
+        "brightness": 50,
+        "contrast": 0,
+        "shutter_speed": 0,
+        "awb_mode": 0,
+        "exposure_mode": 1
+    },
     
     "leftSwitchPin": 6,
     "rightSwitchPin": 12,
@@ -20,5 +28,7 @@
     "carouselBounds": [-160, 15520],
     
     "limitBounce": -100,
-    "homeOvershoot": 5
+    "homeOvershoot": 5,
+
+    "videoNumber": 1
 }

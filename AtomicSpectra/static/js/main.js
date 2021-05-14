@@ -137,10 +137,19 @@ var liveStream
 var slitModal, extremaModal
 var pValue = "coarsePicture"
 
+var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
+
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     liveStream = document.getElementById("v");
+    exposureDisplay = $("#expVal")[0]
+    exposureSlider = $("#exposureSlider")[0]
+    brightnessDisplay = $("#briVal")[0]
+    brightnessSlider = $("#brightnessSlider")[0]
+    contrastDisplay = $("#conVal")[0]
+    contrastSlider = $("#contrastSlider")[0]
+    cameraControl = $("#myModalCamera")[0]
     
     
 
@@ -203,60 +212,52 @@ $("document").ready(function () {
     var Schematic = document.getElementById("Schematic");
     var Lamps = document.getElementById("Lamps");
     var SlitControl = document.getElementById("SlitControl");
+    var cameraControl = document.getElementById("ModalCamera")
     
-    OverviewCam.addEventListener('click', function() {
+    // OverviewCam.addEventListener('click', function() {
         
-        if(FirstTimeCam){
-            console.log("Overview cam was clicked for the first time");
-            FirstTimeCam=false;
-        }
-        else{
-            dataChannel.send("Camera/camera/a");
-            currentCam = "a"
-        }
+    //     if(FirstTimeCam){
+    //         console.log("Overview cam was clicked for the first time");
+    //         FirstTimeCam=false;
+    //     }
+    //     else{
+    //         dataChannel.send("Camera/camera/a");
+    //         currentCam = "a"
+    //     }
         
+    //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+    //     Lamps.style.visibility='visible';
+    //     Crosshairs.style.visibility = "hidden";
+    //     SlitControl.style.visibility = "hidden";
+    //     cameraControl.style.visibility = "hidden"; 
+    //     hide_crosshair()
         
-        Lamps.style.visibility='visible';
-        Crosshairs.style.visibility = "hidden";
-        SlitControl.style.visibility = "hidden";
-        hide_crosshair()
-        
-    })
+    // })
 
-    ArmCam.addEventListener('click', function() {
-        //show_crosshair()
-        resize_canvas()
-        Crosshairs.style.visibility='visible';
-        
-        Lamps.style.visibility='visible';
-        
-        SlitControl.style.visibility='visible';
-        currentCam = "c"       
-        dataChannel.send("Camera/camera/c");
-    })
-
-    V1Cam.addEventListener('click', function() {
+    // V1Cam.addEventListener('click', function() {
        
-        
+    //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
                 
-        Lamps.style.visibility = "hidden";
-        Crosshairs.style.visibility = "hidden";
-        SlitControl.style.visibility = "hidden";
-        currentCam = "b"
-        hide_crosshair()
-        dataChannel.send("Camera/camera/b");
-    })
+    //     Lamps.style.visibility = "hidden";
+    //     Crosshairs.style.visibility = "hidden";
+    //     SlitControl.style.visibility = "hidden";
+    //     cameraControl.style.visibility = "hidden"; 
+    //     currentCam = "b"
+    //     hide_crosshair()
+    //     dataChannel.send("Camera/camera/b");
+    // })
 
-    V2Cam.addEventListener('click', function() {
+    // V2Cam.addEventListener('click', function() {
        
-        Lamps.style.visibility='visible';
-        Crosshairs.style.visibility='visible';
-        SlitControl.style.visibility='visible';
-
-        currentCam = "d"
-        hide_crosshair()
-        dataChannel.send("Camera/camera/d");
-    })
+    //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+    //     Lamps.style.visibility = "hidden";
+    //     Crosshairs.style.visibility = "hidden";
+    //     SlitControl.style.visibility = "hidden";
+    //     cameraControl.style.visibility = "hidden"; 
+    //     currentCam = "d"
+    //     hide_crosshair()
+    //     dataChannel.send("Camera/camera/d");
+    // })
 
     // OffCam.addEventListener('click', function() {
     //     dataChannel.send("Camera/camera/off")
@@ -355,7 +356,7 @@ $("document").ready(function () {
     var tFine = document.getElementById('fineArm');
     var tMedium = document.getElementById('mediumArm')
     var tCoarse = document.getElementById('coarseArm');
-    var telescopeSteps=100; ///unknown number of degrees
+    var telescopeSteps=1000; ///unknown number of degrees
     var telescopeCurrentPosition = 0;
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
@@ -809,9 +810,9 @@ $("document").ready(function () {
     //End Modal Grating Buttons
 
    //BEGIN Arm Buttons 
-   tFine.addEventListener('click', function(){telescopeSteps=10;})
-   tMedium.addEventListener('click', function(){telescopeSteps=30;})
-   tCoarse.addEventListener('click', function(){telescopeSteps=100;})
+   tFine.addEventListener('click', function(){telescopeSteps=25;})
+   tMedium.addEventListener('click', function(){telescopeSteps=250;})
+   tCoarse.addEventListener('click', function(){telescopeSteps=1000;})
 
    tCW.addEventListener('click', function() {
        // Changed for AS 
@@ -826,9 +827,9 @@ $("document").ready(function () {
    //END Arm Buttons
 
     //BEGIN Modal Arm Buttons
-    tMfine.addEventListener('click', function(){telescopeSteps=10;})
-    tMmedium.addEventListener('click', function(){telescope=30;})
-    tMcoarse.addEventListener('click', function(){telescopeSteps=100;})
+    tMfine.addEventListener('click', function(){telescopeSteps=25;})
+    tMmedium.addEventListener('click', function(){telescope=250;})
+    tMcoarse.addEventListener('click', function(){telescopeSteps=1000;})
     tmCW.addEventListener('click', function(){
         console.log("Modal Telescope turned CW");
         dataChannel.send("Arm/move/"+telescopeSteps);
@@ -872,8 +873,148 @@ $("document").ready(function () {
 
    //END Slit Buttons
 
+   async function updateCameraSetting(setting, newValue) {
+        dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
+        currentCameraSettings[setting] = newValue
+    }
+
+   async function updateManyCameraSettings(currentSettings, newSettings) {
+       for (const setting in newSettings) {
+            var newValue = newSettings[setting]
+            var oldValue = currentSettings[setting]
+            if (newValue !== oldValue) {
+                console.log("Updating " + setting)
+                updateCameraSetting(setting, newValue)
+                await sleep(50)
+            }
+        }
+
+    }
+
+   var cameraDefaults = {
+       "frame_rate":15,
+       "brightness": 50,
+       "contrast": 0,
+       "saturation": 0,
+       "red_balance": 100,
+       "blue_balance": 100,
+       "shutter_speed": 0,
+       "iso_sensitivity": 400,
+       "awb_mode": 0,
+       "exposure_mode": 1,
+       "drc_strength": 0
+    }
+
+    var defaultScreenCameraSettings = {
+        "frame_rate":2,
+        "brightness": 50,
+        "contrast": 0,
+        "saturation": 0,
+        "red_balance": 100,
+        "blue_balance": 100,
+        "shutter_speed": 6000,
+        "iso_sensitivity": 400,
+        "awb_mode": 6,
+        "exposure_mode": 5,
+        "drc_strength": 0
+    }
+
+    var currentCameraSettings = JSON.parse(JSON.stringify(cameraDefaults))
+    var screenCameraSettings = JSON.parse(JSON.stringify(defaultScreenCameraSettings))
+
+    setExposure = function(){
+        updateCameraSetting("shutter_speed", exposureSlider.value)
+        screenCameraSettings["shutter_speed"] = exposureSlider.value
+        // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
+    }
+    
+    exposureValue = function(){
+        exposureDisplay.innerHTML=exposureSlider.value
+    }
+    
+    setBrightness = function(){
+        updateCameraSetting("brightness", brightnessSlider.value)
+        screenCameraSettings["brightness"] = brightnessSlider.value
+        // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+    }
+    
+    brightnessValue = function(){
+        brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+    }
+    
+    setContrast = function(){
+        updateCameraSetting("contrast", contrastSlider.value)
+        screenCameraSettings["contrast"] = contrastSlider.value
+        // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+    }
+    
+    contrastValue = function(){
+        contrastDisplay.innerHTML=contrastSlider.value + "%"
+    }
+
+    OverviewCam.addEventListener('click', function() {
+        
+        if(FirstTimeCam){
+            console.log("Overview cam was clicked for the first time");
+            FirstTimeCam=false;
+        }
+        else{
+            dataChannel.send("Camera/camera/a");
+            currentCam = "a"
+        }
+        
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        Lamps.style.visibility='visible';
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
+        hide_crosshair()
+        
+    })
+
+    V1Cam.addEventListener('click', function() {
+       
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+                
+        Lamps.style.visibility = "hidden";
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
+        currentCam = "b"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/b");
+    })
+
+    V2Cam.addEventListener('click', function() {
+       
+        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        Lamps.style.visibility = "hidden";
+        Crosshairs.style.visibility = "hidden";
+        SlitControl.style.visibility = "hidden";
+        cameraControl.style.visibility = "hidden"; 
+        currentCam = "d"
+        hide_crosshair()
+        dataChannel.send("Camera/camera/d");
+    })
+    
+    ArmCam.addEventListener('click', function() {
+        //show_crosshair()
+        resize_canvas()
+        Crosshairs.style.visibility='visible';
+        
+        Lamps.style.visibility='visible';
+        
+        SlitControl.style.visibility='visible';
+        cameraControl.style.visibility='visible';
+        console.log(cameraControl);
+        updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
+        currentCam = "c"       
+        dataChannel.send("Camera/camera/c");
+    })
+
    // makes modal draggable
    $('#myModalschem').draggable()
+   $('#myModalCamera').draggable()
 
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     

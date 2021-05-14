@@ -47,8 +47,8 @@
   <!-- Help Bot Code -->
   <script src="https://embed.small.chat/T01LL37HGMRC01LYGHBDL1.js" async></script>
  
-   <!-- ruler - These scripts enable a canvas with cursor and coordinates -->
-   <!-- <script src="static/js/jquery.ruler.js"></script> -->
+  <!-- ruler - These scripts enable a canvas with cursor and coordinates -->
+  <!--  <script src="static/js/jquery.ruler.js"></script> -->
    <script src="static/js/ruler.js"></script>
 
   <script src="static/js/main.js"></script>
@@ -123,6 +123,9 @@
       </div>
       <div id="Controls" class="column w-row" style="margin-bottom: 0px;">
         <div id="LeftSide" class="column w-col w-col-2">
+          </br></br>
+          </br></br>
+          </br></br>
           <div id="Toggle">
             (click to toggle the<br> ambient Light)<br>
             <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
@@ -134,82 +137,14 @@
         <div id="Center" class="column w-col w-col-8" style="margin-bottom:0px;">
           <div id="Schematic">
             
-            <div id="SchematicLeft" class="column w-col w-col-2">
-              </br></br>
-              </br></br>
-              <button href="#myModalschem" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Movable schematic</button>
-              <div id="myModalschem" class="modal fade">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                      <!-- radio buttons inside modal -->
-                      <div class="w-row">
-                        <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
-                        <div class="column w-col w-col-6" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
-                        <div class="column w-col w-col-1" style="bottom: -15px; color:rgb(184, 134, 6); font-size: large">Lamp:</div>
-                      </div>
-                      <div id="radioButtonsSchematic" class="w-row" >
-                        <!-- Modal Radio buttons for Telescope -->
-                        <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
-                          <input type="radio" id="MfineArm" name="MArmStepSize" value="1" onchange="mtHandleChange(this);">
-                          <label for="MfineArm">Fine</label>
-                        </div>
-                        <div class="column w-col w-col-2" style="color:darkgreen; margin-bottom: 0px;">
-                          <input type="radio" id="MmediumArm" name="MArmStepSize" value="5" onchange="mtHandleChange(this);">
-                          <label for="MmediumArm">Medium</label>
-                        </div>
-                        <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
-                          <input type="radio" id="McoarseArm" name="MArmStepSize" onchange="mtHandleChange(this);" value="50" checked>
-                          <label for="McoarseArm">Coarse</label>
-                        </div>
-                        <div class="column w-col w-col-1" style="margin-bottom: 0px;"></div>
-                        <!-- Modal Radio buttons for grating -->
-                        <div class="column w-col w-col-1" style=" color:darkorchid; margin-bottom: 0px;">
-                          <input type="radio" id="MfineTable" name="MTableStepSize" value="20" onchange="mgHandleChange(this);">
-                          <label for="MfineTable">Fine</label>
-                        </div>
-                        <div class="column w-col w-col-2" style="color:darkorchid; margin-bottom: 0px;">
-                          <input type="radio" id="MmediumTable" name="MTableStepSize" value="200" onchange="mgHandleChange(this);">
-                          <label for="MmediumTable">Medium</label>
-                        </div>
-                        <div class="column w-col w-col-1" style="color:darkorchid; margin-bottom: 0px;">
-                          <input type="radio" id="McoarseTable" name="MTableStepSize" value="600" onchange="mgHandleChange(this);" checked>
-                          <label for="McoarseTable">Coarse</label>
-                        </div>
-                      </div>
-                      <!-- arrow buttons in modal -->
-                      <div>
-                        <div class="arrowbuttonCW">
-                          <img class="column w-col w-col-2" id="arrowbuttonCW" src="static/images/arrowbuttonCW.png">
-                        </div>
-                        <div class="arrowbuttonCCW">
-                          <img class="column w-col w-col-2" id="arrowbuttonCCW" src="static/images/arrowbuttonCCW.png">
-                        </div>
-                        <div class="column w-col w-col-1"></div>
-                        <div class="arrowCW">
-                          <img class="column w-col w-col-2" id="arrowCW" src="static/images/arrowCW.png">
-                        </div>
-                        <div class = "arrowCCW">
-                          <img class="column w-col w-col-1" id="arrowCCW" src="static/images/arrowCCW.png">
-                        </div>
-                        <div class="column w-col w-col-1"></div>
-                        <div class="column w-col w-col-1"></div>
-                        <div class="uparrow">
-                          <img class="column w-col w-col-1" id="uparrow" src="static/images/upArrow.png">
-                        </div>
-                        <div class="downarrow">
-                          <img class="column w-col w-col-1" id="downarrow" src="static/images/downArrow.png">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div id="SchematicLeft" class="column w-col w-col-2">              
             </div>
 
             <div id="SchematicCenter" class="column w-col w-col-8">
               <h3>Schematic</h3>
+              <div class="click-note">
+                (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
+              </div>
               <img id="Schema" src="static/images/spectroscope_schematic.png" usemap="#image-map-schematic">
               <map name="image-map-schematic">
                 <area id="telescopeCW" alt="CW" title="Rotate Clockwise" href="#" coords="119,108,143,117,151,92,157,79,167,63,182,70,183,14,134,38,148,47,137,66,128,88" shape="poly">
@@ -218,20 +153,20 @@
                 <area id="gratingCCW" alt="CCW" title="Rotate Counterclockwise" href="#" coords="382,165,376,173,373,182,365,179,369,205,391,188,383,182,391,170" shape="poly">
                 <area id="lampNudgeLeft" alt="lampLeft" href="#" coords="978,156,978,135,968,135,987,108,1003,135,994,135,997,156" shape="poly">
                 <area id="lampNudgeRight" alt="lampRight" href="#" coords="978,224,979,245,971,245,988,272,1003,245,995,245,995,224" shape="poly">
-              </map>
-              <div class="click-note" style="margin-bottom: -10px;">
-                (choose Fine/Coarse and click arrows to rotate the telescope or the grating)
-              </div>  
+              </map>  
             </div>
 
-            <div id="SchematicRight" class="column w-col w-col-1" style="color:rgb(184, 134, 6);">
-              </br></br>
-              </br></br>
+            <div id="SchematicRight" class="column w-col w-col-2" style="color:rgb(184, 134, 6);">
+              <br><br><br><br>
+              <br><br><br><br>
               (click arrows </br>  to nudge </br> the lamp)
             </div>
           </div>  
         </div>  
         <div id="RightSide" class="column w-col w-col-2">
+          </br></br>
+          </br></br>
+          </br></br>
           <div id="ToggleDark">
             (click to toggle the <br> Background dark)<br>
             <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
@@ -242,7 +177,78 @@
         </div>
       </div>
       <div id="CameraSelectorButtons" >
-
+        <button href="#myModalschem" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Movable schematic</button>
+        <div id="myModalschem" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <!-- radio buttons inside modal -->
+                <div class="w-row">
+                  <div class="column w-col w-col-4" style="bottom: -15px; color:darkgreen; font-size: large;" >Telescope:</div>
+                  <div class="column w-col w-col-6" style="bottom: -15px; color:darkorchid; font-size: large">Grating:</div>
+                  <div class="column w-col w-col-1" style="bottom: -15px; color:rgb(184, 134, 6); font-size: large">Lamp:</div>
+                </div>
+                <div id="radioButtonsSchematic" class="w-row" >
+                  <!-- Modal Radio buttons for Telescope -->
+                  <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
+                    <input type="radio" id="MfineArm" name="MArmStepSize" value="1" onchange="mtHandleChange(this);">
+                    <label for="MfineArm">Fine</label>
+                  </div>
+                  <div class="column w-col w-col-2" style="color:darkgreen; margin-bottom: 0px;">
+                    <input type="radio" id="MmediumArm" name="MArmStepSize" value="5" onchange="mtHandleChange(this);">
+                    <label for="MmediumArm">Medium</label>
+                  </div>
+                  <div class="column w-col w-col-1" style="color:darkgreen; margin-bottom: 0px;">
+                    <input type="radio" id="McoarseArm" name="MArmStepSize" onchange="mtHandleChange(this);" value="50" checked>
+                    <label for="McoarseArm">Coarse</label>
+                  </div>
+                  <div class="column w-col w-col-1" style="margin-bottom: 0px;"></div>
+                  <!-- Modal Radio buttons for grating -->
+                  <div class="column w-col w-col-1" style=" color:darkorchid; margin-bottom: 0px;">
+                    <input type="radio" id="MfineTable" name="MTableStepSize" value="20" onchange="mgHandleChange(this);">
+                    <label for="MfineTable">Fine</label>
+                  </div>
+                  <div class="column w-col w-col-2" style="color:darkorchid; margin-bottom: 0px;">
+                    <input type="radio" id="MmediumTable" name="MTableStepSize" value="200" onchange="mgHandleChange(this);">
+                    <label for="MmediumTable">Medium</label>
+                  </div>
+                  <div class="column w-col w-col-1" style="color:darkorchid; margin-bottom: 0px;">
+                    <input type="radio" id="McoarseTable" name="MTableStepSize" value="600" onchange="mgHandleChange(this);" checked>
+                    <label for="McoarseTable">Coarse</label>
+                  </div>
+                </div>
+                <!-- arrow buttons in modal -->
+                <div class="w-row">
+                  <div class="mTelescopeImg">
+                    <div class="arrowbuttonCW">
+                      <img id="arrowbuttonCW" src="static/images/arrowbuttonCW.png">
+                    </div>
+                    <div class="arrowbuttonCCW">
+                      <img id="arrowbuttonCCW" src="static/images/arrowbuttonCCW.png">
+                    </div>
+                  </div>
+                  <div class="mGratingImg">
+                    <div class="arrowCW">
+                      <img  id="arrowCW" src="static/images/arrowCW.png">
+                    </div>
+                    <div class = "arrowCCW">
+                      <img id="arrowCCW" src="static/images/arrowCCW.png">
+                    </div>
+                  </div>
+                  <div class="mLampImg">
+                    <div class="uparrow">
+                      <img id="uparrow" src="static/images/upArrow.png">
+                    </div>
+                    <div class="downarrow">
+                      <img  id="downarrow" src="static/images/downArrow.png">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="btn-group" role="group"  aria-label="Basic example">
           <button id="OverviewCam" type="button" class="btn btn-primary">Overview</button>
           <button id="EyepieceCam" type="button" class="btn btn-primary">Eyepiece</button>
@@ -337,7 +343,30 @@
           </div>  
           <div class="click-note">
             (choose increment and click arrows to adjust slit width)
-          </div> 
+          </div>
+        </div>  
+        <div id="ModalCamera">
+          <button href="#myModalCamera" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Camera Controls</button>
+          <div id="myModalCamera" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
+                  </br>
+                  <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
+                  </br>
+                  <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
+                  </br>
+                  <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
+                  </br>
+                  <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
+                  </br>
+                  <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -360,11 +389,11 @@
             <strong style="color: gray;" >Select Picture type</strong><br>
             <div class="coursePicture" style="color:gray; margin-bottom: 0px;">
               <input type="radio" id="coarseElement" name="elementPic" value="coarsePicture" checked>
-              <label for="coraseElement">All Lines</label>
+              <label for="coraseElement">Brightest Lines</label>
             </div>
             <div class="finePicture" style="color: gray; margin-bottom: 0px;">
               <input type="radio" id="fineElement" name="elementPic" value="finePicture">
-              <label for="fineElement">Brightest Lines</label>
+              <label for="fineElement">All Lines</label>
             </div>
           </div>
           <div>
