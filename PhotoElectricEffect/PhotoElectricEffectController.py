@@ -18,14 +18,16 @@ with open(labSettingsPath, "r") as f:
     labSettings = json.load(f)
 
 
-outlets = labSettings["outlets"]
-outletMap = labSettings["outletMap"]
-electrometer_address = labSettings["electrometer_address"]
-multimeter_address = labSettings["multimeter_address"]
-refPoints = labSettings["refPoints"]
-potBounds = labSettings["potBounds"]
-colorFilterBounds = labSettings["colorFilterBounds"]
-densityFilterBounds = labSettings["densityFilterBounds"]
+outlets                 = labSettings["outlets"]
+outletMap               = labSettings["outletMap"]
+electrometer_address    = labSettings["electrometer_address"]
+multimeter_address      = labSettings["multimeter_address"]
+refPoints               = labSettings["refPoints"]
+potBounds               = labSettings["potBounds"]
+colorFilterBounds       = labSettings["colorFilterBounds"]
+densityFilterBounds     = labSettings["densityFilterBounds"]
+
+videoNumber             = labSettings["videoNumber"]
 
 if args.admin:
     bounds = bounds = (-1e6, 1e6)
@@ -60,11 +62,11 @@ colorFilterWheel.device.release()
 densityFilterWheel.device.release()
 
 if args.reset:
-    exp = Experiment("PhotoElectricEffect")
+    exp = Experiment("PhotoElectricEffect", messenger=True)
 elif args.admin:
     exp = Experiment("PhotoElectricEffect", admin=True)
 else:
-    exp = Experiment("PhotoElectricEffect")
+    exp = Experiment("PhotoElectricEffect", messenger=True)
 exp.add_device(PEpdu)
 exp.add_device(potentiometer)
 exp.add_device(colorFilterWheel)

@@ -11,5 +11,7 @@
     "ovenBounds": [0, 500],
     "VaBounds": [0, 2000],
     "VrBounds": [0, 160],
-    "ovenGearRatio": 2.85714
+    "ovenGearRatio": 2.85714,
+
+    "videoNumber": 1
 }

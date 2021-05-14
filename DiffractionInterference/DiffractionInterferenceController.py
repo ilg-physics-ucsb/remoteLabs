@@ -38,6 +38,8 @@ stageBounds     = labSettings["stageBounds"]
 refPointsSingle = labSettings["refPointsSingle"]
 refPointsMulti = labSettings["refPointsMulti"]
 
+videoNumber     = labSettings["videoNumber"]
+
 if args.admin:
     bounds = (-1e6, 1e6)
     multiSlitBounds = bounds
@@ -46,7 +48,7 @@ if args.admin:
 
 
 defaultCameraSettings = labSettings["defaultCameraSettings"]
-camera = ArduCamMultiCamera("Camera", 1, defaultSettings=defaultCameraSettings)
+camera = ArduCamMultiCamera("Camera", videoNumber, defaultSettings=defaultCameraSettings)
 
 
 socket_path = "/tmp/uv4l.socket"
@@ -76,11 +78,11 @@ singleSlits.device.release()
 stage.device.release()
 
 if args.reset:
-    exp = Experiment("DiffractionInterference")
+    exp = Experiment("DiffractionInterference", messenger=True)
 elif args.admin:
     exp = Experiment("DiffractionInterference", admin=True)
 else:
-    exp = Experiment("DiffractionInterference")
+    exp = Experiment("DiffractionInterference", messenger=True)
 exp.add_device(camera)
 exp.add_device(ASDIpdu)
 exp.add_device(multiSlits)

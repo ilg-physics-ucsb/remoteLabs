@@ -18,5 +18,7 @@
         },
     "potBounds": [0, 2100],
     "colorFilterBounds": [0, 810],
-    "densityFilterBounds": [0, 1350]
+    "densityFilterBounds": [0, 1350],
+
+    "videoNumber": 0
 }
