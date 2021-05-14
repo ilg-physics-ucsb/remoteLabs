@@ -51,6 +51,7 @@ var setExposure, exposureValue, setBrightness, brightnessValue, setContrast, con
 var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 var cartSlider, cartDisplay, cartValue, setCart
 var extremaModal, stageModal
+
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
