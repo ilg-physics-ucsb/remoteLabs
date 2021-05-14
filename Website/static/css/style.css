@@ -1,19 +1,31 @@
 .Title{
     position: relative;
     padding: 1rem 4rem 0rem;
+    font-family: Avenir,"Century Gothic",sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 16px;
 }
 
 .nav-bar{
     position: relative;
     padding: 0rem 4rem 0rem;
-}
-.tabs{
     border-bottom: 1px solid gray;
 }
 
 .tablinks{
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    font-size: 12px;
+    font-family: Avenir,"Century Gothic",sans-serif;
+    font-weight: 1;
+    font-style: normal;
+    text-transform: uppercase;
+    border-bottom:none;
+    /* background-color: #003660; */
+    /* color: white; */
+    margin: 2px;
+    padding: 2px 10px;
 }
 
 .TabContainers{
@@ -34,7 +46,7 @@
     display: grid;
     text-align: center;
     padding: 1rem;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     background-color: white;
 }
 
@@ -61,7 +73,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30vmax, 1fr));
     grid-gap: 2rem;
-    background-color:rgba(0,0,0,.2);
+    background-color: rgba(0,0,0,.2);
 }
 
 .Contact{
@@ -69,7 +81,7 @@
     display: grid;
     text-align: center;
     padding: 1rem;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     background-color: white;
 }
 
@@ -97,4 +109,18 @@
 
 .cLabs > * {
     display: inline-block;
+}
+
+.calendar{
+    padding: 1rem 4rem;
+}
+.calendarContent{
+    padding: 2rem 2rem;
+    border-radius: 8px;
+    background-color:rgba(0,0,0,.2);
+}
+.HomeContent{
+    padding: 2rem 2rem;
+    border-radius: 8px;
+    background-color:rgba(0,0,0,.2);
 }

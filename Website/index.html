@@ -17,13 +17,23 @@
         </div>
         <div class="nav-bar">
             <div class="tabs">
+                <button class="tablinks" onclick="opentab(event,'Home')">Home</button>
                 <button class="tablinks active" onclick="opentab(event, 'Labs')">Labs</button>
                 <button class="tablinks" onclick="opentab(event, 'Manuals')">Lab Manuals</button>
+                <button class="tablinks" onclick="opentab(event, 'Calendar')">Calendar</button>
                 <button class="tablinks" onclick="opentab(event,'People')">People</button>
             </div>
         </div>
+        <!-- Home Tab -->
+        <div id="Home" class="tabcontent" style="display: none;">
+            <div class="TabContainers">
+                <div class="HomeContent">
+                    <iframe title="vimeo-player" src="https://player.vimeo.com/video/466098275" width="100%" height="360" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
         <!-- Labs Tab -->
-        <div id="Labs" class="tabcontent" style="display: block">
+        <div id="Labs" class="tabcontent" style="display: block;">
             <div class="TabContainers">
                 <div class="TabContent">
                     <div id="Container" class="PE">
@@ -173,6 +183,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div id="Calendar" class="tabcontent" style="display: none;">
+            <div class="TabContainers">
+                <div class="calendarContent">
+                    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FLos_Angeles&amp;src=dWNzYi5lZHVfM202OXE2ZG5nZ29zYjM5OTFnaWc0bmw5ODBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23F4511E&amp;mode=WEEK" style="border:solid 1px #777" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
                 </div>
             </div>
         </div>
