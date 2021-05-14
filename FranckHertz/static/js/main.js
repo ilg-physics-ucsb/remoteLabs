@@ -162,8 +162,8 @@ $("document").ready(function () {
         TubeRight.style.display = "block";
         PotsLeft.style.display = "none";
         PotsRight.style.display = "none";
-        FilaLeft.style.display = "block";
-        FilaRight.style.display = "block";
+        FilaLeft.style.display = "none";
+        FilaRight.style.display = "none";
         MetersManual.style.display = "none";
         MetersBottom.style.display = "none";
     })
