@@ -375,7 +375,7 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator, magnet, fulltime=10, midtime=1, magnetPower=90):
+    def __init__(self, name, stepper, actuator, magnet, initialState, holderMap, fulltime=10, midtime=1, magnetPower=90, ):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
@@ -386,6 +386,8 @@ class AbsorberController(MotorKit, BaseController):
         self.actuator = actuator
         self.magnet = magnet
         self.magnetPower = magnetPower
+        self.initialState = initialState
+        self.holderMap = holderMap
         self.state = {
             "loaded": {
                 "s0":False,
@@ -396,49 +398,17 @@ class AbsorberController(MotorKit, BaseController):
                 "s5":False
             },
 
-            "total": {
-                "s0":'',
-                "s1":'',
-                "s2":'',
-                "s3":'',
-                "s4":'',
-                "s5":'',
-                "h0":'A11',
-                "h1":'A10',
-                "h2":'A9',
-                "h3":'A8',
-                "h4":'A7',
-                "h5":'A6',
-                "h6":'A5',
-                "h7":'A4',
-                "h8":'A3',
-                "h9":'A2',
-                "h10":'A1',
-                "h11":'Source',
-            }
+            "total": self.initialState
         }
-
-        self.holderMap = {
-                "A1": "h10",
-                "A2": "h9",
-                "A3": "h8",
-                "A4": "h7",
-                "A5": "h6",
-                "A6": "h5",
-                "A7": "h4",
-                "A8": "h3",
-                "A9": "h2",
-                "A10": "h1",
-                "A11": "h0",
-                "Source": "h11",
-            }
 
 
     def setup(self, style):
         pass
 
     def reset(self):
-        pass
+        emptyCounter = [ ("s0", ""), ("s1", ""), ("s2", ""), ("s3", ""), ("s4", ""), ("s5", "") ]
+        movesList = self.__makeMovesList(emptyCounter)
+        self.place(movesList)
 
     def __transfer(self, slot1, slot2):
 
@@ -819,7 +789,8 @@ class AbsorberController(MotorKit, BaseController):
         for move in moves:
             self.__transfer(move[0], move[1])
 
-        self.stepper.move(700)
+        if len(moves) != 0:
+            self.stepper.move(700)
 
     # def place(self, absorberList):
     #     for slot, absorber in absorberList:
@@ -949,23 +920,18 @@ class Keithley2000Multimeter(BaseController): #copied unaltered from Electromete
 
 class PololuStepperMotor(BaseController):
 
-    def __init__(self, name, stepPin, directionPin, enablePin, bounds, delay=5000,
+    def __init__(self, name, pwmPin, directionPin, bounds, delay=5000,
                     refPoints={}, limitSwitches=[], homeSwitch=None,
                     degPerStep=1.8, gearRatio=1):
         self.name = name
         self.device_type = "controller"
-        self.stepPin = stepPin
+        self.pwmPin = pwmPin
         self.directionPin = directionPin
-        self.enablePin = enablePin
 
-        pi.set_mode(self.stepPin, pigpio.OUTPUT)
-        pi.set_pull_up_down(self.stepPin, pigpio.PUD_DOWN)
-        pi.set_mode(self.enablePin, pigpio.OUTPUT)
-        pi.set_pull_up_down(self.enablePin, pigpio.PUD_DOWN)
+        pi.set_mode(self.pwmPin, pigpio.OUTPUT)
+        pi.set_pull_up_down(self.pwmPin, pigpio.PUD_DOWN)
         pi.set_mode(self.directionPin, pigpio.OUTPUT)
         pi.set_pull_up_down(self.directionPin, pigpio.PUD_DOWN)
-
-        pi.write(self.enablePin, 0)
 
 
         self.refPoints = refPoints
@@ -1006,30 +972,26 @@ class PololuStepperMotor(BaseController):
             steps = self.upperBound-self.currentPosition
 
         #Create a train of pulses separated by delay
-        pOn = pigpio.pulse(1<<self.stepPin, 0, self.delay//2)
-        pOff = pigpio.pulse(0, 1<<self.stepPin, self.delay//2)
-        pulse = [pOn, pOff]
+        pulse = [pigpio.pulse(1<<self.pwmPin, 1<<self.pwmPin, self.delay//2+1)]
         pi.wave_clear()
         pi.wave_add_generic(pulse)
         stepWave = pi.wave_create()
+        wait = self.delay//2
+        wait_y = wait//256
+        wait_x = wait%256
 
         absteps = abs(steps)
         step_y = absteps//256
         step_x = absteps%256
 
-        pi.write(self.enablePin, 1)
         ## Wave Chains seems incredibly stupid.
         ## To see how to do it check out http://abyz.me.uk/rpi/pigpio/python.html#wave_chain
         pi.wave_chain([
             255, 0,                     # Starts a loop
                 stepWave,               # What wave to send
+                255, 2, wait_x, wait_y, # Adds Delay = x + 256*y microseconds
             255, 1, step_x, step_y      # Repeat loop x + 256*y times.
         ])
-
-        while pi.wave_tx_busy():
-            time.sleep(0.1)
-
-        pi.write(self.enablePin, 0)
 
         self.currentPosition += steps
         self.state['position'] = self.currentPosition

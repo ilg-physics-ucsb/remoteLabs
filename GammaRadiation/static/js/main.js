@@ -239,18 +239,21 @@ $("document").ready(function () {
     const autoLists = $(".auto-list");
     const manualList = $(".manual-list");
     const absorberLocations = {
-        "Absorber 1": 0,
-        "Absorber 2": 1,
-        "Absorber 3": 2,
-        "Absorber 4": 3,
-        "Absorber 5": 4,
-        "Absorber 6": 5,
-        "Absorber 7": 6,
-        "Absorber 8": 7,
-        "Absorber 9": 8,
-        "Absorber 10": 9,
-        // "Absorber 11": 10,
-        "Source"    : 10
+        "Source"    : 14,
+        "Absorber 1": 13,
+        "Absorber 2": 12,
+        "Absorber 3": 11,
+        "Absorber 4": 10,
+        "Absorber 5": 9,
+        "Absorber 6": 8,
+        "Absorber 7": 7,
+        "Absorber 8": 6,
+        "Absorber 9": 5,
+        "Absorber 10": 4,
+        "Absorber 11a": 3,
+        "Absorber 11b": 2,
+        "Absorber 11c": 1,
+        "Absorber 11d": 0
     }
     loaded = {
         "s0": -1,
@@ -272,7 +275,10 @@ $("document").ready(function () {
       "Absorber 8": "A8",
       "Absorber 9": "A9",
       "Absorber 10": "A10",
-      "Absorber 11": "A11",
+      "Absorber 11a": "A11",
+      "Absorber 11b": "A12",
+      "Absorber 11c": "A13",
+      "Absorber 11d": "A14",
       "Source"    : "Source"
     }
     let draggedItem = null;
@@ -315,19 +321,19 @@ $("document").ready(function () {
 
             aList.addEventListener('drop', function(e){
                 let key = draggedItem.textContent
-                console.log(draggedItem)
-                console.log(e)
-                console.log(parentSlot)
-                console.log(parentSlot.className)
-                console.log("KEY:" + key)
-                console.log("LOCATIONS:" + absorberLocations[key])
-                console.log("THIS:")
-                console.log(this)
-                console.log("Children:")
-                console.log(this.children)
+                // console.log(draggedItem)
+                // console.log(e)
+                // console.log(parentSlot)
+                // console.log(parentSlot.className)
+                // console.log("KEY:" + key)
+                // console.log("LOCATIONS:" + absorberLocations[key])
+                // console.log("THIS:")
+                // console.log(this)
+                // console.log("Children:")
+                // console.log(this.children)
                 let holder = this.children[absorberLocations[key]];
-                console.log("holder:")
-                console.log(holder)
+                // console.log("holder:")
+                // console.log(holder)
                 holder.innerHTML = "";
                 holder.appendChild(draggedItem);
                 if (parentSlot.className == "slot") {
