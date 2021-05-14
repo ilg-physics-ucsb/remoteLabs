@@ -20,3 +20,21 @@ h2 {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.outer1{
+  opacity: 1;
+  border: 2px solid rgba(0,0,0,1);
+}
+
+.outer1:hover .lamp_img{
+  opacity: .3;
+}
+
+.outer{
+  opacity: 1;
+  border: 2px solid rgba(0,0,0,1);
+}
+
+.outer:hover .image{
+  opacity: .3
+}

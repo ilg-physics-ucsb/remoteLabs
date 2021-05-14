@@ -76,9 +76,66 @@ function sleep(ms){
     return new Promise(r => setTimeout(r, ms));
 }
 
+//syncing page telescope radio button to modal telescope radio button
+function tHandleChange(src){
+    console.log(src.value);
+    if(src.value == 1){
+        document.getElementById('MfineArm').checked = true;
+    }
+    else if(src.value == 5){
+        document.getElementById('MmediumArm').checked = true;
+    }
+    else{
+        document.getElementById('McoarseArm').checked = true;
+    }
+}
+
+//syncing page grating radio button to modal grating radio button
+function gHandleChange(src){
+    console.log(src.value);
+    if(src.value == 20){
+        document.getElementById('MfineTable').checked = true;
+    }
+    else if(src.value == 200){
+        document.getElementById('MmediumTable').checked = true;
+    }
+    else{
+        document.getElementById("McoarseTable").checked = true;
+    }
+}
+
+// syncing modal telescope radio button to page telescope radio button
+function mtHandleChange(src){
+    console.log(src.value);
+    if(src.value == 1){
+        document.getElementById('fineArm').checked = true;
+    }
+    else if(src.value == 5){
+        document.getElementById('mediumArm').checked = true;
+    }
+    else{
+        document.getElementById('coarseArm').checked = true;
+    }
+}
+
+//syncing modal Grating radio button to page grating radio button
+function mgHandleChange(src){
+    console.log(src.value);
+    if(src.value == 20){
+        document.getElementById('fineTable').checked = true;
+    }
+    else if(src.value == 200){
+        document.getElementById('mediumTable').checked = true;
+    }
+    else{
+        document.getElementById('coarseTable').checked = true;
+    }
+}
+
 var c_wrap
 var liveStream
 var slitModal, extremaModal
+var pValue = "coarsePicture"
 
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
@@ -308,6 +365,90 @@ $("document").ready(function () {
     var gCoarse = document.getElementById('coarseTable');
     var gratingSteps=200; //roughly ten degrees
 
+    
+    //for Modal Telescope Settings
+    var tmCW = document.getElementById('arrowbuttonCW');
+    var tmCCW = document.getElementById('arrowbuttonCCW');
+    var tMfine = document.getElementById('MfineArm');
+    var tMmedium = document.getElementById('MmediumArm');
+    var tMcoarse = document.getElementById('McoarseArm');
+    //for Modal Grating Settings
+    var gmCW = document.getElementById('arrowCW');
+    var gmCCW = document.getElementById('arrowCCW');
+    var gMFine = document.getElementById('MfineTable');
+    var gMMedium = document.getElementById('MmediumTable');
+    var gMCoarse = document.getElementById('McoarseTable');
+    //for Modal Lamp Settings
+    var nudgeLeftModal = document.getElementById('uparrow');
+    var nudgeRightModal = document.getElementById('downarrow')
+
+    //for Element Picture Settings
+    var pCoarse = document.getElementById('coarseElement');
+    var pFine = document.getElementById('fineElement');
+    var He = document.getElementById('He_fullSpectrum')
+    var Ne = document.getElementById('Ne_fullSpectrum')
+    var Ar = document.getElementById('Ar_fullSpectrum')
+    var Kr = document.getElementById('Kr_fullSpectrum')
+    var Xe = document.getElementById('Xe_fullSpectrum')
+
+    //BEGIN picture toggling setting
+    pFine.addEventListener('click', function(){
+        pValue = pFine.value
+    })
+    pCoarse.addEventListener('click', function(){
+        pValue = pCoarse.value
+    })
+
+    //BEGIN picture toggling for Helium
+    He.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            He.href = "static/docs/He_Spectrum.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            He.href = "static/docs/He_majorPeaks.png";
+        }
+    })
+
+    //BEGIN picture toggling for Neon
+    Ne.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            Ne.href = "static/docs/Ne_Spectrum.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Ne.href = "static/docs/Ne_majorPeaks.jpg";
+        }
+    })
+
+    //BEGIN picture toggling for Argon
+    Ar.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            console.log("Fine should be clicked");
+            Ar.href = "static/docs/Ar_Spectrum.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Ar.href = "static/docs/Ar_majorPeaks.jpg";
+        }
+    })
+
+    //BEGIN picture toggling for Krypton
+    Kr.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            Kr.href = "static/docs/Kr_Spectrum.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Kr.href = "static/docs/Kr_majorPeaks.jpg";
+        }
+    })
+
+    //BEGIN picture toggling for Xenon
+    Xe.addEventListener('click', function(){
+        if(pValue == "finePicture"){
+            Xe.href = "static/docs/Xe_Spectrum.jpg";
+        }
+        else if(pValue == "coarsePicture"){
+            Xe.href = "static/docs/Xe_Spectrum.jpg";
+        }
+    })
 
     //BEGIN Ambient Toggling 
      
@@ -614,7 +755,7 @@ $("document").ready(function () {
 
     //END Lamp Toggling
 
-//BEGIN Lamp Nudging
+    //BEGIN Lamp Nudging
 
     nudgeLeft.addEventListener('click',function() {
         console.log("Lamp nudged left");
@@ -624,7 +765,18 @@ $("document").ready(function () {
         console.log("Lamp nudged right");
         dataChannel.send("Carousel/move/-20")
     })
-//END Lamp Nudging
+    //END Lamp Nudging
+
+    //BEGIN Modal Lamp Nudging
+    nudgeLeftModal.addEventListener('click',function(){
+        console.log("Modal Lamp nudged left");
+        dataChannel.send("Carousel/move/20")
+    })
+    nudgeRightModal.addEventListener('click',function() {
+        console.log("Modal Lamp nudged right");
+        dataChannel.send("Carousel/move/-20")
+    })
+    //END Modal Lamp Nudging
 
     //BEGIN Grating buttons
     gFine.addEventListener('click', function(){gratingSteps=20;})        //roughly one degree
@@ -642,6 +794,20 @@ $("document").ready(function () {
 
     //END  Grating Buttons
 
+    //BEGIN Modal Grating buttons
+    gMFine.addEventListener('click',function(){gratingSteps=20;})
+    gMMedium.addEventListener('click', function(){gratingSteps=200;})
+    gMCoarse.addEventListener('click', function(){gratingSteps=600;})  
+    gmCW.addEventListener('click', function(){
+        console.log("Modal Grating turned CW");
+        dataChannel.send("Grating/move/"+gratingSteps)
+    })
+    gmCCW.addEventListener('click', function(){
+        console.log("Modal Grating turned CCW");
+        dataChannel.send("Grating/move/"+(-gratingSteps));
+    })
+    //End Modal Grating Buttons
+
    //BEGIN Arm Buttons 
    tFine.addEventListener('click', function(){telescopeSteps=10;})
    tMedium.addEventListener('click', function(){telescopeSteps=30;})
@@ -658,6 +824,21 @@ $("document").ready(function () {
        dataChannel.send("Arm/move/"+(-telescopeSteps));
     })
    //END Arm Buttons
+
+    //BEGIN Modal Arm Buttons
+    tMfine.addEventListener('click', function(){telescopeSteps=10;})
+    tMmedium.addEventListener('click', function(){telescope=30;})
+    tMcoarse.addEventListener('click', function(){telescopeSteps=100;})
+    tmCW.addEventListener('click', function(){
+        console.log("Modal Telescope turned CW");
+        dataChannel.send("Arm/move/"+telescopeSteps);
+    })
+    tmCCW.addEventListener('click', function() {
+        // Changed for AS 
+        console.log("Modal Telescope turned CCW");
+        dataChannel.send("Arm/move/"+(-telescopeSteps));
+     })
+    //END Modal Arm Buttons
 
    //BEGIN Slit Buttons 
    fineSlit.addEventListener('click', function(){
@@ -691,7 +872,9 @@ $("document").ready(function () {
 
    //END Slit Buttons
 
- 
+   // makes modal draggable
+   $('#myModalschem').draggable()
+
  //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
     
     $('#LampsAllOff').mapster({
@@ -755,6 +938,16 @@ $("document").ready(function () {
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
   
+  $('Arrows').mapster({
+    mapKey: 'id',
+    fillColor: 'f5f5b5',
+    fillOpacity: 0.6,
+    render_select:{
+        fillOpacity: 0.3
+    },
+    singleSelect: true
+  }).parent().css({"margin":"0 auto"})
+
   window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
     mainCamSignal.hangup();

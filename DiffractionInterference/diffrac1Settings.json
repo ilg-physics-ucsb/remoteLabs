@@ -7,40 +7,40 @@
     
     "ambientPin": 5,
 
-    "multiSlitBounds":[-12000, 12000],
-    "singleSlitBounds":[-12000,12000],
+    "multiSlitBounds":[-16000, 16000],
+    "singleSlitBounds":[-16000,16000],
     "stageBounds":[-9750, 0],
 
     "refPointsSingle" : {
         "SingleOpen": 0,
-        "LineSlit": 600,
-        "LittleHole": 1250,
-        "BigHole": 1875,
-        "A02": 2775,
-        "A04": 3450,
-        "A08": 4075,
-        "A16": 4725,
-        "VaryWidth": 5875,
-        "Square": 8575,
-        "Hex": 9200,
-        "Dots": 9900,
-        "Holes": 10500
+        "LineSlit": 900,
+        "LittleHole": 1800,
+        "BigHole": 2850,
+        "A02": 4000,
+        "A04": 4950,
+        "A08": 5850,
+        "A16": 6750,
+        "VaryWidth": 8400,
+        "Square": 12400,
+        "Hex": 13300,
+        "Dots": 14300,
+        "Holes": 15200
     },
 
     "refPointsMulti": {
         "MultiOpen": 0,
-        "FarClose": 600,
-        "WideThin": 1200,
-        "ThreeTwo": 1850,
-        "TwoSlit": 2775,
-        "ThreeSlit": 3400,
-        "FourSlit": 4025,
-        "FiveSlit": 4725,
-        "A04D25": 5650,
-        "A04D50": 6300,
-        "A08D25": 6925,
-        "A08D50": 7550,
-        "VarySpacing": 8600
+        "FarClose": 800,
+        "WideThin": 1800,
+        "ThreeTwo": 2600,
+        "TwoSlit": 3900,
+        "ThreeSlit": 4800,
+        "FourSlit": 5700,
+        "FiveSlit": 6600,
+        "A04D25": 8000,
+        "A04D50": 8900,
+        "A08D25": 9900,
+        "A08D50": 10800,
+        "VarySpacing": 12200
     },
 
     "defaultCameraSettings":{
