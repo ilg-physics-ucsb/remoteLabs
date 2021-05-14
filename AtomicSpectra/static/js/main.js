@@ -67,8 +67,13 @@ function controllerResponseHandler(cmd) {
     }
 
     if (device == "Slit") {
-        console.log("Controller Response Hide")
+        // console.log("Controller Response Hide")
         slitModal.modal('hide')
+    }
+
+    if (device == "Carousel") {
+        // console.log("Controller Response Hide")
+        carouselModal.modal('hide')
     }
 }
 
@@ -134,7 +139,7 @@ function mgHandleChange(src){
 
 var c_wrap
 var liveStream
-var slitModal, extremaModal
+var slitModal, extremaModal, contactModal, bootModal, carouselModal
 var pValue = "coarsePicture"
 
 var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
@@ -194,6 +199,9 @@ $("document").ready(function () {
 
 
     slitModal = $("#slitModal")
+    contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
+    carouselModal = $("carouselModal")
 
     extremaModal = $("#extremaModal")
 
@@ -509,7 +517,7 @@ $("document").ready(function () {
     
     //BEGIN Lamp Toggling
 
-    function H2PressCmd() {
+    async function H2PressCmd() {
         // If it is already on and is just switching to H2
         // Turn off carousel, move to H2, turn on carousel
         if(lampSupplyState && (spectraLamp != "H2")){
@@ -519,7 +527,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a");               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/h2");
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -537,7 +546,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/h2")
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -606,7 +616,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -624,7 +635,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -678,7 +690,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -696,7 +709,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
