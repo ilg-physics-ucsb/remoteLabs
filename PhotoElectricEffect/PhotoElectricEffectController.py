@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithley2000Multimeter, Plug, PDUOutlet
-import visa
+import pyvisa as visa
 import argparse, os, json
 
 parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
@@ -24,7 +24,8 @@ electrometer_address = labSettings["electrometer_address"]
 multimeter_address = labSettings["multimeter_address"]
 refPoints = labSettings["refPoints"]
 potBounds = labSettings["potBounds"]
-filterBounds = labSettings["filterBounds"]
+colorFilterBounds = labSettings["colorFilterBounds"]
+densityFilterBounds = labSettings["densityFilterBounds"]
 
 if args.admin:
     bounds = bounds = (-1e6, 1e6)
@@ -43,7 +44,8 @@ visa_multimeter.write_termination = "\r\n"
 socket_path = "/tmp/uv4l.socket"
 
 potentiometer = StepperI2C("Pot", 2, bounds=potBounds)
-filterWheel = StepperI2C("Wheel", 1, bounds=filterBounds, refPoints=refPoints)
+colorFilterWheel = StepperI2C("colorWheel", 1, bounds=colorFilterBounds, refPoints=refPoints)
+densityFilterWheel = StepperI2C("densityWheel", 3, bounds=densityFilterBounds, refPoints=refPoints)
 
 PEpdu = PDUOutlet("PEpdu", "128.111.18.80", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 PEpdu.login()
@@ -54,7 +56,8 @@ multimeter = Keithley2000Multimeter("Multimeter", visa_multimeter)
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
 potentiometer.device.release()
-filterWheel.device.release()
+colorFilterWheel.device.release()
+densityFilterWheel.device.release()
 
 if args.reset:
     exp = Experiment("PhotoElectricEffect")
@@ -64,10 +67,11 @@ else:
     exp = Experiment("PhotoElectricEffect")
 exp.add_device(PEpdu)
 exp.add_device(potentiometer)
-exp.add_device(filterWheel)
+exp.add_device(colorFilterWheel)
+exp.add_device(densityFilterWheel)
 exp.add_device(electrometer)
 exp.add_device(multimeter)
 exp.set_socket_path(socket_path)
-if not args.reset or not args.admin:
+if not args.reset and not args.admin:
     exp.recallState()
 exp.setup()

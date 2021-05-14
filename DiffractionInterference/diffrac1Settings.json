@@ -13,8 +13,8 @@
 
     "refPointsSingle" : {
         "SingleOpen": 0,
-        "LineSlit": 1100,
-        "LittleHole": 2000,
+        "LineSlit": 900,
+        "LittleHole": 1800,
         "BigHole": 2850,
         "A02": 4250,
         "A04": 5200,
