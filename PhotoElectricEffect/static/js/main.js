@@ -73,13 +73,21 @@ window.addEventListener('DOMContentLoaded', function () {
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
     // var video2 = document.getElementById('v2');
-    
-    // for Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
+    // for Color Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
     var f365 = document.getElementById('f365');
     var f436 = document.getElementById('f436');
     var f546 = document.getElementById('f546');
     var f577 = document.getElementById('f577');
-    var filterwheel = document.getElementById('filterwheel')
+    var colorFilterwheel = document.getElementById('colorFilterWheel')
+ 
+    // for Density Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
+    var nd00 = document.getElementById('nd00');
+    var nd03 = document.getElementById('nd03');
+    var nd05 = document.getElementById('nd05');
+    var nd10 = document.getElementById('nd10');
+    var nd20 = document.getElementById('nd20');
+    var nd40 = document.getElementById('nd40');
+    var densityFilterwheel = document.getElementById('densityFilterWheel')
 
     // for Keithley 6514 Electrometer
     var shift6514Button = document.getElementById('Shift6514');
@@ -296,7 +304,7 @@ window.addEventListener('DOMContentLoaded', function () {
     })
 //END Potentiometer Buttons
 
-//BEGIN Filter Wheel Buttons 
+//BEGIN Color Filter Wheel Buttons 
     function calculateWheelSteps(currentPosition, desiredPosition) {
         //Math to be implimented
         let motorSteps = 0;
@@ -317,31 +325,84 @@ window.addEventListener('DOMContentLoaded', function () {
     f577.addEventListener('click', function(event) {
         console.log("f577 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/180deg");
+        dataChannel.send("colorWheel/goto/180deg");
         // filterwheel.style.transform='rotate(0deg)';
         return false
     })
     f546.addEventListener('click', function(event) {
         console.log("f546 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/120deg");
+        dataChannel.send("colorWheel/goto/120deg");
         // filterwheel.style.transform='rotate(-30deg)';
         return false
     })
     f436.addEventListener('click', function(event) {
         console.log("f436 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/60deg");
+        dataChannel.send("colorWheel/goto/60deg");
         // filterwheel.style.transform='rotate(-60deg)';
         return false
     })
     f365.addEventListener('click', function(event) {
         console.log("f365 was clicked");
         event.stopPropagation();
-        dataChannel.send("Wheel/goto/0deg");
+        dataChannel.send("colorWheel/goto/0deg");
         // filterwheel.style.transform='rotate(-90deg)';
         return false
     })
+//END Filter Wheel Buttons
+
+//BEGIN ND Filter Wheel Buttons 
+function calculateWheelSteps(currentPosition, desiredPosition) {
+    //Math to be implimented
+    let motorSteps = 0;
+    motorSteps = (desiredPosition - currentPosition) * stepsPerDegree;
+    //Last thing to do:
+    currentPosition = desiredPosition;
+    return motorSteps
+}   
+nd00.addEventListener('click', function(event) {
+    console.log("ND OPEN was clicked");
+    event.stopPropagation();
+    dataChannel.send("densityWheel/goto/0deg");
+    // filterwheel.style.transform='rotate(0deg)';
+    return false
+})
+nd03.addEventListener('click', function(event) {
+    console.log("ND 0.3 was clicked");
+    event.stopPropagation();
+    dataChannel.send("densityWheel/goto/300deg");
+    // filterwheel.style.transform='rotate(-30deg)';
+    return false
+})
+nd05.addEventListener('click', function(event) {
+    console.log("ND 0.5 was clicked");
+    event.stopPropagation();
+    dataChannel.send("densityWheel/goto/240deg");
+    // filterwheel.style.transform='rotate(-60deg)';
+    return false
+})
+nd10.addEventListener('click', function(event) {
+    console.log("ND 1.0 was clicked");
+    event.stopPropagation();
+    dataChannel.send("densityWheel/goto/180deg");
+    // filterwheel.style.transform='rotate(-90deg)';
+    return false
+})
+nd20.addEventListener('click', function(event) {
+    console.log("ND 2.0 was clicked");
+    event.stopPropagation();
+    dataChannel.send("densityWheel/goto/120deg");
+    // filterwheel.style.transform='rotate(-90deg)';
+    return false
+})
+nd40.addEventListener('click', function(event) {
+    console.log("ND 4.0 was clicked");
+    event.stopPropagation();
+    dataChannel.send("densityWheel/goto/60deg");
+    // filterwheel.style.transform='rotate(-90deg)';
+    return false
+})
 //END Filter Wheel Buttons
     
 //BEGIN Keithley 6514 Electrometer Buttons

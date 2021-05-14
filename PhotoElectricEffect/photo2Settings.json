@@ -12,8 +12,11 @@
         "0deg":0,
         "60deg":270,
         "120deg":540,
-        "180deg":810
+        "180deg":810,
+        "240deg":1080,
+        "300deg":1350
         },
     "potBounds": [0, 2100],
-    "filterBounds": [0, 810]
+    "colorFilterBounds": [0, 810],
+    "densityFilterBounds": [0, 1350]
 }
