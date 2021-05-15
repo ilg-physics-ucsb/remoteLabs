@@ -656,7 +656,7 @@ $("document").ready(function () {
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             carouselModal.modal("show")
-            await sleep(1000)
+            await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
