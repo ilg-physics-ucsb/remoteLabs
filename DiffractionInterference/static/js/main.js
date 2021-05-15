@@ -73,7 +73,7 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
-    stagemodal = $("#stageModal")
+    stageModal = $("#stageModal")
     exposureDisplay = $("#expVal")[0]
     exposureSlider = $("#exposureSlider")[0]
     brightnessDisplay = $("#briVal")[0]
