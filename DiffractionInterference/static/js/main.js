@@ -52,6 +52,21 @@ var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnes
 var cartSlider, cartDisplay, cartValue, setCart
 var extremaModal, stageModal
 
+function controllerResponseHandler(cmd) {
+    var components = cmd.split("/");
+    var device = components[0]
+    var info = components[1]
+    var infoValue = components[2]
+
+    if (infoValue == "limit") {
+        extremaModal.modal("show")
+    }
+
+    if (device == "Stage") {
+        stageModal.modal("hide")
+    }
+}   
+
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
@@ -579,20 +594,7 @@ $("document").ready(function () {
     var rulerCam = document.getElementById("RulerCam");
     var screenCam = document.getElementById("ScreenCam");
 
-    function controllerResponseHandler(cmd) {
-        var components = cmd.split("/");
-        var device = components[0]
-        var info = components[1]
-        var infoValue = components[2]
-
-        if (infoValue == "limit") {
-            extremaModal.modal("show")
-        }
-
-        if (device == "Stage") {
-            stageModal.modal("hide")
-        }
-    }           
+            
                      
     function sleep(ms){
         return new Promise(r => setTimeout(r, ms));
