@@ -624,7 +624,7 @@ $("document").ready(function () {
         spectraLamp = "H2"
     }
     
-    function APressCmd() {
+    async function APressCmd() {
          // If it is already on and is just switching to A
         // Turn off carousel, move to A, turn on carousel
         if(lampSupplyState && (spectraLamp != "A")){
@@ -698,7 +698,7 @@ $("document").ready(function () {
         spectraLamp = "A"
     }
 
-    function BPressCmd() {
+    async function BPressCmd() {
         // If it is already on and is just switching to B
         // Turn off carousel, move to B, turn on carousel
         if(lampSupplyState && spectraLamp != "B"){
