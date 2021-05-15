@@ -50,7 +50,7 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 var setExposure, exposureValue, setBrightness, brightnessValue, setContrast, contrastValue
 var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 var cartSlider, cartDisplay, cartValue, setCart
-var extremaModal, stageModal
+var extremaModal, stageModal, contactModal, bootModal
 
 function controllerResponseHandler(cmd) {
     var components = cmd.split("/");
@@ -65,6 +65,24 @@ function controllerResponseHandler(cmd) {
     if (device == "Stage") {
         stageModal.modal("hide")
     }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "bootModal") {
+            if (infoValue == "show") {
+                bootModal.modal("show")
+            }
+        }
+    }
 }   
 
 $("document").ready(function () {
@@ -73,6 +91,8 @@ $("document").ready(function () {
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
+    contactModal = $("contactModal")
+    bootModal = $("bootModal")
     stageModal = $("#stageModal")
     exposureDisplay = $("#expVal")[0]
     exposureSlider = $("#exposureSlider")[0]
