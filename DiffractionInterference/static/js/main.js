@@ -544,15 +544,19 @@ $("document").ready(function () {
         prevValue = currValue
     }
 
-    async function setCart(){
+    setCart = function(){
         console.log("move cart to "+cartSlider.value)
         moveStageTo = Math.round(9750*((cartSlider.value-prevValue)/100))
         if (moveStageTo > 9750/6) {
-            stageModal.modal("show")
-            await sleep(2500)
+            showStageModal()
         }
         dataChannel.send("Stage/move/"+ moveStageTo)
         currValue = cartSlider.value
+    }
+
+    async function showStageModal() {
+        stageModal.modal("show")
+        await sleep(2500)
     }
     
     cartValue = function(){
