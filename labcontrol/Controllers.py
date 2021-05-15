@@ -317,7 +317,8 @@ class StepperI2C(MotorKit, BaseController):
     def goto(self, position):
         print(position)
         endPoint=self.refPoints[position]
-        self.move(endPoint-self.currentPosition)
+        response = self.move(endPoint-self.currentPosition)
+        return response
 
     def goto_parser(self, params):
         if len(params) != 1:
