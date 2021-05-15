@@ -548,6 +548,7 @@ $("document").ready(function () {
         console.log("move cart to "+cartSlider.value)
         moveStageTo = Math.round(9750*((cartSlider.value-prevValue)/100))
         if (moveStageTo > 9750/6) {
+            console.log("Show Modal")
             showStageModal()
         }
         dataChannel.send("Stage/move/"+ moveStageTo)
