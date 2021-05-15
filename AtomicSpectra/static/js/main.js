@@ -86,6 +86,7 @@ function controllerResponseHandler(cmd) {
                 bootModal.modal("show")
             }
         }
+    }
 
     if (device == "Carousel") {
         // console.log("Controller Response Hide")
