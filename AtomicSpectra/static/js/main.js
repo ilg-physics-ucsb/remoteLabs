@@ -636,6 +636,7 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
+            console.log("Should be showing Modal")
             carouselModal.modal("show")
             await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
@@ -655,6 +656,7 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
+            console.log("Should be showing Modal")
             carouselModal.modal("show")
             await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
