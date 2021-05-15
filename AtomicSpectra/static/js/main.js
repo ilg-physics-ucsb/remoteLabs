@@ -70,6 +70,23 @@ function controllerResponseHandler(cmd) {
         console.log("Controller Response Hide")
         slitModal.modal('hide')
     }
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "bootModal") {
+            if (infoValue == "show") {
+                bootModal.modal("show")
+            }
+        }
+    }
 }
 
 function sleep(ms){
@@ -134,7 +151,7 @@ function mgHandleChange(src){
 
 var c_wrap
 var liveStream
-var slitModal, extremaModal
+var slitModal, extremaModal, contactModal, bootModal
 var pValue = "coarsePicture"
 
 var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
@@ -196,6 +213,8 @@ $("document").ready(function () {
     slitModal = $("#slitModal")
 
     extremaModal = $("#extremaModal")
+    contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
 
     //for multi-camera switching
     var OverviewCam = document.getElementById("OverviewCam");
