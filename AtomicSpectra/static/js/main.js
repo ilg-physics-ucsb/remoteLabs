@@ -219,7 +219,7 @@ $("document").ready(function () {
     slitModal = $("#slitModal")
     contactModal = $("#contactModal")
     bootModal = $("#bootModal")
-    carouselModal = $("carouselModal")
+    carouselModal = $("#carouselModal")
 
     extremaModal = $("#extremaModal")
     contactModal = $("#contactModal")
@@ -636,7 +636,7 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            console.log("Should be showing Modal")
+            // console.log("Should be showing Modal")
             carouselModal.modal("show")
             await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
@@ -656,7 +656,7 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            console.log("Should be showing Modal")
+            // console.log("Should be showing Modal")
             carouselModal.modal("show")
             await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
