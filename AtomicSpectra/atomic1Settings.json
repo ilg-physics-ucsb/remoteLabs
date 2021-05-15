@@ -24,7 +24,7 @@
 
     "slitBounds": [0,600],
     "gratingBounds": [-450,450],
-    "armBounds": [-10000, 9200],
+    "armBounds": [-12000, 12000],
     "carouselBounds": [-160, 15520],
     
     "limitBounce": 500,
