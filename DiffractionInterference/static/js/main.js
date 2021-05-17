@@ -48,14 +48,52 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 }
 
 var setExposure, exposureValue, setBrightness, brightnessValue, setContrast, contrastValue
-var extremaModal, exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
+var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 var cartSlider, cartDisplay, cartValue, setCart
+var extremaModal, stageModal, contactModal, bootModal
+
+function controllerResponseHandler(cmd) {
+    var components = cmd.split("/");
+    var device = components[0]
+    var info = components[1]
+    var infoValue = components[2]
+
+    if (infoValue == "limit") {
+        extremaModal.modal("show")
+    }
+
+    if (device == "Stage") {
+        stageModal.modal("hide")
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "bootModal") {
+            if (infoValue == "show") {
+                bootModal.modal("show")
+            }
+        }
+    }
+}   
+
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     var liveStream = document.getElementById("v");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
+    contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
+    stageModal = $("#stageModal")
     exposureDisplay = $("#expVal")[0]
     exposureSlider = $("#exposureSlider")[0]
     brightnessDisplay = $("#briVal")[0]
@@ -529,8 +567,17 @@ $("document").ready(function () {
     setCart = function(){
         console.log("move cart to "+cartSlider.value)
         moveStageTo = Math.round(9750*((cartSlider.value-prevValue)/100))
+        if (Math.abs(moveStageTo) > 9750/6) {
+            console.log("Show Modal")
+            showStageModal()
+        }
         dataChannel.send("Stage/move/"+ moveStageTo)
         currValue = cartSlider.value
+    }
+
+    async function showStageModal() {
+        stageModal.modal("show")
+        await sleep(2500)
     }
     
     cartValue = function(){
@@ -572,18 +619,7 @@ $("document").ready(function () {
     var rulerCam = document.getElementById("RulerCam");
     var screenCam = document.getElementById("ScreenCam");
 
-    function controllerResponseHandler(cmd) {
-        var components = cmd.split("/");
-        var device = components[0]
-        var info = components[1]
-        var infoValue = components[2]
-
-        if (infoValue == "limit") {
-            extremaModal.modal("show")
-        }
-    }
-
-                     
+            
                      
     function sleep(ms){
         return new Promise(r => setTimeout(r, ms));

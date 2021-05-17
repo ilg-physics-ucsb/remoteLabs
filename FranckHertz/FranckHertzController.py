@@ -27,6 +27,8 @@ VaBounds                = labSettings["VaBounds"]
 VrBounds                = labSettings["VrBounds"]
 ovenGearRatio               = labSettings["ovenGearRatio"]
 
+videoNumber             = labSettings["videoNumber"]
+
 if args.admin:
     bounds = (-1e6, 1e6)
     filamentBounds=bounds
@@ -39,7 +41,7 @@ visa_electrometer = resource_manager.open_resource('ASRL/dev/ttyUSB'+ str(electr
 visa_electrometer.read_termination = "\r\n"
 visa_electrometer.write_termination = "\r\n"
 
-camera = ArduCamMultiCamera("Camera", 1)
+camera = ArduCamMultiCamera("Camera", videoNumber)
 
 socket_path = "/tmp/uv4l.socket"
 
@@ -64,11 +66,11 @@ Va.device.release()
 Vr.device.release()
 
 if args.reset:
-    exp = Experiment("FranckHertz")
+    exp = Experiment("FranckHertz", messenger=True)
 elif args.admin:
     exp = Experiment("FranckHertz", admin=True)
 else:
-    exp=Experiment("FranckHertz")
+    exp=Experiment("FranckHertz", messenger=True)
 exp.add_device(camera)
 exp.add_device(FHpdu)
 exp.add_device(oven)

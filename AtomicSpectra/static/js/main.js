@@ -61,14 +61,37 @@ function controllerResponseHandler(cmd) {
     var device = components[0]
     var info = components[1]
     var infoValue = components[2]
+    console.log(device)
 
     if (infoValue == "limit") {
         extremaModal.modal("show")
     }
 
     if (device == "Slit") {
-        console.log("Controller Response Hide")
+        // console.log("Controller Response Hide")
         slitModal.modal('hide')
+    }
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "bootModal") {
+            if (infoValue == "show") {
+                bootModal.modal("show")
+            }
+        }
+    }
+
+    if (device == "Carousel") {
+        // console.log("Controller Response Hide")
+        carouselModal.modal('hide')
     }
 }
 
@@ -134,7 +157,7 @@ function mgHandleChange(src){
 
 var c_wrap
 var liveStream
-var slitModal, extremaModal
+var slitModal, extremaModal, contactModal, bootModal, carouselModal
 var pValue = "coarsePicture"
 
 var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
@@ -194,8 +217,13 @@ $("document").ready(function () {
 
 
     slitModal = $("#slitModal")
+    contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
+    carouselModal = $("#carouselModal")
 
     extremaModal = $("#extremaModal")
+    contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
 
     //for multi-camera switching
     var OverviewCam = document.getElementById("OverviewCam");
@@ -509,7 +537,7 @@ $("document").ready(function () {
     
     //BEGIN Lamp Toggling
 
-    function H2PressCmd() {
+    async function H2PressCmd() {
         // If it is already on and is just switching to H2
         // Turn off carousel, move to H2, turn on carousel
         if(lampSupplyState && (spectraLamp != "H2")){
@@ -519,7 +547,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a");               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/h2");
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -537,7 +566,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/h2")
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -596,7 +626,7 @@ $("document").ready(function () {
         spectraLamp = "H2"
     }
     
-    function APressCmd() {
+    async function APressCmd() {
          // If it is already on and is just switching to A
         // Turn off carousel, move to A, turn on carousel
         if(lampSupplyState && (spectraLamp != "A")){
@@ -606,7 +636,9 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            // console.log("Should be showing Modal")
+            carouselModal.modal("show")
+            await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -624,7 +656,9 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            // console.log("Should be showing Modal")
+            carouselModal.modal("show")
+            await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -668,7 +702,7 @@ $("document").ready(function () {
         spectraLamp = "A"
     }
 
-    function BPressCmd() {
+    async function BPressCmd() {
         // If it is already on and is just switching to B
         // Turn off carousel, move to B, turn on carousel
         if(lampSupplyState && spectraLamp != "B"){
@@ -678,7 +712,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
@@ -696,7 +731,8 @@ $("document").ready(function () {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
-            // Add waiting popup (modal) here
+            carouselModal.modal("show")
+            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");

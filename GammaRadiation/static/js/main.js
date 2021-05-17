@@ -45,6 +45,15 @@ function controllerResponseHandler(cmd) {
         }
     }
 
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "bootModal") {
+            if (infoValue == "show") {
+                bootModal.modal("show")
+            }
+        }
+    }
+
 }
 
 // This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
@@ -70,13 +79,14 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
-var extremaModal, contactModal
+var extremaModal, contactModal, bootModal
 
 $("document").ready(function () {
 
     var liveStream = document.getElementById("v");
     extremaModal = $("#extremaModal")
     contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
 
     // Define Variables that are MWRAPs for use inside of callbacks
     var mWrap1, mWrap2, mWrap6, mWrap7

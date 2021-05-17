@@ -57,11 +57,28 @@ function controllerResponseHandler(cmd) {
     if (infoValue == "limit") {
         extremaModal.modal("show")
     }
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "contactModal") {
+            if (infoValue == "show") {
+                contactModal.modal("show")
+            }
+        }
+    }
+
+    if (device == "Messenger") {
+        console.log("Received Messenger")
+        if (info == "bootModal") {
+            if (infoValue == "show") {
+                bootModal.modal("show")
+            }
+        }
+    }
 
 
 }
 
-var extremaModal
+var extremaModal, contactModal, bootModal
 
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
@@ -69,6 +86,8 @@ window.addEventListener('DOMContentLoaded', function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     extremaModal = $("#extremaModal")
+    contactModal = $("#contactModal")
+    bootModal = $("#bootModal")
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
