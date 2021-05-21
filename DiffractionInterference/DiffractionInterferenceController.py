@@ -71,6 +71,7 @@ stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=stageDe
 # Style Old: style="DOUBLE"
 # StepperI2C 'style' options are: 'SINGLE' 'DOUBLE' 'INTERLEAVE' 'MICROSTEP'
 # Default is 8 microsteps
+# Just a test note
 
 
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)

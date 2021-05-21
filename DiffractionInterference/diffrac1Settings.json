@@ -52,7 +52,7 @@
         "exposure_mode": 1
     },
 
-    "stageDelay": 0.004,
+    "stageDelay": 0.003,
     "multiSlitDelay": 0.001,
     "singleSlitDelay": 0.001,
 
