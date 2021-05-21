@@ -59,5 +59,9 @@
         "exposure_mode": 1
     },
 
+    "stageDelay": 0.0005,
+    "multiSlitDelay": 0.001,
+    "singleSlitDelay": 0.001,
+
     "videoNumber": 0
 }

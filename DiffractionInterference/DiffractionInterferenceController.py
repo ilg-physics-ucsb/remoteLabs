@@ -36,7 +36,11 @@ multiSlitBounds = labSettings["multiSlitBounds"]
 singleSlitBounds= labSettings["singleSlitBounds"]
 stageBounds     = labSettings["stageBounds"]
 refPointsSingle = labSettings["refPointsSingle"]
-refPointsMulti = labSettings["refPointsMulti"]
+refPointsMulti  = labSettings["refPointsMulti"]
+
+stageDelay      = labSettings["stageDelay"]
+multiSlitDelay  = labSettings["multiSlitDelay"]
+singleSlitDelay = labSettings["singleSlitDelay"]
 
 videoNumber     = labSettings["videoNumber"]
 
@@ -59,9 +63,9 @@ socket_path = "/tmp/uv4l.socket"
 # screen = SingleGPIO("Screen", 26)
 ambient = SingleGPIO("Ambient", ambientPin)
 
-multiSlits = StepperI2C("MultiSlits", 1, bounds=multiSlitBounds, style="MICROSTEP", delay=0.001, refPoints=refPointsMulti)  #Multiple Slits
-singleSlits = StepperI2C("SingleSlits", 2,bounds=singleSlitBounds, style="MICROSTEP", delay=0.001, refPoints=refPointsSingle) #Single Slits
-stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=0.0005) #Screen
+multiSlits = StepperI2C("MultiSlits", 1, bounds=multiSlitBounds, style="MICROSTEP", delay=multiSlitDelay, refPoints=refPointsMulti)  #Multiple Slits
+singleSlits = StepperI2C("SingleSlits", 2,bounds=singleSlitBounds, style="MICROSTEP", delay=singleSlitDelay, refPoints=refPointsSingle) #Single Slits
+stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=stageDelay) #Screen
 
 # Delay Old: delay=0.00004
 # Style Old: style="DOUBLE"
