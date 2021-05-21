@@ -18,6 +18,8 @@
     "singleSlitBounds":[-16000,16000],
     "stageBounds":[-9750, 0],
 
+    "stageTerminal": 4,
+
     "refPointsSingle" : {
         "SingleOpen": 0,
         "LineSlit": 1100,

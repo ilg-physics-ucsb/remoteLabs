@@ -42,6 +42,8 @@ stageDelay      = labSettings["stageDelay"]
 multiSlitDelay  = labSettings["multiSlitDelay"]
 singleSlitDelay = labSettings["singleSlitDelay"]
 
+stageTerminal   = labSettings["stageTerminal"]
+
 videoNumber     = labSettings["videoNumber"]
 
 if args.admin:
@@ -65,7 +67,7 @@ ambient = SingleGPIO("Ambient", ambientPin)
 
 multiSlits = StepperI2C("MultiSlits", 1, bounds=multiSlitBounds, style="MICROSTEP", delay=multiSlitDelay, refPoints=refPointsMulti)  #Multiple Slits
 singleSlits = StepperI2C("SingleSlits", 2,bounds=singleSlitBounds, style="MICROSTEP", delay=singleSlitDelay, refPoints=refPointsSingle) #Single Slits
-stage = StepperI2C("Stage", 4, bounds=stageBounds, style="DOUBLE", delay=stageDelay) #Screen
+stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=stageDelay) #Screen
 
 # Delay Old: delay=0.00004
 # Style Old: style="DOUBLE"
