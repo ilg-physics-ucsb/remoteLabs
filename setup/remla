@@ -142,8 +142,6 @@ def message(args):
         print("Socket Error:  {0}".format(msg))
        
 
-
-
 def stop(args):
     os.system("sudo pkill uv4l")
     time.sleep(1)
@@ -152,8 +150,48 @@ def stop(args):
     except:
         print("No python process was found. Killing uv4l only.")
         return
-    print("Interupt signal sent. Please wait 30 seconds for shutdown to complete.")
+    print("Interupt signal sent. Please wait 60 seconds for shutdown to complete.")
     # os.system("sudo pkill python3")
+
+def update(args):
+    if os.path.exists(os.path.join(rl_path, "setup", "remla")):
+        os.system("sudo mv /home/pi/remotelabs/setup/remla /usr/bin")
+        os.system("sudo chmod +x /usr/bin/remla")
+    else:
+        print("No new remla file in setup directory to update with")
+
+
+def restart(args):
+    stop(args)
+    print("\r\n ~~~~ Waiting 60 seconds before autostart ~~~~")
+    time.sleep(60)
+    run(args)
+
+def git(args):
+    stop(args)
+    os.chdir(rl_path)
+    os.system("git stash")
+    time.sleep(0.3)
+    os.system("git pull")
+    time.sleep(2)
+    setup(args)
+    run(args)
+
+def boot(args):
+    connection = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
+    socket_path = "/tmp/remla.socket"
+    try:
+        connection.connect(socket_path)
+        time.sleep(0.2)
+        connection.send("Messenger/bootModal/show".encode())
+
+    except socket.error as msg:
+        print("Socket Error:  {0}".format(msg))
+    
+    print("\r\n ~~~~  Waiting 10 seconds and restarting  ~~~~ \r\n")
+    time.sleep(10)
+    print("Restarting now!")
+    restart(args)
 
 
 settings = read_json()
@@ -186,7 +224,38 @@ parser_stop.set_defaults(func=stop)
 parser_message = subparsers.add_parser("message")
 parser_message.set_defaults(func=message)
 
+parser_update = subparsers.add_parsesr("update")
+parser_update.set_defaults(func=update)
+
+parser_restart = subparsers.add_parser("restart")
+parser_restart.set_defaults(func=restart)
+parser_restart.add_argument('-f', "--foreground", action="store_true")
+group_restart = parser_restart.add_mutually_exclusive_group()
+group_restart.add_argument('-r', "--reset", action="store_true")
+group_restart.add_argument("-a", "--admin", action="store_true")
+
+parser_git = subparsers.add_parser("git")
+parser_git.set_defaults(func=git)
+parser_git.add_argument('lab')
+parser_git.add_argument('-p', '--port', default="80")
+parser_git.add_argument("-d", '--driver', default="raspicam")
+parser_git.add_argument("-s", '--settings', required=True)
+parser_git.add_argument("-u", "--uv4lPort", default="8081")
+parser_git.add_argument('-f', "--foreground", action="store_true")
+group_git = parser_git.add_mutually_exclusive_group()
+group_git.add_argument('-r', "--reset", action="store_true")
+group_git.add_argument("-a", "--admin", action="store_true")
+
+parser_boot = subparsers.add_parser("boot")
+parser_boot.set_defaults(func=boot)
+parser_boot.add_argument('-f', "--foreground", action="store_true")
+group_boot = parser_boot.add_mutually_exclusive_group()
+group_boot.add_argument('-r', "--reset", action="store_true")
+group_boot.add_argument("-a", "--admin", action="store_true")
+
+
 args = parser.parse_args()
+
 try:
     args.func(args)
 except AttributeError:
