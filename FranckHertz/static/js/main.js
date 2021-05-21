@@ -449,7 +449,7 @@ $("document").ready(function () {
     // END Power Switches
 
     //BEGIN Oven Variac Buttons 
-    threeDegOvenV.addEventListener('click', function(){ovenDegs=3.6;})
+    threeDegOvenV.addEventListener('click', function(){ovenDegs=7;})
     thirtySixDegOvenV.addEventListener('click', function(){ovenDegs=36;})
     
     lowerOvenV.addEventListener('click', function() {
