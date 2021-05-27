@@ -942,7 +942,7 @@ $("document").ready(function () {
     }
 
     var defaultScreenCameraSettings = {
-        "frame_rate":2,
+        "frame_rate":15,
         "brightness": 50,
         "contrast": 0,
         "saturation": 0,
