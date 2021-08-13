@@ -1,5 +1,6 @@
 
 // This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
+// This needs to be copy and pasted into a each main.js file.
 function connectStream(stream, videoElement) {
     if (videoElement) {
         console.log("got a stream! Putting stream in the following video" );
@@ -12,11 +13,13 @@ function connectStream(stream, videoElement) {
 }
 
 //This function runs if there is an error returned from teh websocket connecting to the stream.
+// This needs to be copy and pasted into a each main.js file.
 function errorStream(error){
     alert(error);
 }
 
 // This functions gets run when the websocket is closed.
+// This needs to be copy and pasted into a each main.js file.
 function closeStream(videoElement) {
     if (videoElement) {
         videoElement.srcObject = null;
@@ -25,6 +28,12 @@ function closeStream(videoElement) {
     }
 }
 
+// This function says what to do when the website receives some information
+// from the python controller. 
+// Typically it is expected that that message coming from the controller
+// is separted into three departs separated by a slash.
+// Device/Info/InfoValue
+// This needs to be copy and pasted into a each main.js file.
 function controllerResponseHandler(cmd) {
     var components = cmd.split("/");
     var device = components[0]
@@ -55,10 +64,13 @@ function controllerResponseHandler(cmd) {
 }
 
 // This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
+// This needs to be copy and pasted into a each main.js file.
 function onWebsocketMessage(message){
     alert(message);
 }
 
+// This function sets up the connection for the webcam using uv4l.
+// This needs to be copy and pasted into a each main.js file.
 function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     var signalling_server_hostname = location.hostname || "192.168.0.2";
     // var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
@@ -79,9 +91,10 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 
 var extremaModal, contactModal, bootModal
 
+//This function is a JQuery function. Run once the document loads. Most of your 
+// code should go in here. 
 $("document").ready(function () {
-    var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
-    var currentPosition = 0;
+    // This is what is used to get the get the livestream setup and running.
     var liveStream = document.getElementById("v");
     var FirstTimeOvenOn = true;
     var FirstTimeOvenOff = true;

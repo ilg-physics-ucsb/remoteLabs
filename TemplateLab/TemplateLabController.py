@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+# This is a basic example of a controller script.
+# It must have the same name as the folder it is in + Controller.py
+# 
 # Start by import Experiment from labcontrol and then any other controllers that you would like to use.
 # for the template we will just add 2 stepper motors and an ArduCamMultiCamera adapter.
 from labcontrol import Experiment, StepperI2C, ArduCamMultiCamera
@@ -110,13 +113,64 @@ motor2.device.release()
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~ SETTING UP EXPERIMENT ~~~~~~~~~~~~#
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
+# You first need to instantiate the experiment.
+# You do this calling the Experiment class and
+# providing a name for the experiment. I don't think
+# it needs to match the name of the folder it sits in
+# but I do this by convention.
 exp = Experiment("TemplateLab")
+# Then you need to add each device to the lab using
+# the add_device method. Just feed it one of the
+# controllers you setup early.
 exp.add_device(camera)
 exp.add_device(motor1)
 exp.add_device(motor2)
+# Now setup the socket path. This will likely be copied
+# and pasted into all of your controller files.
 exp.set_socket_path(socket_path)
+
+# In order to start the lab in the last state it
+# was left in use the following method. You can 
+# comment it out if you want it to start at zero
+# instead.
+exp.recallState()
+# Finally call the setup method which will run the 
+# experiment.
 exp.setup()
-        
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~ RUNNING THE CONTROLLER FILE ~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# To run the controller script you first need to
+# setup the lab. To do this you need to run the 
+# command:
+# sudo remla setup TemplateLab -s templateSettings.json
+#
+# The "-s settingsFile.json" must always be included
+# and it should be the name of a json file in the 
+# the same folder as the controller.py file. It 
+# needs to be included even if there you aren't 
+# utilizing the settings file.
+# 
+# Once setup you then can run the experiment with
+# the following command:
+# remla run
+#
+# This will run the experiment you currently have 
+# setup. To stop the experiment you can use the
+# command:
+# remla stop
+# 
+# If you would like you can run the experiment in
+# the foreground so you can see all of the output
+# of the controller devices. To do that you use 
+# the command:
+# remla run -f
+# 
+# Now to stop the program from running you need to
+# use the key binding:
+# Ctrl+C    
         
     
