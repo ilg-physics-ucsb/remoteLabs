@@ -1375,6 +1375,28 @@ class PWMChannel(BaseController):
     def reset(self):
         self.pwm.ChangeDutyCycle(self.defaultDutyCycle)
 
+#Ziyan Code Goes Here
+class ServoMotor(BaseController):
+
+    def __init__(self, name, pin):
+        #Ziyan puts parameters needed for servo here
+        # i.e. Set up PWM channel, set default PWM duty cycle and frequency.
+        pass
+
+    def goto(self, dutyCycle):
+        ## Code to set duty cycle on PWM channel
+        pass
+
+    def goto_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "goto")
+        ## Code here that translates between angle (params[0]) and duty cycle needed for PWM.
+
+        return dutyCycle
+
+
+
+
 
 class CommandError(Exception):
 
