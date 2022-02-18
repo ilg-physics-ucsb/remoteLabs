@@ -1377,12 +1377,12 @@ class PWMChannel(BaseController):
 
 #Ziyan Code Goes Here
 class ServoAngleMotor(BaseController):
-    def __init__(self, name, pin, frequency,defaultDutyCycle = 0):
+    def __init__(self, name, pin,defaultDutyCycle = 0):
         #Ziyan puts parameters needed for servo here
         # i.e. Set up PWM channel, set default PWM duty cycle and frequency.
         self.pin = pin
         self.name = name
-        self.frequency = frequency
+        ## remove this：self.frequency = frequency
         self.device_type = "servo"
         self.defaultDutyCycle = defaultDutyCycle
         self.p = gpio.PWM(self.pin, self.frequency)
@@ -1391,7 +1391,7 @@ class ServoAngleMotor(BaseController):
 
     def goto(self, dutyCycle):
         ## Code to set duty cycle on PWM channel
-        p.ChangeDutyCycle(dutyCycle)
+        self.p.ChangeDutyCycle(dutyCycle)
         pass
 
     def goto_parser(self, params):
@@ -1401,13 +1401,14 @@ class ServoAngleMotor(BaseController):
         ## Code here that translates between angle (params[0]) and duty cycle needed for PWM.
         if params[0] < 0 or params[0] > 180:
             raise ArgumentError(self.name, "goto", params[0], allowed="0 <= angle <= 180")
-        if params[0] % 5 != 0:
-            raise ArgumentNumberError(self.name, "goto", params[0], allowed="angle % 5 = 0")
-        dutyCycle = params[0]/1.8
+        ## Not sure if we need this: if params[0] % 5 != 0:
+        ## raise ArgumentNumberError(self.name, "goto", params[0], allowed="angle % 5 = 0")
+        dutyCycle = params[0]/1.8 + 2.5
         
         return dutyCycle
 
-
+## class ServoSpeedMotor(BaseController):
+    
 
 
 
