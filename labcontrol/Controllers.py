@@ -1386,7 +1386,7 @@ class ServoAngleMotor(BaseController):
         self.device_type = "servo"
         self.defaultDutyCycle = defaultDutyCycle
         self.p = gpio.PWM(self.pin, self.frequency)
-        p.start(self.defaultdutyCycle)
+        self.p.start(self.defaultdutyCycle)
         pass
 
     def goto(self, dutyCycle):
