@@ -1397,11 +1397,12 @@ class ServoAngleMotor(BaseController):
     def goto_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
+        angle = int(params[0])
         ## Code here that translates between angle (params[0]) and duty cycle needed for PWM.
         if params[0] < 0 or params[0] > 180:
-            raise ArgumentNumberError(self.name, "goto", params[0], allowed="0 <= params[0] <= 180")
-        if params[0] % 5 != 0
-            raise ArgumentNumberError(self.name, "goto", params[0], allowed="params[0] % 5 = 0")
+            raise ArgumentError(self.name, "goto", params[0], allowed="0 <= angle <= 180")
+        if params[0] % 5 != 0:
+            raise ArgumentNumberError(self.name, "goto", params[0], allowed="angle % 5 = 0")
         dutyCycle = params[0]/1.8
         
         return dutyCycle
