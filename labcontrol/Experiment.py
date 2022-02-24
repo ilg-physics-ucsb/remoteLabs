@@ -6,6 +6,8 @@ from signal import signal, SIGINT
 import json
 import logging
 import threading
+import asyncio
+import websockets
 
 
 class NoDeviceError(Exception):
@@ -111,7 +113,7 @@ class Experiment(object):
             names.append(device_name)
         return names
 
-    #Carlos: add websocket object as argument for this function
+
     def command_handler(self, data):
         data = data.decode('utf-8')
         logging.info("Handling Command - " + data)
@@ -120,15 +122,11 @@ class Experiment(object):
         if device_name not in self.devices:
             raise NoDeviceError(device_name)
         response = self.devices[device_name].cmd_handler(command, params)
-        print("RESPONSE", response)
-        if response is not None:
-            print("Sending data")
-            # Carlos: comment line below and replace with your websocket sending features.
-            # Should take the response and send it to the client.
-            self.connection.send(response.encode())
+        
         self.allStates[device_name] = self.devices[device_name].getState()
         with open(self.json_file, "w") as f:
-            json.dump(self.allStates, f)        
+            json.dump(self.allStates, f) 
+        return response       
 
     def exit_handler(self, signal_received, frame):
         # print("\r\nAttempting to exit")
@@ -179,8 +177,7 @@ class Experiment(object):
             self.socket.bind(self.socket_path)
             self.socket.listen(1)
             self.socket.settimeout(1)
-            # Carlos to replace with his socket code (asyncio.run(main()))
-            self.__wait_to_connect()
+            asyncio.run(self.runWebsocketServer())
         except OSError:
             if os.path.exists(self.socket_path):
                 print("Error accessing {0}\nTry running 'sudo chown pi: {0}'".format(self.socket_path))
@@ -192,6 +189,20 @@ class Experiment(object):
         except socket.error as err:
             logging.error("Socket Error!", exc_info=True)
             print("socket error: {0}".format(err))
+
+
+    async def websocketCommandServer(self, websocket):
+        async for message in websocket:
+            response = self.commandHandler(message)
+            print("RESPONSE", response)
+            if response is not None:
+                print("Sending data")
+                await websocket.send(response)
+
+
+    async def runWebsocketServer(self):
+        async with websockets.serve(self.websocketCommandServer, "0.0.0.0", 6042):
+            await asyncio.Future()
 
 
 class Messenger:
@@ -267,14 +278,7 @@ class Messenger:
             self.connection.close()
             # logging.info("Connection to client closed.")
     
-    #Carlos adds websocketCommandServer function here
-        # Add to this function counting number of connections made
-        # run the self.commandHandler method on the data/message. 
 
-    #Carlos adds runWebsocketServer "main" function here
-        # Change address of server to 0.0.0.0
-
-# Zak and Carlos learned how pull requests work
 
 
     

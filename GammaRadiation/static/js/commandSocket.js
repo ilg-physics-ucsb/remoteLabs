@@ -1,9 +1,22 @@
 // Carlos add websocket connections here.
 // make sure to use var dataChannel = Websocket....
 // When the client receives a message from the server that message should go to the messageHandler
+var signalling_server_hostname = location.hostname;
+var signalling_server_address = signalling_server_hostname + location.pathname + "ws"
+var protocol = location.protocol === "https:" ? "wss:" : "ws:";
+var wsurl = protocol + '//' + signalling_server_address;
 
+var dataChannel = new WebSocket(wsurl);
 
+dataChannel.addEventListener('open', function (event) {
+    console.log('Connected to server through websocket.');
+});
 
+dataChannel.addEventListener('close', function (event) {
+    console.log('Websocket connection terminated.');
+});
+
+dataChannel.addEventListener('message', messageHandler);
 
 //Zak's Additional Functions
 function messageHandler(event) {
