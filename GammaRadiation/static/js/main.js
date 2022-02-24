@@ -155,7 +155,7 @@ $("document").ready(function () {
 
     //for LiveFeed
     // TEMP CHANGE
-    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    // var mainCamSignal = setupWebRTC(8081, liveStream, 100); (commented out by Carlos)
 
     //for Time Limit
      window.setTimeout(timeOutHandler,10800000)
