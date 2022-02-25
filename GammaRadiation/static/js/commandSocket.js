@@ -2,7 +2,7 @@
 // make sure to use var dataChannel = Websocket....
 // When the client receives a message from the server that message should go to the messageHandler
 var signalling_server_hostname = location.hostname;
-var signalling_server_address = signalling_server_hostname + location.pathname;
+var signalling_server_address = signalling_server_hostname + location.pathname + "ws";
 var protocol = location.protocol === "https:" ? "wss:" : "ws:";
 var port = 8081;
 var wsurl = protocol + '//' + signalling_server_address + ":" + port;
