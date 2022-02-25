@@ -201,7 +201,7 @@ class Experiment(object):
 
 
     async def runWebsocketServer(self):
-        async with websockets.serve(self.websocketCommandServer, "0.0.0.0", 6042):
+        async with websockets.serve(self.websocketCommandServer, "0.0.0.0", 80):
             await asyncio.Future()
 
 
