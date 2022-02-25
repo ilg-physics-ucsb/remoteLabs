@@ -171,12 +171,12 @@ class Experiment(object):
             if self.messenger is not None:
                 self.messenger_thread = threading.Thread(target=self.messenger.setup, daemon=True)
                 self.messenger_thread.start()
-            os.unlink(self.socket_path)
-            self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
+            # os.unlink(self.socket_path)
+            # self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
             signal(SIGINT, self.exit_handler)
-            self.socket.bind(self.socket_path)
-            self.socket.listen(1)
-            self.socket.settimeout(1)
+            # self.socket.bind(self.socket_path)
+            # self.socket.listen(1)
+            # self.socket.settimeout(1)
             asyncio.run(self.runWebsocketServer())
         except OSError:
             if os.path.exists(self.socket_path):
