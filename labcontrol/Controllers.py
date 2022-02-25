@@ -1377,23 +1377,31 @@ class PWMChannel(BaseController):
 
 #Ziyan Code Goes Here
 class ServoAngleMotor(BaseController):
-    def __init__(self, name, pin,frequency = 50, defaultDutyCycle = 2.5):
+    def __init__(self, name, pin,defaultpulsewidth = 0, bounds=None):
         #Ziyan puts parameters needed for servo here
         # i.e. Set up PWM channel, set default PWM duty cycle and frequency.
         self.pin = pin
         self.name = name
         self.frequency = frequency
+        self.pulsewidth = defaultpulsewidth
         self.device_type = "controller"
-        self.defaultDutyCycle = defaultDutyCycle
-        self.p = gpio.PWM(self.pin, self.frequency)
-        self.p.start(self.defaultdutyCycle)
-        pass
+        pi.set_servo_pulsewidth(self.pin, self.pulsewidth)
+        if bounds is None:
+            self.lowerBound = 0
+            self.upperBound = 180
+        else:
+            self.lowerBound = bounds[0]
+            self.upperBound = bounds[1]
+        
 
-    def goto(self, dutyCycle):
+    def goto(self, angle):
         ## Code to set duty cycle on PWM channel
-        self.dutyCycle = abs(speed)
-        self.p.ChangeDutyCycle(self.dutyCycle)
-        pi.set_PWM_dutycycle(self.Pin, self.dutyCycle)
+#         self.dutyCycle = abs(speed)
+#         self.p.ChangeDutyCycle(self.dutyCycle)
+#         dutyCycle = pulsewidth/20000
+        self.pulsewidth = 2000/180*angle + 500
+        pi.set_servo_pulsewidth(self.pin, sefl.pulsewidth)
+#         pi.set_PWM_dutycycle(self.pin, self.dutyCycle)
         pass
 
     def goto_parser(self, params):
@@ -1403,6 +1411,7 @@ class ServoAngleMotor(BaseController):
         ## Code here that translates between angle (params[0]) and duty cycle needed for PWM.
         if angle < 0 or angle > 180:
             raise ArgumentError(self.name, "goto", angle, allowed="0 <= angle <= 180")
+        return angle
         dutyCycle = angle/1.8 + 2.5
         
         return dutyCycle
