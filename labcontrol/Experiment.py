@@ -193,7 +193,7 @@ class Experiment(object):
 
     async def websocketCommandServer(self, websocket):
         async for message in websocket:
-            response = self.commandHandler(message)
+            response = self.command_handler(message)
             print("RESPONSE", response)
             if response is not None:
                 print("Sending data")
