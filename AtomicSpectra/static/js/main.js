@@ -864,7 +864,7 @@ $("document").ready(function () {
 
     //BEGIN Modal Arm Buttons
     tMfine.addEventListener('click', function(){telescopeSteps=25;})
-    tMmedium.addEventListener('click', function(){telescope=250;})
+    tMmedium.addEventListener('click', function(){telescopeSteps=250;})
     tMcoarse.addEventListener('click', function(){telescopeSteps=1000;})
     tmCW.addEventListener('click', function(){
         console.log("Modal Telescope turned CW");
