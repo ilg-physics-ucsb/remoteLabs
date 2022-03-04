@@ -1396,13 +1396,9 @@ class ServoAngleMotor(BaseController):
 
     def goto(self, angle):
         ## Code to set duty cycle on PWM channel
-#         self.dutyCycle = abs(speed)
-#         self.p.ChangeDutyCycle(self.dutyCycle)
-#         dutyCycle = pulsewidth/20000
         self.pulsewidth = 2000/180*angle + 500
         pi.set_servo_pulsewidth(self.pin, sefl.pulsewidth)
-#         pi.set_PWM_dutycycle(self.pin, self.dutyCycle)
-        pass
+
 
     def goto_parser(self, params):
         if len(params) != 1:
@@ -1412,9 +1408,6 @@ class ServoAngleMotor(BaseController):
         if angle < 0 or angle > 180:
             raise ArgumentError(self.name, "goto", angle, allowed="0 <= angle <= 180")
         return angle
-        dutyCycle = angle/1.8 + 2.5
-        
-        return dutyCycle
 
     class ServoSpeedMotor(BaseController):
     def __init__(self, name, pin,frequency = 50, defaultDutyCycle = 2.5):
