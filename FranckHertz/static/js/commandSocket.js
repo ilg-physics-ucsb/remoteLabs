@@ -3,7 +3,7 @@ var signalling_server_hostname = location.hostname;
 var signalling_server_address = signalling_server_hostname + location.pathname + "ws";
 var protocol = location.protocol === "https:" ? "wss:" : "ws:";
 var port = 8081;
-var wsurl = protocol + '//' + signalling_server_address + ":" + port;
+var wsurl = protocol + '//' + signalling_server_address;
 
 var dataChannel = new WebSocket(wsurl);
 
