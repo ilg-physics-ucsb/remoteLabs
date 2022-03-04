@@ -168,9 +168,9 @@ class Experiment(object):
                 f = open(self.socket_path, 'w')
                 f.close()
             
-            if self.messenger is not None:
-                self.messenger_thread = threading.Thread(target=self.messenger.setup, daemon=True)
-                self.messenger_thread.start()
+            # if self.messenger is not None:
+            #     self.messenger_thread = threading.Thread(target=self.messenger.setup, daemon=True)
+            #     self.messenger_thread.start()
             os.unlink(self.socket_path)
             # self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
             signal(SIGINT, self.exit_handler)
