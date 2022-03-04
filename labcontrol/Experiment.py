@@ -111,6 +111,7 @@ class Experiment(object):
             names.append(device_name)
         return names
 
+    #Carlos: add websocket object as argument for this function
     def command_handler(self, data):
         data = data.decode('utf-8')
         logging.info("Handling Command - " + data)
@@ -122,6 +123,8 @@ class Experiment(object):
         print("RESPONSE", response)
         if response is not None:
             print("Sending data")
+            # Carlos: comment line below and replace with your websocket sending features.
+            # Should take the response and send it to the client.
             self.connection.send(response.encode())
         self.allStates[device_name] = self.devices[device_name].getState()
         with open(self.json_file, "w") as f:
@@ -176,6 +179,7 @@ class Experiment(object):
             self.socket.bind(self.socket_path)
             self.socket.listen(1)
             self.socket.settimeout(1)
+            # Carlos to replace with his socket code (asyncio.run(main()))
             self.__wait_to_connect()
         except OSError:
             if os.path.exists(self.socket_path):
@@ -262,6 +266,15 @@ class Messenger:
         if self.connection is not None:
             self.connection.close()
             # logging.info("Connection to client closed.")
+    
+    #Carlos adds websocketCommandServer function here
+        # Add to this function counting number of connections made
+        # run the self.commandHandler method on the data/message. 
+
+    #Carlos adds runWebsocketServer "main" function here
+        # Change address of server to 0.0.0.0
+
+# Zak and Carlos learned how pull requests work
 
 
     
