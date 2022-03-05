@@ -15,10 +15,10 @@ dataChannel2.addEventListener('close', function (event) {
     console.log('Websocket connection terminated.');
 });
 
-dataChannel2.addEventListener('message', messageHandler);
+dataChannel2.addEventListener('message', messageHandler2);
 
 //Zak's Additional Function
-function messageHandler(event) {
+function messageHandler2(event) {
     console.log("MESSAGE HANDLER")
     var data = event.data;
     console.log(data);
