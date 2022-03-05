@@ -117,7 +117,7 @@ class Experiment(object):
     def command_handler(self, data):
         print("Data", data)
         data = data.decode('utf-8')
-        logging.info("Handling Command - " + data)
+        #logging.info("Handling Command - " + data)
         device_name, command, params = data.strip().split("/")
         params = params.split(",")
         print(device_name, command, params)
