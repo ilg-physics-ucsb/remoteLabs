@@ -22,7 +22,6 @@ function messageHandler(event) {
     console.log("MESSAGE HANDLER")
     var data = event.data;
     console.log(data);
-    return false;
     // Data should be the response from the server
     // controllerResponseHandler(data)
 }
