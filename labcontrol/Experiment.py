@@ -126,7 +126,7 @@ class Experiment(object):
         if device_name not in self.devices:
             raise NoDeviceError(device_name)
         response = self.devices[device_name].cmd_handler(command, params)
-        
+        print(response)
         self.allStates[device_name] = self.devices[device_name].getState()
         with open(self.json_file, "w") as f:
             json.dump(self.allStates, f) 
