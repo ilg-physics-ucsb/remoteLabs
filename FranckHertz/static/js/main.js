@@ -454,10 +454,10 @@ $("document").ready(function () {
     
     lowerOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned down"); 
-        dataChannel.send("Oven/degMove/"+(-ovenDegs));})
+        dataChannel2.send("Oven/degMove/"+(-ovenDegs));})
     raiseOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned up");
-        dataChannel.send("Oven/degMove/"+ovenDegs);})
+        dataChannel2.send("Oven/degMove/"+ovenDegs);})
     //END Oven Variac Buttons
    //BEGIN Filament Variac Buttons 
    threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
