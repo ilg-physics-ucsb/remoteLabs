@@ -28,7 +28,7 @@ class BaseController(object):
         # If parser exists, use it to parse the params.
         if parser is not None:
             params = parser(params)
-        print("After if parser")
+            print("After if parser")
         # If there is no parser print this statement for user.
         else:
             print("No Parser Found. Will just pass params to command.")
