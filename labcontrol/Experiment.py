@@ -114,7 +114,7 @@ class Experiment(object):
         return names
 
 
-    def command_handler(self, data):
+    async def command_handler(self, data):
         print("Data", data)
         data = data.decode('utf-8')
         print("Data again")
