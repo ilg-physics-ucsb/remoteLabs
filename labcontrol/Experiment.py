@@ -204,6 +204,7 @@ class Experiment(object):
         async with websockets.serve(self.websocketCommandServer, "0.0.0.0", 6048):
             print("Running Carlos's Websocket server")
             await asyncio.Future()
+            print("Working")
 
 
 class Messenger:
