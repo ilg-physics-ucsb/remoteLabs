@@ -124,7 +124,6 @@ class Experiment(object):
         params = params.split(",")
         print(device_name, command, params)
         print(device_name)
-        print(type(device))
         print(self.devices)
         if device_name not in self.devices:
             print("error")
