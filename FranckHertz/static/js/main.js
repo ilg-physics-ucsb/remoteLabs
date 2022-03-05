@@ -1,63 +1,63 @@
 
 // This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
-function connectStream(stream, videoElement) {
-    if (videoElement) {
-        console.log("got a stream! Putting stream in the following video" );
-        console.log(videoElement);
-        videoElement.srcObject = stream;
-        videoElement.setAttribute("data-playing", "true");
+// function connectStream(stream, videoElement) {
+//     if (videoElement) {
+//         console.log("got a stream! Putting stream in the following video" );
+//         console.log(videoElement);
+//         videoElement.srcObject = stream;
+//         videoElement.setAttribute("data-playing", "true");
 
-        // videoElement.play();
-    }
-}
+//         // videoElement.play();
+//     }
+// }
 
-//This function runs if there is an error returned from teh websocket connecting to the stream.
-function errorStream(error){
-    alert(error);
-}
+// //This function runs if there is an error returned from teh websocket connecting to the stream.
+// function errorStream(error){
+//     alert(error);
+// }
 
-// This functions gets run when the websocket is closed.
-function closeStream(videoElement) {
-    if (videoElement) {
-        videoElement.srcObject = null;
-        videoElement.setAttribute("data-playing", "false");
-        console.log("websocket closed. bye bye!");
-    }
-}
+// // This functions gets run when the websocket is closed.
+// function closeStream(videoElement) {
+//     if (videoElement) {
+//         videoElement.srcObject = null;
+//         videoElement.setAttribute("data-playing", "false");
+//         console.log("websocket closed. bye bye!");
+//     }
+// }
 
-function controllerResponseHandler(cmd) {
-    var components = cmd.split("/");
-    var device = components[0]
-    var info = components[1]
-    var infoValue = components[2]
+// function controllerResponseHandler(cmd) {
+//     var components = cmd.split("/");
+//     var device = components[0]
+//     var info = components[1]
+//     var infoValue = components[2]
 
-    if (infoValue == "limit") {
-        extremaModal.modal("show")
-    }
-    if (device == "Messenger") {
-        console.log("Received Messenger")
-        if (info == "contactModal") {
-            if (infoValue == "show") {
-                contactModal.modal("show")
-            }
-        }
-    }
+//     if (infoValue == "limit") {
+//         extremaModal.modal("show")
+//     }
+//     if (device == "Messenger") {
+//         console.log("Received Messenger")
+//         if (info == "contactModal") {
+//             if (infoValue == "show") {
+//                 contactModal.modal("show")
+//             }
+//         }
+//     }
 
-    if (device == "Messenger") {
-        console.log("Received Messenger")
-        if (info == "bootModal") {
-            if (infoValue == "show") {
-                bootModal.modal("show")
-            }
-        }
-    }
+//     if (device == "Messenger") {
+//         console.log("Received Messenger")
+//         if (info == "bootModal") {
+//             if (infoValue == "show") {
+//                 bootModal.modal("show")
+//             }
+//         }
+//     }
 
-}
+// }
 
-// This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
-function onWebsocketMessage(message){
-    alert(message);
-}
+// // This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
+// function onWebsocketMessage(message){
+//     alert(message);
+// }
 
 // function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
 //     var signalling_server_hostname = location.hostname || "192.168.0.2";
@@ -813,12 +813,12 @@ $("document").ready(function () {
 });
 
 
-window.addEventListener('beforeunload', function(e) {
-    // TEMP CHANGE
-    mainCamSignal.hangup();
-    // TEMP CHANGE
-    dataChannel.close();
-})
+// window.addEventListener('beforeunload', function(e) {
+//     // TEMP CHANGE
+//     mainCamSignal.hangup();
+//     // TEMP CHANGE
+//     dataChannel.close();
+// })
 
 
 
