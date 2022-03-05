@@ -21,6 +21,7 @@ gpio.setmode(gpio.BCM)
 class BaseController(object):
 
     def cmd_handler(self, cmd, params):
+        print("Running cmd_handler")
         # Make the parser name, it should follow the naming convention <cmd>_parser. If there is no parser return None.
         parser = getattr(self, cmd+"_parser", None)
 
