@@ -114,9 +114,9 @@ class Experiment(object):
         return names
 
 
-    async def command_handler(self, data):
+    def command_handler(self, data):
         print("Data", data)
-        data = data.decode('utf-8')
+        #data = data.decode('utf-8')
         print("Data again")
         #logging.info("Handling Command - " + data)
         device_name, command, params = data.strip().split("/")
