@@ -124,6 +124,7 @@ class Experiment(object):
         params = params.split(",")
         print(device_name, command, params)
         if device_name not in self.devices:
+            print("error")
             raise NoDeviceError(device_name)
         response = self.devices[device_name].cmd_handler(command, params)
         print(response)
