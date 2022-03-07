@@ -5,17 +5,17 @@ var protocol = location.protocol === "https:" ? "wss:" : "ws:";
 var port = 8081;
 var wsurl = protocol + '//' + signalling_server_address;
 
-var dataChannel2 = new WebSocket(wsurl);
+var dataChannel = new WebSocket(wsurl);
 
-dataChannel2.addEventListener('open', function (event) {
+dataChannel.addEventListener('open', function (event) {
     console.log('Connected to server through websocket.');
 });
 
-dataChannel2.addEventListener('close', function (event) {
+dataChannel.addEventListener('close', function (event) {
     console.log('Websocket connection terminated.');
 });
 
-dataChannel2.addEventListener('message', messageHandler2);
+dataChannel.addEventListener('message', messageHandler2);
 
 //Zak's Additional Function
 function messageHandler2(event) {
