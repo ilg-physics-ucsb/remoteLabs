@@ -117,23 +117,16 @@ class Experiment(object):
     def command_handler(self, data):
         print("Data", data)
         #data = data.decode('utf-8')
-        print("Data again")
         #logging.info("Handling Command - " + data)
         device_name, command, params = data.strip().split("/")
-        print("Data after device")
         params = params.split(",")
-        print(device_name, command, params)
-        print(device_name)
-        print(self.devices)
         if device_name not in self.devices:
-            print("error")
             raise NoDeviceError(device_name)
         response = self.devices[device_name].cmd_handler(command, params)
-        print(response)
         self.allStates[device_name] = self.devices[device_name].getState()
         with open(self.json_file, "w") as f:
             json.dump(self.allStates, f) 
-        return response       
+        return response
 
     def exit_handler(self, signal_received, frame):
         # print("\r\nAttempting to exit")
@@ -199,13 +192,10 @@ class Experiment(object):
 
 
     async def websocketCommandServer(self, websocket):
-        print("Waiting data")
         async for message in websocket:
-            print("Running command", message)
             response = self.command_handler(message)
             print("RESPONSE", response)
             if response is not None:
-                print("Sending data")
                 await websocket.send(response)
 
 
@@ -213,7 +203,6 @@ class Experiment(object):
         async with websockets.serve(self.websocketCommandServer, "0.0.0.0", 6048):
             print("Running Carlos's Websocket server")
             await asyncio.Future()
-            print("Working")
 
 
 class Messenger:

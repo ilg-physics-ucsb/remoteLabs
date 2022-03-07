@@ -21,24 +21,19 @@ gpio.setmode(gpio.BCM)
 class BaseController(object):
 
     def cmd_handler(self, cmd, params):
-        print("Running cmd_handler")
         # Make the parser name, it should follow the naming convention <cmd>_parser. If there is no parser return None.
         parser = getattr(self, cmd+"_parser", None)
-        print("After parser")
         # If parser exists, use it to parse the params.
         if parser is not None:
             params = parser(params)
-            print("After if parser")
         # If there is no parser print this statement for user.
         else:
             print("No Parser Found. Will just pass params to command.")
 
         # No get the command method. If there isn't a method, it should through an AttributeError.
         method = getattr(self, cmd)
-        print("After method")
         if callable(method):
             response = method(params)
-        print("after callable")
         return response
 
     def cleanup(self):
