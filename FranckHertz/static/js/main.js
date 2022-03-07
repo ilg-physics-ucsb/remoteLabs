@@ -349,7 +349,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOff){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/OFF");   //use this command with HS105
-            dataChannel2.send("FHpdu/off/Oven");                //use this command with PDU
+            dataChannel.send("FHpdu/off/Oven");                //use this command with PDU
             }
             mWrap1.style.display = "block";                      
             mWrap2.style.display = "none";
@@ -369,7 +369,7 @@ $("document").ready(function () {
             if(!FirstTimeOvenOn){
             //--------choose one of the following
             //dataChannel.send("OvenPower/setRelay/ON");    //use this command with HS105
-            dataChannel2.send("FHpdu/on/Oven");                 //use this command with PDU 
+            dataChannel.send("FHpdu/on/Oven");                 //use this command with PDU 
             }
             mWrap2.style.display = "block";                      
             mWrap1.style.display = "none"; 
@@ -454,10 +454,10 @@ $("document").ready(function () {
     
     lowerOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned down"); 
-        dataChannel2.send("Oven/degMove/"+(-ovenDegs));})
+        dataChannel.send("Oven/degMove/"+(-ovenDegs));})
     raiseOvenV.addEventListener('click', function() {
         console.log("Oven Variac was turned up");
-        dataChannel2.send("Oven/degMove/"+ovenDegs);})
+        dataChannel.send("Oven/degMove/"+ovenDegs);})
     //END Oven Variac Buttons
    //BEGIN Filament Variac Buttons 
    threeDegFilamentV.addEventListener('click', function(){filamentSteps=2;})
