@@ -128,7 +128,7 @@ sudo nano /boot/config.txt
 Go down to an area referencing Additional Overlays (however it can be anywhere in the file) and the the following line:
 
 ```
-dtoverlay=i2c-gpio
+dtoverlay=i2c-gpio,bus=11
 ```
 
 This will create a new I2C bus out of physical pins 16 & 18 (BCM 23 & 24) where 23=SDA and 24=SCL lines. For us this made it on bus 11. You can specify other pins or which bus number to use if you would like. To do this look at the /boot/overlays/README file. Ctrl-F "i2c-gpio" for instructions. You now need to reboot for changes to take effect.
