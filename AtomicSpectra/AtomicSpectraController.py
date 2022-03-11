@@ -112,12 +112,8 @@ if not args.reset and not args.admin:
     exp.recallState()
 exp.setup()
 
-# #This code is to add an infrared sensor gate to the carousel power.
+#This code is to add an infrared sensor gate to the carousel power.
 # def Infra_Sensor(motor):
-#     if "motor is moving":
-#         SingleGPIO.off("Pin to PDU")
-#         "wait, check motor state"
-#         if SingleGPIO.input("Pin from Sensor") == 1:
-#             SingleGPIO.on("Pin to PDU")
-#         else:
-#             "Move forward until GPIO.input == 1"
+#     print("Stuck")
+#     motor.currentPosition += steps
+#     motor.adminMove(-limitBounce)

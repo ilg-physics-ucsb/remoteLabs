@@ -320,6 +320,12 @@ class StepperI2C(MotorKit, BaseController):
         response = self.move(endPoint-self.currentPosition)
         return response
 
+    def admingoto(self, position):
+        print(position)
+        endPoint=self.refPoints[position]
+        response = self.adminMove(endPoint-self.currentPosition)
+        return response
+
     def goto_parser(self, params):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
