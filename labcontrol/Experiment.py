@@ -25,7 +25,7 @@ class NoDeviceError(Exception):
 class Experiment(object):
 
     def __init__(self, name, root_directory="remoteLabs", admin=False, messenger=False):
-        self.camera = PiCamera(sensor_mode = 2, resolution = '1920x1080', framerate = 30, port = 6049)
+        self.camera = PiCamera(sensor_mode = 2, resolution = '1920x1080', framerate = 30)
         self.devices = {}
         self.allStates = {}
         if messenger:
@@ -341,11 +341,11 @@ class wsHandler(tornado.websocket.WebSocketHandler):
 
 class Camera():
 
-    def __init__(self, sensor_mode, resolution, framerate, port):
+    def __init__(self, sensor_mode, resolution, framerate):
+        port = 6049
         self.sensor_mode = sensor_mode
         self.resolution = resolution
         self.framerate = framerate
-        self.port = port
         self.recordingOptions = {
             'format' : 'h264',
             'quality' : 20,
@@ -356,13 +356,13 @@ class Camera():
             'inline_headers' : True,
             'sps_timing' : True
         }
-        self.camera = PiCamera(self.sensor_mode, self.resolution, self.framerate, self.port)
+        self.camera = PiCamera(self.sensor_mode, self.resolution, self.framerate)
         self.camera.video_denoise = False
     def start(self):
         self.streamBuffer = StreamBuffer(camera)
         self.camera.start_recording(streamBuffer, **recordingOptions)
         self.application = tornado.web.Application(requestHandlers)
-        self.application.listen(self.port)
+        self.application.listen(port)
         self.loop = tornado.ioloop.IOLoop.current()
         self.streamBuffer.setLoop(loop)
         self.loop.start() 
