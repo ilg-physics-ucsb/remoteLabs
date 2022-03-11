@@ -25,7 +25,7 @@ class NoDeviceError(Exception):
 class Experiment(object):
 
     def __init__(self, name, root_directory="remoteLabs", admin=False, messenger=False):
-        self.camera = Camera(sensorMode = 2, resolution = '1920x1080', framerate = 30, port = 6049)
+        self.camera = PiCamera(sensorMode = 2, resolution = '1920x1080', framerate = 30, port = 6049)
         self.devices = {}
         self.allStates = {}
         if messenger:
@@ -357,7 +357,7 @@ class Camera():
             'sps_timing' : True
         }
         self.camera = PiCamera(self.sensorMode, self.resolution, self.framerate, self.port)
-        camera.video_denoise = False
+        self.camera.video_denoise = False
     def start(self):
         self.streamBuffer = StreamBuffer(camera)
         self.camera.start_recording(streamBuffer, **recordingOptions)
