@@ -352,9 +352,9 @@ class Camera():
             'profile' : 'high',
             'level' : '4.2',
             'intra_period' : 15,
-            'intra_refresh' : 'both'
-            'inline_headers' = True,
-            'sps_timing' = True
+            'intra_refresh' : 'both',
+            'inline_headers' : True,
+            'sps_timing' : True
         }
         self.camera = PiCamera(self.sensorMode, self.resolution, self.framerate, self.port)
         camera.video_denoise = False
