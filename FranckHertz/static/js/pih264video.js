@@ -4,6 +4,7 @@ var protocol_video = location.protocol === "https:" ? "wss:" : "ws:";
 var port = 6049;
 var wsurl_video = protocol_video + '//' + signalling_server_address_video;
 window.onload = function(){	
+    console.log("Attempting to connect to JMuxer")
     var jmuxer = new JMuxer({
         node: 'stream',
         mode: 'video',
