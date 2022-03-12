@@ -25,7 +25,7 @@ class NoDeviceError(Exception):
 class Experiment(object):
 
     def __init__(self, name, root_directory="remoteLabs", admin=False, messenger=False):
-        self.camera = Camera(sensor_mode = 2, resolution = '1920x1080', framerate = 30)
+        #self.camera = Camera(sensor_mode = 2, resolution = '1920x1080', framerate = 30)
         self.devices = {}
         self.allStates = {}
         if messenger:
@@ -176,8 +176,8 @@ class Experiment(object):
             # if self.messenger is not None:
             #     self.messenger_thread = threading.Thread(target=self.messenger.setup, daemon=True)
             #     self.messenger_thread.start()
-            self.camera_thread = threading.Thread(target = self.camera.start(), daemon = True)
-            self.camera_thread.start()
+            # self.camera_thread = threading.Thread(target = self.camera.start(), daemon = True)
+            # self.camera_thread.start()
             os.unlink(self.socket_path)
             # self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
             signal(SIGINT, self.exit_handler)
