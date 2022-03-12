@@ -9,7 +9,7 @@ window.onload = function(){
         node: 'stream',
         mode: 'video',
         flushingTime: 0,
-        fps: $fps,
+        fps: 30,
         debug: false
         });
 
