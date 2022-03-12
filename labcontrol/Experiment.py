@@ -362,13 +362,14 @@ class Camera():
             (r"/ws/", wsHandler)
         ]
     def start(self):
+        asyncio.set_event_loop(asyncio.new_event_loop())
         self.streamBuffer = StreamBuffer(self.camera)
         self.camera.start_recording(self.streamBuffer, **self.recordingOptions)
         self.application = tornado.web.Application(self.requestHandlers)
         self.application.listen(self.port)
-        #self.loop = tornado.ioloop.IOLoop.current()
-        self.loop = tornado.ioloop.IOLoop()
-        self.loop.make_current()
+        self.loop = tornado.ioloop.IOLoop.current()
+        # self.loop = tornado.ioloop.IOLoop()
+        # self.loop.make_current()
         self.streamBuffer.setLoop(self.loop)
         self.loop.start() 
     def end(self):
