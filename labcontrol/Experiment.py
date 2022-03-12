@@ -366,7 +366,9 @@ class Camera():
         self.camera.start_recording(self.streamBuffer, **self.recordingOptions)
         self.application = tornado.web.Application(self.requestHandlers)
         self.application.listen(self.port)
-        self.loop = tornado.ioloop.IOLoop.current()
+        #self.loop = tornado.ioloop.IOLoop.current()
+        self.loop = tornado.ioloop.IOLoop()
+        self.loop.make_current()
         self.streamBuffer.setLoop(self.loop)
         self.loop.start() 
     def end(self):
