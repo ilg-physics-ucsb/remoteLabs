@@ -77,6 +77,27 @@
 //     return signalObj
 // }
 
+function videoStream() {
+    console.log("Attempting to connect to JMuxer")
+    var jmuxer = new JMuxer({
+        node: 'stream',
+        mode: 'video',
+        flushingTime: 0,
+        fps: 30,
+        debug: false
+        });
+
+    var ws = new WebSocket(wsurl_video);
+    ws.binaryType = 'arraybuffer';
+    ws.addEventListener('message',function(event){
+        if (!document.hidden){
+            jmuxer.feed({
+                video: new Uint8Array(event.data)
+            });				
+        }
+    });
+}
+
 var extremaModal, contactModal, bootModal
 
 $("document").ready(function () {
@@ -764,6 +785,8 @@ $("document").ready(function () {
     },
     singleSelect: true
   }).parent().css({"margin":"0 auto"});
+
+  videoStream();
   
 //   console.log('mapster calls have been made');
   
