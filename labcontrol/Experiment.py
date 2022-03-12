@@ -342,7 +342,7 @@ class wsHandler(tornado.websocket.WebSocketHandler):
 class Camera():
 
     def __init__(self, sensor_mode, resolution, framerate):
-        port = 6049
+        self.port = 6049
         self.sensor_mode = sensor_mode
         self.resolution = resolution
         self.framerate = framerate
@@ -356,15 +356,18 @@ class Camera():
             'inline_headers' : True,
             'sps_timing' : True
         }
-        self.camera = PiCamera(self.sensor_mode, self.resolution, self.framerate)
+        self.camera = PiCamera(sensor_mode=self.sensor_mode, resolution=self.resolution, framerate=self.framerate)
         self.camera.video_denoise = False
+        self.requestHandlers = [
+            (r"/ws/", wsHandler)
+        ]
     def start(self):
-        self.streamBuffer = StreamBuffer(camera)
-        self.camera.start_recording(streamBuffer, **recordingOptions)
-        self.application = tornado.web.Application(requestHandlers)
-        self.application.listen(port)
+        self.streamBuffer = StreamBuffer(self.camera)
+        self.camera.start_recording(self.streamBuffer, **self.recordingOptions)
+        self.application = tornado.web.Application(self.requestHandlers)
+        self.application.listen(self.port)
         self.loop = tornado.ioloop.IOLoop.current()
-        self.streamBuffer.setLoop(loop)
+        self.streamBuffer.setLoop(self.loop)
         self.loop.start() 
     def end(self):
         self.camera.close()
