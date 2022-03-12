@@ -12,7 +12,7 @@ group.add_argument("-a", "--admin", action="store_true")
 
 args = parser.parse_args()
 
-labSettingsPath = os.path.join("home","pi", "remoteLabs", "FranckHertz", args.settings)
+labSettingsPath = os.path.join("/home","pi", "remoteLabs", "FranckHertz", args.settings)
 
 with open(labSettingsPath, "r") as f:
     labSettings = json.load(f)
