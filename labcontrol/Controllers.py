@@ -1218,8 +1218,11 @@ class ArduCamMultiCamera(BaseController):
     def camera(self, param):
         #Param should be a, b, c, d, or off
         print("Switching to camera "+param)
+        if self.experiment is not None:
+            self.experiment.camera.camera.wait_recording(5)
         os.system(self.camerai2c[param])
         gpio.output(self.channels, self.cameraDict[param])
+            
 
     def camera_parser(self, params):
         if len(params) != 1:
