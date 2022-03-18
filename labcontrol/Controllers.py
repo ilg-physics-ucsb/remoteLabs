@@ -926,7 +926,7 @@ class PololuStepperMotor(BaseController):
         self.enablePin = enablePin
 
         pi.set_mode(self.stepPin, pigpio.OUTPUT)
-        #pi.set_pull_up_down(self.stepPin, pigpio.PUD_DOWN)
+        pi.set_pull_up_down(self.stepPin, pigpio.PUD_DOWN)
         pi.set_mode(self.enablePin, pigpio.OUTPUT)
         pi.set_pull_up_down(self.enablePin, pigpio.PUD_DOWN)
         pi.set_mode(self.directionPin, pigpio.OUTPUT)
