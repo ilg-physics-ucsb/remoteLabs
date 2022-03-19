@@ -5,7 +5,7 @@ var protocol = location.protocol === "https:" ? "wss:" : "ws:";
 var port = 8081;
 var wsurl = protocol + '//' + signalling_server_address;
 
-var dataChannel = new WebSocket(wsurl);
+var dataChannel = new WebSocket('ws://franck2.inst.physics.ucsb.edu:6048');
 
 dataChannel.addEventListener('open', function (event) {
     console.log('Connected to server through websocket.');
