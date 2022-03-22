@@ -72,7 +72,7 @@ elif args.admin:
 else:
     exp=Experiment("FranckHertz", messenger=False)
 exp.add_device(camera)
-exp.add_device(FHpdu)
+# exp.add_device(FHpdu)
 exp.add_device(oven)
 # exp.add_device(OvenPower)
 exp.add_device(filament)
