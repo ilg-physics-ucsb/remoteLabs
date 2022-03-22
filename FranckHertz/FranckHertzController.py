@@ -53,8 +53,8 @@ Vr = StepperI2C("Vr", 4,bounds=VrBounds)
 
 
 
-FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
-FHpdu.login()
+# FHpdu = PDUOutlet("FHpdu", "fhpdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+# FHpdu.login()
 
 
 electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
