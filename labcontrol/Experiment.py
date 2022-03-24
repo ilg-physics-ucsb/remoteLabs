@@ -25,7 +25,7 @@ class NoDeviceError(Exception):
 class Experiment(object):
 
     def __init__(self, name, root_directory="remoteLabs", admin=False, messenger=False):
-        self.camera = Camera(sensor_mode = 2, resolution = '1280x720', framerate = 30)
+        self.camera = Camera(sensor_mode = 2, resolution = '1920x1080', framerate = 30)
         self.devices = {}
         self.allStates = {}
         if messenger:
