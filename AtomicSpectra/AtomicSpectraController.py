@@ -96,8 +96,8 @@ carousel = StepperI2C("Carousel", 4,bounds=carouselBounds, style="MICROSTEP", de
 ambient = SingleGPIO("Ambient", ambientPin)
 
 
-ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
-ASDIpdu.login()
+# ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+# ASDIpdu.login()
 
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
 slit.device.release()
@@ -112,7 +112,7 @@ elif args.admin:
 else:
     exp = Experiment("AtomicSpectra", messenger=True)
 exp.add_device(camera)
-exp.add_device(ASDIpdu)
+# exp.add_device(ASDIpdu)
 exp.add_device(grating)
 exp.add_device(slit)
 exp.add_device(arm)
