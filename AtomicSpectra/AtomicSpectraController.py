@@ -86,6 +86,7 @@ def sensorSwitchHit(motor, steps):
 
 leftSwitch.switchAction = leftSwitchHit
 rightSwitch.switchAction = rightSwitchHit
+sensorSwitch.switchAction = sensorSwitchHit
 
 slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.1)  
 grating = StepperI2C("Grating", 2, bounds=gratingBounds, style="DOUBLE")
