@@ -24,6 +24,7 @@ refPoints       = labSettings["refPoints"]
 leftSwitchPin   = labSettings["leftSwitchPin"]
 rightSwitchPin  = labSettings["rightSwitchPin"]
 homeSwitchPin   = labSettings["homeSwitchPin"]
+sensorSwitchPin = labSettings["sensorSwitchPin"]
 ambientPin      = labSettings["ambientPin"]
 
 slitBounds      = labSettings["slitBounds"]
@@ -33,6 +34,7 @@ carouselBounds  = labSettings["carouselBounds"]
 
 limitBounce     = labSettings["limitBounce"]
 homeOvershoot   = labSettings["homeOvershoot"]
+carouselBounce  = labSettings["carouselBounce"]
 
 videoNumber     = labSettings["videoNumber"]
 
@@ -50,6 +52,7 @@ socket_path = "/tmp/uv4l.socket"
 leftSwitch = LimitSwitch("LeftSwitch", leftSwitchPin)
 rightSwitch = LimitSwitch("RightSwitch", rightSwitchPin)
 homeSwitch = LimitSwitch("HomeSwitch", homeSwitchPin)
+sensorSwitch = LimitSwitch("SensorSwitch", sensorSwitchPin)
 
 def leftSwitchHit(motor, steps):
     print("Left Switch Hit")
@@ -73,8 +76,17 @@ def homing(motor):
         motor.homeMove(stepLimit=15000)
     motor.currentPosition = 0
 
+def sensorSwitchHit(motor, steps):
+    print("Carousel Misaligned")
+    motor.currentPosition += steps
+    if steps <= 0:
+        motor.adminMove(carouselBounce)
+    else:
+        motor.adminMove(-carouselBounce)
+
 leftSwitch.switchAction = leftSwitchHit
 rightSwitch.switchAction = rightSwitchHit
+sensorSwitch.switchAction = sensorSwitchHit
 
 slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.1)  
 grating = StepperI2C("Grating", 2, bounds=gratingBounds, style="DOUBLE")
@@ -111,13 +123,3 @@ exp.set_socket_path(socket_path)
 if not args.reset and not args.admin:
     exp.recallState()
 exp.setup()
-
-# #This code is to add an infrared sensor gate to the carousel power.
-# def Infra_Sensor(motor):
-#     if "motor is moving":
-#         SingleGPIO.off("Pin to PDU")
-#         "wait, check motor state"
-#         if SingleGPIO.input("Pin from Sensor") == 1:
-#             SingleGPIO.on("Pin to PDU")
-#         else:
-#             "Move forward until GPIO.input == 1"
