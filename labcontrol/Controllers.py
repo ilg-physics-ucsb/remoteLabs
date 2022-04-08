@@ -1433,7 +1433,7 @@ class ServoAngleMotor(BaseController):
         
         return dutyCycle
 
-    class ServoSpeedMotor(BaseController):
+class ServoSpeedMotor(BaseController):
     def __init__(self, name, pin,frequency = 50, defaultDutyCycle = 2.5):
         #Ziyan puts parameters needed for servo here
         # i.e. Set up PWM channel, set default PWM duty cycle and frequency.
