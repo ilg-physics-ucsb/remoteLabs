@@ -1452,6 +1452,11 @@ class PWMChannel(BaseController):
 #         pi.write(self.directionPin, speed<=0)
         
 #         # The relationship between pulsewiteh and speed just as angle
+#         speed = 951.5365153687828/(1+np.exp(-0.013258915407307536*(x-1495.0847846147005)))+-480.9992281790085
+    
+
+
+
 
 
 #     def goto_parser(self, params):
