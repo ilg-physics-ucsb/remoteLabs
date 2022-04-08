@@ -550,7 +550,7 @@ $("document").ready(function () {
             carouselModal.modal("show")
             await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/h2");
+            dataChannel.send("Carousel/admingoto/h2");
             dataChannel.send("ASDIpdu/on/Carousel");
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
@@ -569,7 +569,7 @@ $("document").ready(function () {
             carouselModal.modal("show")
             await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/h2")
+            dataChannel.send("Carousel/admingoto/h2")
             dataChannel.send("ASDIpdu/on/Carousel");
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
@@ -640,7 +640,7 @@ $("document").ready(function () {
             carouselModal.modal("show")
             await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/a")
+            dataChannel.send("Carousel/admingoto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
@@ -660,7 +660,7 @@ $("document").ready(function () {
             carouselModal.modal("show")
             await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/a")
+            dataChannel.send("Carousel/admingoto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
@@ -715,7 +715,7 @@ $("document").ready(function () {
             carouselModal.modal("show")
             await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/b");
+            dataChannel.send("Carousel/admingoto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
@@ -734,7 +734,7 @@ $("document").ready(function () {
             carouselModal.modal("show")
             await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/goto/b");
+            dataChannel.send("Carousel/admingoto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
@@ -864,7 +864,7 @@ $("document").ready(function () {
 
     //BEGIN Modal Arm Buttons
     tMfine.addEventListener('click', function(){telescopeSteps=25;})
-    tMmedium.addEventListener('click', function(){telescope=250;})
+    tMmedium.addEventListener('click', function(){telescopeSteps=250;})
     tMcoarse.addEventListener('click', function(){telescopeSteps=1000;})
     tmCW.addEventListener('click', function(){
         console.log("Modal Telescope turned CW");
