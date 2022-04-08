@@ -83,6 +83,8 @@ elif args.admin:
     exp = Experiment("GammaRadiation", admin=True)
 else:
     exp=Experiment("GammaRadiation", messenger=True)
+
+#Create locks alongside experimentes
 exp.add_device(camera)
 exp.add_device(stage)
 exp.add_device(actuator)
@@ -90,6 +92,16 @@ exp.add_device(magnet)
 exp.add_device(absorberController)
 exp.add_device(buttons)
 exp.add_device(GRpdu)
+
+# Case of adding multiple locks
+#exp.add_lock([camera, stage])
+exp.add_lock([camera])
+exp.add_lock([stage])
+exp.add_lock([actuator])
+exp.add_lock([magnet])
+exp.add_lock([absorberController])
+exp.add_lock([buttons])
+exp.add_lock([GRpdu])
 
 
 exp.set_socket_path(socket_path)
