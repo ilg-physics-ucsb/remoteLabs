@@ -82,6 +82,17 @@ exp.add_device(Va)
 exp.add_device(Vr)
 exp.add_device(electrometer)
 exp.set_socket_path(socket_path)
+
+# Adding Locks for multiThreading
+# Arguments must be taken in as a iterable
+exp.add_device([camera])
+exp.add_device([FHpdu])
+exp.add_device([oven])
+exp.add_device([filament])
+exp.add_device([Va, Vr])
+exp.add_device([electrometer])
+exp.set_socket_path([socket_path])
+
 if not args.reset and not args.admin:
     exp.recallState()
 exp.setup()
