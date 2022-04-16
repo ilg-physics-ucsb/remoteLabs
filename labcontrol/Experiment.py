@@ -151,7 +151,7 @@ class Experiment(object):
         response_queue = queue.Queue()
 
         #Start response handling thread - CAN ONLY RUN ONCE AT A TIME
-        response_thread = threading.Thread(target=self.response_printer, args=(queue, ))
+        response_thread = threading.Thread(target=self.response_printer, args=(response_queue, ))
         response_thread.start()
 
 
