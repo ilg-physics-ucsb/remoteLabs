@@ -125,7 +125,7 @@ class Experiment(object):
             if not q.empty():
 
                 # Grabs response from queue
-                response = q.get() # Might need to handle case where nothing in queue
+                response, device_name = q.get() # Might need to handle case where nothing in queue
                 print("RESPONSE", response)
 
                 if response is not None:
@@ -191,7 +191,7 @@ class Experiment(object):
 
         
 
-        command_thread = threading.Thread(target=self.devices[device_name].cmd_handler, args=(command, params, queue))
+        command_thread = threading.Thread(target=self.devices[device_name].cmd_handler, args=(command, params, queue, device_name))
         command_thread.start()
 
         ### OLD Code

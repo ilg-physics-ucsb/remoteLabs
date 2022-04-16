@@ -20,7 +20,7 @@ gpio.setmode(gpio.BCM)
 
 class BaseController(object):
 
-    def cmd_handler(self, cmd, params, queue): # this should recieve a command, and a queue where it sends its response
+    def cmd_handler(self, cmd, params, queue, device_name): # this should recieve a command, and a queue where it sends its response
         
         ### Need to create a algorithm that grabs lock 
         #NOT RECOMMENDED - each controller having its own lock
@@ -50,8 +50,10 @@ class BaseController(object):
         if callable(method):
             response = method(params)
 
+        
+
         # returns response
-        queue.put(response)
+        queue.put([response, device_name])
 
         # Releases lock
         self.experiment.locks[self.name].release()
