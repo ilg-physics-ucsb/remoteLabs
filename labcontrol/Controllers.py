@@ -51,7 +51,7 @@ class BaseController(object):
             response = method(params)
 
         # returns response
-        q.put(response)
+        queue.put(response)
 
         # Releases lock
         self.experiment.locks[self.name].release()
