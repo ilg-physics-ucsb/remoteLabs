@@ -124,27 +124,27 @@ class Experiment(object):
         while True:
             if not q.empty():
 
-            # Grabs response from queue
+                # Grabs response from queue
                 response = q.get() # Might need to handle case where nothing in queue
-            print("RESPONSE", response)
+                print("RESPONSE", response)
 
-            if response is not None:
-                print("Sending data")
-                # Carlos: comment line below and replace with your websocket sending features.
-                # Should take the response and send it to the client.
+                if response is not None:
+                    print("Sending data")
+                    # Carlos: comment line below and replace with your websocket sending features.
+                    # Should take the response and send it to the client.
 
-                # Sends Response
-                self.connection.send(response.encode()) # back to whatever sent the command to socket
+                    # Sends Response
+                    self.connection.send(response.encode()) # back to whatever sent the command to socket
 
-            #Checks State
-            self.allStates[device_name] = self.devices[device_name].getState() #returns state variable
+                #Checks State
+                self.allStates[device_name] = self.devices[device_name].getState() #returns state variable
         
-            #These will not work on a separate thread
-            # Two devices sending data at the same time
+                #These will not work on a separate thread
+                # Two devices sending data at the same time
 
-            # Dumps into json file
-            with open(self.json_file, "w") as f:
-                json.dump(self.allStates, f)  
+                # Dumps into json file
+                with open(self.json_file, "w") as f:
+                    json.dump(self.allStates, f)  
 
     def __data_connection(self, connection):
         # Defining queue that handles response between command_thread and response_thread
