@@ -93,12 +93,24 @@ exp.add_device(absorberController)
 exp.add_device(buttons)
 exp.add_device(GRpdu)
 
-# Case of adding multiple locks
-#exp.add_lock([camera, stage])
+"""
+add_lock function is defined in line 60 of experiment.py
+
+This function must take in an iterable and allows multiprocessing by placing a lock on a single or multiple devices. Locking devices
+disables devices that share that lock from being ran at the same time. When a command is sent to a device, the device aquires the lock,
+disabling all other devices (including itself) executing any commands. Instead these commands are put into a queue and executed in
+first in first out order as soon as the original device finishes executing and releases the lock.
+
+If two devices should not be ran at the sametime, put both devices into an iterable (i.e. [device1, device2]) to create a lock
+both devices share. If a device can be ran at the same time as every other device, you must still give it its own lock by placing it in
+an iterable (i.e. ([device1])) to enable multiprocessing and to allow multiple commands to be queued for that device. 
+
+
+""" 
+# actuator and stage and magnet
+# need to update w master
 exp.add_lock([camera])
-exp.add_lock([stage])
-exp.add_lock([actuator])
-exp.add_lock([magnet])
+exp.add_lock([actuator, stage, magnet])
 exp.add_lock([absorberController])
 exp.add_lock([buttons])
 exp.add_lock([GRpdu])

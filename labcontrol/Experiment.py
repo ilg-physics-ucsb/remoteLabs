@@ -63,20 +63,6 @@ class Experiment(object):
         lock = threading.Lock()
         for device_name in devices:
             self.locks[device_name.name] = lock
-
-
-    #Need to add lock setup function\
-    """
-    def lockfunction
-        loop thru dictionary of devices (argument)
-            Check if each device exists (keys is in self.devices)
-            if exists
-                self.device[keyname].lock_list == lock_dict[keyname]
-            
-    
-    
-    """
-    
             
 
     def recallState(self):
@@ -118,14 +104,15 @@ class Experiment(object):
                 # print("Socket Error: {0}".format(err))
                 logging.error("Socket Error!", exc_info=True)
                 break
-
-    def response_printer(self, q):
+    
+    # Takes in queue defined in data_connection
+    def response_printer(self, q): 
         
         while True:
             if not q.empty():
 
-                # Grabs response from queue
-                response, device_name = q.get() # Might need to handle case where nothing in queue
+                # Grabs response and device_name from cmd_handler in controllers.py from queue
+                response, device_name = q.get() 
                 print("RESPONSE", response)
 
                 if response is not None:
@@ -150,7 +137,7 @@ class Experiment(object):
         # Defining queue that handles response between command_thread and response_thread
         response_queue = queue.Queue()
 
-        #Start response handling thread - CAN ONLY RUN ONCE AT A TIME
+        #Start response handling thread 
         response_thread = threading.Thread(target=self.response_printer, args=(response_queue, ))
         response_thread.start()
 
@@ -162,7 +149,7 @@ class Experiment(object):
                     data = self.connection.recv(1024)
 
                     if data:
-                        self.command_handler(data, response_queue) ### Do i need to define q here?
+                        self.command_handler(data, response_queue) 
                     else:
                         break
                     time.sleep(0.01)
@@ -194,8 +181,7 @@ class Experiment(object):
         command_thread = threading.Thread(target=self.devices[device_name].cmd_handler, args=(command, params, queue, device_name))
         command_thread.start()
 
-        ### OLD Code
-        #response = self.devices[device_name].cmd_handler(command, params)
+       
         
            
 

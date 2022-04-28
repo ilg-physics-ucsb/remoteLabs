@@ -119,6 +119,30 @@ exp.add_device(slit)
 exp.add_device(arm)
 exp.add_device(carousel)
 exp.add_device(ambient)
+
+"""
+add_lock function is defined in line 60 of experiment.py
+
+This function must take in an iterable and allows multiprocessing by placing a lock on a single or multiple devices. Locking devices
+disables devices that share that lock from being ran at the same time. When a command is sent to a device, the device aquires the lock,
+disabling all other devices (including itself) executing any commands. Instead these commands are put into a queue and executed in
+first in first out order as soon as the original device finishes executing and releases the lock.
+
+If two devices should not be ran at the sametime, put both devices into an iterable (i.e. [device1, device2]) to create a lock
+both devices share. If a device can be ran at the same time as every other device, you must still give it its own lock by placing it in
+an iterable (i.e. ([device1])) to enable multiprocessing and to allow multiple commands to be queued for that device. 
+
+
+"""
+
+exp.add_lock([camera])
+exp.add_lock([ASDIpdu])
+exp.add_lock([grating])
+exp.add_lock([slit])
+exp.add_lock([arm])
+exp.add_lock([carousel])
+exp.add_lock([ambient])
+
 exp.set_socket_path(socket_path)
 if not args.reset and not args.admin:
     exp.recallState()
