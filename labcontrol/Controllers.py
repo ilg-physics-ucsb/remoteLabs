@@ -20,7 +20,11 @@ gpio.setmode(gpio.BCM)
 
 class BaseController(object):
 
-    def cmd_handler(self, cmd, params):
+    def cmd_handler(self, cmd, params, queue, device_name): # this should recieve a command, and a queue where it sends its response
+        
+        # Aquires lock
+        self.experiment.locks[self.name].acquire()
+
         # Make the parser name, it should follow the naming convention <cmd>_parser. If there is no parser return None.
         parser = getattr(self, cmd+"_parser", None)
 
@@ -37,7 +41,13 @@ class BaseController(object):
         if callable(method):
             response = method(params)
 
-        return response
+        
+
+        # returns response
+        queue.put([response, device_name])
+
+        # Releases lock
+        self.experiment.locks[self.name].release()
 
     def cleanup(self):
         pass
@@ -318,6 +328,12 @@ class StepperI2C(MotorKit, BaseController):
         print(position)
         endPoint=self.refPoints[position]
         response = self.move(endPoint-self.currentPosition)
+        return response
+
+    def admingoto(self, position):
+        print(position)
+        endPoint=self.refPoints[position]
+        response = self.adminMove(endPoint-self.currentPosition)
         return response
 
     def goto_parser(self, params):
@@ -1375,26 +1391,93 @@ class PWMChannel(BaseController):
     def reset(self):
         self.pwm.ChangeDutyCycle(self.defaultDutyCycle)
 
-#Ziyan Code Goes Here
-class ServoMotor(BaseController):
+# #Ziyan Code Goes Here
+# class ServoAngleMotor(BaseController):
+#     def __init__(self, name, pin,defaultpulsewidth = 0, bounds=None):
+#         #Ziyan puts parameters needed for servo here
+#         # i.e. Set up PWM channel, set default PWM duty cycle and frequency.
+#         self.pin = pin
+#         self.name = name
+#         self.frequency = frequency
+#         self.pulsewidth = defaultpulsewidth
+#         self.device_type = "controller"
+#         pi.set_servo_pulsewidth(self.pin, self.pulsewidth)
+#         self.stepPin = stepPin
+#         self.directionPin = directionPin
+#         self.enablePin = enablePin
+        
+#         pi.set_mode(self.stepPin, pigpio.OUTPUT)
+#         pi.set_pull_up_down(self.stepPin, pigpio.PUD_DOWN)
+#         pi.set_mode(self.enablePin, pigpio.OUTPUT)
+#         pi.set_pull_up_down(self.enablePin, pigpio.PUD_DOWN)
+#         pi.set_mode(self.directionPin, pigpio.OUTPUT)
+#         pi.set_pull_up_down(self.directionPin, pigpio.PUD_DOWN)
+        
+#         pi.write(self.enablePin, 0)
+        
+#         if bounds is None:
+#             self.lowerBound = 0
+#             self.upperBound = 180
+#         else:
+#             self.lowerBound = bounds[0]
+#             self.upperBound = bounds[1]
+            
 
-    def __init__(self, name, pin):
-        #Ziyan puts parameters needed for servo here
-        # i.e. Set up PWM channel, set default PWM duty cycle and frequency.
-        pass
-
-    def goto(self, dutyCycle):
-        ## Code to set duty cycle on PWM channel
-        pass
-
-    def goto_parser(self, params):
-        if len(params) != 1:
-            raise ArgumentNumberError(len(params), 1, "goto")
-        ## Code here that translates between angle (params[0]) and duty cycle needed for PWM.
-
-        return dutyCycle
+#     def goto(self, angle):
+#         ## Code to set duty cycle on PWM channel
+#         self.pulsewidth = 2000/180*angle + 500
+#         pi.set_servo_pulsewidth(self.pin, sefl.pulsewidth)
+        
 
 
+#     def goto_parser(self, params):
+#         if len(params) != 1:
+#             raise ArgumentNumberError(len(params), 1, "goto")
+#         angle = int(params[0])
+#         ## Code here that translates between angle (params[0]) and duty cycle needed for PWM.
+#         if angle < 0 or angle > 180:
+#             raise ArgumentError(self.name, "goto", angle, allowed="0 <= angle <= 180")
+#         return angle
+
+#     class ServoSpeedMotor(BaseController):
+#     def __init__(self, name, pin,defaultpulsewidth = 0):
+#         #Ziyan puts parameters needed for servo here
+#         # i.e. Set up PWM channel, set default PWM duty cycle and frequency.
+#         self.pin = pin
+#         self.name = name
+#         self.frequency = frequency
+#         self.device_type = "controller"
+#         self.frequency = frequency
+#         self.pulsewidth = defaultpulsewidth
+#         self.device_type = "controller"
+#         pi.set_servo_pulsewidth(self.pin, self.pulsewidth)
+        
+    
+#     def goto(self, speed):
+#         if speed >= 0:
+#              gpio.output(self.directionPin, 1)
+#         else:
+#             gpio.output(self.directionPin, 0)
+            
+#         pi.write(self.directionPin, speed<=0)
+        
+#         # The relationship between pulsewiteh and speed just as angle
+#         speed = 951.5365153687828/(1+np.exp(-0.013258915407307536*(x-1495.0847846147005)))+-480.9992281790085
+    
+
+
+
+
+
+#     def goto_parser(self, params):
+#         if len(params) != 1:
+#             raise ArgumentNumberError(len(params), 1, "goto")
+#         speed = int(params[0])
+
+#         if speed < -self.pwmScaler or speed > self.pwmScaler:
+#             raise ArgumentError(self.name, "goto", speed/self.pwmScaler, "-1 <= speed <= 1")
+
+#         return speed
 
 
 

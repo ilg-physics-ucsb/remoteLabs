@@ -1,3 +1,4 @@
+from pickle import EMPTY_DICT, TRUE
 import socket
 import sys
 import os
@@ -6,6 +7,7 @@ from signal import signal, SIGINT
 import json
 import logging
 import threading
+import queue
 
 
 class NoDeviceError(Exception):
@@ -20,6 +22,11 @@ class Experiment(object):
 
     def __init__(self, name, root_directory="remoteLabs", admin=False, messenger=False):
         self.devices = {}
+
+        # Marlon's addition
+        self.locks = {} # lock dict
+        #self.queue?    
+
         self.allStates = {}
         if messenger:
             self.messenger = Messenger(self)
@@ -48,6 +55,15 @@ class Experiment(object):
         device.experiment = self
         logging.info("Adding Device - " + device.name)
         self.devices[device.name] = device
+        #self.locks[device.name] = threading.Lock()
+
+    # Lock function that creates
+    def add_lock(self, devices):
+        # Loops through all devices
+        lock = threading.Lock()
+        for device_name in devices:
+            self.locks[device_name.name] = lock
+            
 
     def recallState(self):
         logging.info("Recalling State")
@@ -82,19 +98,58 @@ class Experiment(object):
                 time.sleep(0.01)
             except socket.timeout:
                 logging.debug("Socket Timeout")
+                
                 continue
             except socket.error as err:
                 # print("Socket Error: {0}".format(err))
                 logging.error("Socket Error!", exc_info=True)
                 break
+    
+    # Takes in queue defined in data_connection
+    def response_printer(self, q): 
+        
+        while True:
+            if not q.empty():
+
+                # Grabs response and device_name from cmd_handler in controllers.py from queue
+                response, device_name = q.get() 
+                print("RESPONSE", response)
+
+                if response is not None:
+                    print("Sending data")
+                    # Carlos: comment line below and replace with your websocket sending features.
+                    # Should take the response and send it to the client.
+
+                    # Sends Response
+                    self.connection.send(response.encode()) # back to whatever sent the command to socket
+
+                #Checks State
+                self.allStates[device_name] = self.devices[device_name].getState() #returns state variable
+        
+                #These will not work on a separate thread
+                # Two devices sending data at the same time
+
+                # Dumps into json file
+                with open(self.json_file, "w") as f:
+                    json.dump(self.allStates, f)  
 
     def __data_connection(self, connection):
+        # Defining queue that handles response between command_thread and response_thread
+        response_queue = queue.Queue()
+
+        #Start response handling thread 
+        response_thread = threading.Thread(target=self.response_printer, args=(response_queue, ))
+        response_thread.start()
+
+
         while True:
             try:
                 while True:
+                    # Recieves data
                     data = self.connection.recv(1024)
+
                     if data:
-                        self.command_handler(data)
+                        self.command_handler(data, response_queue) 
                     else:
                         break
                     time.sleep(0.01)
@@ -111,21 +166,24 @@ class Experiment(object):
             names.append(device_name)
         return names
 
-    def command_handler(self, data):
+    #Carlos: add websocket object as argument for this function
+    def command_handler(self, data, queue):
+
         data = data.decode('utf-8')
         logging.info("Handling Command - " + data)
         device_name, command, params = data.strip().split("/")
         params = params.split(",")
         if device_name not in self.devices:
             raise NoDeviceError(device_name)
-        response = self.devices[device_name].cmd_handler(command, params)
-        print("RESPONSE", response)
-        if response is not None:
-            print("Sending data")
-            self.connection.send(response.encode())
-        self.allStates[device_name] = self.devices[device_name].getState()
-        with open(self.json_file, "w") as f:
-            json.dump(self.allStates, f)        
+
+        
+
+        command_thread = threading.Thread(target=self.devices[device_name].cmd_handler, args=(command, params, queue, device_name))
+        command_thread.start()
+
+       
+        
+           
 
     def exit_handler(self, signal_received, frame):
         # print("\r\nAttempting to exit")
@@ -176,6 +234,7 @@ class Experiment(object):
             self.socket.bind(self.socket_path)
             self.socket.listen(1)
             self.socket.settimeout(1)
+            # Carlos to replace with his socket code (asyncio.run(main()))
             self.__wait_to_connect()
         except OSError:
             if os.path.exists(self.socket_path):
@@ -262,6 +321,15 @@ class Messenger:
         if self.connection is not None:
             self.connection.close()
             # logging.info("Connection to client closed.")
+    
+    #Carlos adds websocketCommandServer function here
+        # Add to this function counting number of connections made
+        # run the self.commandHandler method on the data/message. 
+
+    #Carlos adds runWebsocketServer "main" function here
+        # Change address of server to 0.0.0.0
+
+# Zak and Carlos learned how pull requests work
 
 
     
