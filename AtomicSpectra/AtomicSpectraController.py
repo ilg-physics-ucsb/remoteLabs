@@ -136,11 +136,11 @@ an iterable (i.e. ([device1])) to enable multiprocessing and to allow multiple c
 """
 
 exp.add_lock([camera])
-exp.add_lock([ASDIpdu])
+exp.add_lock([ASDIpdu, carousel])
 exp.add_lock([grating])
 exp.add_lock([slit])
 exp.add_lock([arm])
-exp.add_lock([carousel])
+
 exp.add_lock([ambient])
 
 exp.set_socket_path(socket_path)
