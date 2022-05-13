@@ -132,6 +132,8 @@ class Experiment(object):
                 # Dumps into json file
                 with open(self.json_file, "w") as f:
                     json.dump(self.allStates, f)  
+            else:
+                time.sleep(0.01)
 
     def __data_connection(self, connection):
         # Defining queue that handles response between command_thread and response_thread
