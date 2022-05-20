@@ -340,6 +340,11 @@ class StepperI2C(MotorKit, BaseController):
         if len(params) != 1:
             raise ArgumentNumberError(len(params), 1, "goto")
         return params[0]
+    
+    def admingoto_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "admingoto")
+        return params[0]
 
     def degMove_parser(self, params):
         try:
@@ -347,7 +352,6 @@ class StepperI2C(MotorKit, BaseController):
         except ValueError:
             raise ArgumentError(self.name, "degMove", params)
         return steps
-
 
     def degMove(self, deg):
         print("{0} degrees".format(deg))
