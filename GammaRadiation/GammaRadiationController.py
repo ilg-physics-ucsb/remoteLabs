@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
-from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, DCMotorI2C, SingleGPIO, Multiplexer, AbsorberController, PWMChannel, PololuDCMotor, PololuStepperMotor
-import visa
+from labcontrol import Experiment, StepperI2C, PDUOutlet, ArduCamMultiCamera, SingleGPIO, Multiplexer, AbsorberController
+from labcontrol import S42CStepperMotor, FS5103RContinuousMotor, GeneralPWMServo
+import pyvisa as visa
 import argparse, os, json
 
 parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
@@ -24,16 +25,11 @@ outletMap       = labSettings["outletMap"]
 stageBounds     = labSettings["stageBounds"]
 stageRefPoints  = labSettings["stageRefPoints"]
 stageStepPin, stageDirPin, stageEnPin   = labSettings['stagePins']
-stageDelay      = labSettings["stageDelay"]
 
-# magnetTerminal      = labSettings["magnetTerminal"]
 magnetPin           = labSettings["magnetPin"]
-magnetFrequency     = labSettings["magnetFrequency"]
 
-actuatorPwmPin, actuatorDirPin, actuatorNotEnPin, actuatorStopPin   = labSettings["actuatorPins"]
-actuatorTriggerEdge = labSettings["actuatorTriggerEdge"]
-actuatorSteadyState = labSettings["actuatorSteadyState"]
-actuatorPWMScaler   = labSettings["actuatorPWMScaler"]
+actuatorPwmPin      = labSettings["actuatorPwmPin"]
+actuatorLimitPin    = labSettings["actuatorLimitPin"]
 
 initialState        = labSettings["initialState"]
 holderMap           = labSettings["holderMap"]
@@ -43,30 +39,29 @@ inhibitorPin        = labSettings["inhibitorPin"]
 multiplexerChannels = labSettings["multiplexerChannels"]
 multiplexerDelay    = labSettings["multiplexerDelay"]
 
-absorberFullTime = labSettings["absorberFullTime"]
-absorberMidTime  = labSettings["absorberMidTime"]
-magnetPower      = labSettings["magnetPower"]
-
+absorberDownTime = labSettings["absorberDownTime"]
+absorberUpTime  = labSettings["absorberUpTime"]
 
 if args.admin:
-    bounds = (-1e6, 1e6)
-    stageBounds=bounds
+    stageBounds = (None, None)
 
-camera = ArduCamMultiCamera("Camera", 1, i2cbus=1)
+camera = ArduCamMultiCamera("Camera", 0, i2cbus=11)
 
 socket_path = "/tmp/uv4l.socket"
 messenger_socket_path = "/tmp/remla.socket"
 
+stage = S42CStepperMotor("Stage",
+                        stageEnPin, 
+                        stageStepPin, 
+                        stageDirPin, 
+                        bounds=stageBounds,
+                        refPoints=stageRefPoints)
 
-## stage = StepperI2C("Stage", stageTerminal, bounds=stageBounds, style="DOUBLE", delay=0.000004, refPoints=stageRefPoints)
-stage = PololuStepperMotor("Stage", stageStepPin, stageDirPin, stageEnPin, bounds=stageBounds, delay=stageDelay, refPoints=stageRefPoints)
-## actuator = DCMotorI2C("Actuator", actuatorTerminal)
-actuator = PololuDCMotor("Actuator", actuatorPwmPin, actuatorDirPin, actuatorNotEnPin, actuatorStopPin, rising=actuatorTriggerEdge, pwmScaler=actuatorPWMScaler, steadyState=actuatorSteadyState)
+actuator = FS5103RContinuousMotor("actuator", actuatorPwmPin, actuatorLimitPin, _reversed=True)
 
-## magnet = DCMotorI2C("Magnet", magnetTerminal)
-magnet = PWMChannel("Magnet", magnetPin, magnetFrequency)
+magnet = GeneralPWMServo("magnet", magnetPin)
 
-absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, initialState, holderMap, fulltime=absorberFullTime, midtime=absorberMidTime, magnetPower=magnetPower)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, initialState, holderMap, downtime = absorberDownTime, uptime = absorberUpTime)
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
@@ -84,37 +79,18 @@ elif args.admin:
 else:
     exp=Experiment("GammaRadiation", messenger=True)
 
-#Create locks alongside experimentes
-exp.add_device(camera)
-exp.add_device(stage)
-exp.add_device(actuator)
-exp.add_device(magnet)
-exp.add_device(absorberController)
-exp.add_device(buttons)
-exp.add_device(GRpdu)
+devices = [camera,
+           stage,
+           actuator,
+           magnet,
+           absorberController,
+           buttons,
+           GRpdu]
 
-"""
-add_lock function is defined in line 60 of experiment.py
+for device in devices:
+    exp.add_device(device)
 
-This function must take in an iterable and allows multiprocessing by placing a lock on a single or multiple devices. Locking devices
-disables devices that share that lock from being ran at the same time. When a command is sent to a device, the device aquires the lock,
-disabling all other devices (including itself) executing any commands. Instead these commands are put into a queue and executed in
-first in first out order as soon as the original device finishes executing and releases the lock.
-
-If two devices should not be ran at the sametime, put both devices into an iterable (i.e. [device1, device2]) to create a lock
-both devices share. If a device can be ran at the same time as every other device, you must still give it its own lock by placing it in
-an iterable (i.e. ([device1])) to enable multiprocessing and to allow multiple commands to be queued for that device. 
-
-
-""" 
-# actuator and stage and magnet
-# need to update w master
-exp.add_lock([camera])
-exp.add_lock([actuator, stage, magnet])
-exp.add_lock([absorberController])
-exp.add_lock([buttons])
-exp.add_lock([GRpdu])
-
+exp.add_lock(devices)
 
 exp.set_socket_path(socket_path)
 if not args.reset and not args.admin:

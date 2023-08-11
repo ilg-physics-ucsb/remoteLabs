@@ -4,18 +4,14 @@
         "ST160": 6
     },
 
-    "multiplexerPins": [9, 11, 8],
-    "inhibitorPin" : 25,
+    "multiplexerPins": [5, 6, 13],
+    "inhibitorPin" : 12,
     "multiplexerChannels": [1,2,3,4,5,6],
     "multiplexerDelay": 0.1,
 
-    "magnetPin" : 12,
-    "magnetFrequency": 100,
+    "magnetPin" : 19,
 
-    "actuatorPins" : [16, 19, 13, 6],
-    "actuatorTriggerEdge": false,
-    "actuatorSteadyState": 70000,
-    "actuatorPWMScaler"  : 255,
+    "actuatorPwmPin" : 24,
     
     "stagePins": [20, 21, 26],
 

@@ -49,7 +49,7 @@ potentiometer = StepperI2C("Pot", 2, bounds=potBounds)
 colorFilterWheel = StepperI2C("colorWheel", 1, bounds=colorFilterBounds, refPoints=refPoints)
 densityFilterWheel = StepperI2C("densityWheel", 3, bounds=densityFilterBounds, refPoints=refPoints)
 
-PEpdu = PDUOutlet("PEpdu", "128.111.18.80", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
+PEpdu = PDUOutlet("PEpdu", "pepdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 PEpdu.login()
 
 electrometer = Keithley6514Electrometer("Electrometer", visa_electrometer)
