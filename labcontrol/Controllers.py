@@ -13,6 +13,7 @@ import signal
 from adafruit_bus_device.i2c_device import I2CDevice
 import pigpio
 import sys
+from warnings import warn
 
 
 pi = pigpio.pi()
@@ -394,17 +395,15 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator, magnet, initialState, holderMap, fulltime=10, midtime=1, magnetPower=90, ):
+    def __init__(self, name, stepper, actuator, magnet, initialState, holderMap, downtime=0.5, uptime=1):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
-        self.fulltime = fulltime
-        self.midtime = midtime
-        self.downtime = fulltime - midtime
+        self.downtime = downtime
+        self.uptime = uptime
         self.stepper = stepper
         self.actuator = actuator
         self.magnet = magnet
-        self.magnetPower = magnetPower
         self.initialState = initialState
         self.holderMap = holderMap
         self.state = {
@@ -430,6 +429,7 @@ class AbsorberController(MotorKit, BaseController):
         self.place(movesList)
 
     def __transfer(self, slot1, slot2):
+        # TODO: magnet control needs to be fixed
 
         absorber = self.state["total"][slot1]
         # print(f"Transfer {absorber} from {slot1} --> {slot2}")
@@ -440,22 +440,31 @@ class AbsorberController(MotorKit, BaseController):
         # x += 1
         self.stepper.goto(slot1)
         self.actuator.throttle(self.actuator.throttle_parser([1.0]))
-        time.sleep(self.midtime)
+        time.sleep(self.downtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
-        # self.magnet.throttle(1.0)
-        self.magnet.power(self.magnetPower)
+        # absorber gets attached to the magnet
+        time.sleep(0.5)
         self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
-        time.sleep(self.fulltime)
+        time.sleep(self.uptime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
+
         self.stepper.goto(slot2)
         self.actuator.throttle(self.actuator.throttle_parser([1.0]))
         time.sleep(self.downtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
-        # self.magnet.throttle(0)
-        self.magnet.power(0)
-        # self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
-        # time.sleep(self.midtime)
+
+        # push magnet and drop the absorber
+        # TODO this needs to be updated when the setup is finalized
+        self.magnet.goto(-45)
+        time.sleep(1)
+        self.magnet.goto(-90)
+        time.sleep(1)
+        self.magnet.disable()
+
+        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
+        time.sleep(self.uptime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
+        self.actuator.disable()
 
 
         self.state["total"][slot1] = ''
@@ -807,19 +816,6 @@ class AbsorberController(MotorKit, BaseController):
         print("Moves:{0}".format(moves))
         for move in moves:
             self.__transfer(move[0], move[1])
-
-        if len(moves) != 0:
-            self.stepper.move(700)
-
-    # def place(self, absorberList):
-    #     for slot, absorber in absorberList:
-    #         # If the slot is not already load with the correct absorber & and it's empty
-    #         if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] == -1:
-    #             # Get absorber from its current location
-    #             # Move it to new location
-    #             pass
-    #         if self.state["loaded"][slot] != absorber and self.state["loaded"][slot] != -1:
-    #             pass
 
     def place_parser(self, params):
         # if len(params) != 1:
@@ -1394,6 +1390,447 @@ class PWMChannel(BaseController):
 
     def reset(self):
         self.pwm.ChangeDutyCycle(self.defaultDutyCycle)
+
+class S42CStepperMotor(BaseController):
+    """
+    !There are no argument type check for this class!
+    TODO Barry (chutian_wang@ucsb.edu) if checks became necessary.
+
+    args: 
+        name -- str: the name of this motor.
+        EN -- int: the enable pin port.
+        STEP -- int: the step pin port.
+        DIR -- int: the direction pin port.
+        bounds -- tuple: the limiting step bounds beyond which the
+            motor should not reach, (LB, UB). Set to (None, None)
+            If there are no restrictions (NOT RECOMMENDED). LB
+            and UB are steps relative to initial position. If
+            LB > 0 or UB < 0 initializaition will fail.
+
+    kwargs:
+        refPoints -- dict({}): A table of predefined reference points
+            that can be quickly accessed by calling the `goto()`
+            function. {str: int}
+        delay -- float(0.02): the step pulse period in seconds.
+        microstep -- int(2): the microstep setting on the motor.
+            Choose a higher value if more precision is needed.
+            This parameter is currently NOT USED. TODO Barry
+            if it needs to be implemented.
+        pi -- any(None): the host Rpi pigpio.pi instance. Default None
+            will use the local host pi.
+    
+    The S24CStepperMotor shares the same controls as the StepperI2C motor.
+    It has the following `microStep` settings on the OLED menu:
+
+        2 -- 400  steps per rev or 0.9 degrees per microstep.
+        4 -- 800  steps per rev or 0.45 degrees per microstep.
+        8 -- 1600 steps per rec or 0.225 degrees per microstep.
+
+    Hihger microsteps are 16, 32, 64, 128, 256.
+    Note: more steps usually results in less torque but higher precision.
+
+    Bound crossing handling:
+        If any bounds are hit, the original move steps will be registered
+        internally but the physical motor will not pass through the bound.
+        If curPos is not within the bounds, any moves that attempt to push
+        the motor further from the bounds range will not have physical
+        effect.
+        e.g. UB = 100, curPos = 0, move(101) will set curPos to 101 and
+        send 100 step pulses to the motor.
+        e.g. UB = 100, curPos = 200, move(10) will set curPos to 210 and
+        send 0 step pulses to the motor.
+        e.g. UB = 100, curPos = 200, move(-150) will set curPos to 50 and
+        send 50 step pulses to the motor.
+
+    Multithreading/Callback support:
+        None, TODO barry if required in the future.
+    """
+
+    def __init__(
+            self,
+            name:   str,
+            EN:     int,
+            STEP:   int,
+            DIR:    int,
+            bounds: tuple,
+            refPoints   = {},
+            microstep   = 2,
+            gearRatio   = 1,
+            _pi          = None,
+        ):
+
+        self.name       = name
+        self.EN         = EN
+        self.STEP       = STEP
+        self.DIR        = DIR
+        self.LB     = bounds[0]
+        self.UB     = bounds[1]
+        # Bounds warning logic, remove if unecessary to improve performance
+        if self.LB == None or self.UB == None:
+            if self.LB == None and self.UB == None:
+                warn(self.name + " is initialized without any bounds!", RuntimeWarning)
+            elif self.LB == None:
+                warn(self.name + " is initialized without a lower bound.", RuntimeWarning)
+            elif self.UB == None:
+                warn(self.name + " is initialized without a upper bound.", RuntimeWarning)
+        else:
+            if self.LB > self.UB:
+                warn(self.name + " is initialized with LB > UB!", RuntimeWarning)
+            if self.LB > 0:
+                warn(self.name + " is initialized with a positive lower bound.", RuntimeWarning)
+            if self.UB < 0:
+                warn(self.name + " is initialized with a negative lower bound.", RuntimeWarning)
+        self.refPoints  = refPoints
+        self.delay      = 0.0001
+        self.mStep      = microstep
+        self.gearRatio  = gearRatio
+        # The host Rpi, in case multihost systems are used in the future
+        if not _pi:
+            self.pi = pi
+        else:
+            self.pi = _pi
+            warn("Foreign controls may not be supported.", RuntimeWarning)
+
+        # The home position (TODO future update)
+        self.homePos = 0
+        # The ideal current position.
+        self.curPos = 0
+
+        self.pi.set_mode(self.STEP, pigpio.OUTPUT)
+        self.pi.set_pull_up_down(self.STEP, pigpio.PUD_DOWN)
+        self.pi.set_mode(self.EN, pigpio.OUTPUT)
+        self.pi.set_pull_up_down(self.EN, pigpio.PUD_UP)
+        self.pi.set_mode(self.DIR, pigpio.OUTPUT)
+        self.pi.set_pull_up_down(self.DIR, pigpio.PUD_DOWN)
+
+        # Always enable closed loop control. EN is active low.
+        self.pi.write(self.EN, 0)
+        self.state = {"position": self.curPos}
+    
+    def move_parser(self, params: list) -> int:
+        """
+        args:
+            params -- iterable(list): The parameter list that contains cmd strings.
+
+        ret:
+            int: The number of steps to move.
+
+        Will throw ArgumentNumberError if len(params) != 1.
+        """
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "move")
+        return int(params[0])
+
+    def goto_parser(self, params: list):
+        """
+        args:
+            params -- iterable(list): The parameter list that contains cmd strings.
+
+        ret:
+            str: The target refPoint.
+
+        Will throw ArgumentNumberError if len(params) != 1.
+        """
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "goto")
+        return params[0]
+
+    def degMove_parser(self, params: list):
+        """
+        args:
+            params -- iterable(list): The parameter list that contains cmd strings.
+
+        ret:
+            str: The target refPoint.
+
+        Will throw ArgumentNumberError if len(params) != 1.
+        """
+        try:
+            deg = float(params[0])
+        except ValueError:
+            raise ArgumentError(self.name, "degMove", params)
+        return deg
+
+    def __sqGenPWM(self, pin, period, num):
+        pOn = pigpio.pulse(1<<self.STEP, 0, int(self.delay*1e6/2))
+        pOff = pigpio.pulse(0, 1<<self.STEP, int(self.delay*1e6/2))
+        pulse = [pOn, pOff]
+        pi.wave_clear()
+        pi.wave_add_generic(pulse)
+        stepWave = pi.wave_create()
+
+        absteps = abs(num)
+        step_y = absteps//256
+        step_x = absteps%256
+
+        pi.wave_chain([
+            255, 0,
+            stepWave,
+            255, 1,
+            step_x, step_y
+        ])
+
+        while pi.wave_tx_busy():
+            time.sleep(0.1)
+
+    def move(self, steps: int):
+        """
+        args:
+            steps -- int: The desired number of steps to move.
+
+        ret:
+            str: A response string ("{self.name}/position/{self.state["position"]}"
+            or "{self.name}/position/limit").
+
+        Attemps to move `steps` number of steps. Will stop if any bounds are hit. See
+        class documentation `Bound crossing handling` for details.
+        """
+        # bounds checking decision tree.
+        # optimize this with LUT if better performance is desiered
+        targetPos = self.curPos + steps
+
+        if self.LB == None and self.UB == None:
+            moveSteps = steps
+
+        elif self.LB == None:
+            if self.curPos < self.UB:
+                if targetPos <= self.UB:
+                    moveSteps = targetPos - self.curPos
+                else: # targetPos > self.UB
+                    moveSteps = self.UB - self.curPos
+            
+            if self.curPos >= self.UB:
+                if targetPos <= self.UB:
+                    moveSteps = targetPos - self.UB
+                else: # targetPos > self.UB
+                    moveSteps = 0
+
+        elif self.UB == None:
+            if self.curPos <= self.LB:
+                if targetPos < self.LB:
+                    moveSteps = 0
+                else: # targetPos >= self.LB
+                    moveSteps = targetPos - self.LB
+
+            if self.curPos > self.LB:
+                if targetPos < self.LB:
+                    moveSteps = self.LB - self.curPos
+                else: # targetPos >= self.LB:
+                    moveSteps = targetPos - self.curPos
+
+        else:
+            if self.curPos <= self.LB:
+                if targetPos < self.LB:
+                    moveSteps = 0
+                elif targetPos >= self.LB and targetPos <= self.UB:
+                    moveSteps = targetPos - self.LB
+                else: # targetPos > self.UB
+                    moveSteps = self.UB - self.LB
+
+            if self.curPos > self.LB and self.curPos < self.UB:
+                if targetPos < self.LB:
+                    moveSteps = self.LB - self.curPos
+                elif targetPos >= self.LB and targetPos <= self.UB:
+                    moveSteps = targetPos - self.curPos
+                else: # targetPos > self.UB
+                    moveSteps = self.UB - self.curPos
+            
+            if self.curPos >= self.UB:
+                if targetPos < self.LB:
+                    moveSteps = self.LB - self.UB
+                elif targetPos >= self.LB and targetPos <= self.UB:
+                    moveSteps = targetPos - self.UB
+                else: # targetPos > self.UB
+                    moveSteps = 0
+        
+        # set DIR pin
+        if moveSteps >= 0:
+            self.pi.write(self.DIR, 1)
+        else:
+            self.pi.write(self.DIR, 0)
+
+        self.__sqGenPWM(self.STEP, self.delay, abs(moveSteps))
+        time.sleep(6.5 / 1e4 * abs(moveSteps))
+        
+        # update self.curPos and self.state
+        self.curPos = targetPos
+        self.state["position"] += moveSteps
+        
+        if self.state["position"] == self.UB or self.state["position"] == self.LB:
+            return "{0}/{1}/{2}".format(self.name, "position", "limit")
+        else:
+            return "{0}/{1}/{2}".format(self.name, "position", self.state["position"])
+    
+    def goto(self, ref: str, safe = True):
+        """
+        args:
+            ref -- int: The target refPoint.
+            safe -- bool(True): If `safe` is set True, the motor will not attempt
+                to move to a refpoint beyond the bounds. Otherwise it will stop at 
+                the bound.
+
+        ret:
+            str: A response string ("{self.name}/position/{self.state["position"]}"
+            or "{self.name}/position/limit").
+
+        Attemps to move to the target refPoint. Will stop if any bounds are hit. See
+        class documentation `Bound crossing handling` for details.
+        """
+        if safe and (self.refPoints[ref] > self.UB or self.refPoints[ref] < self.LB):
+            warn(self.name + " refPoint out of bounds, move canceled.", RuntimeWarning)
+            return "{0}/{1}/{2}".format(self.name, "position", self.state["position"])
+        else:
+            target = self.refPoints[ref]
+            return self.move(target - self.curPos)
+        
+    def reset(self):
+        return self.move(-self.curPos)
+
+class FS5103RContinuousMotor(BaseController):
+
+    def __init__(self, name, PWM, limitPin = None, _reversed = False, pi = None):
+        """
+        This is the controller for the FS5103R continuous motor used on the gamma labs.
+        When active (default, not disabled) this motor will use one of the PWM channels.
+        This controller is made compatable with any code that uses the same commands as
+        the PololuDCMotor. It also has an additional `disable` method that will stop the
+        PWM output and release the PWM channel. The motor will stop as soon as a limit
+        is triggered (limit pin pulled high).
+        args: 
+            name -- str: the name of this motor.
+            PWM -- int: the PWM pin for the motor.
+
+        kwargs:
+            pi -- any(None): the host Rpi pigpio.pi instance. Default None
+                will use the local host pi.
+            limitPin -- int/(None): the limit interrupt pin for the motor. Default None will
+                not have any limit protection.
+            _reversed -- bool(False): if the motor's direction should be _reversed set this to True.
+        """
+        self.name = name
+        self.PWM = PWM
+        self.limitPin = limitPin
+        self._reversed = _reversed
+        # The host Rpi, in case multihost systems are used in the future
+        if not pi:
+            self.pi = pigpio.pi()
+        else:
+            self.pi = pi
+            warn("Foreign controls may not be supported.", RuntimeWarning)
+
+        self.pi.set_mode(self.PWM, pigpio.OUTPUT)
+        self.pi.set_pull_up_down(self.PWM, pigpio.PUD_DOWN)
+
+        # Set the callback trigger pin, the callback function, and the
+        # glitch filter for the limit switch
+        if self.limitPin != None:
+            self.pi.set_mode(self.limitPin, pigpio.INPUT)
+            self.pi.set_glitch_filter(limitPin, 50)
+            self.stopCallback   = self.pi.callback(limitPin, pigpio.RISING_EDGE, self.__stop)
+            self.startCallback  = self.pi.callback(limitPin, pigpio.FALLING_EDGE, self.__resetCallback)
+        self.state = {"running": False, "throttle": 0}
+
+
+    def throttle(self, throttle):
+        """
+        args:
+            throttle -- int: desired percent speed in the range [-1.0, 1.0],
+                1.0 sets the speed fully forwards and -1.0 sets the speed
+                fully backwards. 0 is stall.
+        """
+        self.state["running"] = True
+        self.pi.set_mode(self.PWM, pigpio.OUTPUT)
+        dutyCycle = int(1500 + throttle * 1000)
+        self.pi.set_servo_pulsewidth(self.PWM, dutyCycle)
+        self.state["throttle"] = throttle
+        return self.state
+
+    def __stop(self, gpio, level, tick):
+        self.stopCallback.cancel()
+        self.startCallback = self.pi.callback(self.limitPin, pigpio.FALLING_EDGE, self.__resetCallback)
+        #print(self.name, f"has reached its limit. status {level}")
+        self.throttle(0)
+        
+    def __resetCallback(self, gpio, level, tick):
+        self.startCallback.cancel()
+        self.stopCallback = self.pi.callback(self.limitPin, pigpio.RISING_EDGE, self.__stop)
+        #print(self.name, f"stop callback reset. status {level}")
+
+    def disable(self):
+        self.pi.set_mode(self.PWM, pigpio.INPUT)
+        self.state["running"]   = False
+        self.state["throttle"]  = 0.
+        return self.state
+
+    def throttle_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "setSpeed")
+        throttle = float(params[0])
+        if self._reversed:
+            throttle = - throttle
+        if throttle < -1 or throttle > 1:
+            raise ArgumentError(self.name, "throttle", throttle, allowed="-1 <= throttle <= 1")
+        return throttle
+
+class GeneralPWMServo(BaseController):
+    def __init__(self, name, PWM, pi = None):
+        """
+        This is a control class for generic PWM controlled 180 degrees
+        servo.
+        args: 
+            name -- str: the name of this servo.
+            PWM -- int: the PWM pin for the servo.
+
+        kwargs:
+            pi -- any(None): the host Rpi pigpio.pi instance. Default None
+                will use the local host pi.
+        """
+        self.name = name
+        self.PWM = PWM
+        if not pi:
+            self.pi = pigpio.pi()
+        else:
+            self.pi = pi
+            warn("Foreign controls may not be supported.", RuntimeWarning)
+        
+        self.pi.set_mode(self.PWM, pigpio.OUTPUT)
+        self.pi.set_pull_up_down(self.PWM, pigpio.PUD_DOWN)
+        self.state = {"running": False, "angle": 0}
+
+    def goto_parser(self, params: list):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "goto")
+        try:
+            return float(params[0])
+        except:
+            raise ArgumentError(self.name, "goto", params[0], float)
+
+    def goto(self, angle):
+        """
+        This method will use one of the PWM channels on the pi to control
+        the servo.
+        args:
+            angle -- float: The target angle, this angle must be between +90
+                and -90.
+        """
+        self.state["running"] = True
+        self.pi.set_mode(self.PWM, pigpio.OUTPUT)
+        if angle < -90 or angle > 90:
+            raise ArgumentError(self.name, "goto", angle, allowed = "-90 < angle < 90")
+        dutyCycle = int(1500 + angle / 90 * 1000)
+        self.pi.set_servo_pulsewidth(self.PWM, dutyCycle)
+        self.state["angle"] = angle
+        return self.state
+
+    def disable(self):
+        """
+        This method will stop the servo control and free up the PWM channel.
+        The servo will usually stop in place but this is technically undefined
+        behavior.
+        """
+        self.pi.set_mode(self.PWM, pigpio.INPUT)
+        self.state["running"] = False
+        return self.state
 
 # #Ziyan Code Goes Here
 # class ServoAngleMotor(BaseController):
