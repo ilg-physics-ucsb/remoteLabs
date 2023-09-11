@@ -3,3 +3,13 @@
 .vscode/settings.json
 nohup.out
 */nohup.out
+
+AtomicSpectra/AtomicSpectra.log
+DiffractionInterference/DiffractionInterference.log
+PhotoElectricEffect/PhotoElectricEffect.log
+FranckHertz/FranckHertz.log
+
+labcontroltest/Test.log
+
+__pycache__/
+*.pyc
