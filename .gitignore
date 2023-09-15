@@ -5,9 +5,24 @@ nohup.out
 */nohup.out
 
 AtomicSpectra/AtomicSpectra.log
+AtomicSpectra/atomic1Settings.json
+AtomicSpectra/atomic2Settings.json
+
 DiffractionInterference/DiffractionInterference.log
+DiffractionInterference/diffrac1Settings.json
+DiffractionInterference/diffrac2Settings.json
+
 PhotoElectricEffect/PhotoElectricEffect.log
+PhotoElectricEffect/photo1Settings.json
+PhotoElectricEffect/photo2Settings.json
+
 FranckHertz/FranckHertz.log
+FranckHertz/franck1Settings.json
+FranckHertz/franck2Settings.json
+
+GammaRadiation/GammaRadiation.log
+GammaRadiation/gamma1Settings.json
+GammaRadiation/gamma2Settings.json
 
 labcontroltest/Test.log
 
