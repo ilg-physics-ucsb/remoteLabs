@@ -32,7 +32,33 @@ function signal(url, videoElement, vformat, hardwareCodec, onStream, onError, on
 
         ws.onopen = function () {
             /* First we create a peer connection */
-            var config = {"iceServers": [{"urls": "stun:numb.viagenie.ca"}, {"urls": "turn:numb.viagenie.ca", "username": "zespley@physics.ucsb.edu", "credential": "AUY*400VHXlfuV4&@uM59a$9vIONf"}]};
+            var config ={"iceServers": [
+                {
+                  "urls": "stun:stun.relay.metered.ca:80",
+                },
+                {
+                  "urls": "turn:a.relay.metered.ca:80",
+                  "username": "ac3bcda0134b0933681db3be",
+                  "credential": "heEreaOAa+NbwALc",
+                },
+                {
+                  "urls": "turn:a.relay.metered.ca:80?transport=tcp",
+                  "username": "ac3bcda0134b0933681db3be",
+                  "credential": "heEreaOAa+NbwALc",
+                },
+                {
+                  "urls": "turn:a.relay.metered.ca:443",
+                  "username": "ac3bcda0134b0933681db3be",
+                  "credential": "heEreaOAa+NbwALc",
+                },
+                {
+                  "urls": "turn:a.relay.metered.ca:443?transport=tcp",
+                  "username": "ac3bcda0134b0933681db3be",
+                  "credential": "heEreaOAa+NbwALc",
+                },
+            ],
+          };
+                 
             var options = {optional: []};
             pc = new RTCPeerConnection(config, options);
             iceCandidates = [];
