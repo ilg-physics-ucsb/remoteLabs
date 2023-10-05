@@ -3,6 +3,34 @@ from labcontrol import Experiment, StepperI2C, Keithley6514Electrometer, Keithle
 import pyvisa as visa
 import argparse, os, json
 
+#cyclic stepper adaptation
+class FilterStepperI2C(StepperI2C):
+    def __init__(self, name, terminal, bounds, delay=0.02, refPoints={}, style="SINGLE", microsteps=8, limitSwitches=[], homeSwitch=None, degPerStep=1.8, gearRatio=1):
+        super().__init__(name, terminal, (-1e9, 1e9), delay, refPoints, style, microsteps, limitSwitches, homeSwitch, degPerStep, gearRatio)
+        self.refPointsRaw = sorted(list(refPoints.values()))
+
+    def goto(self, position):
+        if self.currentPosition in self.refPointsRaw:
+            curIdx = self.refPointsRaw.index(self.currentPosition)
+            tgtIdx = self.refPointsRaw.index(self.refPoints[position])
+            if abs(tgtIdx - curIdx) <= len(self.refPointsRaw) / 2:
+                super().goto(position)
+            else:
+                # reverse direction 
+                if tgtIdx > curIdx:
+                    dif = -(curIdx + len(self.refPointsRaw) - tgtIdx)
+                # foward direction
+                elif tgtIdx < curIdx:
+                    dif = tgtIdx + len(self.refPointsRaw) - curIdx
+                self.move(dif * (self.refPointsRaw[1] - self.refPointsRaw[0]))
+                # maintain a reasonable amount of steps for resetting
+                if self.currentPosition > self.refPointsRaw[-1]:
+                    self.currentPosition = self.currentPosition - (self.refPointsRaw[1] - self.refPointsRaw[0]) * len(self.refPointsRaw)
+                if self.currentPosition < 0:
+                    self.currentPosition = self.currentPosition + (self.refPointsRaw[1] - self.refPointsRaw[0]) * len(self.refPointsRaw)
+        else:
+            super().goto(position)
+
 parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
 
 parser.add_argument("-s", "--settings", required=True)
@@ -46,8 +74,8 @@ visa_multimeter.write_termination = "\r\n"
 socket_path = "/tmp/uv4l.socket"
 
 potentiometer = StepperI2C("Pot", 2, bounds=potBounds)
-colorFilterWheel = StepperI2C("colorWheel", 1, bounds=colorFilterBounds, refPoints=refPoints)
-densityFilterWheel = StepperI2C("densityWheel", 3, bounds=densityFilterBounds, refPoints=refPoints)
+colorFilterWheel = FilterStepperI2C("colorWheel", 1, bounds=colorFilterBounds, refPoints={key: -val for (key, val) in refPoints.items()})
+densityFilterWheel = FilterStepperI2C("densityWheel", 3, bounds=densityFilterBounds, refPoints=refPoints)
 
 PEpdu = PDUOutlet("PEpdu", "pepdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 PEpdu.login()

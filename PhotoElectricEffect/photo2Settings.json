@@ -17,7 +17,7 @@
         "300deg":1350
         },
     "potBounds": [0, 2100],
-    "colorFilterBounds": [0, 810],
+    "colorFilterBounds": [-810, 0],
     "densityFilterBounds": [0, 1350],
 
     "videoNumber": 0
