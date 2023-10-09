@@ -10,15 +10,13 @@
     "multimeter_address":0,
     "refPoints": {
         "0deg":0,
-        "60deg":270,
-        "120deg":540,
-        "180deg":810,
-        "240deg":1080,
-        "300deg":1350
+        "60deg":-270,
+        "120deg":-540,
+        "180deg":-810,
+        "240deg":-1080,
+        "300deg":-1350
         },
     "potBounds": [0, 2100],
-    "colorFilterBounds": [-810, 0],
-    "densityFilterBounds": [0, 1350],
 
     "videoNumber": 0
 }
