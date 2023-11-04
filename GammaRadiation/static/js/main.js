@@ -145,11 +145,11 @@ $("document").ready(function () {
 
 
     CounterCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/b");
+        dataChannel.send("Camera/camera/d");
     })
 
     OverviewCam.addEventListener('click', function() {
-        dataChannel.send("Camera/camera/a");
+        dataChannel.send("Camera/camera/b");
     })
 
 

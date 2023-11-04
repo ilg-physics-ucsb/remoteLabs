@@ -1194,7 +1194,7 @@ class PololuDCMotor(BaseController):
 
 class ArduCamMultiCamera(BaseController):
 
-    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11):
+    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11, initialCamera="a"):
         self.name = name
         self.videoNumber = videoNumber
         self.device_type = "measurement"
@@ -1232,7 +1232,7 @@ class ArduCamMultiCamera(BaseController):
         }
 
         # Set camera for A
-        self.camera("a")
+        self.camera(initialCamera)
 
     def camera(self, param):
         #Param should be a, b, c, d, or off
