@@ -1194,7 +1194,7 @@ class PololuDCMotor(BaseController):
 
 class ArduCamMultiCamera(BaseController):
 
-    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11, initialCamera="a", controlPins=[4,17,18]):
+    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11, initialCamera="a", controlPins=[4,17,18], cameraNamesDict=None):
         self.name = name
         self.videoNumber = videoNumber
         self.device_type = "measurement"
@@ -1202,6 +1202,7 @@ class ArduCamMultiCamera(BaseController):
         self.state = {}
         self.defaultSettings = defaultSettings
         self.i2cbus = i2cbus
+        self.cameraNames = cameraNamesDict
 
         # Define Pins
         # Board Pin 7 = BCM Pin 4 = Selection
@@ -1245,6 +1246,22 @@ class ArduCamMultiCamera(BaseController):
         if param not in self.cameraDict:
             raise ArgumentError(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
         return params[0].lower()
+
+    # This is a translation layer so we can switch by named camera instead of slots.
+    # The name should be translated from the dictionary self.cameraNames
+    def cameraName(self, param):
+        cameraSlot = self.cameraNames[param]
+        print("Switching to camera {0}, slot {1}".format(param, cameraSlot))
+        os.system(self.camerai2c[cameraSlot])
+        gpio.output(self.channels, self.cameraDict[cameraSlot])
+    
+    def cameraName_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "cameraName")
+        param = params[0].lower()
+        if param not in self.cameraNames:
+            raise ArgumentError(self.name, "cameraName", param, self.cameraNames)
+        return param
 
     def imageMod(self, params):
         imageControl = params[0]
