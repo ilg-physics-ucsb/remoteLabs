@@ -18,7 +18,7 @@ labSettingsPath = os.path.join("home","pi", "remoteLabs", "GammaRadiation", args
 with open(labSettingsPath, "r") as f:
     labSettings = json.load(f)
 
-# Raffi make these settings match what is needed in the settings file
+
 outlets         = labSettings["outlets"]
 outletMap       = labSettings["outletMap"]
 
