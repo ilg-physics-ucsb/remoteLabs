@@ -46,6 +46,7 @@ initialCamera       = labSettings["initialCamera"]
 videoNumber         = labSettings["videoNumber"]
 cameraControlPins   = labSettings["cameraControlPins"]
 cameraI2cBus        = labSettings["cameraI2cBus"]
+cameraNamesDict         = labSettings["cameraNamesDict"]
 
 if args.admin:
     stageBounds = (None, None)
@@ -54,7 +55,8 @@ camera = ArduCamMultiCamera("Camera",
                              videoNumber, 
                              i2cbus=cameraI2cBus, 
                              initialCamera=initialCamera,
-                             controlPins=cameraControlPins)
+                             controlPins=cameraControlPins,
+                             cameraNamesDict=cameraNamesDict)
 
 socket_path = "/tmp/uv4l.socket"
 messenger_socket_path = "/tmp/remla.socket"
