@@ -1194,7 +1194,7 @@ class PololuDCMotor(BaseController):
 
 class ArduCamMultiCamera(BaseController):
 
-    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11, initialCamera="a"):
+    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11, initialCamera="a", controlPins=[4,17,18]):
         self.name = name
         self.videoNumber = videoNumber
         self.device_type = "measurement"
@@ -1208,10 +1208,8 @@ class ArduCamMultiCamera(BaseController):
         # Board Pin 11 = BCM Pin 17 = Enable 1
         # Board Pin 12 = BCM Pin 18 = Enable 2
         # See Arducam User Guide https://www.uctronics.com/download/Amazon/B0120.pdf
-        self.selection = 4
-        self.enable1 = 17
-        self.enable2 = 18
-        self.channels = [self.selection, self.enable1, self.enable2]
+        self.selection, self.enable1, self.enable2 = controlPins
+        self.channels = controlPins
         gpio.setup(self.channels, gpio.OUT)
 
 
