@@ -454,17 +454,15 @@ class AbsorberController(MotorKit, BaseController):
         self.actuator.throttle(self.actuator.throttle_parser([0]))
 
         # push magnet and drop the absorber
-        # TODO this needs to be updated when the setup is finalized
-        self.magnet.goto(-45)
-        time.sleep(1)
-        self.magnet.goto(-90)
-        time.sleep(1)
-        self.magnet.disable()
+        self.magnet.goto(45)
 
         self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
         time.sleep(self.uptime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         self.actuator.disable()
+        self.magnet.goto(-90)
+        time.sleep(1)
+        self.magnet.disable()
 
 
         self.state["total"][slot1] = ''
@@ -1194,7 +1192,7 @@ class PololuDCMotor(BaseController):
 
 class ArduCamMultiCamera(BaseController):
 
-    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11):
+    def __init__(self, name, videoNumber=0, defaultSettings=None, i2cbus=11, initialCamera="a", controlPins=[4,17,18], cameraNamesDict=None):
         self.name = name
         self.videoNumber = videoNumber
         self.device_type = "measurement"
@@ -1202,16 +1200,15 @@ class ArduCamMultiCamera(BaseController):
         self.state = {}
         self.defaultSettings = defaultSettings
         self.i2cbus = i2cbus
+        self.cameraNames = cameraNamesDict
 
         # Define Pins
         # Board Pin 7 = BCM Pin 4 = Selection
         # Board Pin 11 = BCM Pin 17 = Enable 1
         # Board Pin 12 = BCM Pin 18 = Enable 2
         # See Arducam User Guide https://www.uctronics.com/download/Amazon/B0120.pdf
-        self.selection = 4
-        self.enable1 = 17
-        self.enable2 = 18
-        self.channels = [self.selection, self.enable1, self.enable2]
+        self.selection, self.enable1, self.enable2 = controlPins
+        self.channels = controlPins
         gpio.setup(self.channels, gpio.OUT)
 
 
@@ -1232,7 +1229,7 @@ class ArduCamMultiCamera(BaseController):
         }
 
         # Set camera for A
-        self.camera("a")
+        self.camera(initialCamera)
 
     def camera(self, param):
         #Param should be a, b, c, d, or off
@@ -1247,6 +1244,22 @@ class ArduCamMultiCamera(BaseController):
         if param not in self.cameraDict:
             raise ArgumentError(self.name, "camera", param, ["a", 'b', 'c', 'd', 'off'])
         return params[0].lower()
+
+    # This is a translation layer so we can switch by named camera instead of slots.
+    # The name should be translated from the dictionary self.cameraNames
+    def cameraName(self, param):
+        cameraSlot = self.cameraNames[param]
+        print("Switching to camera {0}, slot {1}".format(param, cameraSlot))
+        os.system(self.camerai2c[cameraSlot])
+        gpio.output(self.channels, self.cameraDict[cameraSlot])
+    
+    def cameraName_parser(self, params):
+        if len(params) != 1:
+            raise ArgumentNumberError(len(params), 1, "cameraName")
+        param = params[0].lower()
+        if param not in self.cameraNames:
+            raise ArgumentError(self.name, "cameraName", param, self.cameraNames)
+        return param
 
     def imageMod(self, params):
         imageControl = params[0]
@@ -1728,6 +1741,8 @@ class FS5103RContinuousMotor(BaseController):
             self.pi.set_glitch_filter(limitPin, 50)
             self.stopCallback   = self.pi.callback(limitPin, pigpio.RISING_EDGE, self.__stop)
             self.startCallback  = self.pi.callback(limitPin, pigpio.FALLING_EDGE, self.__resetCallback)
+            self.pi.set_mode(self.PWM, pigpio.INPUT)
+            self.pi.set_pull_up_down(self.PWM, pigpio.PUD_DOWN)
         self.state = {"running": False, "throttle": 0}
 
 

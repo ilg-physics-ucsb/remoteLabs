@@ -39,6 +39,7 @@ H0              =                       "Set H0"
 H14             =                      "Set H14"
 #                         bot info bar
 
+steps = 0
 
 def loadFile(btn, window, filename, textbar, confbtn):
     with open(filename, "r") as f:
@@ -68,7 +69,6 @@ def setMotor(window, app, coarsebtn):
     if not window.varMap.setdefault("motor_set", False):
         window.varMap["motor_set"] = True
         window.REG_A = window.popStack() # config data
-        window.REG_B = 0 # steps
         window.REG_X = 1000 # step increment
         window.highlightWidget(coarsebtn)
         STEP, DIR, EN = window.REG_A['stagePins']
@@ -90,44 +90,51 @@ def setFine(btn, window, coarsebtn):
     window.REG_X = 10
     
 def moveL(btn, window, posbar, infobar):
-    window.REG_B -= window.REG_X
+    global steps
+    steps -= window.REG_X
     window.REG_Y.move(-window.REG_X) # comment out when testing
     infobar.updateText(f"Steped {window.REG_X} in the NEGATIVE direction.")
-    posbar.updateText(f"Current position: {window.REG_B} steps")
+    posbar.updateText(f"Current position: {steps} steps")
 
 def moveR(btn, window, posbar, infobar):
-    window.REG_B += window.REG_X
+    global steps
+    steps += window.REG_X
     window.REG_Y.move(window.REG_X) # comment out when testing
     infobar.updateText(f"Steped {window.REG_X} in the POSITIVE direction.")
-    posbar.updateText(f"Current position: {window.REG_B} steps")
+    posbar.updateText(f"Current position: {steps} steps")
 
 def abort(btn, window, app):
     app.popWindow()
 
 def setHome(btn, window, infobar):
+    global steps
     window.highlightWidget(btn)
     infobar.updateText(f"Home is set to current position.")
-    window.varMap["home"] = window.REG_B
+    window.varMap["home"] = steps
 
 def setS0(btn, window, infobar):
+    global steps
     window.highlightWidget(btn)
     infobar.updateText(f"S0 is set to current position.")
-    window.varMap["s0"] = window.REG_B
+    window.varMap["s0"] = steps
 
 def setS5(btn, window, infobar):
+    global steps
     window.highlightWidget(btn)
     infobar.updateText(f"S5 is set to current position.")
-    window.varMap["s5"] = window.REG_B
+    window.varMap["s5"] = steps
 
 def setH0(btn, window, infobar):
+    global steps
     window.highlightWidget(btn)
     infobar.updateText(f"H0 is set to current position.")
-    window.varMap["h0"] = window.REG_B
+    window.varMap["h0"] = steps
 
 def setH14(btn, window, infobar):
+    global steps
     window.highlightWidget(btn)
     infobar.updateText(f"H14 is set to current position.")
-    window.varMap["h14"] = window.REG_B
+    window.varMap["h14"] = steps
 
 def registerConfig(btn, window, infobar, saveWindow, app):
     if window.varMap["home"] != None and\
@@ -162,7 +169,7 @@ def saveFile(btn, window, filename, textbar, confbtn):
         textbar.updateText("Open failed:" + str(inst))
         window.hideWidget(confbtn)
 
-def confSave(btn, window, textbar):
+def confSave(btn, window, textbar, app):
     filename, labSettings = window.popStack()
     home = window.varMap["home"]
     s0 = window.varMap["s0"]
@@ -174,15 +181,16 @@ def confSave(btn, window, textbar):
         key = 's' + str(slotNum)
         labSettings["stageRefPoints"][key] = s0 + int((s5 - s0) * slotNum / 5) - home
 
-    for absorberNum in range(0, 16):
+    for absorberNum in range(0, 15):
         key = 'h' + str(absorberNum)
-        labSettings["stageRefPoints"][key] = h0 + int((h14 - h0) * absorberNum / 5) - home
+        labSettings["stageRefPoints"][key] = h0 + int((h14 - h0) * absorberNum / 14) - home
 
     try:
         with open(filename, "w") as f:
             json.dump(labSettings, f)
         textbar.updateText(f"Successfully saved to \"{filename}\" and moved stage to home.")
-        window.REG_Y.move(-home)
+        window.REG_Y.move(-steps + home)
+        app.popWindow()
     except:
         textbar.updateText("SAVE FAILED")
 
@@ -312,7 +320,7 @@ def newCal(btn, window, app):
         save_window.addWidget(btn)
     
     save_cancel.setFunc(cancelSave, app)
-    save_conf.setFunc(confSave, save_textbar)
+    save_conf.setFunc(confSave, save_textbar, app)
 
     save_window.addWidget(save_title, save_textbar, save_conf, save_cancel)
     save_window.hideWidget(save_conf)

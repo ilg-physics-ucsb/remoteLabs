@@ -18,7 +18,7 @@ labSettingsPath = os.path.join("home","pi", "remoteLabs", "GammaRadiation", args
 with open(labSettingsPath, "r") as f:
     labSettings = json.load(f)
 
-# Raffi make these settings match what is needed in the settings file
+
 outlets         = labSettings["outlets"]
 outletMap       = labSettings["outletMap"]
 
@@ -39,13 +39,24 @@ inhibitorPin        = labSettings["inhibitorPin"]
 multiplexerChannels = labSettings["multiplexerChannels"]
 multiplexerDelay    = labSettings["multiplexerDelay"]
 
-absorberDownTime = labSettings["absorberDownTime"]
-absorberUpTime  = labSettings["absorberUpTime"]
+absorberDownTime    = labSettings["absorberDownTime"]
+absorberUpTime      = labSettings["absorberUpTime"]
+
+initialCamera       = labSettings["initialCamera"]
+videoNumber         = labSettings["videoNumber"]
+cameraControlPins   = labSettings["cameraControlPins"]
+cameraI2cBus        = labSettings["cameraI2cBus"]
+cameraNamesDict         = labSettings["cameraNamesDict"]
 
 if args.admin:
     stageBounds = (None, None)
 
-camera = ArduCamMultiCamera("Camera", 0, i2cbus=11)
+camera = ArduCamMultiCamera("Camera", 
+                             videoNumber, 
+                             i2cbus=cameraI2cBus, 
+                             initialCamera=initialCamera,
+                             controlPins=cameraControlPins,
+                             cameraNamesDict=cameraNamesDict)
 
 socket_path = "/tmp/uv4l.socket"
 messenger_socket_path = "/tmp/remla.socket"
