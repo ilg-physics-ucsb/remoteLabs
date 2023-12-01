@@ -454,17 +454,15 @@ class AbsorberController(MotorKit, BaseController):
         self.actuator.throttle(self.actuator.throttle_parser([0]))
 
         # push magnet and drop the absorber
-        # TODO this needs to be updated when the setup is finalized
-        self.magnet.goto(-45)
-        time.sleep(1)
-        self.magnet.goto(-90)
-        time.sleep(1)
-        self.magnet.disable()
+        self.magnet.goto(45)
 
         self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
         time.sleep(self.uptime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         self.actuator.disable()
+        self.magnet.goto(-90)
+        time.sleep(1)
+        self.magnet.disable()
 
 
         self.state["total"][slot1] = ''
@@ -1743,6 +1741,8 @@ class FS5103RContinuousMotor(BaseController):
             self.pi.set_glitch_filter(limitPin, 50)
             self.stopCallback   = self.pi.callback(limitPin, pigpio.RISING_EDGE, self.__stop)
             self.startCallback  = self.pi.callback(limitPin, pigpio.FALLING_EDGE, self.__resetCallback)
+            self.pi.set_mode(self.PWM, pigpio.INPUT)
+            self.pi.set_pull_up_down(self.PWM, pigpio.PUD_DOWN)
         self.state = {"running": False, "throttle": 0}
 
 
