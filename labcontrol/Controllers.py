@@ -395,7 +395,7 @@ class StepperI2C(MotorKit, BaseController):
 
 class AbsorberController(MotorKit, BaseController):
 
-    def __init__(self, name, stepper, actuator, magnet, initialState, holderMap, downtime=0.5, uptime=1):
+    def __init__(self, name, stepper, actuator, magnet, initialState, holderMap, downtime=0.5, uptime=1, throttle=1.0):
         self.name = name
         self.device_type = "controller"
         self.experiment = None
@@ -406,6 +406,7 @@ class AbsorberController(MotorKit, BaseController):
         self.magnet = magnet
         self.initialState = initialState
         self.holderMap = holderMap
+        self.throttle = throttle
         self.state = {
             "loaded": {
                 "s0":False,
@@ -439,24 +440,24 @@ class AbsorberController(MotorKit, BaseController):
         # global x
         # x += 1
         self.stepper.goto(slot1)
-        self.actuator.throttle(self.actuator.throttle_parser([1.0]))
+        self.actuator.throttle(self.actuator.throttle_parser([self.throttle]))
         time.sleep(self.downtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         # absorber gets attached to the magnet
         time.sleep(0.5)
-        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
+        self.actuator.throttle(self.actuator.throttle_parser([-self.throttle]))
         time.sleep(self.uptime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
 
         self.stepper.goto(slot2)
-        self.actuator.throttle(self.actuator.throttle_parser([1.0]))
+        self.actuator.throttle(self.actuator.throttle_parser([self.throttle]))
         time.sleep(self.downtime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
 
         # push magnet and drop the absorber
         self.magnet.goto(45)
 
-        self.actuator.throttle(self.actuator.throttle_parser([-1.0]))
+        self.actuator.throttle(self.actuator.throttle_parser([-self.throttle]))
         time.sleep(self.uptime)
         self.actuator.throttle(self.actuator.throttle_parser([0]))
         self.actuator.disable()
