@@ -41,6 +41,7 @@ multiplexerDelay    = labSettings["multiplexerDelay"]
 
 absorberDownTime    = labSettings["absorberDownTime"]
 absorberUpTime      = labSettings["absorberUpTime"]
+actuatorThrottle    = labSettings["actuatorThrottle"]
 
 initialCamera       = labSettings["initialCamera"]
 videoNumber         = labSettings["videoNumber"]
@@ -72,7 +73,7 @@ actuator = FS5103RContinuousMotor("actuator", actuatorPwmPin, actuatorLimitPin, 
 
 magnet = GeneralPWMServo("magnet", magnetPin)
 
-absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, initialState, holderMap, downtime = absorberDownTime, uptime = absorberUpTime)
+absorberController = AbsorberController("AbsorberController", stage, actuator, magnet, initialState, holderMap, downtime = absorberDownTime, uptime = absorberUpTime, throttle=actuatorThrottle)
 
 buttons = Multiplexer("Buttons", multiplexerPins, inhibitorPin, multiplexerChannels, delay=multiplexerDelay)
 # Need to talk to PCS about getting GRpdu Setup
