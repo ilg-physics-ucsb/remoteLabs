@@ -1472,7 +1472,8 @@ class S42CStepperMotor(BaseController):
             refPoints   = {},
             microstep   = 2,
             gearRatio   = 1,
-            _pi          = None,
+            _pi         = None,
+            stepWaitTime= 0
         ):
 
         self.name       = name
@@ -1500,6 +1501,7 @@ class S42CStepperMotor(BaseController):
         self.delay      = 0.0001
         self.mStep      = microstep
         self.gearRatio  = gearRatio
+        self.stepWaitTime   = stepWaitTime
         # The host Rpi, in case multihost systems are used in the future
         if not _pi:
             self.pi = pi
@@ -1666,7 +1668,7 @@ class S42CStepperMotor(BaseController):
             self.pi.write(self.DIR, 0)
 
         self.__sqGenPWM(self.STEP, self.delay, abs(moveSteps))
-        time.sleep(6.5 / 1e4 * abs(moveSteps))
+        time.sleep(self.stepWaitTime * abs(moveSteps))
         
         # update self.curPos and self.state
         self.curPos = targetPos

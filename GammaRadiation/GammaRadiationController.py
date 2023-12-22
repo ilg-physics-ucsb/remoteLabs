@@ -47,7 +47,9 @@ initialCamera       = labSettings["initialCamera"]
 videoNumber         = labSettings["videoNumber"]
 cameraControlPins   = labSettings["cameraControlPins"]
 cameraI2cBus        = labSettings["cameraI2cBus"]
-cameraNamesDict         = labSettings["cameraNamesDict"]
+cameraNamesDict     = labSettings["cameraNamesDict"]
+
+stepWaitTime        = labSettings["stepWaitTime"]
 
 if args.admin:
     stageBounds = (None, None)
@@ -67,7 +69,8 @@ stage = S42CStepperMotor("Stage",
                         stageStepPin, 
                         stageDirPin, 
                         bounds=stageBounds,
-                        refPoints=stageRefPoints)
+                        refPoints=stageRefPoints,
+                        stepWaitTime=stepWaitTime)
 
 actuator = FS5103RContinuousMotor("actuator", actuatorPwmPin, actuatorLimitPin, _reversed=True)
 
