@@ -1,5 +1,5 @@
-CarouselTop - anchors an encoded motor atop the carousel with its axis positioned vertically and the microcontroller off to the side.
+StageMount - anchors the screen to the translation stage.
 
-CarouselArm - connects the motor shaft to the lamp turret
+ScreenFrame - holds switchable plastic screen.
 
 (list all the rest of the 3D printed items used in this setup)
