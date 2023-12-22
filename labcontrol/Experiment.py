@@ -187,17 +187,10 @@ class Experiment(object):
         if device_name not in self.devices:
             raise NoDeviceError(device_name)
 
-        
-
         command_thread = threading.Thread(target=self.devices[device_name].cmd_handler, args=(command, params, queue, device_name))
         command_thread.start()
 
-       
-        
-           
-
     def exit_handler(self, signal_received, frame):
-        # print("\r\nAttempting to exit")
         logging.info("Attempting to exit")
         if self.socket is not None:
             self.socket.close()
@@ -207,14 +200,14 @@ class Experiment(object):
             self.messenger_socket.close()
             logging.info("Messenger socket closed")
         
-        logging.info("Looping through devices shutting them down.")
         if not self.admin:
+            logging.info("Looping through devices shutting them down.")
             for device_name, device in self.devices.items():
                 logging.info("Running reset and cleanup on device " + device_name)
                 device.reset()
                 device.cleanup()
-        # print("Everything shutdown properly. Exiting.")
-        logging.info("Everything shutdown properly. Exiting")
+            logging.info("Everything shutdown properly. Exiting")
+
         exit(0)
     
     def close_handler(self):

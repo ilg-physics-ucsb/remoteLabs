@@ -100,8 +100,11 @@ for device in peripherals:
     exp.add_device(device)
     exp.add_lock([device])
 
-for device in actuators:
-    exp.add_device(device)
+if args.admin:
+    for device in actuators:
+        exp.add_device(device)
+else:
+    exp.add_device([absorberController])
 
 exp.add_lock(actuators)
 
