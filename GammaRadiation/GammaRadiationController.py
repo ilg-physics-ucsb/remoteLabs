@@ -89,7 +89,7 @@ if args.reset:
 elif args.admin:
     exp = Experiment("GammaRadiation", admin=True)
 else:
-    exp=Experiment("GammaRadiation", messenger=True)
+    exp = Experiment("GammaRadiation", messenger=True)
 
 peripherals = [camera, buttons, GRpdu]
 
@@ -103,10 +103,10 @@ for device in peripherals:
 if args.admin:
     for device in actuators:
         exp.add_device(device)
+    exp.add_lock(actuators)
 else:
-    exp.add_device([absorberController])
-
-exp.add_lock(actuators)
+    exp.add_device(absorberController)
+    exp.add_lock([absorberController])
 
 exp.set_socket_path(socket_path)
 if not args.reset and not args.admin:

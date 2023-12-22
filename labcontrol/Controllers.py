@@ -429,6 +429,7 @@ class AbsorberController(MotorKit, BaseController):
         emptyCounter = [ ("s0", ""), ("s1", ""), ("s2", ""), ("s3", ""), ("s4", ""), ("s5", "") ]
         movesList = self.__makeMovesList(emptyCounter)
         self.place(movesList)
+        self.stepper.reset()
 
     def __transfer(self, slot1, slot2):
         # TODO: magnet control needs to be fixed
