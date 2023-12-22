@@ -57,7 +57,16 @@ class Experiment(object):
         self.devices[device.name] = device
         #self.locks[device.name] = threading.Lock()
 
-    # Lock function that creates
+    """
+    Barry's note:
+    This function will assign the group of devices in the iterable
+    <devices> a single lock. All members in the iterable share a lock
+    and their cmd handlers cannot therefore be invoked concurrently.
+
+    The right way to do this is to put the devices in an experiment into
+    groups (iterables) such that the devices in each group should not be
+    invoked concurrently and call add_lock on each of the groups.
+    """
     def add_lock(self, devices):
         # Loops through all devices
         lock = threading.Lock()

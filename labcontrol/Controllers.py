@@ -36,16 +36,17 @@ class BaseController(object):
         else:
             print("No Parser Found. Will just pass params to command.")
 
-        # No get the command method. If there isn't a method, it should through an AttributeError.
-        method = getattr(self, cmd)
+        # Now get the command method. If there isn't a method, it should throw an AttributeError.
+        try:
+            method = getattr(self, cmd)
+        except:
+            print(f"{self.__class__.__name__} does not have <{cmd}> cmd")
 
         if callable(method):
             response = method(params)
 
-        
-
-        # returns response
-        queue.put([response, device_name])
+            # returns response
+            queue.put([response, device_name])
 
         # Releases lock
         self.experiment.locks[self.name].release()
