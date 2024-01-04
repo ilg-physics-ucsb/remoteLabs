@@ -4,7 +4,7 @@
 # rev2
 
 # add the line below to /etc/crontab to check every x minutes
-# */x * * * * root bash /home/pi/remoteLabs/remotelabs.check.python3.uv4l.running.sh
+# */x * * * * root bash /home/pi/remoteLabs/check.python3.uv4l.running.sh
 
 if pgrep python3 >/dev/null 2>&1 && pgrep uv4l >/dev/null 2>&1
 
