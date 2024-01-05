@@ -57,7 +57,16 @@ class Experiment(object):
         self.devices[device.name] = device
         #self.locks[device.name] = threading.Lock()
 
-    # Lock function that creates
+    """
+    Barry's note:
+    This function will assign the group of devices in the iterable
+    <devices> a single lock. All members in the iterable share a lock
+    and their cmd handlers cannot therefore be invoked concurrently.
+
+    The right way to do this is to put the devices in an experiment into
+    groups (iterables) such that the devices in each group should not be
+    invoked concurrently and call add_lock on each of the groups.
+    """
     def add_lock(self, devices):
         # Loops through all devices
         lock = threading.Lock()
@@ -178,17 +187,10 @@ class Experiment(object):
         if device_name not in self.devices:
             raise NoDeviceError(device_name)
 
-        
-
         command_thread = threading.Thread(target=self.devices[device_name].cmd_handler, args=(command, params, queue, device_name))
         command_thread.start()
 
-       
-        
-           
-
     def exit_handler(self, signal_received, frame):
-        # print("\r\nAttempting to exit")
         logging.info("Attempting to exit")
         if self.socket is not None:
             self.socket.close()
@@ -198,14 +200,14 @@ class Experiment(object):
             self.messenger_socket.close()
             logging.info("Messenger socket closed")
         
-        logging.info("Looping through devices shutting them down.")
         if not self.admin:
+            logging.info("Looping through devices shutting them down.")
             for device_name, device in self.devices.items():
                 logging.info("Running reset and cleanup on device " + device_name)
                 device.reset()
                 device.cleanup()
-        # print("Everything shutdown properly. Exiting.")
-        logging.info("Everything shutdown properly. Exiting")
+            logging.info("Everything shutdown properly. Exiting")
+
         exit(0)
     
     def close_handler(self):

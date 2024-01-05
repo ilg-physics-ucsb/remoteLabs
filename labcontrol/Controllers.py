@@ -36,16 +36,17 @@ class BaseController(object):
         else:
             print("No Parser Found. Will just pass params to command.")
 
-        # No get the command method. If there isn't a method, it should through an AttributeError.
-        method = getattr(self, cmd)
+        # Now get the command method. If there isn't a method, it should throw an AttributeError.
+        try:
+            method = getattr(self, cmd)
+        except:
+            print(f"{self.__class__.__name__} does not have <{cmd}> cmd")
 
         if callable(method):
             response = method(params)
 
-        
-
-        # returns response
-        queue.put([response, device_name])
+            # returns response
+            queue.put([response, device_name])
 
         # Releases lock
         self.experiment.locks[self.name].release()
@@ -428,6 +429,7 @@ class AbsorberController(MotorKit, BaseController):
         emptyCounter = [ ("s0", ""), ("s1", ""), ("s2", ""), ("s3", ""), ("s4", ""), ("s5", "") ]
         movesList = self.__makeMovesList(emptyCounter)
         self.place(movesList)
+        self.stepper.reset()
 
     def __transfer(self, slot1, slot2):
         # TODO: magnet control needs to be fixed
@@ -1470,7 +1472,8 @@ class S42CStepperMotor(BaseController):
             refPoints   = {},
             microstep   = 2,
             gearRatio   = 1,
-            _pi          = None,
+            _pi         = None,
+            stepWaitTime= 0
         ):
 
         self.name       = name
@@ -1498,6 +1501,7 @@ class S42CStepperMotor(BaseController):
         self.delay      = 0.0001
         self.mStep      = microstep
         self.gearRatio  = gearRatio
+        self.stepWaitTime   = stepWaitTime
         # The host Rpi, in case multihost systems are used in the future
         if not _pi:
             self.pi = pi
@@ -1664,7 +1668,7 @@ class S42CStepperMotor(BaseController):
             self.pi.write(self.DIR, 0)
 
         self.__sqGenPWM(self.STEP, self.delay, abs(moveSteps))
-        time.sleep(6.5 / 1e4 * abs(moveSteps))
+        time.sleep(self.stepWaitTime * abs(moveSteps))
         
         # update self.curPos and self.state
         self.curPos = targetPos

@@ -47,7 +47,9 @@ initialCamera       = labSettings["initialCamera"]
 videoNumber         = labSettings["videoNumber"]
 cameraControlPins   = labSettings["cameraControlPins"]
 cameraI2cBus        = labSettings["cameraI2cBus"]
-cameraNamesDict         = labSettings["cameraNamesDict"]
+cameraNamesDict     = labSettings["cameraNamesDict"]
+
+stepWaitTime        = labSettings["stepWaitTime"]
 
 if args.admin:
     stageBounds = (None, None)
@@ -67,7 +69,8 @@ stage = S42CStepperMotor("Stage",
                         stageStepPin, 
                         stageDirPin, 
                         bounds=stageBounds,
-                        refPoints=stageRefPoints)
+                        refPoints=stageRefPoints,
+                        stepWaitTime=stepWaitTime)
 
 actuator = FS5103RContinuousMotor("actuator", actuatorPwmPin, actuatorLimitPin, _reversed=True)
 
@@ -89,20 +92,24 @@ if args.reset:
 elif args.admin:
     exp = Experiment("GammaRadiation", admin=True)
 else:
-    exp=Experiment("GammaRadiation", messenger=True)
+    exp = Experiment("GammaRadiation", messenger=True)
 
-devices = [camera,
-           stage,
-           actuator,
-           magnet,
-           absorberController,
-           buttons,
-           GRpdu]
+peripherals = [camera, buttons, GRpdu]
 
-for device in devices:
+actuators = [stage, actuator, magnet,
+            absorberController]
+
+for device in peripherals:
     exp.add_device(device)
+    exp.add_lock([device])
 
-exp.add_lock(devices)
+if args.admin:
+    for device in actuators:
+        exp.add_device(device)
+    exp.add_lock(actuators)
+else:
+    exp.add_device(absorberController)
+    exp.add_lock([absorberController])
 
 exp.set_socket_path(socket_path)
 if not args.reset and not args.admin:
