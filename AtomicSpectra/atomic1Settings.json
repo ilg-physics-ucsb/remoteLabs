@@ -17,20 +17,15 @@
         "exposure_mode": 1
     },
     
-    "leftSwitchPin": 6,
-    "rightSwitchPin": 12,
-    "homeSwitchPin": 13,
+    "carouselPins": [16, 12, 20],
+    "armPins": [19, 13, 26],
+    
     "ambientPin": 5,
-    "sensorSwitchPin": 26,
 
     "slitBounds": [0,600],
     "gratingBounds": [-450,450],
     "armBounds": [-12000, 12000],
     "carouselBounds": [-160, 15520],
-    
-    "limitBounce": 500,
-    "homeOvershoot": 5,
-    "carouselBounce": 2,
     
     "videoNumber":0
 }
