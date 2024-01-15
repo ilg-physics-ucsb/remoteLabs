@@ -25,6 +25,7 @@ File Structure Outline
 			i. Name Format: Old Files
 			ii. Contains old Fusion 360 files
 		d. Photos for each part sub directory with matching name
+			i. Each photo includes the Fusion 360 outline to show all 'Components'
 		e. Include videos and photos of the lab set up as a whole
 	2. General Files 
 		a. All files not associated with a specific lab (files used across labs)
