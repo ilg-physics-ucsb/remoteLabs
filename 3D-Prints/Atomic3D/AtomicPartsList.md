@@ -1,7 +1,5 @@
-Atomic Spectroscopy has many primary Fusion 360 files:
-	Mounting System Version 3
-	Track Center and Guide
-	Direct Drive Slit Mount
+Atomic Spectroscopy has 12 Fusion 360 files
+	
 
 Atomic Spectroscopy was the first lab to heavily use 3D printed parts for a complicated assembly. Thus, its files are disjointed and not well organized. It has also had the most revisions over time. There are many files for individual components instead of a streamlined assembly like Diffrac or Gamma. 
 
