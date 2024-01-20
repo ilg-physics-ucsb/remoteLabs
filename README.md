@@ -255,3 +255,6 @@ http://<ip_address>:5000
 
 Where you replace <ip_address> with the Raspberry Pi's IP address.
 
+
+
+Remote Labs Repository © 2020 by University of California, Santa Barbara, Instructional Lab Group is licensed under CC BY-NC 4.0 

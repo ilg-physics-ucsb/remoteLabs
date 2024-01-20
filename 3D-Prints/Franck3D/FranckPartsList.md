@@ -1,5 +1,25 @@
-CarouselTop - anchors an encoded motor atop the carousel with its axis positioned vertically and the microcontroller off to the side.
+Franck Hertz has 5 Fusion 360 files:
+	DCV Clip
+	FH Pulley
+	L Bracket
+	Variac Idler
+	Variac Pulley
 
-CarouselArm - connects the motor shaft to the lamp turret
+The Franck Hertz lab does not have a well defined print repository like other labs. It was the first lab to be remotified and was mostly done manually. It should get a complete 3D printed redesign, particularly for the motors. Thus, all the files are somewhat disjointed.
 
-(list all the rest of the 3D printed items used in this setup)
+DCV Clip
+	Clip to mount the DCV and DCA
+	- DCV Clip
+
+FH Pulley
+	- Pulley
+
+L Bracket
+	- L Brakcet
+
+Variac Idler
+	- Variac Idler Arm
+	- Idler Bearing
+
+Variac Pulley
+	- Variac Pulley
