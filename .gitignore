@@ -3,6 +3,7 @@
 .vscode/settings.json
 nohup.out
 */nohup.out
+.idea
 
 AtomicSpectra/AtomicSpectra.log
 AtomicSpectra/atomic1Settings.json
