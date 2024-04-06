@@ -4,6 +4,7 @@
 nohup.out
 */nohup.out
 .idea
+logs/*
 
 AtomicSpectra/AtomicSpectra.log
 AtomicSpectra/atomic1Settings.json

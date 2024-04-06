@@ -1328,27 +1328,6 @@ class HomeSwitch(BaseController):
         return state
 
 
-class SingleGPIO(BaseController):
-
-    def __init__(self, name, pin, initialState=False):
-        self.pin = pin
-        self.name = name
-        gpio.setup(self.pin, gpio.OUT)
-        if initialState:
-            self.state = "off"
-            gpio.output(self.pin, gpio.HIGH)
-        else:
-            self.state = "off"
-            gpio.output(self.pin, gpio.LOW)
-
-    def on(self, params):
-        gpio.output(self.pin, gpio.HIGH)
-
-    def off(self, params):
-        gpio.output(self.pin, gpio.LOW)
-
-    def reset(self):
-        gpio.output(self.pin, gpio.LOW)
 
 class PushButton(BaseController):
 

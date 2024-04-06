@@ -1,3 +1,0 @@
-sudo uv4l --config-file=/etc/uv4l/uv4l-raspicam.conf -d raspicam --driver-config-file=/etc/uv4l/uv4l-raspicam.conf --enable-server yes
-
-sudo uv4l --config-file=/etc/uv4l/uv4l-uvc.conf -d uvc --driver-config-file=/etc/uv4l/uv4l-uvc.conf --enable-server yes

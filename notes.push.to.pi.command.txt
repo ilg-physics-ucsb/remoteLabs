@@ -1,9 +1,0 @@
-Push to pi command
-
-rsync -r <directory to push> pi@<ip address>:~/
-
-Must be run from directory containing remoteLabs, or path must be specified
-
-For example, for FH, from within the “web interfacing” directory on my MacBookPro
-
-rsync -r remoteLabs pi@128.111.18.10:~/

@@ -1,0 +1,78 @@
+Camera:
+  type: ArduCamMultiCamera
+  videoNumber: 0
+  defaultSettings:
+    frame_rate: 15
+    brightness: 50
+    contrast: 0
+    shutter_speed: 0
+    awb_mode: 0
+    exposure_mode: 1
+  i2cbus: 11
+  initialCamera: a
+  controlPins: [4, 17, 18]
+  cameraNamesDict: null
+
+Ambient:
+  type: SingleGPIO
+  pin: 5
+
+MultiSlits:
+  type: StepperI2C
+  terminal: 1
+  bounds: [-16000, 16000]
+  style: MICROSTEP
+  delay: 0.001
+  refPoints:
+    MultiOpen: 0
+    FarClose: 800
+    WideThin: 1700
+    ThreeTwo: 2600
+    TwoSlit: 4000
+    ThreeSlit: 5000
+    FourSlit: 5900
+    FiveSlit: 6800
+    A04D25: 8200
+    A04D50: 9100
+    A08D25: 10000
+    A08D50: 10900
+    VarySpacing: 12300
+
+SingleSlits:
+  type: StepperI2C
+  terminal: 2
+  bounds: [-16000, 16000]
+  style: MICROSTEP
+  delay: 0.001
+  refPoints:
+    SingleOpen: 0
+    LineSlit: 900
+    LittleHole: 1800
+    BigHole: 2850
+    A02: 4250
+    A04: 5200
+    A08: 6150
+    A16: 6950
+    VaryWidth: 8400
+    Square: 12400
+    Hex: 13300
+    Dots: 14300
+    Holes: 15200
+
+Stage:
+  type: StepperI2C
+  terminal: 3
+  bounds: [-9750, 0]
+  style: DOUBLE
+  delay: 0.004
+
+ASDIpdu:
+  type: PDUOutlet
+  host: asdipdu.inst.physics.ucsb.edu
+  username: admin
+  password: 5tgb567ujnb
+  port: 60
+  outlets: [1, 2]
+  outletMap:
+    Laser: 1
+    Screen: 2

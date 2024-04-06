@@ -1,0 +1,364 @@
+<!-- DIFFRACTION & INTERFERENCE EXPERIMENT CONTROL PAGE -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- <meta content="Webflow" name="generator"> -->
+  <title>UCSB Physics Remote Lab - Diffraction and Interference</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="static/css/mdb.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="static/css/styleGrid.css">
+  <link rel="stylesheet" href="static/css/crosshair.css">
+  <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/skeleton-3df96e.webflow.css" rel="stylesheet" type="text/css">
+  
+  <!-- Items below are from WebFlow, could make it easy to customize favicon and webclip icons -->
+  <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+  <!-- <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="static/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="static/images/webclip.png" rel="apple-touch-icon"> -->
+
+</head>
+<body>
+  
+  <!-- jQuery - These are all the scripts to do all the styling -->
+  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="static/js/popper.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/js/webflow.js" type="text/javascript"></script>
+  
+  <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
+  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
+  <!-- Draggable -->
+  <script src="static/js/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+  <!-- help bot code -->
+<!-- <script src="https://embed.small.chat/T01LL37HGMRC01LYGHBDL1.js" async></script> CHER's OLD HELPBOT-->
+<script src="https://embed.small.chat/T02U4DGKYV8C0310KCK7S7.js" async></script>
+ 
+
+  <!-- crosshairs -->
+  <script src="static/js/crosshair.js"></script>
+  <script src="static/js/signalling.js"></script>
+  <script src="static/js/main.js"></script>
+ 
+
+  <!-- Start your project here--> 
+  <div class="pagecontainer w-row">
+    <div id="PageHead" class="column w-row">
+      <h1 class="Title">Diffraction & Interference</h1>
+      <!-- <div class="text-block">
+        <h5 class="SubTitle">
+          <a target="_blank" href="static/docs/DILabGuide.pdf">Click here to access the lab guide.</a>
+            <br>  
+          <span style="font-weight: 100;font-style: italic;"> This will become a link to the course's GauchoSpace.</span>
+        </h5>
+      </div> 
+        <div id="TopTextLeft" class="column w-col w-col-6">
+          <h2 class="SubTitle">Set-Up</h2>
+          <div class="text-block">
+            Here students will find links to a video in which each piece of equipment is introduced and incorporated into a set-up with the same layout as in the live feed, 
+            as well as to equipment manuals and manufacturer websites.</div>
+        </div>
+        <div id="TopTextRight" class="column w-col w-col-6">
+          <h2 class="SubTitle">Get Help</h2>
+          <div class="text-block">
+            Here students will be advised of options for synchronous and asynchronous assistance. 
+            <br>Each will be assigned by the TA to a lab-specific breakout room in the Zoom meeting for their section, 
+            so they can use the various Zoom features to request help in real time. 
+            There will also be a link to a channel (ala Nectir, Piazza or Slack) for the lab where they get/give answers to questions.</div>
+        </div> -->
+      <!-- </div> -->
+    </div>
+    <div id="PageMiddle" class="column w-row">
+      <div  id="LeftSideImages" class="column w-col w-col-2">
+        <div id="ToggleLight" style="margin-top: 52mm;">
+          (click to toggle the Ambient Light)<br>
+          <img id="lightSwitch" src="static/images/lightSwitch.png" usemap="#image-map-ls">
+          <map name="image-map-ls">
+             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
+          </map>
+          <br>
+          <br>
+          a=: slit width in mm
+          <br>
+          <br>           
+        </div>
+        <div id="diffractionSlitsDiv" >
+          <img id="diffractionSlitsPic" src="static/images/diffractionSlits.jpg" usemap="#image-map-diffractionSlits">
+            <map name="image-map-diffractionSlits">
+              <area id="a02" alt="a=0.02mm" title="a=0.02mm" href="#" coords="63,131,20" shape="circle">
+              <area id="a04" alt="a=0.04mm" title="a=0.04mm" href="#" coords="105,116,19" shape="circle">
+              <area id="a08" alt="a=0.08mm" title="a=0.08mm" href="#" coords="149,116,19" shape="circle">
+              <area id="a16" alt="a=0.16mm" title="a=0.16mm" href="#" coords="191,129,18" shape="circle">
+              <area id="a02-20" alt="a=0.02-0.20mm" title="a=0.02-0.20mm" href="#" coords="53,283,46,292,45,303,52,311,62,316,74,312,87,306,99,302,111,298,125,296,139,298,150,298,162,302,173,307,186,313,201,311,208,303,209,290,201,278,184,271,163,263,145,260,128,259,102,263,84,268,70,273" shape="poly">
+              <area id="square" alt="square grid" title="square grid" href="#" coords="61,460,18" shape="circle">
+              <area id="hex" alt="hexagonal grid" title="hexagonal grid" href="#" coords="103,447,19" shape="circle">
+              <area id="dots" alt="scattered dots" title="scattered dots" href="#" coords="147,446,18" shape="circle">
+              <area id="holes" alt="scattered holes" title="scattered holes" href="#" coords="188,461,19" shape="circle">
+              <area id="singleOpen" alt="OPEN" title="OPEN" href="#" coords="64,626,18" shape="circle">
+              <area id="line+slit" alt="line+slit" title="line+slit" href="#" coords="105,611,19" shape="circle">
+              <area id="ø0.2" alt="ø=0.2mm" title="ø=0.2mm" href="#" coords="149,611,20" shape="circle">
+              <area id="ø0.4" alt="ø=0.4mm" title="ø=0.4mm" href="#" coords="191,625,18" shape="circle">
+            </map>
+        </div>
+        <br>
+        (click eyelid to toggle Screen Opacity)
+        <div id="Eye">
+          <div id="TransparencyOFF">
+            <img id="closedEye" src="static/images/ClosedEye.png" title="Click here to see through the screen">
+          </div>
+          <div id="TransparencyON">
+            <img id="openEye" src="static/images/OpenEye.png" title="Click here to make the screen opaque">
+          </div>
+        </div>
+        <!-- <div id="ModalCamera" style="display: none;">
+          <button href="#myModalCamera" class="btn btn-settings" data-backdrop="false" data-toggle="modal">Camera Controls Modal</button>
+          <div id="myModalCamera" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
+                  </br>
+                  <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
+                  </br>
+                  <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
+                  </br>
+                  <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
+                  </br>
+                  <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
+                  </br>
+                  <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div  id="VideoCenter" class="column w-col w-col-8">
+        
+        <div class="Warning">
+          This session will end and the system will reset in 
+          <span id="time" style="color:red;font-weight:bold">3:00:00</span>
+          hours.
+          <hr>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Basic example" id= 'buttons'>
+          <button id="ViewCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Overview</button>
+          <button id="RulerCam" type="button" class="btn btn-primary" onclick=' show_image_crosshairs()'>Position</button>
+          <button id="ScreenCam" type="button" class="btn btn-primary" onclick=' hide_all_crosshair()'>Screen</button>
+          <button id="crossHairs" type="button" class="btn btn-primary" onclick='start_CH()'>Crosshair</button>
+          <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
+        </div>
+        
+        <div id="otherToggles" class="row">
+          <div id="Laser" class="column w-col w-col-3">
+            (click to toggle the Laser)<br>
+            <img id="laserSwitch" src="static/images/laserIcon.png">
+          </div>
+          <div id="Schema" class="column w-col w-col-9">
+            
+            <img id="schematic" src="static/images/TrackSchematic.png" usemap="#image-map-schematic">
+            <map name="image-map-schematic">
+              <area id="closer" title="move closer" href="#" coords="608,126,511,182,608,240,609,207,664,207,663,158,609,159" shape="poly">
+              <area id="farther" title="move farther" href="#" coords="920,238,1020,182,922,129,920,158,864,159,864,208,920,209" shape="poly">
+              <area id="down" title="nudge down" href="#" coords="211,168,213,185,205,188,229,211,235,181,225,184,222,166" shape="poly">
+              <area id="up" title="nudge up" href="#" coords="212,116,224,116,226,100,235,104,229,73,206,93,213,97,212,108" shape="poly">
+            </map>
+          </div>
+        </div>
+
+        <div class= "row">
+          <div id="laserSwitchSpacing" class="column w-col w-col-4" style="margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">
+          </div>
+          <br>Closest</br>
+          <div id="cartSliderSpacing" class="column w-col w-col-6" style="margin-bottom: 0px; margin-right: 5px; margin-left: 5px;">
+            <span id="cartVal" style="font-weight:bold" >100</span><b>%</b> <br>
+            <input id="cartSlider" type="range" min="0" max="100" value="100" class="sliders" oninput = 'cartValue()' onmouseup="setCart()" onmousedown="getCartSliderValue()">
+          </div>
+          <br>Farthest</br>
+        </div>
+        
+        <div class="video w-video w-embed" id='embeded'>
+              <div id="wrapper_v" height=100>
+                <img id="imgCrossHairs" src="static/images/crosshairs.png" width=100% alt="" srcset="">
+                <video id='v' data-playing="false" autoplay="" muted></video>
+                <canvas id='chcv' width='100%'></canvas>
+            
+              </div>
+              <div style="clear: both;"></div>
+        </div>
+
+        
+        
+        <!-- <div id="cameraControl" style="display: none;"> -->
+          <!-- <b> Camera Controls</b> -->
+          <!-- <hr> -->
+          <!-- <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br> -->
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <!-- <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()"> -->
+           <!-- <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br> -->
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <!-- <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()"> -->
+           <!-- <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br> -->
+          <!-- <b>Arbitr:</b> <span id="slo" style="font-weight:bold" >6000</span>  -->
+           <!-- <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()"> -->
+        <!-- </div> -->
+        <hr>
+      </div>
+      <div id="RightSideImages" class="column w-col w-col-2" style="justify-content: start">
+        <div id="ToggleDark" style="margin-top: 52mm;" >
+          (click to toggle the Background)<br>
+          <img id="darkSwitch" src="static/images/darkSwitch.png" usemap="#image-map-ds">
+          <map name="image-map-ds">
+             <area id="darkTOGGLE" title="Click here to turn DARK" coords="50,68,78,92" shape="rect">
+          </map>
+          <br>
+          <br>   
+          d=: slit separation in mm     
+          <br>  
+          <br>  
+        </div>
+        <div id="interferenceSlitsDiv" >
+          <img id="interferenceSlitsPic" src="static/images/interferenceSlits.jpg" usemap="#image-map-interferenceSlits">
+            <map name="image-map-interferenceSlits">
+              <area id="a04d25" alt="a=0.04mm d=0.25mm" title="a=0.04mm d=0.25mm" href="#" coords="65,130,19" shape="circle">
+              <area id="a04d50" alt="a=0.04mm d=0.50mm" title="a=0.04mm d=0.50mm" href="#" coords="107,115,18" shape="circle">
+              <area id="a08d25" alt="a=0.08mm d=0.25mm" title="a=0.08mm d=0.25mm" href="#" coords="152,117,20" shape="circle">
+              <area id="a08d50" alt="a=0.08mm d=0.50mm" title="a=0.08mm d=0.50mm" href="#" coords="194,131,17" shape="circle">
+              <area id="a04d0125-075" alt="a04d0125-075" title="a04d0125-075" href="#" coords="56,279,50,288,50,300,56,309,64,311,74,311,83,304,95,299,106,295,118,294,128,293,141,294,152,296,164,299,173,302,183,308,195,311,205,307,210,299,211,289,207,279,197,273,184,267,171,262,156,258,136,256,115,258,96,261,76,265,64,271" shape="poly">
+              <area id="2slit" alt="2 slits" title="2 slits" href="#" coords="62,463,19" shape="circle">
+              <area id="3slit" alt="3 slits" title="3 slits" href="#" coords="107,448,19" shape="circle">
+              <area id="4slit" alt="4 slits" title="4 slits" href="#" coords="155,448,18" shape="circle">
+              <area id="5slit" alt="5 slits" title="5 slits" href="#" coords="200,463,19" shape="circle">
+              <area id="multiOpen" alt="OPEN" title="OPEN" href="#" coords="61,625,19" shape="circle">
+              <area id="farClose" alt="far apart vs close together" title="far apart vs close together" href="#" coords="104,610,19" shape="circle">
+              <area id="wideThin" alt="wide vs thin" title="wide vs thin" href="#" coords="150,611,20" shape="circle">
+              <area id="threeTwo" alt="three vs two" title="three vs two" href="#" coords="193,626,18" shape="circle">          
+            </map>
+        </div>
+        <div id="ModalCamera" style="display: none;">
+          <button href="#myModalCamera" class="btn btn-settings" data-backdrop="false" data-toggle="modal" style="background-color:lightskyblue">Camera Controls Modal</button>
+          <div id="myModalCamera" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <b>Exposure in Microseconds:</b> <span id="expVal" style="font-weight:bold" >6000</span> <br>
+                  </br>
+                  <input type="range" min="1" max="15000" value="6000" class="sliders" id='exposureSlider' oninput= 'exposureValue()' onmouseup="setExposure()">
+                  </br>
+                  <b>Brightness:</b> <span id="briVal" style="font-weight:bold" >50%</span> <br>
+                  </br>
+                  <input type="range" min="0" max="100" value="50" class="sliders" id='brightnessSlider' oninput= 'brightnessValue()' onmouseup="setBrightness()">
+                  </br>
+                  <b>Contrast:</b> <span id="conVal" style="font-weight:bold" >0%</span> <br>
+                  </br>
+                  <input type="range" min="-100" max="100" value="0" class="sliders" id='contrastSlider' oninput= 'contrastValue()' onmouseup="setContrast()">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <br>
+        (click the button to take a snap shot)<br><br><br>
+        <div id="blank" class="column w-col w-col-4">
+         </div>
+        <div id="Snap" class="column w-col w-col-4">
+          <img id="pushButton" src="static/images/redPushPutton.jpg">
+        </div>
+        <div id="blank" class="column w-col w-col-4">
+        </div> -->
+      </div>
+    </div>
+    <div id="PageBottom" class="column w-row">
+
+    </div>
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="loadingModalLabel">Page Loading</h5>
+                </div>
+                <div class="modal-body">
+                        <div class="loader"></div>
+                        <p>Please wait while the page finishes loading.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="stageModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="loadingModalLabel">Motor Moving</h5>
+              </div>
+              <div class="modal-body">
+                      <div class="loader"></div>
+                      <p>Large movements on the stage can take 15-30 seconds. Please be patient. This pop up will go away when it should be done moving.</p>
+              </div>
+          </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="extremaModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="loadingModalLabel">Limit Reached!</h5>
+              </div>
+              <div class="modal-body">
+                      <p>This object can't move any more in that direction.</p>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header" style="background-color: red;">
+              <h5 class="modal-title" id="loadingModalLabel">STOP!</h5>
+              </div>
+              <div class="modal-body">
+                <img src="static/images/stop.jpg">
+                <p>Before continuing the lab please send a message using the equipment help button at the bottom right of the screen</p>
+                <img src="static/images/equipmentHelp.JPG">
+              </div>
+          </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="bootModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header" style="background-color: red;">
+              <h5 class="modal-title" id="loadingModalLabel">STOP!</h5>
+              </div>
+              <div class="modal-body">
+                <img src="static/images/booted.jpg">
+                <p>You are about to be booted! You have 10 seconds to finish taking measurements. If this is a mistake use the equipment help button at the bottom right of the screen. </p>
+                <img src="static/images/equipmentHelp.JPG">
+              </div>
+          </div>
+      </div>
+    </div>
+
+
+    
+ </body>
+</html>
