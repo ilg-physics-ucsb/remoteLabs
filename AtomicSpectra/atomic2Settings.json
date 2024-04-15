@@ -1,12 +1,12 @@
 {
-    "outlets":[3],
+    "outlets":[7],
     "outletMap":{
-        "Carousel": 3
+        "Carousel": 7
     },
     "refPoints": {
         "h2":0,
-        "a":7860,
-        "b": 15720
+        "a":-1350,
+        "b":-2710
     },
     "defaultCameraSettings":{
         "frame_rate":15,
@@ -19,13 +19,13 @@
     
     "carouselPins": [16, 12, 20],
     "armPins": [19, 13, 26],
-
+    
     "ambientPin": 5,
 
     "slitBounds": [0,600],
     "gratingBounds": [-450,450],
-    "armBounds": [-21000, 21000],
-    "carouselBounds": [-160, 15520],
-
-    "videoNumber": 0
+    "armBounds": [-10000, 10000],
+    "carouselBounds": [-3000, 300],
+    
+    "videoNumber":0
 }

@@ -5,9 +5,9 @@
     },
     "refPoints": {
         "h2":0,
-        "a":7860,
-        "b": 15720
-        },
+        "a":-1350,
+        "b":-2710
+    },
     "defaultCameraSettings":{
         "frame_rate":15,
         "brightness": 50,
@@ -24,8 +24,8 @@
 
     "slitBounds": [0,600],
     "gratingBounds": [-450,450],
-    "armBounds": [-12000, 12000],
-    "carouselBounds": [-160, 15520],
+    "armBounds": [-10000, 10000],
+    "carouselBounds": [-3000, 300],
     
     "videoNumber":0
 }

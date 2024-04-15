@@ -43,11 +43,11 @@ defaultCameraSettings = labSettings["defaultCameraSettings"]
 camera = ArduCamMultiCamera("Camera", videoNumber, defaultSettings=defaultCameraSettings)
 socket_path = "/tmp/uv4l.socket"
 
-slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.1)  
+slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.001)  
 grating = StepperI2C("Grating", 2, bounds=gratingBounds, style="DOUBLE")
 
-arm = S42CStepperMotor("Arm", armEN, armSTEP, armDIR, bounds=armBounds)
-carousel = S42CStepperMotor("Carousel", carouselEN, carouselSTEP, carouselDIR, bounds=carouselBounds, refPoints=refPoints)
+arm = S42CStepperMotor("Arm", armEN, armSTEP, armDIR, bounds=armBounds, stepDelay = 0.004)
+carousel = S42CStepperMotor("Carousel", carouselEN, carouselSTEP, carouselDIR, bounds=carouselBounds, refPoints=refPoints, stepDelay = 0.002)
 
 ambient = SingleGPIO("Ambient", ambientPin)
 
