@@ -548,10 +548,14 @@ $("document").ready(function () {
             }
             dataChannel.send("Camera/camera/a");               //This should be overview camera
             carouselModal.modal("show")
-            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/admingoto/h2");
+            dataChannel.send("Carousel/goto/h2");
             dataChannel.send("ASDIpdu/on/Carousel");
+            if (spectraLamp == "A") {
+                await sleep(4000)
+            } else {
+                await sleep(7000);
+            }
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
             }
@@ -567,10 +571,14 @@ $("document").ready(function () {
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             carouselModal.modal("show")
-            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/admingoto/h2")
+            dataChannel.send("Carousel/goto/h2")
             dataChannel.send("ASDIpdu/on/Carousel");
+            if (spectraLamp == "A") {
+                await sleep(4000)
+            } else {
+                await sleep(7000);
+            }
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
             }
@@ -638,10 +646,16 @@ $("document").ready(function () {
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // console.log("Should be showing Modal")
             carouselModal.modal("show")
-            await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/admingoto/a")
+            dataChannel.send("Carousel/goto/a")
+            // counter backlash
+            if (spectraLamp == "H2") {
+                dataChannel.send("Carousel/move/-20");
+            } else {
+                dataChannel.send("Carousel/move/20");
+            }
             dataChannel.send("ASDIpdu/on/Carousel");
+            await sleep(4000);
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
             }
@@ -658,10 +672,16 @@ $("document").ready(function () {
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             // console.log("Should be showing Modal")
             carouselModal.modal("show")
-            await sleep(2500)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/admingoto/a")
+            dataChannel.send("Carousel/goto/a")
+            // counter backlash
+            if (spectraLamp == "H2") {
+                dataChannel.send("Carousel/move/-20");
+            } else {
+                dataChannel.send("Carousel/move/20");
+            }
             dataChannel.send("ASDIpdu/on/Carousel");
+            await sleep(4000);
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
             }
@@ -713,10 +733,10 @@ $("document").ready(function () {
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             carouselModal.modal("show")
-            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/admingoto/b");
+            dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
+            await sleep(4000);
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
             }
@@ -732,10 +752,10 @@ $("document").ready(function () {
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
             carouselModal.modal("show")
-            await sleep(1000)
             dataChannel.send("ASDIpdu/off/Carousel");
-            dataChannel.send("Carousel/admingoto/b");
+            dataChannel.send("Carousel/goto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
+            await sleep(4000);
             if(!AmbientStatePrev){
                 AmbientTOGGLE.click;
             }
@@ -796,11 +816,11 @@ $("document").ready(function () {
 
     nudgeLeft.addEventListener('click',function() {
         console.log("Lamp nudged left");
-        dataChannel.send("Carousel/move/20")
+        dataChannel.send("Carousel/move/10")
     })
     nudgeRight.addEventListener('click',function() {
         console.log("Lamp nudged right");
-        dataChannel.send("Carousel/move/-20")
+        dataChannel.send("Carousel/move/-10")
     })
     //END Lamp Nudging
 
