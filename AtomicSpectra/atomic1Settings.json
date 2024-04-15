@@ -24,8 +24,13 @@
 
     "slitBounds": [0,600],
     "gratingBounds": [-450,450],
+<<<<<<< HEAD
     "armBounds": [-10000, 10000],
     "carouselBounds": [-3000, 300],
+=======
+    "armBounds": [-12000, 12000],
+    "carouselBounds": [-160, 15520],
+>>>>>>> 1b6bf82bd75669bf388762f33b98ef848043c47a
     
     "videoNumber":0
 }
