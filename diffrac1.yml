@@ -13,6 +13,7 @@ devices:
   Camera:
     type: ArduCamMultiCamera
     videoNumber: 0
+    numCameras: 2
     defaultSettings:
       frame_rate: 15
       brightness: 50
