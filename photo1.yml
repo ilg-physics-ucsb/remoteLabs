@@ -1,0 +1,61 @@
+devices:
+  Potentiometer:
+    type: FilterStepperI2C
+    terminal: 5
+    delay: 0.02
+    refPoints:
+      0deg: 0
+      60deg: -270
+      120deg: -540
+      180deg: -810
+      240deg: -1080
+      300deg: -1350
+    style: SINGLE
+  Color Filter Wheel:
+    type: FilterStepperI2C
+    terminal: 6
+    delay: 0.02
+    refPoints:
+      0deg: 0
+      60deg: -270
+      120deg: -540
+      180deg: -810
+      240deg: -1080
+      300deg: -1350
+    style: SINGLE
+  Density Filter Wheel:
+    type: FilterStepperI2C
+    terminal: 7
+    delay: 0.02
+    refPoints:
+      0deg: 0
+      60deg: -270
+      120deg: -540
+      180deg: -810
+      240deg: -1080
+      300deg: -1350
+    style: SINGLE
+  Electrometer:
+    type: Keithley6514Electrometer
+    usbAddress: 1
+    baud_rate: 19200
+  Multimeter:
+    type: Keithley2000Multimeter
+    usbAddress: 0
+    baud_rate: 19200
+  PEpdu:
+    type: PDUOutlet
+    hostname: "pepdu.inst.physics.ucsb.edu"
+    username: "admin"
+    password: "5tgb567ujnb"
+    port: 60
+    outlets:
+      - 5
+      - 6
+      - 7
+      - 8
+    outletMap:
+      Electrometer: 5
+      Multimeter: 6
+      HgNeLamp: 7
+      Ambient: 8

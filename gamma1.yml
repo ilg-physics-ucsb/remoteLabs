@@ -1,0 +1,85 @@
+network:
+  port: 8080
+  domain: pi
+  wsPort: 8675
+
+website:
+  index: null
+  commonStaticFolder: null
+  staticFolder: null
+
+devices:
+  Camera:
+    type: ArduCamMultiCamera
+    videoNumber: 0
+    i2cBus: 11
+    initialCamera: "counter"
+    controlPins:
+      - 4
+      - 17
+      - 18
+    cameraNames:
+      counter: "b"
+      overview: "d"
+  Stage:
+    type: S42CStepperMotor
+    enablePin: 20
+    stepPin: 21
+    directionPin: 26
+    bounds:
+      - 0
+      - 22740
+    refPoints:
+      s0: 22620
+      s1: 21820
+      s2: 21020
+    stepWaitTime: 0.00044
+  Actuator:
+    type: FS5103RContinuousMotor
+    pwmPin: 22
+    limitPin: 27
+    reversed: true
+  Magnet:
+    type: GeneralPWMServo
+    pin: 10
+  AbsorberController:
+    type: AbsorberController
+    stage: "Stage"
+    actuator: "Actuator"
+    magnet: "Magnet"
+    initialState:
+      s0: ""
+      s1: ""
+    holderMap:
+      Source: "h14"
+      A1: "h13"
+    downtime: 2
+    uptime: 2
+    throttle: 0.3
+  Buttons:
+    type: Multiplexer
+    pins:
+      - 8
+      - 11
+      - 9
+    inhibitorPin: 25
+    channels:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+    delay: 0.1
+  GRpdu:
+    type: PDUOutlet
+    hostname: "grpdu.inst.physics.ucsb.edu"
+    username: "admin"
+    password: "5tgb567ujnb"
+    port: 60
+    outlets:
+      - 3
+      - 6
+    outletMap:
+      PowerSupply: 3
+      ST160: 6

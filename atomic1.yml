@@ -1,0 +1,83 @@
+network:
+  port: 8080
+  domain: pi
+  wsPort: 8675
+
+website:
+  index: null
+  commonStaticFolder: null
+  staticFolder: null
+
+devices:
+  Camera:
+    type: ArduCamMultiCamera
+    videoNumber: 0
+    defaultSettings:
+      frame_rate: 15
+      brightness: 50
+      contrast: 0
+      shutter_speed: 0
+      awb_mode: 0
+      exposure_mode: 1
+  Slit:
+    type: StepperI2C
+    terminal: 7  # assumed pin number
+    bounds:
+      - 0
+      - 600
+    style: "MICROSTEP"
+    microsteps: 16
+    delay: 0.0001
+  Grating:
+    type: StepperI2C
+    terminal: 8  # assumed pin number
+    bounds:
+      - -450
+      - 450
+    style: "MICROSTEP"
+    microsteps: 16
+    delay: 0.0001
+  Arm:
+    type: StepperI2C
+    terminal: 9  # assumed pin number
+    bounds:
+      - -12000
+      - 12000
+    style: "MICROSTEP"
+    microsteps: 16
+    delay: 0.0001
+  Carousel:
+    type: StepperI2C
+    terminal: 10  # assumed pin number
+    bounds:
+      - -160
+      - 15520
+    style: "MICROSTEP"
+    microsteps: 16
+    delay: 0.0001
+  Ambient:
+    type: SingleGPIO
+    pin: 5
+  Limit Switches:
+    LeftSwitch:
+      type: LimitSwitch
+      pin: 6
+    RightSwitch:
+      type: LimitSwitch
+      pin: 12
+    HomeSwitch:
+      type: LimitSwitch
+      pin: 13
+    SensorSwitch:
+      type: LimitSwitch
+      pin: 26
+  ASDIpdu:
+    type: PDUOutlet
+    hostname: "asdipdu.inst.physics.ucsb.edu"
+    username: "admin"
+    password: "5tgb567ujnb"
+    port: 60
+    outlets:
+      - 7
+    outletMap:
+      Carousel: 7
