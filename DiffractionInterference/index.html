@@ -50,7 +50,8 @@
 
   <!-- crosshairs -->
   <script src="static/js/crosshair.js"></script>
-  <script src="static/js/signalling.js"></script>
+<!--  <script src="static/js/signalling.js"></script>-->
+  <script src="static/js/remlaSocket.js"></script>
   <script src="static/js/main.js"></script>
  
 
@@ -195,7 +196,8 @@
         <div class="video w-video w-embed" id='embeded'>
               <div id="wrapper_v" height=100>
                 <img id="imgCrossHairs" src="static/images/crosshairs.png" width=100% alt="" srcset="">
-                <video id='v' data-playing="false" autoplay="" muted></video>
+<!--                <video id='v' data-playing="false" autoplay="" muted></video>-->
+                <iframe id="videoFrame" frameborder="0"></iframe>
                 <canvas id='chcv' width='100%'></canvas>
             
               </div>
