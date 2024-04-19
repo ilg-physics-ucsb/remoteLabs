@@ -46,7 +46,7 @@
     };
 })();
 
-window.onload = function () {
+window.addEventListener("load", function () {
     let iframeUrl = getDomainURL() + "/cam";
     document.getElementById('videoFrame').src = iframeUrl;
-}
+});

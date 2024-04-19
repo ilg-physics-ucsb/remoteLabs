@@ -93,7 +93,7 @@ $("document").ready(function () {
  
      function timeOutHandler(){
         //  TEMP CHANGE
-         mainCamSignal.hangup()
+        //  mainCamSignal.hangup()
          alert("Your session has timed out.")
      }
  
@@ -693,7 +693,7 @@ $("document").ready(function () {
     // END Camera Switching
 
      //for LiveFeed  
-     var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+     // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
    
 
  
@@ -792,7 +792,7 @@ $("document").ready(function () {
   
   window.addEventListener('beforeunload', function(e) {
         // // TEMP CHANGE
-        mainCamSignal.hangup();
+        // mainCamSignal.hangup();
         // // TEMP CHANGE
         dataChannel.close();
     })
