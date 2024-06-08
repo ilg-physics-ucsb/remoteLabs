@@ -1,6 +1,6 @@
 network:
   port: 8080
-  domain: pi
+  domain: gamma1.inst.physics.ucsb.edu
   wsPort: 8675
 
 website:
@@ -30,10 +30,28 @@ devices:
       - 0
       - 22740
     refPoints:
-      s0: 22620
-      s1: 21820
-      s2: 21020
-    stepWaitTime: 0.00044
+      s0:21200
+      s1:20400
+      s2:19600
+      s3:18800
+      s4:18000
+      s5:17200
+      h0:14870
+      h1:14062
+      h2:13253
+      h3:12445
+      h4:11636
+      h5:10828
+      h6:10019
+      h7:9210
+      h8:8402
+      h9:7593
+      h10:6785
+      h11:5976
+      h12:5168
+      h13:4359
+      h14:3550
+    stepWaitTime: 0.00048
   Actuator:
     type: FS5103RContinuousMotor
     pwmPin: 22
@@ -50,9 +68,41 @@ devices:
     initialState:
       s0: ""
       s1: ""
+      s2: ""
+      s3: ""
+      s4: ""
+      s5: ""
+      h0: "A14"
+      h1: "A13"
+      h2: "A12"
+      h3: "A11"
+      h4: "A10"
+      h5: "A9"
+      h6: "A8"
+      h7: "A7"
+      h8: "A6"
+      h9: "A5"
+      h10: "A4"
+      h11: "A3"
+      h12: "A2"
+      h13: "A1"
+      h14: "Source"
     holderMap:
       Source: "h14"
       A1: "h13"
+      A2: "h12"
+      A3: "h11"
+      A4: "h10"
+      A5: "h9"
+      A6: "h8"
+      A7: "h7"
+      A8: "h6"
+      A9: "h5"
+      A10: "h4"
+      A11: "h3"
+      A12: "h2"
+      A13: "h1"
+      A14: "h0"
     downtime: 2
     uptime: 2
     throttle: 0.3
@@ -78,8 +128,6 @@ devices:
     password: "5tgb567ujnb"
     port: 60
     outlets:
-      - 3
       - 6
     outletMap:
-      PowerSupply: 3
       ST160: 6
