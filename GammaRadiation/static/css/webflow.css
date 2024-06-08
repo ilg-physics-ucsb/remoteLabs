@@ -292,6 +292,7 @@ ol {
 }
 .w-video {
   width: 100%;
+  height: 600px;
   position: relative;
   padding: 0;
 }
