@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 from asyncore import read
-from labcontrol import Experiment, StepperI2C, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO, LimitSwitch
+from labcontrol import Experiment, StepperI2C, S42CStepperMotor, Plug, PDUOutlet, ArduCamMultiCamera, SingleGPIO, LimitSwitch
 import argparse, os, json
 
 parser = argparse.ArgumentParser(description="Used to select which mode to run in", prog="LabController")
@@ -21,20 +21,14 @@ outlets         = labSettings["outlets"]
 outletMap       = labSettings["outletMap"]
 refPoints       = labSettings["refPoints"]
 
-leftSwitchPin   = labSettings["leftSwitchPin"]
-rightSwitchPin  = labSettings["rightSwitchPin"]
-homeSwitchPin   = labSettings["homeSwitchPin"]
-sensorSwitchPin = labSettings["sensorSwitchPin"]
-ambientPin      = labSettings["ambientPin"]
+ambientPin      = labSettings["ambientPin"] # GPIO 5
+carouselEN, carouselSTEP, carouselDIR   = labSettings["carouselPins"] # [EN, STEP, DIR]
+armEN,      armSTEP,      armDIR        = labSettings["armPins"] # [EN, STEP, DIR]
 
 slitBounds      = labSettings["slitBounds"]
 gratingBounds   = labSettings["gratingBounds"]
 armBounds       = labSettings["armBounds"]
 carouselBounds  = labSettings["carouselBounds"]
-
-limitBounce     = labSettings["limitBounce"]
-homeOvershoot   = labSettings["homeOvershoot"]
-carouselBounce  = labSettings["carouselBounce"]
 
 videoNumber     = labSettings["videoNumber"]
 
@@ -49,53 +43,13 @@ defaultCameraSettings = labSettings["defaultCameraSettings"]
 camera = ArduCamMultiCamera("Camera", videoNumber, defaultSettings=defaultCameraSettings)
 socket_path = "/tmp/uv4l.socket"
 
-leftSwitch = LimitSwitch("LeftSwitch", leftSwitchPin)
-rightSwitch = LimitSwitch("RightSwitch", rightSwitchPin)
-homeSwitch = LimitSwitch("HomeSwitch", homeSwitchPin)
-sensorSwitch = LimitSwitch("SensorSwitch", sensorSwitchPin)
-
-def leftSwitchHit(motor, steps):
-    print("Left Switch Hit")
-    motor.currentPosition += steps
-    motor.adminMove(-limitBounce)
-
-def rightSwitchHit(motor, steps):
-    print("Right Switch Hit")
-    motor.currentPosition += steps
-    motor.adminMove(limitBounce)
-
-def homing(motor):
-    print("Home switch hit.")
-    homeSwitch = motor.move(20000)
-    print("Here I am at left switch")
-    print(homeSwitch)
-    if homeSwitch is True:
-        motor.adminMove(homeOvershoot)
-    else:
-        print("Moving Towards home.")
-        motor.homeMove(stepLimit=15000)
-    motor.currentPosition = 0
-
-def sensorSwitchHit(motor, steps):
-    print("Carousel Misaligned")
-    motor.currentPosition += steps
-    if steps <= 0:
-        motor.adminMove(carouselBounce)
-    else:
-        motor.adminMove(-carouselBounce)
-
-leftSwitch.switchAction = leftSwitchHit
-rightSwitch.switchAction = rightSwitchHit
-sensorSwitch.switchAction = sensorSwitchHit
-
-slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.1)  
+slit = StepperI2C("Slit", 1,bounds=slitBounds, style="DOUBLE", delay=0.001)  
 grating = StepperI2C("Grating", 2, bounds=gratingBounds, style="DOUBLE")
-arm = StepperI2C("Arm", 3,bounds=armBounds, style="INTERLEAVE", limitSwitches=[leftSwitch, rightSwitch], homeSwitch=homeSwitch, delay=0.0001)
-arm.customHome = homing
-carousel = StepperI2C("Carousel", 4,bounds=carouselBounds, style="MICROSTEP", delay=0.0001, refPoints=refPoints, microsteps=16)
+
+arm = S42CStepperMotor("Arm", armEN, armSTEP, armDIR, bounds=armBounds, stepDelay = 0.004)
+carousel = S42CStepperMotor("Carousel", carouselEN, carouselSTEP, carouselDIR, bounds=carouselBounds, refPoints=refPoints, stepDelay = 0.002)
 
 ambient = SingleGPIO("Ambient", ambientPin)
-
 
 ASDIpdu = PDUOutlet("ASDIpdu", "asdipdu.inst.physics.ucsb.edu", "admin", "5tgb567ujnb", 60, outlets=outlets, outletMap=outletMap)
 ASDIpdu.login()
@@ -103,8 +57,6 @@ ASDIpdu.login()
 #This code is to release the motors at the start. I don't know why the labcontroller version doesn't work.
 slit.device.release()
 grating.device.release()
-arm.device.release()
-carousel.device.release()
 
 if args.reset:
     exp = Experiment("AtomicSpectra", messenger=True)

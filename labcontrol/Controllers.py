@@ -36,7 +36,7 @@ class BaseController(object):
         else:
             print("No Parser Found. Will just pass params to command.")
 
-        # Now get the command method. If there isn't a method, it should throw an AttributeError.
+        # Now get the command method. If there isn't a method, it will log the erroneous cmd.
         try:
             method = getattr(self, cmd)
         except:
@@ -1427,7 +1427,9 @@ class S42CStepperMotor(BaseController):
         refPoints -- dict({}): A table of predefined reference points
             that can be quickly accessed by calling the `goto()`
             function. {str: int}
-        delay -- float(0.02): the step pulse period in seconds.
+        stepDelay -- float(0.0001): the step pulse period in seconds.
+        stepWaitTime -- float(0.0): the wait time for the motor to
+            physically reach the target in the unit second/step.
         microstep -- int(2): the microstep setting on the motor.
             Choose a higher value if more precision is needed.
             This parameter is currently NOT USED. TODO Barry
@@ -1473,7 +1475,8 @@ class S42CStepperMotor(BaseController):
             microstep   = 2,
             gearRatio   = 1,
             _pi         = None,
-            stepWaitTime= 0
+            stepWaitTime= 0.0,
+            stepDelay   = 0.0001
         ):
 
         self.name       = name
@@ -1498,7 +1501,7 @@ class S42CStepperMotor(BaseController):
             if self.UB < 0:
                 warn(self.name + " is initialized with a negative lower bound.", RuntimeWarning)
         self.refPoints  = refPoints
-        self.delay      = 0.0001
+        self.delay      = stepDelay
         self.mStep      = microstep
         self.gearRatio  = gearRatio
         self.stepWaitTime   = stepWaitTime
