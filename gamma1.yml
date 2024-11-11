@@ -11,21 +11,22 @@ website:
 devices:
   Camera:
     type: ArduCamMultiCamera
+    numCameras: 2
     videoNumber: 0
-    i2cBus: 11
+    i2cbus: 1
     initialCamera: "counter"
     controlPins:
       - 4
       - 17
       - 18
-    cameraNames:
-      counter: "b"
-      overview: "d"
+    cameraNamesDict:
+      counter: a
+      overview: b
   Stage:
     type: S42CStepperMotor
-    enablePin: 20
-    stepPin: 21
-    directionPin: 26
+    EN: 20
+    STEP: 21
+    DIR: 26
     bounds:
       - 0
       - 22740
@@ -62,7 +63,7 @@ devices:
     PWM: 10
   AbsorberController:
     type: AbsorberController
-    stage: "Stage"
+    stepper: "Stage"
     actuator: "Actuator"
     magnet: "Magnet"
     initialState:
