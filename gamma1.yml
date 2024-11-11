@@ -54,12 +54,12 @@ devices:
     stepWaitTime: 0.00048
   Actuator:
     type: FS5103RContinuousMotor
-    pwmPin: 22
+    PWM: 22
     limitPin: 27
-    reversed: true
+    _reversed: true
   Magnet:
     type: GeneralPWMServo
-    pin: 10
+    PWM: 10
   AbsorberController:
     type: AbsorberController
     stage: "Stage"
