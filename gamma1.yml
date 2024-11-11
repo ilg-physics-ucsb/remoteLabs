@@ -125,9 +125,8 @@ devices:
   GRpdu:
     type: PDUOutlet
     hostname: "grpdu.inst.physics.ucsb.edu"
-    username: "admin"
+    userid: "admin"
     password: "5tgb567ujnb"
-    port: 60
     outlets:
       - 6
     outletMap:
