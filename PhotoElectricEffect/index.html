@@ -23,8 +23,11 @@
  
 </head>
 <body>
-  <script src="static/js/signalling.js"></script>
-  <script src="static/js/main.js"></script>
+        <!-- <script src="static/js/signalling.js"></script> -->
+        <script src="static/js/main.js"></script>
+        <script src="static/js/remlaSocket.js"></script>
+        <script defer type="text/javascript" src="static/js/reader.js"></script>
+        <script defer type="text/javascript" src="static/js/mediaMTXGetFeed.js"></script>
 
  
   <!-- Start your project here-->  
@@ -112,9 +115,10 @@
           <span id="time" style="color:red;font-weight:bold">3:00:00</span>
           hours.
         </div>
-        <div class="video w-video w-embed">
-          <video id='v' data-playing="false" autoplay="" muted></video>
-        </div>
+            <div class="video w-video w-embed">
+                <video id="video" autoplay></video>
+            <div id="message"></div>
+
         <!-- <img id="webcam" src="" alt="" srcset=""> -->
         <!-- <img src="http://192.168.0.2:8082/stream/video.mjpeg" alt="" srcset=""> -->
       </div>  
@@ -384,6 +388,9 @@
         });   
   </script>
   <!-- <script type="text/javascript">imageMapResize();</script> -->
-  
+ 
+    <style>
+	#video {width:100%; height:100%}
+    </style>
 </body>
 </html>
