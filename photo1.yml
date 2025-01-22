@@ -34,11 +34,9 @@ devices:
   Electrometer:
     type: Keithley6514Electrometer
     usbAddress: 1
-    baud_rate: 19200
   Multimeter:
     type: Keithley2000Multimeter
     usbAddress: 0
-    baud_rate: 19200
   PEpdu:
     type: PDUOutlet
     hostname: "pepdu.inst.physics.ucsb.edu"
