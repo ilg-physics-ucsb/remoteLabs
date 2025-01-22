@@ -40,7 +40,7 @@ devices:
   PEpdu:
     type: PDUOutlet
     hostname: "pepdu.inst.physics.ucsb.edu"
-    username: "admin"
+    userid: "admin"
     password: "5tgb567ujnb"
     outlets:
       - 5
