@@ -52,16 +52,16 @@ devices:
       Multimeter: 6
       HgNeLamp: 7
       Ambient: 8
-  locks:
-    pdu:
-      - PEpdu
-    pot:
-      - Potentiometer
-    colorwheel:
-      - colorWheel
-    densityWheel:
-      - densityWheel
-    mulimeter:
-      - Multimeter
-    electrometer:
-      - electrometer
+locks:
+  pdu:
+    - PEpdu
+  pot:
+    - Potentiometer
+  colorwheel:
+    - colorWheel
+  densityWheel:
+    - densityWheel
+  mulimeter:
+    - Multimeter
+  electrometer:
+    - electrometer
