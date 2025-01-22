@@ -1,7 +1,15 @@
 devices:
   Potentiometer:
+    type: StepperI2C
+    terminal: 2
+    delay: 0.02
+    style: SINGLE
+    bounds:
+      - 0
+      - 2100
+  colorWheel:
     type: FilterStepperI2C
-    terminal: 5
+    terminal: 2
     delay: 0.02
     refPoints:
       0deg: 0
@@ -11,21 +19,9 @@ devices:
       240deg: -1080
       300deg: -1350
     style: SINGLE
-  Color Filter Wheel:
+  densityWheel:
     type: FilterStepperI2C
-    terminal: 6
-    delay: 0.02
-    refPoints:
-      0deg: 0
-      60deg: -270
-      120deg: -540
-      180deg: -810
-      240deg: -1080
-      300deg: -1350
-    style: SINGLE
-  Density Filter Wheel:
-    type: FilterStepperI2C
-    terminal: 7
+    terminal: 1
     delay: 0.02
     refPoints:
       0deg: 0
@@ -59,3 +55,16 @@ devices:
       Multimeter: 6
       HgNeLamp: 7
       Ambient: 8
+  locks:
+    pdu:
+      - PEpdu
+    pot:
+      - Potentiometer
+    colorwheel:
+      - colorWheel
+    densityWheel:
+      - densityWheel
+    mulimeter:
+      - Multimeter
+    electrometer:
+      - electrometer
