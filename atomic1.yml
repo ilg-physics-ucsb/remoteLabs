@@ -21,56 +21,47 @@ devices:
       exposure_mode: 1
   Slit:
     type: StepperI2C
-    terminal: 7  # assumed pin number
+    terminal: 1
     bounds:
       - 0
       - 600
-    style: "MICROSTEP"
+    style: "DOUBLE"
     microsteps: 16
-    delay: 0.0001
+    delay: 0.001
   Grating:
     type: StepperI2C
-    terminal: 8  # assumed pin number
+    terminal: 2
     bounds:
       - -450
       - 450
-    style: "MICROSTEP"
+    style: "DOUBLE"
     microsteps: 16
-    delay: 0.0001
+    delay: 0.001
   Arm:
-    type: StepperI2C
-    terminal: 9  # assumed pin number
+    type: S42CStepperMotor
+    EN: 19
+    STEP: 13
+    DIR: 26
     bounds:
-      - -12000
-      - 12000
-    style: "MICROSTEP"
-    microsteps: 16
-    delay: 0.0001
+      - -10000
+      - 10000
+    stepDelay: 0.004
   Carousel:
-    type: StepperI2C
-    terminal: 10  # assumed pin number
+    type: S42CStepperMotor
+    EN: 16
+    STEP: 12
+    DIR: 20
     bounds:
-      - -160
-      - 15520
-    style: "MICROSTEP"
-    microsteps: 16
-    delay: 0.0001
+      - -3000
+      - 300
+    refPoints:
+      h2: 0
+      a: -1350
+      b: -2710
+    stepDelay: 0.002
   Ambient:
     type: SingleGPIO
     pin: 5
-  Limit Switches:
-    LeftSwitch:
-      type: LimitSwitch
-      pin: 6
-    RightSwitch:
-      type: LimitSwitch
-      pin: 12
-    HomeSwitch:
-      type: LimitSwitch
-      pin: 13
-    SensorSwitch:
-      type: LimitSwitch
-      pin: 26
   ASDIpdu:
     type: PDUOutlet
     hostname: "asdipdu.inst.physics.ucsb.edu"
