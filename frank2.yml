@@ -46,15 +46,15 @@ devices:
     password: "5tgb567ujnb"
     port: 60
     outlets:
-    - 1
-    - 2
-    - 3
-    - 4
+    - 5
+    - 6
+    - 7
+    - 8
     outletMap:
-      Electrometer: 4
-      Oven: 1
-      Filament: 2
-      PowerSupply: 3
+      Electrometer: 8
+      Oven: 5
+      Filament: 6
+      PowerSupply: 7
   Electrometer:
     type: Keithley6514Electrometer
     resource: "ASRL/dev/ttyUSB0::INSTR"
