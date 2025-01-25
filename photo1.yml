@@ -9,7 +9,7 @@ devices:
       - 2100
   colorWheel:
     type: FilterStepperI2C
-    terminal: 2
+    terminal: 3
     delay: 0.02
     refPoints:
       0deg: 0
