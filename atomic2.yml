@@ -56,8 +56,8 @@ devices:
       - 300
     refPoints:
       h2: 0
-      a: -1350
-      b: -2710
+      a: -1600
+      b: -3200
     stepDelay: 0.002
   Ambient:
     type: SingleGPIO
