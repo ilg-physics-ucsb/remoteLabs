@@ -1,1 +1,118 @@
-{"outlets": [3, 4], "outletMap": {"PowerSupply": 3, "ST160": 4}, "multiplexerPins": [8, 11, 9], "inhibitorPin": 25, "multiplexerChannels": [1, 2, 3, 4, 5, 6], "multiplexerDelay": 0.1, "magnetPin": 10, "actuatorPwmPin": 22, "actuatorLimitPin": 27, "stagePins": [20, 21, 26], "stageBounds": [0, 22740], "stageDelay": 1050, "stageRefPoints": {"s0": 22060, "s1": 21260, "s2": 20460, "s3": 19660, "s4": 18860, "s5": 18060, "h0": 15850, "h1": 15028, "h2": 14206, "h3": 13384, "h4": 12562, "h5": 11740, "h6": 10918, "h7": 10095, "h8": 9273, "h9": 8451, "h10": 7629, "h11": 6807, "h12": 5985, "h13": 5163, "h14": 4340, "h15": 16340}, "initialState": {"s0": "", "s1": "", "s2": "", "s3": "", "s4": "", "s5": "", "h0": "A14", "h1": "A13", "h2": "A12", "h3": "A11", "h4": "A10", "h5": "A9", "h6": "A8", "h7": "A7", "h8": "A6", "h9": "A5", "h10": "A4", "h11": "A3", "h12": "A2", "h13": "A1", "h14": "Source"}, "holderMap": {"Source": "h14", "A1": "h13", "A2": "h12", "A3": "h11", "A4": "h10", "A5": "h9", "A6": "h8", "A7": "h7", "A8": "h6", "A9": "h5", "A10": "h4", "A11": "h3", "A12": "h2", "A13": "h1", "A14": "h0"}, "absorberDownTime": 2, "absorberUpTime": 2, "initialCamera": "d", "videoNumber": 0, "cameraControlPins": [4, 17, 18], "cameraI2cBus": 11, "cameraNamesDict": {"counter": "d", "overview": "b"}, "actuatorThrottle": 0.3, "stepWaitTime": 6.8e-4}
+{
+    "outlets": [
+        3,
+        4
+    ],
+    "outletMap": {
+        "PowerSupply": 3,
+        "ST160": 4
+    },
+    "multiplexerPins": [
+        8,
+        11,
+        9
+    ],
+    "inhibitorPin": 25,
+    "multiplexerChannels": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+    ],
+    "multiplexerDelay": 0.1,
+    "magnetPin": 10,
+    "actuatorPwmPin": 22,
+    "actuatorLimitPin": 27,
+    "stagePins": [
+        20,
+        21,
+        26
+    ],
+    "stageBounds": [
+        0,
+        22740
+    ],
+    "stageDelay": 1050,
+    "stageRefPoints": {
+        "s0": 22060,
+        "s1": 21260,
+        "s2": 20460,
+        "s3": 19660,
+        "s4": 18860,
+        "s5": 18060,
+        "h0": 15850,
+        "h1": 15028,
+        "h2": 14206,
+        "h3": 13384,
+        "h4": 12562,
+        "h5": 11740,
+        "h6": 10918,
+        "h7": 10095,
+        "h8": 9273,
+        "h9": 8451,
+        "h10": 7629,
+        "h11": 6807,
+        "h12": 5985,
+        "h13": 5163,
+        "h14": 4340,
+        "h15": 16340
+    },
+    "initialState": {
+        "s0": "",
+        "s1": "",
+        "s2": "",
+        "s3": "",
+        "s4": "",
+        "s5": "",
+        "h0": "A14",
+        "h1": "A13",
+        "h2": "A12",
+        "h3": "A11",
+        "h4": "A10",
+        "h5": "A9",
+        "h6": "A8",
+        "h7": "A7",
+        "h8": "A6",
+        "h9": "A5",
+        "h10": "A4",
+        "h11": "A3",
+        "h12": "A2",
+        "h13": "A1",
+        "h14": "Source"
+    },
+    "holderMap": {
+        "Source": "h14",
+        "A1": "h13",
+        "A2": "h12",
+        "A3": "h11",
+        "A4": "h10",
+        "A5": "h9",
+        "A6": "h8",
+        "A7": "h7",
+        "A8": "h6",
+        "A9": "h5",
+        "A10": "h4",
+        "A11": "h3",
+        "A12": "h2",
+        "A13": "h1",
+        "A14": "h0"
+    },
+    "absorberDownTime": 2,
+    "absorberUpTime": 2,
+    "initialCamera": "d",
+    "videoNumber": 0,
+    "cameraControlPins": [
+        4,
+        17,
+        18
+    ],
+    "cameraI2cBus": 11,
+    "cameraNamesDict": {
+        "counter": "d",
+        "overview": "b"
+    },
+    "actuatorThrottle": 0.3,
+    "stepWaitTime": 0.00068
+}

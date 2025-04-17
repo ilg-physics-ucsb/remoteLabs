@@ -1,6 +1,6 @@
 network:
   port: 8080
-  domain: gamma1.inst.physics.ucsb.edu
+  domain: gamma2.inst.physics.ucsb.edu
   wsPort: 8675
 
 website:
@@ -30,27 +30,28 @@ devices:
       - 0
       - 22740
     refPoints:
-      s0: 22620
-      s1: 21820
-      s2: 21020
-      s3: 20220
-      s4: 19420
-      s5: 18620
-      h0: 16350
-      h1: 15539
-      h2: 14728
-      h3: 13916
-      h4: 13105
-      h5: 12293
-      h6: 11482
-      h7: 10670
-      h8: 9859
-      h9: 9048
-      h10: 8236
-      h11: 7425
-      h12: 6613
-      h13: 5802
-      h14: 4990
+      s0: 22060
+      s1: 21260
+      s2: 20460
+      s3: 19660
+      s4: 18860
+      s5: 18060
+      h0: 15850
+      h1: 15028
+      h2: 14206
+      h3: 13384
+      h4: 12562
+      h5: 11740
+      h6: 10918
+      h7: 10095
+      h8: 9273
+      h9: 8451
+      h10: 7629
+      h11: 6807
+      h12: 5985
+      h13: 5163
+      h14: 4340
+      h15: 16340
     stepWaitTime: 0.00044
   Actuator:
     type: FS5103RContinuousMotor
@@ -66,12 +67,12 @@ devices:
     actuator: Actuator
     magnet: Magnet
     initialState:
-      s0: 
-      s1: 
-      s2: 
-      s3: 
-      s4: 
-      s5: 
+      s0: ""
+      s1: ""
+      s2: ""
+      s3: ""
+      s4: ""
+      s5: ""
       h0: A14
       h1: A13
       h2: A12
@@ -128,7 +129,7 @@ devices:
     password: "5tgb567ujnb"
     outlets:
       - 3
-      - 6
+      - 4
     outletMap:
       PowerSupply: 3
-      ST160: 6
+      ST160: 4

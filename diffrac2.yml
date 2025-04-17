@@ -34,18 +34,18 @@ devices:
     delay: 0.001
     refPoints:
       MultiOpen: 0
-      FarClose: 800
-      WideThin: 1700
-      ThreeTwo: 2600
-      TwoSlit: 4000
-      ThreeSlit: 5000
-      FourSlit: 5900
-      FiveSlit: 6800
-      A04D25: 8200
-      A04D50: 9100
-      A08D25: 10000
-      A08D50: 10900
-      VarySpacing: 12300
+      FarClose: 900
+      WideThin: 1800
+      ThreeTwo: 2700
+      TwoSlit: 3900
+      ThreeSlit: 4800
+      FourSlit: 5700
+      FiveSlit: 6600
+      A04D25: 8000
+      A04D50: 8900
+      A08D25: 9900
+      A08D50: 10800
+      VarySpacing: 12400
   SingleSlits:
     type: StepperI2C
     terminal: 2
@@ -56,13 +56,13 @@ devices:
     delay: 0.001
     refPoints:
       SingleOpen: 0
-      LineSlit: 900
-      LittleHole: 1800
+      LineSlit: 1100
+      LittleHole: 2000
       BigHole: 2850
-      A02: 4250
-      A04: 5200
-      A08: 6150
-      A16: 6950
+      A02: 4000
+      A04: 4950
+      A08: 5850
+      A16: 6750
       VaryWidth: 8400
       Square: 12400
       Hex: 13300
@@ -70,7 +70,7 @@ devices:
       Holes: 15200
   Stage:
     type: StepperI2C
-    terminal: 3
+    terminal: 4
     bounds:
       - -9750
       - 0
@@ -82,8 +82,8 @@ devices:
     userid: "admin"
     password: "5tgb567ujnb"
     outlets:
-      - 1
-      - 2
+      - 5
+      - 6
     outletMap:
-      Laser: 1
-      Screen: 2
+      Laser: 5
+      Screen: 6
