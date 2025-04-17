@@ -33,25 +33,25 @@ devices:
     style: SINGLE
   Electrometer:
     type: Keithley6514Electrometer
-    usbAddress: 1
+    usbAddress: 0
   Multimeter:
     type: Keithley2000Multimeter
-    usbAddress: 0
+    usbAddress: 1
   PEpdu:
     type: PDUOutlet
     hostname: "pepdu.inst.physics.ucsb.edu"
     userid: "admin"
     password: "5tgb567ujnb"
     outlets:
-      - 5
-      - 6
-      - 7
-      - 8
+      - 1
+      - 2
+      - 3
+      - 4
     outletMap:
-      Electrometer: 5
-      Multimeter: 6
-      HgNeLamp: 7
-      Ambient: 8
+      Electrometer: 1
+      Multimeter: 2
+      HgNeLamp: 3
+      Ambient: 4
 locks:
   pdu:
     - PEpdu
