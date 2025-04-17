@@ -56,7 +56,7 @@ locks:
   pdu:
     - PEpdu
   pot:
-    - Potentiometer
+    - Pot
   colorwheel:
     - colorWheel
   densityWheel:
