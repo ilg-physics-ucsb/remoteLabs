@@ -1,5 +1,5 @@
 devices:
-  Potentiometer:
+  Pot:
     type: StepperI2C
     terminal: 2
     delay: 0.02
