@@ -1,0 +1,67 @@
+devices:
+  Potentiometer:
+    type: StepperI2C
+    terminal: 2
+    delay: 0.02
+    style: SINGLE
+    bounds:
+      - 0
+      - 2100
+  colorWheel:
+    type: FilterStepperI2C
+    terminal: 3
+    delay: 0.02
+    refPoints:
+      0deg: 0
+      60deg: -270
+      120deg: -540
+      180deg: -810
+      240deg: -1080
+      300deg: -1350
+    style: SINGLE
+  densityWheel:
+    type: FilterStepperI2C
+    terminal: 1
+    delay: 0.02
+    refPoints:
+      0deg: 0
+      60deg: -270
+      120deg: -540
+      180deg: -810
+      240deg: -1080
+      300deg: -1350
+    style: SINGLE
+  Electrometer:
+    type: Keithley6514Electrometer
+    usbAddress: 0
+  Multimeter:
+    type: Keithley2000Multimeter
+    usbAddress: 1
+  PEpdu:
+    type: PDUOutlet
+    hostname: "pepdu.inst.physics.ucsb.edu"
+    userid: "admin"
+    password: "5tgb567ujnb"
+    outlets:
+      - 1
+      - 2
+      - 3
+      - 4
+    outletMap:
+      Electrometer: 1
+      Multimeter: 2
+      HgNeLamp: 3
+      Ambient: 4
+locks:
+  pdu:
+    - PEpdu
+  pot:
+    - Potentiometer
+  colorwheel:
+    - colorWheel
+  densityWheel:
+    - densityWheel
+  mulimeter:
+    - Multimeter
+  electrometer:
+    - Electrometer
