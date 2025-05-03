@@ -1,5 +1,5 @@
-<!-- DIFFRACTION & INTERFERENCE EXPERIMENT CONTROL PAGE -->
 <!DOCTYPE html>
+<!-- DIFFRACTION & INTERFERENCE EXPERIMENT CONTROL PAGE -->
 <html lang="en">
 
 <head>
@@ -53,7 +53,8 @@
 <!--  <script src="static/js/signalling.js"></script>-->
   <script src="static/js/remlaSocket.js"></script>
   <script src="static/js/main.js"></script>
- 
+  <script src="static/js/reader.js"></script>
+  <script src="static/js/mediaMTXGetFeed.js"></script>
 
   <!-- Start your project here--> 
   <div class="pagecontainer w-row">
@@ -193,12 +194,14 @@
           <br>Farthest</br>
         </div>
         
-        <div class="video w-video w-embed" id='embeded'>
+        <div class="video w-video w-embed" id="embeded">
               <div id="wrapper_v" height=100>
                 <img id="imgCrossHairs" src="static/images/crosshairs.png" width=100% alt="" srcset="">
 <!--                <video id='v' data-playing="false" autoplay="" muted></video>-->
+                            <video id="video" autoplay></video>
+                            <div id="message"><div>
                 <iframe id="videoFrame" frameborder="0"></iframe>
-                <canvas id='chcv' width='100%'></canvas>
+                                <canvas id='chcv'width="100%"></canvas>
             
               </div>
               <div style="clear: both;"></div>
