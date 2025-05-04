@@ -1,4 +1,3 @@
-
 // This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
 function connectStream(stream, videoElement) {
     if (videoElement) {
@@ -77,6 +76,25 @@ function controllerResponseHandler(cmd) {
 
 
 }
+
+// Resizing - TODO
+// const resizeTool = document.getElementById("resize-tool");
+// resizeTool.addEventListener('mousedown', mousedown);
+
+// function mousedown(e) {
+//     window.addEventListener('mousemove', mousemove);
+//     window.addEventListener('mouseup', mouseup); // release mouse
+
+//     function mousemove(e) {
+
+//     }
+
+//     function mouseup() {
+
+//     }
+    
+// }
+
 
 var extremaModal, contactModal, bootModal
 
@@ -264,21 +282,26 @@ window.addEventListener('DOMContentLoaded', function () {
     //         ambientState=true;
     //                  }
     // })
+    // console.log(lightSwitch);
     ambientTOGGLE.addEventListener('click', function(){
         console.log("Ambient light was switched");
         if(ambientState){
             // dataChannel.send("ambientLight/state/OFF");
+            console.log("Toggled off.");
+            lightSwitch.src = 'static/imgs/figma-components/lightSwitchOFF.png'
             dataChannel.send("PEpdu/off/Ambient")
             ambientState=false;
             ambientTOGGLE.title="Click here to turn ON";
-            lightSwitch.style.transform='rotate(0deg)';
-                     }
-        else{
+            // lightSwitch.style.transform='rotate(0deg)';
+        }
+        else {
             // dataChannel.send("ambientLight/state/ON");
+            console.log("Toggled on.");
+            lightSwitch.src = 'static/imgs/figma-components/lightSwitchON.png'
             dataChannel.send("PEpdu/on/Ambient");
             ambientState=true;
             ambientTOGGLE.title="Click here to turn OFF";
-            lightSwitch.style.transform='rotate(180deg)';
+            // lightSwitch.style.transform='rotate(180deg)';
         }
     })
     HgNeTOGGLE.addEventListener('click', function(){
