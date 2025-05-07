@@ -55,7 +55,7 @@
       style="display: flex; flex-direction: column; gap: 12; align-items: end;"
       >
         <p style="color: white; font-weight:bold">TURN ON AMBIENT LIGHT</p>
-        <figure class="ambient-light" style="position: relative; display: inline-block;">
+        <!-- <figure class="ambient-light" style="position: relative; display: inline-block;">
           <img 
           id="lightSwitch" 
           src="static/imgs/figma-components/lightSwitchOFF.png" 
@@ -63,14 +63,6 @@
           usemap="#image-map-ls" 
           style="cursor: pointer;"
           >
-          <!-- <map name="image-map-ls">
-            <area 
-            id="ambientTOGGLE" 
-            title="Click here to turn ON" 
-            coords="50,68,78,92" 
-            shape="rect"
-            >
-          </map>          -->
           <div id="ambientTOGGLE"
             title="Click here to turn ON"
             style="
@@ -84,7 +76,14 @@
               /* background-color: rgba(255, 0, 0, 0.2); */
             ">
           </div>
-        </figure>
+        </figure> -->
+        <label class="switch">
+          <input id="ambientTOGGLE" type="checkbox">
+          <span class="slider round">
+            <!-- <span id="off" class="slider-label off">OFF</span>
+            <span id="on" class="slider-label on"></span> -->
+          </span>
+        </label>
       </div>
     </header>
 

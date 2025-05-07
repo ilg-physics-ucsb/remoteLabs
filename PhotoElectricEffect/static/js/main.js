@@ -78,22 +78,22 @@ function controllerResponseHandler(cmd) {
 }
 
 // Resizing - TODO
-const resizeTool = document.getElementById("resize-tool");
-resizeTool.addEventListener('mousedown', mousedown);
+// const resizeTool = document.getElementById("resize-tool");
+// resizeTool.addEventListener('mousedown', mousedown);
 
-function mousedown(e) {
-    window.addEventListener('mousemove', mousemove);
-    window.addEventListener('mouseup', mouseup); // release mouse
+// function mousedown(e) {
+//     window.addEventListener('mousemove', mousemove);
+//     window.addEventListener('mouseup', mouseup); // release mouse
 
-    function mousemove(e) {
+//     function mousemove(e) {
 
-    }
+//     }
 
-    function mouseup() {
+//     function mouseup() {
 
-    }
+//     }
     
-}
+// }
 
 
 var extremaModal, contactModal, bootModal
@@ -238,7 +238,9 @@ window.addEventListener('DOMContentLoaded', function () {
     // var ambientOFF = document.getElementById('ambientOFF');
     // var ambientON = document.getElementById('ambientON');
     var ambientTOGGLE = document.getElementById('ambientTOGGLE');
-    ambientTOGGLE.style.transform='scaleY(1)';
+    // var onText = document.getElementById('on');
+    // var offText = document.getElementById('off');
+    // ambientTOGGLE.style.transform='scaleY(1)';
     var ambientState = false;
 
     //for Potentiometer
@@ -249,55 +251,25 @@ window.addEventListener('DOMContentLoaded', function () {
     var threeSixtyDegree = document.getElementById('360_degree');
     var potSteps=200;
   
-    //BEGIN Light Switches 
-    // HgNeOFF.addEventListener('click', function(){
-    //     console.log("HgNe lamp switch was switched OFF");
-    //     if(HgNeState){
-    //         toggleSwitch.style.transform='scaleY(-1)';
-    //         dataChannel.send("HgNeLamp/state/OFF");
-    //         HgNeState=false;
-    //                  }
-    // })
-    // HgNeON.addEventListener('click', function(){
-    //     console.log("HgNe lamp switch was switched ON");
-    //     if(!HgNeState){
-    //         toggleSwitch.style.transform='scaleY(1)';
-    //         dataChannel.send("HgNeLamp/state/ON");
-    //         HgNeState=true;
-    //                  }
-    // })
-    // ambientOFF.addEventListener('click', function(){
-    //     console.log("Ambient light was switched OFF");
-    //     if(ambientState){
-    //         lightSwitch.style.transform='rotate(0deg)';
-    //         dataChannel.send("ambientLight/state/OFF");
-    //         ambientState=false;
-    //                  }
-    // })
-    // ambientON.addEventListener('click', function(){
-    //     console.log("Ambient light was switched ON");
-    //     if(!ambientState){
-    //         lightSwitch.style.transform='rotate(180deg)';
-    //         dataChannel.send("ambientLight/state/ON");
-    //         ambientState=true;
-    //                  }
-    // })
-    // console.log(lightSwitch);
     ambientTOGGLE.addEventListener('click', function(){
         console.log("Ambient light was switched");
-        if(ambientState){
+        if(ambientState){ // OFF
             // dataChannel.send("ambientLight/state/OFF");
             console.log("Toggled off.");
-            lightSwitch.src = 'static/imgs/figma-components/lightSwitchOFF.png'
+            // onText.innerHTML = '';
+            // offText.innerHTML = 'OFF';
+            // lightSwitch.src = 'static/imgs/figma-components/lightSwitchOFF.png'
             dataChannel.send("PEpdu/off/Ambient")
             ambientState=false;
             ambientTOGGLE.title="Click here to turn ON";
             // lightSwitch.style.transform='rotate(0deg)';
         }
-        else {
+        else { // ON
             // dataChannel.send("ambientLight/state/ON");
             console.log("Toggled on.");
-            lightSwitch.src = 'static/imgs/figma-components/lightSwitchON.png'
+            // offText.innerHTML = '';
+            // onText.innerHTML = 'ON';
+            // lightSwitch.src = 'static/imgs/figma-components/lightSwitchON.png'
             dataChannel.send("PEpdu/on/Ambient");
             ambientState=true;
             ambientTOGGLE.title="Click here to turn OFF";
