@@ -73,38 +73,6 @@ function controllerResponseHandler(cmd) {
             }
         }
     }
-
-
-}
-
-// Resizing - TODO
-const resizeTool = document.getElementById("resize-tool");
-resizeTool.addEventListener('mousedown', mousedown);
-resizeTool.addEventListener('click', () => {
-    console.log("Clicked on resizing tool");
-})
-
-function mousedown(e) {
-    window.addEventListener('mousemove', mousemove);
-    window.addEventListener('mouseup', mouseup); // release mouse
-
-    let prevX = e.clientX;
-
-    function mousemove(e) {
-        let newX = prevX - e.clientX;
-
-        const rect = resizeTool.getBoundingClientRect();
-
-        resizeTool.style.left = rect.left - newX + "px";
-
-        prevX = e.clientX;
-    }
-
-    function mouseup() {
-        window.removeEventListener('mousemove', mousemove);
-        window.removeEventListener('mouseup', mouseup);
-    }
-    
 }
 
 
@@ -237,6 +205,41 @@ window.addEventListener('DOMContentLoaded', function () {
             display = document.querySelector('#time');
         startTimer(threeHours, display);
     }
+
+
+    // Resizing - TODO
+    const resizeTool = document.getElementById("splitter-resizer");
+    const livestreamContainer = document.querySelector(".livestream-resizable");
+    const toolContainer = document.querySelector(".tool-resizable");
+    const container = document.querySelector('.livestream-and-tool-section');
+
+    
+    if (!container) {
+        console.error("Container element not found!");
+        return; // exit early
+    }
+    let isResizing = false;
+
+    resizeTool.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        document.body.style.cursor = 'ew-resize';
+    })
+
+    document.addEventListener('mousemove', function(e) {
+        if (!isResizing) return;
+
+        const containerOffsetLeft = container.offsetLeft;
+        const newLeftWidth = e.clientX - containerOffsetLeft;
+
+        livestreamContainer.style.width = `${newLeftWidth}px`;
+        toolContainer.style.width = `calc(100% - ${newLeftWidth + 3}px)`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isResizing = false;
+        document.body.style.cursor = "default";
+    })
+
 
     //for HgNe Lamp
     // var HgNeOFF = document.getElementById('HgNeLampOFF');

@@ -54,27 +54,33 @@ header {
 
 .livestream-and-tool-section {
     margin: 15px;
-    display: grid;
-    grid-template-columns: 2.5fr 1fr;
-    gap: 12px;
+    display: flex;
+    align-items: center;
+    height: 65vh;
+    /* grid-template-columns: 2.5fr 1fr; */
+    gap: 6px;
 }
 
-.livestream {
+.livestream-resizable {
     background-color: var(--secondary);
     border-radius: 10px;
     display: flex;
-    flex-direction: row;
     padding: 10px;
     align-items: center;
+    max-width: 66%;
+    width: 66%;
+    height: 100%;
 }
 
-.tool {
+.tool-resizable {
     background-color: var(--secondary);
     border-radius: 10px;
     display: flex;
-    flex-direction: row;
     padding: 10px;
     align-items: center;
+    width: 33%;
+    height: 100%;
+    min-width: 33%;
 }
 
 
