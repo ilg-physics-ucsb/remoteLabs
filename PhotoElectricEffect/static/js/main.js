@@ -78,22 +78,34 @@ function controllerResponseHandler(cmd) {
 }
 
 // Resizing - TODO
-// const resizeTool = document.getElementById("resize-tool");
-// resizeTool.addEventListener('mousedown', mousedown);
+const resizeTool = document.getElementById("resize-tool");
+resizeTool.addEventListener('mousedown', mousedown);
+resizeTool.addEventListener('click', () => {
+    console.log("Clicked on resizing tool");
+})
 
-// function mousedown(e) {
-//     window.addEventListener('mousemove', mousemove);
-//     window.addEventListener('mouseup', mouseup); // release mouse
+function mousedown(e) {
+    window.addEventListener('mousemove', mousemove);
+    window.addEventListener('mouseup', mouseup); // release mouse
 
-//     function mousemove(e) {
+    let prevX = e.clientX;
 
-//     }
+    function mousemove(e) {
+        let newX = prevX - e.clientX;
 
-//     function mouseup() {
+        const rect = resizeTool.getBoundingClientRect();
 
-//     }
+        resizeTool.style.left = rect.left - newX + "px";
+
+        prevX = e.clientX;
+    }
+
+    function mouseup() {
+        window.removeEventListener('mousemove', mousemove);
+        window.removeEventListener('mouseup', mouseup);
+    }
     
-// }
+}
 
 
 var extremaModal, contactModal, bootModal

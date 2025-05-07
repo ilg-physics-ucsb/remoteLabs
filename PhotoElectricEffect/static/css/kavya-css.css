@@ -130,8 +130,7 @@ h2 {
 }
 
 
-
-/* Ambient toggle button */
+/* AMBIENT TOGGLE BUTTON */
 /* The switch - the box around the slider */
 .switch {
     position: relative;
@@ -194,7 +193,7 @@ h2 {
     border-radius: 50%;
   }
 
-  .slider-label.off {
+  /* .slider-label.off {
     right: 10px;
     opacity: 1;
     transition: 0.3s;
@@ -206,4 +205,4 @@ h2 {
     opacity: 1;
     transition: 0.3s;
     z-index: 2;
-  }
+  } */
