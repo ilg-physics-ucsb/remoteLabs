@@ -95,7 +95,6 @@
               <video id="video" autoplay></video>
               <div id="message"></div>
           </div>
-          <!-- <img class="resize-tool" src="static/imgs/figma-components/resizingTool.png" width="7" height="27"/> -->
         </div>
 
         <div id="splitter-resizer"
@@ -109,160 +108,149 @@
         ></div>
 
         <div class="tool-resizable">
-          <!-- <img class="resize-tool" src="static/imgs/figma-components/resizingTool.png" width="7" height="27"/> -->
-          <div class="tool-info"></div>
+          <div class="tool-info">
+            <p id="close" style="color: white; cursor: pointer;"></p>
+            <p 
+            style="font-weight: 400; color: white; font-size: 24px;" 
+            id="click-on-tool-message">Click on a tool below!</p>
+          </div>
         </div>
       </div>
-
-        <!-- COMMENTED STARTED HERE -->
-
-        <div id="SideImagesLeft" class="column w-col w-col-2">
-          <figure class="Icon">
-            (click to toggle the Hg-Ne lamp)<br>
-            <img id="toggleSwitch" src="static/imgs/toggleSwitch.png" usemap="#image-map-ts">
-            <map name="image-map-ts">
-                <area id="HgNeTOGGLE" title="Click here to turn ON" coords="72,45,128,95" shape="rect">
-            </map> 
-            <br>       
-          </figure>
-          <figure class="Photo">
-              <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
-              <a target="_blank" href="static/docs/PenRayGasLamps.pdf">
-                <div class = "outer1">
-                  <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
-                </div>
-                </a><br>
-              <a target="_blank" href="static/docs/Hg-NeEmission.jpg">
-                <div class = "outer">
-                  <img id="Spectrum" class="image" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
-                </div>
-              </a><br><br><br>
-          </figure>        
-          <figure class="Photo">
-              <strong>Filters: Edumund Optics&#174; Bandpass Interference Filters</strong> <br> 
-              <a target="_blank" href="static/docs/curv_f365.pdf">
-                  <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
-              </a>
-              <a target="_blank" href="static/docs/curv_f436.pdf">
-                  <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
-              </a>
-              <a target="_blank" href="static/docs/curv_f546.pdf">
-                  <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
-              </a>
-              <a target="_blank" href="static/docs/curv_f577.pdf">
-                  <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
-              </a><br>
-              (click each for its transmission curve)
-          </figure>
-          <figure class="Device embed wheel">
-              <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw">
-              <map name="image-map-cfw">
-                <area id="f365" href="#" title="365 nm" coords="321,110,108" shape="circle">
-                <area id="f436" href="#" title="436 nm" coords="536,232,106" shape="circle">
-                <area id="f546" href="#" title="546 nm" coords="539,481,107" shape="circle">
-                <area id="f577" href="#" title="577 nm" coords="325,600,111" shape="circle">
-              </map>   
-              <br>
-              (click on a filter to rotate it into position)
-          </figure>
-        </div>   
-        
-        <!-- COMMENTED ENDED HERE -->
-
-        <!-- <div id="VideoCenter" class="column w-col w-col-8"> -->
-          <!-- <div class="Warning">
-            This session will end and the motors will reset in 
-            <span id="time" style="color:red;font-weight:bold">3:00:00</span>
-            hours.
-          </div> -->
-              <!-- <div class="video w-video w-embed"> -->
-                  <!-- <video id="video" autoplay></video> -->
-                  <!-- <div id="message"></div> -->
-              <!-- </div> -->
-
-          <!-- <img id="webcam" src="" alt="" srcset=""> -->
-          <!-- <img src="http://192.168.0.2:8082/stream/video.mjpeg" alt="" srcset=""> -->
-        <!-- </div>   -->
-        <div id="SideImagesRight" class="column w-col w-col-2">
-          <!-- <figure class="Icon">
-            (click to toggle the ambient light)<br>
-            <img id="lightSwitch" src="static/imgs/lightSwitch.png" usemap="#image-map-ls">
-            <map name="image-map-ls">
-              <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
-            </map>
-            <br> 
-            <br> 
-            <br>           
-          </figure> -->
-          <div id="radioButtonsPot" class="w-row">
-            <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
-            <div class="column w-col w-col-1" style="margin-bottom: 0px;">
-              <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
-              <label for="3.6_degree">3.6&#176;</label>
-            </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-              <input type="radio" id="36_degree" name="angleStep" value="36">
-              <label for="36_degree">36&#176;</label>
-            </div>
-            <div class="column w-col w-col-1" style="margin-bottom: 0px;">
-              <input type="radio" id="360_degree" name="angleStep" value="360" checked>
-              <label for="360_degree">360&#176;</label>
-            </div>
-            <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
-          </div>  
-          <div id="potentiometerKnob" style="width: 100%; height: 100%">
-            <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
-            <map name="image-map-knob">
-              <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
-              <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
-            </map>
-            <br>
-            (click on the arrows to rotate the potentiometer)
-          </div>
-          <br>
-          <figure class="Photo">
-            <strong>Filters: ThorLabs&#174; Absorptive Neutral Density Filters</strong> <br> 
-            <a target="_blank" href="static/docs/curv_03.gif">
-              <img id="0.3" title="ND 0.3" class ="ND_img" alt="ND Transmission" src="static/imgs/ND0.3.png">
-            </a>
-            <a target="_blank" href="static/docs/curv_03.gif">
-              <img id="0.5" title="ND 0.5" class ="ND_img" alt="ND Transmission" src="static/imgs/ND0.5.png">
-            </a>
-            <a target="_blank" href="static/docs/curv_1.gif">
-              <img id="1" title="ND 1"class ="ND_img" alt="ND Transmission" src="static/imgs/ND1.png">
-            </a>
-            <a target="_blank" href="static/docs/curv_1.gif">
-              <img id="2" title="ND 2" class ="ND_img" alt="ND Transmission" src="static/imgs/ND2.png">
-            </a>
-            <a target="_blank" href="static/docs/curv_4.gif">
-              <img id="4" title="ND 4" class ="ND_img" alt="ND Transmission" src="static/imgs/ND4.png">
-            </a>
-            <br>
-            (click each for its transmission curve)
-          </figure>
-          <figure class="Device embed wheel">
-            <center><img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw"></center>
-            <map name="image-map-dfw">
-              <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
-              <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
-              <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
-              <area id="nd10" href="#" title="ND 1.0" coords="315,555,68"  shape="circle">
-              <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
-              <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
-            </map>
-            <br>
-            (click on a filter to rotate it into position)   
-          </figure>
-        </div>
     </div>
 
-    <div class="tools-section">
-      <img src="static/imgs/transparent-imgs/penray-lamp.png" width="172" height="26"/>
-      <img src="static/imgs/FilterWheelScaled.png" width="84"/>
-      <img src="static/imgs/densityFilterWheelScaledCropped.png" width="84"/>
-      <img src="static/imgs/Keithley6514Electrometer.jpg" width="224"/>
-      <img src="static/imgs/Keithley2000Multimeter.jpg" width="224"/>
-      <img src="static/imgs/knob.png" width="72"/>
+    <div style="margin: 15px;">
+      <div class="tools-section">
+        <img id="hg-ne-lamp" style="padding: 3px 5px;" class="tool-item" src="static/imgs/transparent-imgs/penray-lamp.png" width="172" height="26"/>
+        <img id="filter-wheel" style="padding: 5px;" class="tool-item" src="static/imgs/FilterWheelScaled.png" width="84"/>
+        <img id="density-filter-wheel" style="padding: 5px;" class="tool-item" src="static/imgs/densityFilterWheelScaledCropped.png" width="84"/>
+        <img id="electrometer" style="padding: 10px;" class="tool-item" src="static/imgs/Keithley6514Electrometer.jpg" width="224"/>
+        <img id="multimeter" style="padding: 10px;" class="tool-item" src="static/imgs/Keithley2000Multimeter.jpg" width="224"/>
+        <img id="knob" style="padding: 5px;" class="tool-item" src="static/imgs/knob.png" width="72"/>
+      </div>
+    </div>
+
+    <div id="SideImagesLeft" class="column w-col w-col-2">
+      <figure class="Icon">
+        (click to toggle the Hg-Ne lamp)<br>
+        <img id="toggleSwitch" src="static/imgs/toggleSwitch.png" usemap="#image-map-ts">
+        <map name="image-map-ts">
+            <area id="HgNeTOGGLE" title="Click here to turn ON" coords="72,45,128,95" shape="rect">
+        </map> 
+        <br>       
+      </figure>
+      <figure class="Photo">
+          <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
+          <a target="_blank" href="static/docs/PenRayGasLamps.pdf">
+            <div class = "outer1">
+              <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
+            </div>
+            </a><br>
+          <a target="_blank" href="static/docs/Hg-NeEmission.jpg">
+            <div class = "outer">
+              <img id="Spectrum" class="image" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
+            </div>
+          </a><br><br><br>
+      </figure>        
+      <figure class="Photo">
+          <strong>Filters: Edumund Optics&#174; Bandpass Interference Filters</strong> <br> 
+          <a target="_blank" href="static/docs/curv_f365.pdf">
+              <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f436.pdf">
+              <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f546.pdf">
+              <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f577.pdf">
+              <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
+          </a><br>
+          (click each for its transmission curve)
+      </figure>
+      <figure class="Device embed wheel">
+          <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw">
+          <map name="image-map-cfw">
+            <area id="f365" href="#" title="365 nm" coords="321,110,108" shape="circle">
+            <area id="f436" href="#" title="436 nm" coords="536,232,106" shape="circle">
+            <area id="f546" href="#" title="546 nm" coords="539,481,107" shape="circle">
+            <area id="f577" href="#" title="577 nm" coords="325,600,111" shape="circle">
+          </map>   
+          <br>
+          (click on a filter to rotate it into position)
+      </figure>
+    </div>   
+
+
+    <div id="SideImagesRight" class="column w-col w-col-2">
+      <!-- <figure class="Icon">
+        (click to toggle the ambient light)<br>
+        <img id="lightSwitch" src="static/imgs/lightSwitch.png" usemap="#image-map-ls">
+        <map name="image-map-ls">
+          <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
+        </map>
+        <br> 
+        <br> 
+        <br>           
+      </figure> -->
+      <div id="radioButtonsPot" class="w-row">
+        <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
+        <div class="column w-col w-col-1" style="margin-bottom: 0px;">
+          <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
+          <label for="3.6_degree">3.6&#176;</label>
+        </div>  <!-- &nbsp;&nbsp;&nbsp; -->
+        <div class="column w-col w-col-4" style="margin-bottom: 0px;">
+          <input type="radio" id="36_degree" name="angleStep" value="36">
+          <label for="36_degree">36&#176;</label>
+        </div>
+        <div class="column w-col w-col-1" style="margin-bottom: 0px;">
+          <input type="radio" id="360_degree" name="angleStep" value="360" checked>
+          <label for="360_degree">360&#176;</label>
+        </div>
+        <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
+      </div>  
+      <div id="potentiometerKnob" style="width: 100%; height: 100%">
+        <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
+        <map name="image-map-knob">
+          <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
+          <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
+        </map>
+        <br>
+        (click on the arrows to rotate the potentiometer)
+      </div>
+      <br>
+      <figure class="Photo">
+        <strong>Filters: ThorLabs&#174; Absorptive Neutral Density Filters</strong> <br> 
+        <a target="_blank" href="static/docs/curv_03.gif">
+          <img id="0.3" title="ND 0.3" class ="ND_img" alt="ND Transmission" src="static/imgs/ND0.3.png">
+        </a>
+        <a target="_blank" href="static/docs/curv_03.gif">
+          <img id="0.5" title="ND 0.5" class ="ND_img" alt="ND Transmission" src="static/imgs/ND0.5.png">
+        </a>
+        <a target="_blank" href="static/docs/curv_1.gif">
+          <img id="1" title="ND 1"class ="ND_img" alt="ND Transmission" src="static/imgs/ND1.png">
+        </a>
+        <a target="_blank" href="static/docs/curv_1.gif">
+          <img id="2" title="ND 2" class ="ND_img" alt="ND Transmission" src="static/imgs/ND2.png">
+        </a>
+        <a target="_blank" href="static/docs/curv_4.gif">
+          <img id="4" title="ND 4" class ="ND_img" alt="ND Transmission" src="static/imgs/ND4.png">
+        </a>
+        <br>
+        (click each for its transmission curve)
+      </figure>
+      <figure class="Device embed wheel">
+        <center><img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw"></center>
+        <map name="image-map-dfw">
+          <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
+          <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
+          <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
+          <area id="nd10" href="#" title="ND 1.0" coords="315,555,68"  shape="circle">
+          <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
+          <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
+        </map>
+        <br>
+        (click on a filter to rotate it into position)   
+      </figure>
     </div>
     
     <div id="PageBottom" class="w-row">

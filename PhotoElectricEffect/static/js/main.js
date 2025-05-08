@@ -213,11 +213,56 @@ window.addEventListener('DOMContentLoaded', function () {
     const toolContainer = document.querySelector(".tool-resizable");
     const container = document.querySelector('.livestream-and-tool-section');
 
-    
-    if (!container) {
-        console.error("Container element not found!");
-        return; // exit early
+    // TOOL RENDERING
+
+    let toolClicked = false;
+    const message = document.getElementById("click-on-tool-message");
+    const close = document.getElementById("close");
+
+    const tools = document.getElementsByClassName('tool-item');
+
+    Array.from(tools).forEach(tool => {
+        tool.addEventListener('click', () => {
+            toolClicked = true;
+            document.querySelector('.background')?.classList.remove('background');
+            tool.classList.add('background');
+            updateUI();
+        })
+    })
+
+    close.addEventListener('click', () => {
+        toolClicked = false;
+        updateUI();
+    })
+
+    // Function gets called AFTER event changes state.
+    function updateUI() {
+        if (toolClicked) {
+            toolContainer.style.backgroundColor = "#404040";
+
+            resizeTool.style.display = 'block';
+
+            message.style.display= 'none';
+
+            close.style.display = 'block';
+            close.innerHTML = '&times;'
+        } else {
+            toolContainer.style.background = 'none';
+            
+            document.querySelector('.background')?.classList.remove('background');
+
+            resizeTool.style.display = 'none';
+
+            message.style.display = 'block';
+            message.innerHTML= 'Click on a tool below!';
+
+            close.style.display = 'none';
+        }
     }
+
+
+    //
+
     let isResizing = false;
 
     resizeTool.addEventListener('mousedown', (e) => {
@@ -239,6 +284,8 @@ window.addEventListener('DOMContentLoaded', function () {
         isResizing = false;
         document.body.style.cursor = "default";
     })
+
+
 
 
     //for HgNe Lamp

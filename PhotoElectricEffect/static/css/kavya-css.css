@@ -67,13 +67,13 @@ header {
     display: flex;
     padding: 10px;
     align-items: center;
-    max-width: 66%;
+    min-width: 50%;
     width: 66%;
     height: 100%;
 }
 
 .tool-resizable {
-    background-color: var(--secondary);
+    /* background-color: var(--secondary); */
     border-radius: 10px;
     display: flex;
     padding: 10px;
@@ -90,15 +90,31 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 15px 50px;
+    padding: 5px 50px;
     gap: 16px;
-    /* grid-template-columns: 1fr 2.5fr 1fr; */
     align-items: center;
     margin: 15px;
     border-radius: 10px;
     box-sizing: border-box;
 }
 
+.tool-item {
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.tool-item:hover {
+  background-color: #375C3E;
+  box-shadow: 0px 4px 4px rgb(0, 0, 0, 0.15);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.background {
+  background-color: var(--accent);
+  transition: none !important;
+  box-shadow: none !important;
+}
 
 /* TEXT STYLES */
 
@@ -130,7 +146,7 @@ h2 {
     background-color: #828282;
 }
 
-.manuals:active {
+.manuals:focus {
     background-color: #828282;
     border: none;
 }
