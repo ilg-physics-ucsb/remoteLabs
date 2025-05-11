@@ -208,7 +208,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
     // Resizing - TODO
-    const resizeTool = document.getElementById("splitter-resizer");
+    // const resizeTool = document.getElementById("splitter-resizer");
     const livestreamContainer = document.querySelector(".livestream-resizable");
     const toolContainer = document.querySelector(".tool-resizable");
     const container = document.querySelector('.livestream-and-tool-section');
@@ -235,55 +235,83 @@ window.addEventListener('DOMContentLoaded', function () {
         updateUI();
     })
 
+    let resizeTool = null;
+
+    // const resizeElement = document.createElement('div');
+    resizeElement.innerHTML = `<div id="splitter-resizer"
+                style="
+                border-left: 6px solid #969696; 
+                height: 70px; 
+                width: 3px;
+                border-radius: 3px;
+                cursor: ew-resize;
+                "></div>`;
+
     // Function gets called AFTER event changes state.
     function updateUI() {
         if (toolClicked) {
             toolContainer.style.backgroundColor = "#404040";
+            message.style.display= 'none';
+            close.style.display = 'block';
+            close.innerHTML = '&times;'
+
+            // Add resize tool
+            if (!resizeTool) {
+                resizeTool = document.createElement('div');
+                resizeTool.id = 'splitter-resizer';
+                resizeTool.style.cssText = `
+                    border-left: 6px solid #969696;
+                    height: 70px;
+                    width: 3px;
+                    border-radius: 3px;
+                    cursor: ew-resize;
+                `;
+            }
+            container.insertBefore(resizeTool, toolContainer);
+            attachResizeListeners(resizeTool);
 
             resizeTool.style.display = 'block';
 
-            message.style.display= 'none';
 
-            close.style.display = 'block';
-            close.innerHTML = '&times;'
         } else {
             toolContainer.style.background = 'none';
-            
             document.querySelector('.background')?.classList.remove('background');
-
-            resizeTool.style.display = 'none';
-
             message.style.display = 'block';
             message.innerHTML= 'Click on a tool below!';
-
             close.style.display = 'none';
+
+            // Remove resize tool
+            if (resizeTool) {
+                resizeTool.style.display = 'none';
+            }
         }
     }
 
 
-    //
+    function attachResizeListeners(resizeTool) {
+        let isResizing = false;
 
-    let isResizing = false;
+        resizeTool.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.body.style.cursor = 'ew-resize';
+        })
 
-    resizeTool.addEventListener('mousedown', (e) => {
-        isResizing = true;
-        document.body.style.cursor = 'ew-resize';
-    })
+        document.addEventListener('mousemove', function(e) {
+            if (!isResizing) return;
 
-    document.addEventListener('mousemove', function(e) {
-        if (!isResizing) return;
+            const containerOffsetLeft = container.offsetLeft;
+            const newLeftWidth = e.clientX - containerOffsetLeft;
 
-        const containerOffsetLeft = container.offsetLeft;
-        const newLeftWidth = e.clientX - containerOffsetLeft;
+            livestreamContainer.style.width = `${newLeftWidth}px`;
+            toolContainer.style.width = `calc(100% - ${newLeftWidth + 3}px)`;
+        });
 
-        livestreamContainer.style.width = `${newLeftWidth}px`;
-        toolContainer.style.width = `calc(100% - ${newLeftWidth + 3}px)`;
-    });
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+            document.body.style.cursor = "default";
+        })
+    }
 
-    document.addEventListener('mouseup', () => {
-        isResizing = false;
-        document.body.style.cursor = "default";
-    })
 
 
 
