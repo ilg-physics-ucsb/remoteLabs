@@ -226,7 +226,7 @@ window.addEventListener('DOMContentLoaded', function () {
             toolClicked = true;
             document.querySelector('.background')?.classList.remove('background');
             tool.classList.add('background');
-            updateUI();
+            updateUI(); // Called when the user clicks on a tool
         })
     })
 
@@ -246,6 +246,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 border-radius: 3px;
                 cursor: ew-resize;
                 "></div>`;
+
 
     // Function gets called AFTER event changes state.
     function updateUI() {
