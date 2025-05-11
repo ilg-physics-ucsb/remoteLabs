@@ -238,14 +238,14 @@ window.addEventListener('DOMContentLoaded', function () {
     let resizeTool = null;
 
     // const resizeElement = document.createElement('div');
-    resizeElement.innerHTML = `<div id="splitter-resizer"
-                style="
-                border-left: 6px solid #969696; 
-                height: 70px; 
-                width: 3px;
-                border-radius: 3px;
-                cursor: ew-resize;
-                "></div>`;
+    // resizeTool.innerHTML = `<div id="splitter-resizer"
+    //             style="
+    //             border-left: 6px solid #969696; 
+    //             height: 70px; 
+    //             width: 3px;
+    //             border-radius: 3px;
+    //             cursor: ew-resize;
+    //             "></div>`;
 
 
     // Function gets called AFTER event changes state.
