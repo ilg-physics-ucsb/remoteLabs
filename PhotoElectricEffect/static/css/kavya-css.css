@@ -283,6 +283,7 @@ input:checked + .slider:before {
   padding: 20px;
   transition: 0.5s;
   pointer-events: none;
+  z-index: 1000;
 }
 
 #sidebar.active {
@@ -304,19 +305,23 @@ input:checked + .slider:before {
 
 .link {
   text-align: center;
+  padding: 0;
   color: white;
+  width: 100%;
+  /* background-color: #212529; */
+}
+
+.link:hover {
+  color: rgb(218, 218, 218);
+  text-decoration: underline;
 }
 
 .sidebar-item {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  width: 100%;
+  justify-content: flex-start;
   align-items: center;
-  /* gap: 6px; */
+  gap: 12px;
   /* background-color: #0D8B28; */
-}
-
-ul li:hover a {
-  color: white;
-  text-decoration: underline;
 }
