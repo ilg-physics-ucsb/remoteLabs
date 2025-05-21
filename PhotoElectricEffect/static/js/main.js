@@ -206,6 +206,18 @@ window.addEventListener('DOMContentLoaded', function () {
         startTimer(threeHours, display);
     }
 
+    const manualsButton = document.getElementById('manuals');
+    const sidebar = this.document.getElementById('sidebar');
+    const closeSidebar = this.document.getElementById('sidebar-close');
+    manualsButton.addEventListener('click', () => {
+        sidebar.classList.add('active');
+    })
+
+    closeSidebar.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+    })
+
+
 
     // Resizing - TODO
     // const resizeTool = document.getElementById("splitter-resizer");
@@ -236,17 +248,6 @@ window.addEventListener('DOMContentLoaded', function () {
     })
 
     let resizeTool = null;
-
-    // const resizeElement = document.createElement('div');
-    // resizeTool.innerHTML = `<div id="splitter-resizer"
-    //             style="
-    //             border-left: 6px solid #969696; 
-    //             height: 70px; 
-    //             width: 3px;
-    //             border-radius: 3px;
-    //             cursor: ew-resize;
-    //             "></div>`;
-
 
     // Function gets called AFTER event changes state.
     function updateUI() {
@@ -312,9 +313,6 @@ window.addEventListener('DOMContentLoaded', function () {
             document.body.style.cursor = "default";
         })
     }
-
-
-
 
 
     //for HgNe Lamp
