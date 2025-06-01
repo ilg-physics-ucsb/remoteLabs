@@ -23,6 +23,7 @@
   <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/skeleton-3df96e.webflow.css" rel="stylesheet" type="text/css">
   <link href="static/css/ruler.css" rel="stylesheet" type="text/css">
+  <link href="static/css/remlaStyle.css" rel="stylesheet" type="text/css">
   
   <!-- Items below are from WebFlow, could make it easy to customize favicon and webclip icons -->
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
@@ -35,7 +36,7 @@
 
 
 
-  <script src="static/js/signalling.js"></script>
+  <!-- <script src="static/js/signalling.js"></script> -->
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
   <script type="text/javascript" src="static/js/popper.min.js"></script>
@@ -53,6 +54,9 @@
    <script src="static/js/ruler.js"></script>
 
   <script src="static/js/main.js"></script>
+  <script src="static/js/remlaSocket.js"></script>
+  <script defer type="text/javascript" src="static/js/reader.js"></script>
+  <script defer type="text/javascript" src="static/js/mediaMTXGetFeed.js"></script>
 
   <!-- Start your project here--> 
   <div class="pagecontainer w-row">
@@ -289,9 +293,11 @@
       margin-right: 10px;">
         <div class="video w-video w-embed" id="v_overlay">
             <div id="canvas-wrap">
-              <video id='v' data-playing="false" autoplay="" muted></video>
+              <!-- <video id='v' data-playing="false" autoplay="" muted></video> : changed to line below for MediaMTX-->
+              <video id="video" autoplay></video>
               <canvas id='canvas' ></canvas>
             </div>
+            <div id="message"></div>
         </div>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
