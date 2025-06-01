@@ -35,7 +35,7 @@
 
 
 
-  <script src="static/js/signalling.js"></script>
+  <!-- <script src="static/js/signalling.js"></script> -->
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
   <script type="text/javascript" src="static/js/popper.min.js"></script>
@@ -53,6 +53,9 @@
    <script src="static/js/ruler.js"></script>
 
   <script src="static/js/main.js"></script>
+  <script src="static/js/remlaSocket.js"></script>
+  <script defer type="text/javascript" src="static/js/reader.js"></script>
+  <script defer type="text/javascript" src="static/js/mediaMTXGetFeed.js"></script>
 
   <!-- Start your project here--> 
   <div class="pagecontainer w-row">
@@ -289,9 +292,11 @@
       margin-right: 10px;">
         <div class="video w-video w-embed" id="v_overlay">
             <div id="canvas-wrap">
-              <video id='v' data-playing="false" autoplay="" muted></video>
+              <!-- <video id='v' data-playing="false" autoplay="" muted></video> : changed to line below for MediaMTX-->
+              <video id="video" autoplay></video>
               <canvas id='canvas' ></canvas>
             </div>
+            <div id="message"></div>
         </div>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
