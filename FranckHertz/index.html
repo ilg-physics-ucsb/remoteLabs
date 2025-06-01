@@ -31,7 +31,6 @@
 
 </head>
 <body>
-  <script src="static/js/signalling.js"></script>
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
   <script type="text/javascript" src="static/js/popper.min.js"></script>
@@ -39,13 +38,15 @@
   <script src="static/js/webflow.js" type="text/javascript"></script>
   <!-- imagemapster - These are scripts that enable styling canvases atop imagemaps -->
   <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
-
+  <script 
   <!-- help bot -->
 <!-- <script src="https://embed.small.chat/T01LL37HGMRC01LYGHBDL1.js" async></script> CHER's OLD HELPBOT-->
 <script src="https://embed.small.chat/T02U4DGKYV8C0310KCK7S7.js" async></script>
  
   <script src="static/js/main.js"></script>
-   
+  <script src="static/js/remlaSocket.js"></script>
+  <script defer type="text/javascript" src="static/js/reader.js"></script>
+  <script defer type="text/javascript" src="static/js/mediaMTXGetFeed.js"></script>
   <!-- Start your project here--> 
   <div class="pagecontainer w-row">
     <div id="PageHead" class="column w-row">
@@ -167,8 +168,9 @@
           <!-- <button id="OffCam" type="button" class="btn btn-primary">Off</button> -->
         </div>
         <div class="video w-video w-embed">
-          <video id='v' data-playing="false" autoplay="" muted></video>
-        </div>
+                <video id="video" autoplay></video>
+                <div id="message"></div>
+                    </div>
       </div>
       <div id="RightSideImages" class="column w-col w-col-2">
         <div id="OvenRight" >
