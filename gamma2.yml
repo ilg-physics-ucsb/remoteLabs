@@ -12,6 +12,7 @@ devices:
   Camera:
     type: ArduCamMultiCamera
     videoNumber: 0
+    numCameras: 2
     i2cbus: 11
     initialCamera: b
     controlPins:
