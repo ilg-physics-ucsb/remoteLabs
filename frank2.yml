@@ -54,7 +54,7 @@ devices:
   FHpdu:
     type: PDUOutlet
     hostname: "fhpdu.inst.physics.ucsb.edu"
-    username: "admin"
+    userid: "admin"
     password: "5tgb567ujnb"
     outlets:
       - 5
