@@ -16,29 +16,29 @@ devices:
     type: StepperI2C
     terminal: 1
     bounds:
-    - 0
-    - 180
+      - 0
+      - 180
     style: DOUBLE
   Oven:
     type: StepperI2C
     terminal: 2
     bounds:
-    - 0
-    - 500
+      - 0
+      - 500
     style: DOUBLE
     gearRatio: 2.85714
   Va:
     type: StepperI2C
     terminal: 3
     bounds:
-    - 0
-    - 2000
+      - 0
+      - 2000
   Vr:
     type: StepperI2C
     terminal: 4
     bounds:
-    - 0
-    - 160
+      - 0
+      - 160
   FHpdu:
     type: PDUOutlet
     hostname: "fhpdu.inst.physics.ucsb.edu"
@@ -46,10 +46,10 @@ devices:
     password: "5tgb567ujnb"
     port: 60
     outlets:
-    - 1
-    - 2
-    - 3
-    - 4
+      - 1
+      - 2
+      - 3
+      - 4
     outletMap:
       Electrometer: 4
       Oven: 1
@@ -59,3 +59,19 @@ devices:
     type: Keithley6514Electrometer
     resource: "ASRL/dev/ttyUSB0::INSTR"
     # baud_rate: 19200 # is static and therefore removed
+  locks:
+    electrometer:
+      - Electrometer
+    pdu:
+      - FHpdu
+    camera:
+      - Camera
+    oven:
+      - Oven
+    va:
+      - Va
+    vr:
+      - Vr
+    filament:
+      - Filament
+
