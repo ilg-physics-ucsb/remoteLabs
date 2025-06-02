@@ -174,12 +174,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
     //for LiveFeed
-    var mainCamSignal = setupWebRTC(8081, video, 100);
-    // var mainCamSignal = setupWebRTC(5002, video, 50);
     window.setTimeout(timeOutHandler,10800000)
 
     function timeOutHandler(){
-        mainCamSignal.hangup()
+        // mainCamSignal.hangup()
         alert("Your session has timed out.")
     }
 
@@ -756,7 +754,7 @@ nd40.addEventListener('click', function(event) {
 });
 
 window.addEventListener('beforeunload', function(e) {
-    mainCamSignal.hangup();
+    // mainCamSignal.hangup();
     dataChannel.close();
 })
     
