@@ -12,6 +12,18 @@ devices:
   Camera:
     type: ArduCamMultiCamera
     videoNumber: 1
+    numCameras: 4
+    i2cbus: 11
+    initialCamera: a
+    controlPins:
+      - 4
+      - 17
+      - 18
+    cameraNamesDict:
+      heat: a
+      tube: b
+      pots: c
+      data: d
   Filament:
     type: StepperI2C
     terminal: 1
