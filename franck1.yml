@@ -56,7 +56,6 @@ devices:
     hostname: "fhpdu.inst.physics.ucsb.edu"
     username: "admin"
     password: "5tgb567ujnb"
-    port: 60
     outlets:
       - 1
       - 2
