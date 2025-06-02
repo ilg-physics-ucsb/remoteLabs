@@ -59,19 +59,18 @@ devices:
     type: Keithley6514Electrometer
     resource: "ASRL/dev/ttyUSB0::INSTR"
     # baud_rate: 19200 # is static and therefore removed
-  locks:
-    electrometer:
-      - Electrometer
-    pdu:
-      - FHpdu
-    camera:
-      - Camera
-    oven:
-      - Oven
-    va:
-      - Va
-    vr:
-      - Vr
-    filament:
-      - Filament
-
+locks:
+  electrometer:
+    - Electrometer
+  pdu:
+    - FHpdu
+  camera:
+    - Camera
+  oven:
+    - Oven
+  va:
+    - Va
+  vr:
+    - Vr
+  filament:
+    - Filament
