@@ -134,3 +134,16 @@ devices:
     outletMap:
       PowerSupply: 3
       ST160: 4
+  locks:
+    pdu:
+      - GRpdu
+    absorberComponents:
+      - Actuator
+      - Stage
+      - Magnet
+    absorberController:
+      - AbsorberController
+    buttons:
+      - Buttons
+    camera:
+      - Camera
