@@ -14,7 +14,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
+    color: white;
     text-align: left;
     background-color: #000;
 } 
@@ -79,7 +79,7 @@ header {
     flex-direction: column;
     justify-content: center;
     border-radius: 10px;
-    padding: 10px;
+    padding: 25px;
     align-items: center;
     width: 33%;
     height: 100%;
@@ -153,6 +153,14 @@ header {
 .tool-item.background:hover {
   background-color: var(--accent); /* this keeps it consistent while hovering */
   box-shadow: none; /* override hover shadow */
+}
+
+.tool-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
 }
 
 

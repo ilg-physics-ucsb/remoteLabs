@@ -233,9 +233,88 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const tools = document.getElementsByClassName('tool-item');
 
+
+    // TOOL DATA TO DISPLAY
+    const toolDetailArea = document.getElementById('tool-detail-content');
+    const toolData = {
+        hgNeLamp: {
+            name: 'Hg-Ne Lamp',
+            description: "The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source for this purpose because it emits a lot of light, but only in a small number of wavelengths.",
+            // toolImage: "static/imgs/transparent-imgs/penray-lamp.png",
+            width: 172,
+            toolDirection: "Click to toggle the lamp!",
+            render: () => {
+                const target = document.getElementById("tool-interactive-area");
+                if (target) {
+                    target.innerHTML = `
+                    <figure class="Icon">
+                        <img id="toggleSwitch" src="static/imgs/toggleSwitch.png" usemap="#image-map-ts">
+                        <map name="image-map-ts">
+                            <area id="HgNeTOGGLE" title="Click here to turn ON" coords="72,45,128,95" shape="rect">
+                        </map> 
+                        <br>       
+                    </figure>`;
+                }
+            }
+        },
+        filterWheel: {
+            name: 'Edumund Optics® Bandpass Interference Filters',
+            description: "An interference filter transmits light only in a narrow range of wavelengths, λ±Δλ, and blocks light of all other wavelengths. Placing different interference filters in front of the Hg-discharge lamp allows photons from only one (or occasionally two) of the peaks in the Hg emission spectrum to fall on the photocathode.",
+            // toolImage: "static/imgs/FilterWheelScaled.png",
+            width: 84,
+            toolDirection: "Click on a filter to rotate it into position.",
+            render: () => {
+                toolDetailArea.innerHTML = `
+                <figure class="Photo">
+                    <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
+                    <a target="_blank" href="static/docs/PenRayGasLamps.pdf">
+                        <div class = "outer1">
+                        <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
+                        </div>
+                        </a><br>
+                    <a target="_blank" href="static/docs/Hg-NeEmission.jpg">
+                        <div class = "outer">
+                        <img id="Spectrum" class="image" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
+                        </div>
+                    </a><br><br><br>
+                </figure> `
+            }
+        },
+        densityFilterWheel: {
+            name: 'ThorLabs® Absorptive Neutral Density Filters',
+            description: "A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. Placing different ND filters in front of the Hg-discharge lamp changes the intensity of the light (i.e., the number of photons per unit area) that falls on the photocathode.",
+            // toolImage: "static/imgs/densityFilterWheelScaledCropped.png",
+            width: 84,
+            toolDirection: "Click on a filter to rotate it into position."
+        },
+        electrometer: {
+           name: 'Keithley Model 6514 System Electrometer Instruction',
+           description: "A system electrometer measures the photocurrent. The electrometer is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1pA = 10^−12 A)",
+        //    toolImage: "static/imgs/Keithley6514Electrometer.jpg",
+           width: 224,
+           toolDirection: "" 
+        },
+        multimeter: {
+           name: 'Keithley Model 2000 Multimeter User',
+           description: "A digital multimeter (DMM) measures the potential difference between the photocathode and the anode.",
+        //    toolImage: "static/imgs/Keithley2000Multimeter.jpg",
+           width: 224,
+           toolDirection: "" 
+        },
+        knob: {
+           name: 'Potentiometer',
+           description: "The voltage is adjusted by turning the knob of a variable resistor (also known as a potentiometer).",
+        //    toolImage: "static/imgs/knob.png",
+           width: 72,
+           toolDirection: "Click on an arrow to rotate it into position." 
+        }
+    }
+
+    let selectedTool = null;
     Array.from(tools).forEach(tool => {
         tool.addEventListener('click', () => {
             toolClicked = true;
+            selectedTool = tool.dataset.tool; // returns name of the tool
             document.querySelector('.background')?.classList.remove('background');
             tool.classList.add('background');
             updateUI(); // Called when the user clicks on a tool
@@ -275,6 +354,45 @@ window.addEventListener('DOMContentLoaded', function () {
             resizeTool.style.display = 'block';
 
 
+            // Add tool data
+            if (selectedTool && toolData[selectedTool]) {
+                const currTool = toolData[selectedTool];
+                // HTML FOR TOOL INFORMATION AREA
+                toolDetailArea.innerHTML = `
+                    <div style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 25px;"
+                    gap: 32px
+                    >
+                        <h4>${currTool.name}</h4>
+                        <div>
+                            <p style="font-weight: bold;">Description</p>
+                            <p>${currTool.description}</p>
+                        </div>
+                        <div style="
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center
+                        ">
+                            <p style="font-weight: bold;">Use tool</p>
+                            <div>
+
+                            </div>
+                            <p>${currTool.toolDirection}</p>
+                        </div>
+
+                        <div id="tool-interactive-area"></div>
+                    </div>
+                `;
+
+                currTool.render?.();
+            }
+
+
         } else {
             toolContainer.style.background = 'none';
             document.querySelector('.background')?.classList.remove('background');
@@ -286,6 +404,8 @@ window.addEventListener('DOMContentLoaded', function () {
             if (resizeTool) {
                 resizeTool.style.display = 'none';
             }
+
+            document.getElementById("tool-detail-content").innerHTML = '';
         }
     }
 
