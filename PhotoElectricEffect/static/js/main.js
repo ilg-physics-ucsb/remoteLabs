@@ -255,7 +255,9 @@ window.addEventListener('DOMContentLoaded', function () {
                         <br>       
                     </figure>`;
                 }
+                console.log("Rendered lamp interactive area!");
                 var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
+                var toggleSwitch = this.document.getElementById("toggleSwitch");
                 HgNeTOGGLE.style.transform='scaleY(1)';
                 var HgNeState = false;
 
