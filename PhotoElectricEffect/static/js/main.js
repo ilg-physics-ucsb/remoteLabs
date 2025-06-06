@@ -255,6 +255,26 @@ window.addEventListener('DOMContentLoaded', function () {
                         <br>       
                     </figure>`;
                 }
+                var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
+                HgNeTOGGLE.style.transform='scaleY(1)';
+                var HgNeState = false;
+
+                HgNeTOGGLE.addEventListener('click', function(){
+                console.log("HgNe lamp was switched");
+                if(HgNeState){
+                    dataChannel.send("PEpdu/off/HgNeLamp");
+                    HgNeState=false;
+                    HgNeTOGGLE.title="Click here to turn ON";
+                    toggleSwitch.style.transform='scaleY(1)';
+                            }
+                else{
+                    dataChannel.send("PEpdu/on/HgNeLamp");
+                    HgNeState=true;
+                    HgNeTOGGLE.title="Click here to turn OFF";
+                    toggleSwitch.style.transform='scaleY(-1)';
+                }
+            })
+
             }
         },
         filterWheel: {
@@ -438,9 +458,10 @@ window.addEventListener('DOMContentLoaded', function () {
     //for HgNe Lamp
     // var HgNeOFF = document.getElementById('HgNeLampOFF');
     // var HgNeON = document.getElementById('HgNeLampON');
-    var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
-    HgNeTOGGLE.style.transform='scaleY(1)';
-    var HgNeState = false;
+    //COMMENTING
+    // var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
+    // HgNeTOGGLE.style.transform='scaleY(1)';
+    // var HgNeState = false;
 
 
     //for Ambient Light
@@ -485,21 +506,21 @@ window.addEventListener('DOMContentLoaded', function () {
             // lightSwitch.style.transform='rotate(180deg)';
         }
     })
-    HgNeTOGGLE.addEventListener('click', function(){
-        console.log("HgNe lamp was switched");
-        if(HgNeState){
-            dataChannel.send("PEpdu/off/HgNeLamp");
-            HgNeState=false;
-            HgNeTOGGLE.title="Click here to turn ON";
-            toggleSwitch.style.transform='scaleY(1)';
-                     }
-        else{
-            dataChannel.send("PEpdu/on/HgNeLamp");
-            HgNeState=true;
-            HgNeTOGGLE.title="Click here to turn OFF";
-            toggleSwitch.style.transform='scaleY(-1)';
-        }
-    })
+    // HgNeTOGGLE.addEventListener('click', function(){
+    //     console.log("HgNe lamp was switched");
+    //     if(HgNeState){
+    //         dataChannel.send("PEpdu/off/HgNeLamp");
+    //         HgNeState=false;
+    //         HgNeTOGGLE.title="Click here to turn ON";
+    //         toggleSwitch.style.transform='scaleY(1)';
+    //                  }
+    //     else{
+    //         dataChannel.send("PEpdu/on/HgNeLamp");
+    //         HgNeState=true;
+    //         HgNeTOGGLE.title="Click here to turn OFF";
+    //         toggleSwitch.style.transform='scaleY(-1)';
+    //     }
+    // })
     // END Light Switches
    
     var ElectrometerState=false;
