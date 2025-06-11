@@ -255,7 +255,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     <figure class="Icon">
                         <img id="toggleSwitch" src="static/imgs/figma-components/hgne-off.png" usemap="#image-map-ts">
                         <map name="image-map-ts">
-                            <area target="" alt="" title="" href="" coords="1,-1,123,155" shape="rect">
+                            <area id="HgNeTOGGLE" target="" alt="" title="" href="" coords="1,-1,123,155" shape="rect">
                         </map> 
                         <br>       
                     </figure>`;
@@ -267,23 +267,25 @@ window.addEventListener('DOMContentLoaded', function () {
                 var HgNeState = false;
 
                 // TOOL OPERATION
-                HgNeTOGGLE.addEventListener('click', function(){
-                console.log("HgNe lamp was switched");
-                if (HgNeState) {
-                    dataChannel.send("PEpdu/off/HgNeLamp");
-                    HgNeState=false;
-                    HgNeTOGGLE.title="Click here to turn ON";
-                    // toggleSwitch.style.transform='scaleY(1)';
-                    toggleSwitch.src = "static/imgs/figma-components/hgne-on.png"
-                }
-                else {
-                    dataChannel.send("PEpdu/on/HgNeLamp");
-                    HgNeState=true;
-                    HgNeTOGGLE.title="Click here to turn OFF";
-                    // toggleSwitch.style.transform='scaleY(-1)';
-                    toggleSwitch.src = "static/imgs/figma-components/hgne-off.png"
-                }
-            })
+                HgNeTOGGLE.addEventListener('click', function(event){
+                    event.preventDefault();
+                    event.stopPropagation();
+                    console.log("HgNe lamp was switched");
+                    if (HgNeState) {
+                        dataChannel.send("PEpdu/off/HgNeLamp");
+                        HgNeState=false;
+                        HgNeTOGGLE.title="Click here to turn ON";
+                        // toggleSwitch.style.transform='scaleY(1)';
+                        toggleSwitch.src = "static/imgs/figma-components/hgne-on.png"
+                    }
+                    else {
+                        dataChannel.send("PEpdu/on/HgNeLamp");
+                        HgNeState=true;
+                        HgNeTOGGLE.title="Click here to turn OFF";
+                        // toggleSwitch.style.transform='scaleY(-1)';
+                        toggleSwitch.src = "static/imgs/figma-components/hgne-off.png"
+                    }
+                })
 
             }
         },
