@@ -55,7 +55,23 @@
         <img style="padding: 10px;" src="static/imgs/Keithley6514Electrometer.jpg" width="224"/>
       </li>
       <li class="sidebar-item">
-        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/curv_f546.pdf" target="_blank">Edumund Optics® Bandpass Interference Filters</a>
+        <p>Filters: Edumund Optics&#174; Bandpass Interference Filters</p>
+        <!-- <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/curv_f546.pdf" target="_blank">Edumund Optics® Bandpass Interference Filters</a> -->
+        <figure class="Photo">
+          <a target="_blank" href="static/docs/curv_f365.pdf">
+              <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f436.pdf">
+              <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f546.pdf">
+              <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f577.pdf">
+              <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
+          </a> <br><br>
+          <p style="text-align: center;">(click each for its transmission curve)</p>
+         </figure>
       </li>
       <!-- <li class="sidebar-item">
         <a class="link" href="" target="_blank">ThorLabs® Absorptive Neutral Density Filters</a>
@@ -82,33 +98,9 @@
       style="display: flex; flex-direction: column; gap: 12; align-items: end;"
       >
         <p style="color: white; font-weight:bold">TURN ON AMBIENT LIGHT</p>
-        <!-- <figure class="ambient-light" style="position: relative; display: inline-block;">
-          <img 
-          id="lightSwitch" 
-          src="static/imgs/figma-components/lightSwitchOFF.png" 
-          width="67" height="31"
-          usemap="#image-map-ls" 
-          style="cursor: pointer;"
-          >
-          <div id="ambientTOGGLE"
-            title="Click here to turn ON"
-            style="
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 67px;
-              height: 31px;
-              cursor: pointer;
-              z-index: 10;
-              /* background-color: rgba(255, 0, 0, 0.2); */
-            ">
-          </div>
-        </figure> -->
         <label class="switch">
           <input id="ambientTOGGLE" type="checkbox">
           <span class="slider round">
-            <!-- <span id="off" class="slider-label off">OFF</span>
-            <span id="on" class="slider-label on"></span> -->
           </span>
         </label>
       </div>
@@ -125,28 +117,16 @@
         </div>
 
         <div class="tool-resizable">
-          <!-- <div class="tool-info"> -->
-            <!-- <div class="close-container"> -->
               <button id="close"></button>
-            <!-- </div> -->
             <p 
             style="font-weight: 400; color: white; font-size: 24px;" 
             id="click-on-tool-message">Click on a tool below!</p>
-          <!-- </div> -->
-           <!-- <h4>Hg-Ne Lamp</h4>
-           <div>
-            <p style="font-weight: bold;">Description</p>
-            <p>The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source for this purpose because it emits a lot of light, but only in a small number of wavelengths.</p>
-           </div>
-           <div>
-            <p>Use tool</p>
-            <img src="static/imgs/transparent-imgs/penray-lamp.png" />
-           </div> -->
            <div id="tool-detail-content"></div>
         </div>
       </div>
     </div>
 
+    <!-- TOOL SECTION (BOTTOM) -->
     <div style="margin: 15px;">
       <div class="tools-section">
         <img id="hg-ne-lamp" style="padding: 3px 5px;" class="tool-item" data-tool="hgNeLamp" src="static/imgs/transparent-imgs/penray-lamp.png" width="172" height="26"/>
@@ -158,6 +138,9 @@
       </div>
     </div>
 
+
+    <!-- PREVIOUS CODE -->
+    
     <div id="SideImagesLeft" class="column w-col w-col-2">
       <figure class="Icon">
         (click to toggle the Hg-Ne lamp)<br>

@@ -328,8 +328,7 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: 12px;
-  /* background-color: #0D8B28; */
+  /* gap: 12px; */
 }

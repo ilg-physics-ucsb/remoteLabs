@@ -206,6 +206,7 @@ window.addEventListener('DOMContentLoaded', function () {
         startTimer(threeHours, display);
     }
 
+    // SIDEBAR
     const manualsButton = document.getElementById('manuals');
     const sidebar = this.document.getElementById('sidebar');
     const closeSidebar = this.document.getElementById('sidebar-close');
@@ -217,16 +218,12 @@ window.addEventListener('DOMContentLoaded', function () {
         sidebar.classList.remove('active');
     })
 
-
-
-    // Resizing - TODO
-    // const resizeTool = document.getElementById("splitter-resizer");
+    // RESIZING
     const livestreamContainer = document.querySelector(".livestream-resizable");
     const toolContainer = document.querySelector(".tool-resizable");
     const container = document.querySelector('.livestream-and-tool-section');
 
     // TOOL RENDERING
-
     let toolClicked = false;
     const message = document.getElementById("click-on-tool-message");
     const close = document.getElementById("close");
@@ -234,7 +231,15 @@ window.addEventListener('DOMContentLoaded', function () {
     const tools = document.getElementsByClassName('tool-item');
 
 
-    // TOOL DATA TO DISPLAY
+    // TOOL DATA TO DISPLAY. Array name: toolData
+    // Includes:
+    // (1) name
+    // (2) description of tool
+    // (3) width of image displayed in tool bar
+    // (4) direction detailing how to use the tool
+    // (5) render function, which includes:
+    //      (a) innerHTML of tool area changed to display information about the tool,
+    //      (b) clicking logic for tool
     const toolDetailArea = document.getElementById('tool-detail-content');
     const toolData = {
         hgNeLamp: {
@@ -264,14 +269,14 @@ window.addEventListener('DOMContentLoaded', function () {
                 // TOOL OPERATION
                 HgNeTOGGLE.addEventListener('click', function(){
                 console.log("HgNe lamp was switched");
-                if(HgNeState){
+                if (HgNeState) {
                     dataChannel.send("PEpdu/off/HgNeLamp");
                     HgNeState=false;
                     HgNeTOGGLE.title="Click here to turn ON";
                     // toggleSwitch.style.transform='scaleY(1)';
                     toggleSwitch.src = "static/imgs/figma-components/hgne-on.png"
-                            }
-                else{
+                }
+                else {
                     dataChannel.send("PEpdu/on/HgNeLamp");
                     HgNeState=true;
                     HgNeTOGGLE.title="Click here to turn OFF";
@@ -285,57 +290,85 @@ window.addEventListener('DOMContentLoaded', function () {
         filterWheel: {
             name: 'Edumund Optics® Bandpass Interference Filters',
             description: "An interference filter transmits light only in a narrow range of wavelengths, λ±Δλ, and blocks light of all other wavelengths. Placing different interference filters in front of the Hg-discharge lamp allows photons from only one (or occasionally two) of the peaks in the Hg emission spectrum to fall on the photocathode.",
-            // toolImage: "static/imgs/FilterWheelScaled.png",
             width: 84,
             toolDirection: "Click on a filter to rotate it into position.",
             render: () => {
-                toolDetailArea.innerHTML = `
-                <figure class="Photo">
-                    <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
-                    <a target="_blank" href="static/docs/PenRayGasLamps.pdf">
-                        <div class = "outer1">
-                        <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
-                        </div>
-                        </a><br>
-                    <a target="_blank" href="static/docs/Hg-NeEmission.jpg">
-                        <div class = "outer">
-                        <img id="Spectrum" class="image" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
-                        </div>
-                    </a><br><br><br>
-                </figure> `
-            }
+                const target = document.getElementById("tool-interactive-area");
+                if (target) {
+                    target.innerHTML = `
+                        <figure class="Device embed wheel">
+                            <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw" width=116 height=128>
+                            <map name="image-map-cfw">
+                                <area id="f365" href="#" title="365 nm" coords="321,110,108" shape="circle">
+                                <area id="f436" href="#" title="436 nm" coords="536,232,106" shape="circle">
+                                <area id="f546" href="#" title="546 nm" coords="539,481,107" shape="circle">
+                                <area id="f577" href="#" title="577 nm" coords="325,600,111" shape="circle">
+                            </map>   
+                        </figure>
+                    `;
+                }
+
+                f577.addEventListener('click', function(event) {
+                    console.log("f577 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("colorWheel/goto/180deg");
+                    // filterwheel.style.transform='rotate(0deg)';
+                    return false
+                })
+                f546.addEventListener('click', function(event) {
+                    console.log("f546 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("colorWheel/goto/120deg");
+                    // filterwheel.style.transform='rotate(-30deg)';
+                    return false
+                })
+                f436.addEventListener('click', function(event) {
+                    console.log("f436 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("colorWheel/goto/60deg");
+                    // filterwheel.style.transform='rotate(-60deg)';
+                    return false
+                })
+                f365.addEventListener('click', function(event) {
+                    console.log("f365 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("colorWheel/goto/0deg");
+                    // filterwheel.style.transform='rotate(-90deg)';
+                    return false
+                })  
+                }
         },
-        densityFilterWheel: {
+        densityFilterWheel: { // TODO
             name: 'ThorLabs® Absorptive Neutral Density Filters',
             description: "A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. Placing different ND filters in front of the Hg-discharge lamp changes the intensity of the light (i.e., the number of photons per unit area) that falls on the photocathode.",
-            // toolImage: "static/imgs/densityFilterWheelScaledCropped.png",
             width: 84,
             toolDirection: "Click on a filter to rotate it into position."
         },
-        electrometer: {
+        electrometer: { // TODO
            name: 'Keithley Model 6514 System Electrometer Instruction',
            description: "A system electrometer measures the photocurrent. The electrometer is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1pA = 10^−12 A)",
-        //    toolImage: "static/imgs/Keithley6514Electrometer.jpg",
            width: 224,
            toolDirection: "" 
         },
-        multimeter: {
+        multimeter: { // TODO
            name: 'Keithley Model 2000 Multimeter User',
            description: "A digital multimeter (DMM) measures the potential difference between the photocathode and the anode.",
-        //    toolImage: "static/imgs/Keithley2000Multimeter.jpg",
            width: 224,
            toolDirection: "" 
         },
-        knob: {
+        knob: { // TODO
            name: 'Potentiometer',
            description: "The voltage is adjusted by turning the knob of a variable resistor (also known as a potentiometer).",
-        //    toolImage: "static/imgs/knob.png",
            width: 72,
            toolDirection: "Click on an arrow to rotate it into position." 
         }
     }
 
+
     let selectedTool = null;
+
+    // Iterates through each tool and adds an event listener to it.
+    // Styles tool when user clicks on it.
     Array.from(tools).forEach(tool => {
         tool.addEventListener('click', () => {
             toolClicked = true;
@@ -346,6 +379,7 @@ window.addEventListener('DOMContentLoaded', function () {
         })
     })
 
+    // Close button for tool window
     close.addEventListener('click', () => {
         toolClicked = false;
         updateUI();
@@ -353,18 +387,23 @@ window.addEventListener('DOMContentLoaded', function () {
 
     let resizeTool = null;
 
-    // Function gets called AFTER event changes state.
+    // Function gets called AFTER event changes state. Actions:
+    // (1) Styles tool container
+    // (2) Displays resize tool
+    // (3) Inserts resize tool
     function updateUI() {
         if (toolClicked) {
+            // Make tool container visible
             toolContainer.style.backgroundColor = "#404040";
             message.style.display= 'none';
             close.style.display = 'block';
             close.innerHTML = '&times;'
 
-            // Add resize tool
+            // Add resize tool to adjust window size of livestream and tool containers
             if (!resizeTool) {
                 resizeTool = document.createElement('div');
                 resizeTool.id = 'splitter-resizer';
+                // Resize element visual
                 resizeTool.style.cssText = `
                     border-left: 6px solid #969696;
                     height: 70px;
@@ -379,7 +418,7 @@ window.addEventListener('DOMContentLoaded', function () {
             resizeTool.style.display = 'block';
 
 
-            // Add tool data
+            // Display data for that tool
             if (selectedTool && toolData[selectedTool]) {
                 const currTool = toolData[selectedTool];
                 // HTML FOR TOOL INFORMATION AREA
@@ -418,7 +457,7 @@ window.addEventListener('DOMContentLoaded', function () {
             }
 
 
-        } else {
+        } else { // If no tool has been clicked
             toolContainer.style.background = 'none';
             document.querySelector('.background')?.classList.remove('background');
             message.style.display = 'block';
@@ -434,7 +473,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
+    // RESIZE LOGIC
     function attachResizeListeners(resizeTool) {
         let isResizing = false;
 
@@ -459,6 +498,8 @@ window.addEventListener('DOMContentLoaded', function () {
         })
     }
 
+
+    // PREVIOUS CODE
 
     //for HgNe Lamp
     // var HgNeOFF = document.getElementById('HgNeLampOFF');
