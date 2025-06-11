@@ -276,14 +276,14 @@ window.addEventListener('DOMContentLoaded', function () {
                         HgNeState=false;
                         HgNeTOGGLE.title="Click here to turn ON";
                         // toggleSwitch.style.transform='scaleY(1)';
-                        toggleSwitch.src = "static/imgs/figma-components/hgne-on.png"
+                        toggleSwitch.src = "static/imgs/figma-components/hgne-off.png"
                     }
                     else {
                         dataChannel.send("PEpdu/on/HgNeLamp");
                         HgNeState=true;
                         HgNeTOGGLE.title="Click here to turn OFF";
                         // toggleSwitch.style.transform='scaleY(-1)';
-                        toggleSwitch.src = "static/imgs/figma-components/hgne-off.png"
+                        toggleSwitch.src = "static/imgs/figma-components/hgne-on.png"
                     }
                 })
 
