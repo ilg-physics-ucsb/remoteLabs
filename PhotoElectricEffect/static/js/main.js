@@ -91,10 +91,10 @@ window.addEventListener('DOMContentLoaded', function () {
     var video = document.getElementById('v');
     // var video2 = document.getElementById('v2');
     // for Color Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
-    var f365 = document.getElementById('f365');
-    var f436 = document.getElementById('f436');
-    var f546 = document.getElementById('f546');
-    var f577 = document.getElementById('f577');
+    // var f365 = document.getElementById('f365');
+    // var f436 = document.getElementById('f436');
+    // var f546 = document.getElementById('f546');
+    // var f577 = document.getElementById('f577');
     var colorFilterwheel = document.getElementById('colorFilterWheel')
  
     // for Density Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
@@ -309,6 +309,12 @@ window.addEventListener('DOMContentLoaded', function () {
                         </figure>
                     `;
                 }
+
+                var f365 = document.getElementById('f365');
+                var f436 = document.getElementById('f436');
+                var f546 = document.getElementById('f546');
+                var f577 = document.getElementById('f577');
+                var colorFilterwheel = document.getElementById('colorFilterWheel')
 
                 f577.addEventListener('click', function(event) {
                     console.log("f577 was clicked");
