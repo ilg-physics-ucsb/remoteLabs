@@ -308,7 +308,18 @@ window.addEventListener('DOMContentLoaded', function () {
                             </map>   
                         </figure>
                     `;
+                     $('#colorFilterWheel').mapster({
+                        mapKey:'id',
+                        fillColor: 'f5f5b5',
+                        fillOpacity: 0.6,
+                        render_select: { 
+                            fillOpacity: 0.3
+                        },
+                        singleSelect: true
+                    }).parent().css({"margin":"0 auto"});
                 }
+
+// removed this from img command for colorFilterwheel: width=116 height=128
 
                 var f365 = document.getElementById('f365');
                 var f436 = document.getElementById('f436');
