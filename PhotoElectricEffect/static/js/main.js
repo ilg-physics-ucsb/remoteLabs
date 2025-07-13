@@ -440,16 +440,16 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         },
         electrometer: { // TODO
-            name: 'Keithley Model 6514 System Electrometer Instruction',
-            description: "A system electrometer measures the photocurrent. The electrometer is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1pA = 10^−12 A)",
+            name: 'Keithley Model 6514 System Electrometer',
+            description: "The electrometer measures the photocurrent. The electrometer is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1pA = 10^−12 A)",
             width: 224,
-            toolDirection: "Click on a filter to rotate it into position.",
+            toolDirection: "Click a button on the image below to press it on the device.",
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
                     target.innerHTML = `
                         <figure class="Device embed meter">
-                        <img id="electrometer" src="static/imgs/Keithley6514ElectrometerTXT.jpg" usemap="#image-map-6514"> 
+                        <img id="electrometer" src="static/imgs/Keithley6514ElectrometerTXTleft.jpg" usemap="#image-map-6514"> 
                             <map name="image-map-6514">
                                 <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
                                 <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,399,17" shape="circle">
