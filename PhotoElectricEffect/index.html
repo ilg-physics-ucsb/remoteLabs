@@ -179,17 +179,6 @@
           </a><br>
           (click each for its transmission curve)
       </figure>
-      <figure class="Device embed wheel">
-          <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw">
-          <map name="image-map-cfw">
-            <area id="f365" href="#" title="365 nm" coords="321,110,108" shape="circle">
-            <area id="f436" href="#" title="436 nm" coords="536,232,106" shape="circle">
-            <area id="f546" href="#" title="546 nm" coords="539,481,107" shape="circle">
-            <area id="f577" href="#" title="577 nm" coords="325,600,111" shape="circle">
-          </map>   
-          <br>
-          (click on a filter to rotate it into position)
-      </figure>
     </div>   
 
 
@@ -250,7 +239,7 @@
         <br>
         (click each for its transmission curve)
       </figure>
-      <figure class="Device embed wheel">
+      <!-- <figure class="Device embed wheel">
         <center><img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw"></center>
         <map name="image-map-dfw">
           <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
@@ -262,7 +251,7 @@
         </map>
         <br>
         (click on a filter to rotate it into position)   
-      </figure>
+      </figure> -->
     </div>
     
     <div id="PageBottom" class="w-row">
@@ -417,15 +406,15 @@
           //   singleSelect: true
           // }).parent().css({"margin":"0 auto"});
           
-          $('#densityFilterWheel').mapster({
-            mapKey:'id',
-            fillColor: 'f5f5b5',
-            fillOpacity: 0.6,
-            render_select: { 
-                fillOpacity: 0.3
-            },
-            singleSelect: true
-          }).parent().css({"margin":"0 auto"});
+          // $('#densityFilterWheel').mapster({
+          //   mapKey:'id',
+          //   fillColor: 'f5f5b5',
+          //   fillOpacity: 0.6,
+          //   render_select: { 
+          //       fillOpacity: 0.3
+          //   },
+          //   singleSelect: true
+          // }).parent().css({"margin":"0 auto"});
 
           $('#knob').mapster({
             mapKey:'id',

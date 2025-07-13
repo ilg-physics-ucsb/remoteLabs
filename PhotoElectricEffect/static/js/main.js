@@ -95,16 +95,16 @@ window.addEventListener('DOMContentLoaded', function () {
     // var f436 = document.getElementById('f436');
     // var f546 = document.getElementById('f546');
     // var f577 = document.getElementById('f577');
-    var colorFilterwheel = document.getElementById('colorFilterWheel')
+    // var colorFilterwheel = document.getElementById('colorFilterWheel')
  
     // for Density Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
-    var nd00 = document.getElementById('nd00');
-    var nd03 = document.getElementById('nd03');
-    var nd05 = document.getElementById('nd05');
-    var nd10 = document.getElementById('nd10');
-    var nd20 = document.getElementById('nd20');
-    var nd40 = document.getElementById('nd40');
-    var densityFilterwheel = document.getElementById('densityFilterWheel')
+    // var nd00 = document.getElementById('nd00');
+    // var nd03 = document.getElementById('nd03');
+    // var nd05 = document.getElementById('nd05');
+    // var nd10 = document.getElementById('nd10');
+    // var nd20 = document.getElementById('nd20');
+    // var nd40 = document.getElementById('nd40');
+    // var densityFilterwheel = document.getElementById('densityFilterWheel')
 
     // for Keithley 6514 Electrometer
     var shift6514Button = document.getElementById('Shift6514');
@@ -301,10 +301,10 @@ window.addEventListener('DOMContentLoaded', function () {
                         <figure class="Device embed wheel">
                             <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw" width=116 height=128>
                             <map name="image-map-cfw">
-                                <area id="f365" href="#" title="365 nm" coords="321,110,108" shape="circle">
-                                <area id="f436" href="#" title="436 nm" coords="536,232,106" shape="circle">
-                                <area id="f546" href="#" title="546 nm" coords="539,481,107" shape="circle">
-                                <area id="f577" href="#" title="577 nm" coords="325,600,111" shape="circle">
+                                <area id="f365" href="#" title="365 nm" coords="325,115,74" shape="circle">
+                                <area id="f436" href="#" title="436 nm" coords="528,236,72" shape="circle">
+                                <area id="f546" href="#" title="546 nm" coords="535,480,72" shape="circle">
+                                <area id="f577" href="#" title="577 nm" coords="325,600,74" shape="circle">
                             </map>   
                         </figure>
                     `;
@@ -318,8 +318,6 @@ window.addEventListener('DOMContentLoaded', function () {
                         singleSelect: true
                     }).parent().css({"margin":"0 auto"});
                 }
-
-// removed this from img command for colorFilterwheel: width=116 height=128
 
                 var f365 = document.getElementById('f365');
                 var f436 = document.getElementById('f436');
@@ -355,13 +353,91 @@ window.addEventListener('DOMContentLoaded', function () {
                     // filterwheel.style.transform='rotate(-90deg)';
                     return false
                 })  
-                }
+            }
         },
-        densityFilterWheel: { // TODO
+        densityFilterWheel: { 
             name: 'ThorLabs® Absorptive Neutral Density Filters',
             description: "A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. Placing different ND filters in front of the Hg-discharge lamp changes the intensity of the light (i.e., the number of photons per unit area) that falls on the photocathode.",
             width: 84,
-            toolDirection: "Click on a filter to rotate it into position."
+            toolDirection: "Click on a filter to rotate it into position.",
+            render: () => {
+                    const target = document.getElementById("tool-interactive-area");
+                    if (target) {
+                        target.innerHTML = `
+                            <figure class="Device embed wheel">
+                            <img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw" width=116 height=128></center>
+                                <map name="image-map-dfw">
+                                    <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
+                                    <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
+                                    <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
+                                    <area id="nd10" href="#" title="ND 1.0" coords="312,558,68"  shape="circle">
+                                    <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
+                                    <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
+                                </map>
+                            </figure>
+                        `;
+                       $('#densityFilterWheel').mapster({
+                            mapKey:'id',
+                            fillColor: 'f5f5b5',
+                            fillOpacity: 0.6,
+                            render_select: { 
+                                fillOpacity: 0.3
+                            },
+                            singleSelect: true
+                        }).parent().css({"margin":"0 auto"});
+                    }
+
+                    var nd00 = document.getElementById('nd00');
+                    var nd03 = document.getElementById('nd03');
+                    var nd05 = document.getElementById('nd05');
+                    var nd10 = document.getElementById('nd10');
+                    var nd20 = document.getElementById('nd20');
+                    var nd40 = document.getElementById('nd40');
+                    var densityFilterwheel = document.getElementById('densityFilterWheel')
+
+                    nd00.addEventListener('click', function(event) {
+                        console.log("ND OPEN was clicked");
+                        event.stopPropagation();
+                        dataChannel.send("densityWheel/goto/0deg");
+                        // filterwheel.style.transform='rotate(0deg)';
+                        return false
+                    })
+                    nd03.addEventListener('click', function(event) {
+                        console.log("ND 0.3 was clicked");
+                        event.stopPropagation();
+                        dataChannel.send("densityWheel/goto/300deg");
+                        // filterwheel.style.transform='rotate(-30deg)';
+                        return false
+                    })
+                    nd05.addEventListener('click', function(event) {
+                        console.log("ND 0.5 was clicked");
+                        event.stopPropagation();
+                        dataChannel.send("densityWheel/goto/240deg");
+                        // filterwheel.style.transform='rotate(-60deg)';
+                        return false
+                    })
+                    nd10.addEventListener('click', function(event) {
+                        console.log("ND 1.0 was clicked");
+                        event.stopPropagation();
+                        dataChannel.send("densityWheel/goto/180deg");
+                        // filterwheel.style.transform='rotate(-90deg)';
+                        return false
+                    })
+                    nd20.addEventListener('click', function(event) {
+                        console.log("ND 2.0 was clicked");
+                        event.stopPropagation();
+                        dataChannel.send("densityWheel/goto/120deg");
+                        // filterwheel.style.transform='rotate(-90deg)';
+                        return false
+                    })
+                    nd40.addEventListener('click', function(event) {
+                        console.log("ND 4.0 was clicked");
+                        event.stopPropagation();
+                        dataChannel.send("densityWheel/goto/60deg");
+                        // filterwheel.style.transform='rotate(-90deg)';
+                        return false
+                    })
+            }
         },
         electrometer: { // TODO
            name: 'Keithley Model 6514 System Electrometer Instruction',
@@ -614,14 +690,14 @@ window.addEventListener('DOMContentLoaded', function () {
 //END Potentiometer Buttons
 
 //BEGIN Color Filter Wheel Buttons 
-    function calculateWheelSteps(currentPosition, desiredPosition) {
-        //Math to be implimented
-        let motorSteps = 0;
-        motorSteps = (desiredPosition - currentPosition) * stepsPerDegree;
-        //Last thing to do:
-        currentPosition = desiredPosition;
-        return motorSteps
-    }   
+    // function calculateWheelSteps(currentPosition, desiredPosition) {
+    //     //Math to be implimented
+    //     let motorSteps = 0;
+    //     motorSteps = (desiredPosition - currentPosition) * stepsPerDegree;
+    //     //Last thing to do:
+    //     currentPosition = desiredPosition;
+    //     return motorSteps
+    // }   
     // f577.addEventListener('click', function(event) {
     //     event.stopPropagation();
     //     motoreSteps = calculateFilterSteps(currentPosition, 0);
@@ -631,87 +707,87 @@ window.addEventListener('DOMContentLoaded', function () {
     //     }
     //     return false
     // })
-    f577.addEventListener('click', function(event) {
-        console.log("f577 was clicked");
-        event.stopPropagation();
-        dataChannel.send("colorWheel/goto/180deg");
-        // filterwheel.style.transform='rotate(0deg)';
-        return false
-    })
-    f546.addEventListener('click', function(event) {
-        console.log("f546 was clicked");
-        event.stopPropagation();
-        dataChannel.send("colorWheel/goto/120deg");
-        // filterwheel.style.transform='rotate(-30deg)';
-        return false
-    })
-    f436.addEventListener('click', function(event) {
-        console.log("f436 was clicked");
-        event.stopPropagation();
-        dataChannel.send("colorWheel/goto/60deg");
-        // filterwheel.style.transform='rotate(-60deg)';
-        return false
-    })
-    f365.addEventListener('click', function(event) {
-        console.log("f365 was clicked");
-        event.stopPropagation();
-        dataChannel.send("colorWheel/goto/0deg");
-        // filterwheel.style.transform='rotate(-90deg)';
-        return false
-    })
+    // f577.addEventListener('click', function(event) {
+    //     console.log("f577 was clicked");
+    //     event.stopPropagation();
+    //     dataChannel.send("colorWheel/goto/180deg");
+    //     // filterwheel.style.transform='rotate(0deg)';
+    //     return false
+    // })
+    // f546.addEventListener('click', function(event) {
+    //     console.log("f546 was clicked");
+    //     event.stopPropagation();
+    //     dataChannel.send("colorWheel/goto/120deg");
+    //     // filterwheel.style.transform='rotate(-30deg)';
+    //     return false
+    // })
+    // f436.addEventListener('click', function(event) {
+    //     console.log("f436 was clicked");
+    //     event.stopPropagation();
+    //     dataChannel.send("colorWheel/goto/60deg");
+    //     // filterwheel.style.transform='rotate(-60deg)';
+    //     return false
+    // })
+    // f365.addEventListener('click', function(event) {
+    //     console.log("f365 was clicked");
+    //     event.stopPropagation();
+    //     dataChannel.send("colorWheel/goto/0deg");
+    //     // filterwheel.style.transform='rotate(-90deg)';
+    //     return false
+    // })
 //END Filter Wheel Buttons
 
 //BEGIN ND Filter Wheel Buttons 
-function calculateWheelSteps(currentPosition, desiredPosition) {
-    //Math to be implimented
-    let motorSteps = 0;
-    motorSteps = (desiredPosition - currentPosition) * stepsPerDegree;
-    //Last thing to do:
-    currentPosition = desiredPosition;
-    return motorSteps
-}   
-nd00.addEventListener('click', function(event) {
-    console.log("ND OPEN was clicked");
-    event.stopPropagation();
-    dataChannel.send("densityWheel/goto/0deg");
-    // filterwheel.style.transform='rotate(0deg)';
-    return false
-})
-nd03.addEventListener('click', function(event) {
-    console.log("ND 0.3 was clicked");
-    event.stopPropagation();
-    dataChannel.send("densityWheel/goto/300deg");
-    // filterwheel.style.transform='rotate(-30deg)';
-    return false
-})
-nd05.addEventListener('click', function(event) {
-    console.log("ND 0.5 was clicked");
-    event.stopPropagation();
-    dataChannel.send("densityWheel/goto/240deg");
-    // filterwheel.style.transform='rotate(-60deg)';
-    return false
-})
-nd10.addEventListener('click', function(event) {
-    console.log("ND 1.0 was clicked");
-    event.stopPropagation();
-    dataChannel.send("densityWheel/goto/180deg");
-    // filterwheel.style.transform='rotate(-90deg)';
-    return false
-})
-nd20.addEventListener('click', function(event) {
-    console.log("ND 2.0 was clicked");
-    event.stopPropagation();
-    dataChannel.send("densityWheel/goto/120deg");
-    // filterwheel.style.transform='rotate(-90deg)';
-    return false
-})
-nd40.addEventListener('click', function(event) {
-    console.log("ND 4.0 was clicked");
-    event.stopPropagation();
-    dataChannel.send("densityWheel/goto/60deg");
-    // filterwheel.style.transform='rotate(-90deg)';
-    return false
-})
+// function calculateWheelSteps(currentPosition, desiredPosition) {
+//     //Math to be implimented
+//     let motorSteps = 0;
+//     motorSteps = (desiredPosition - currentPosition) * stepsPerDegree;
+//     //Last thing to do:
+//     currentPosition = desiredPosition;
+//     return motorSteps
+// }   
+// nd00.addEventListener('click', function(event) {
+//     console.log("ND OPEN was clicked");
+//     event.stopPropagation();
+//     dataChannel.send("densityWheel/goto/0deg");
+//     // filterwheel.style.transform='rotate(0deg)';
+//     return false
+// })
+// nd03.addEventListener('click', function(event) {
+//     console.log("ND 0.3 was clicked");
+//     event.stopPropagation();
+//     dataChannel.send("densityWheel/goto/300deg");
+//     // filterwheel.style.transform='rotate(-30deg)';
+//     return false
+// })
+// nd05.addEventListener('click', function(event) {
+//     console.log("ND 0.5 was clicked");
+//     event.stopPropagation();
+//     dataChannel.send("densityWheel/goto/240deg");
+//     // filterwheel.style.transform='rotate(-60deg)';
+//     return false
+// })
+// nd10.addEventListener('click', function(event) {
+//     console.log("ND 1.0 was clicked");
+//     event.stopPropagation();
+//     dataChannel.send("densityWheel/goto/180deg");
+//     // filterwheel.style.transform='rotate(-90deg)';
+//     return false
+// })
+// nd20.addEventListener('click', function(event) {
+//     console.log("ND 2.0 was clicked");
+//     event.stopPropagation();
+//     dataChannel.send("densityWheel/goto/120deg");
+//     // filterwheel.style.transform='rotate(-90deg)';
+//     return false
+// })
+// nd40.addEventListener('click', function(event) {
+//     console.log("ND 4.0 was clicked");
+//     event.stopPropagation();
+//     dataChannel.send("densityWheel/goto/60deg");
+//     // filterwheel.style.transform='rotate(-90deg)';
+//     return false
+// })
 //END Filter Wheel Buttons
     
 //BEGIN Keithley 6514 Electrometer Buttons
