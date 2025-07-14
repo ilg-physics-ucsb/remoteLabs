@@ -14,7 +14,7 @@ function errorStream(error){
     alert(error);
 }
 
-// This functions gets run when the websocket is closed.
+// This functions runs when the websocket is closed.
 function closeStream(videoElement) {
     if (videoElement) {
         videoElement.srcObject = null;
@@ -29,6 +29,7 @@ function onWebsocketMessage(message){
     alert(message);
 }
 
+// What does this function do?
 function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     var signalling_server_hostname = location.hostname || "192.168.0.2";
     // var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
@@ -47,6 +48,7 @@ function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
     return signalObj
 }
 
+// What does this function do?
 function controllerResponseHandler(cmd) {
     var components = cmd.split("/");
     var device = components[0]
@@ -89,91 +91,8 @@ window.addEventListener('DOMContentLoaded', function () {
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
-    // var video2 = document.getElementById('v2');
-    // for Color Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
-    // var f365 = document.getElementById('f365');
-    // var f436 = document.getElementById('f436');
-    // var f546 = document.getElementById('f546');
-    // var f577 = document.getElementById('f577');
-    // var colorFilterwheel = document.getElementById('colorFilterWheel')
- 
-    // for Density Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
-    // var nd00 = document.getElementById('nd00');
-    // var nd03 = document.getElementById('nd03');
-    // var nd05 = document.getElementById('nd05');
-    // var nd10 = document.getElementById('nd10');
-    // var nd20 = document.getElementById('nd20');
-    // var nd40 = document.getElementById('nd40');
-    // var densityFilterwheel = document.getElementById('densityFilterWheel')
+    
 
-    // for Keithley 6514 Electrometer
-    // var shift6514Button = document.getElementById('Shift6514');
-    // var local6514Button = document.getElementById('Local6514');
-    // var power6514Button = document.getElementById('Power6514');
-    // var voltageButton = document.getElementById('Voltage');
-    // var currentButton = document.getElementById('Current');
-    // var resistanceButton = document.getElementById('Resistance');
-    // var chargeButton = document.getElementById('Charge');
-    // var externalFeedbackButton = document.getElementById('ExternalFeedback');
-    // var zeroCheckButton = document.getElementById('ZeroCheck');
-    // var zeroCorrectButton = document.getElementById('ZeroCorrect');
-    // var groundButton = document.getElementById('Ground');
-    // var averageButton = document.getElementById('Average');
-    // var medianButton = document.getElementById('Median');
-    // var relativeButton = document.getElementById('Relative');
-    // var limitButton = document.getElementById('Limit');
-    // var digits6514Button = document.getElementById('Digits6514');
-    // var rate6514Button = document.getElementById('Rate6514');
-    // var cursorLeft6514Button = document.getElementById('CursorLeft6514');
-    // var cursorRight6514Button = document.getElementById('CursorRight6514');
-    // var store6514Button = document.getElementById('Store6514');
-    // var recall6514Button = document.getElementById('Recall6514');
-    // var delayButton = document.getElementById('Delay');
-    // var dampingButton = document.getElementById('Damping');
-    // var haltButton = document.getElementById('Halt');
-    // var trigger6514Button = document.getElementById('Trigger6514');
-    // var exit6514Button = document.getElementById('Exit6514');
-    // var enter6514Button = document.getElementById('Enter6514');
-    // var upRange6514Button = document.getElementById('UpRange6514');
-    // var downRange6514Button = document.getElementById('DownRange6514');
-    // var autoRange6514Button = document.getElementById('AutoRange6514');
-
-    //for Keithley 2000 Multimeter
-    // var shift2000Button = document.getElementById('Shift2000');
-    // var local2000Button = document.getElementById('Local2000');
-    // var power2000Button = document.getElementById('Power2000');
-    // var dcVoltageButton = document.getElementById('DCvoltage');
-    // var acVoltageButton = document.getElementById('ACvoltage');
-    // var dcCurrentButton = document.getElementById('DCcurrent');
-    // var acCurrentButton = document.getElementById('ACcurrent');
-    // var TWOwireResistanceButton = document.getElementById('2wireResistance');
-    // var FOURwireResistanceButton = document.getElementById('4wireResistance');
-    // var frequencyButton = document.getElementById('Frequency');
-    // var temperatureButton = document.getElementById('Temperature');
-    // var externalTriggerButton = document.getElementById('ExternalTrigger');
-    // var trigger2000Button = document.getElementById('Trigger2000');
-    // var store2000Button = document.getElementById('Store2000');
-    // var recall2000Button = document.getElementById('Recall2000');
-    // var filterButton = document.getElementById('Filter');
-    // var relativeButton = document.getElementById('Relative');
-    // var cursorLeft2000Button = document.getElementById('CursorLeft2000');
-    // var cursorRight2000Button = document.getElementById('CursorRight2000');
-    // var openButton = document.getElementById('Open');
-    // var closeButton = document.getElementById('Close');
-    // var stepButton = document.getElementById('Step');
-    // var scanButton = document.getElementById('Scan');
-    // var digits2000Button = document.getElementById('Digits2000');
-    // var rate2000Button = document.getElementById('Rate2000');
-    // var exit2000Button = document.getElementById('Exit2000');
-    // var enter2000Button = document.getElementById('Enter2000');
-    // var upRange2000Button = document.getElementById('UpRange2000');
-    // var downRange2000Button = document.getElementById('DownRange2000');
-    // var autoRange2000Button = document.getElementById('AutoRange2000');
-
-
-    //for LiveFeed
-    // var mainCamSignal = setupWebRTC(8081, video, 100);
-    // var mainCamSignal = setupWebRTC(5002, video, 50);
     window.setTimeout(timeOutHandler,10800000)
 
     function timeOutHandler(){
@@ -318,7 +237,7 @@ window.addEventListener('DOMContentLoaded', function () {
                         singleSelect: true
                     }).parent().css({"margin":"0 auto"});
                 }
-
+                console.log("Rendered colorFilterWheel interactive area!");    
                 var f365 = document.getElementById('f365');
                 var f436 = document.getElementById('f436');
                 var f546 = document.getElementById('f546');
@@ -942,11 +861,83 @@ window.addEventListener('DOMContentLoaded', function () {
 
             }    
         },
-        knob: { // TODO
-           name: 'Potentiometer',
-           description: "The voltage is adjusted by turning the knob of a variable resistor (also known as a potentiometer).",
-           width: 72,
-           toolDirection: "Click on an arrow to rotate it into position." 
+        knob: {
+            name: 'Potentiometer',
+            description: "The voltage is adjusted by turning the knob of a variable resistor (also known as a potentiometer).",
+            width: 72,
+            toolDirection: "Choose a radio button to select the amount of rotation per click.   Click an arrow to rotate the knob in that direction. ",
+            render: () => {
+                const target = document.getElementById("tool-interactive-area");
+                if (target) {
+                    target.innerHTML = `
+                        <div id="radioButtonsPot" class="w-row">
+                        <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>    
+                            <div class="column w-col w-col-1" style="margin-bottom: 0px;">
+                                <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
+                                <label for="3.6_degree">3.6&#176;</label>
+                            </div>  
+                            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
+                                <input type="radio" id="36_degree" name="angleStep" value="36">
+                                <label for="36_degree">36&#176;</label>
+                            </div>
+                                <div class="column w-col w-col-1" style="margin-bottom: 0px; ">
+                                <input type="radio" id="360_degree" name="angleStep" value="360" checked>
+                                <label for="360_degree">360&#176;</label>
+                            </div>
+                            <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
+                        </div>  
+                        <div id="potentiometerKnob" style="width: 50%; height: 50%">
+                            <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
+                            <map name="image-map-knob">
+                                <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
+                                <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
+                            </map>
+                        </div>
+                         <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
+                    `;
+                    $('#knob').mapster({
+                        mapKey:'id',
+                        fillColor: 'f5f5b5',
+                        fillOpacity: 0.6,
+                        render_select: { 
+                            fillOpacity: 0.3
+                        },
+                        singleSelect: true
+                    }).parent().css({"margin":"0 auto"});
+                }
+
+                console.log("Rendered potentiometer interactive area!");
+                var leftPot = document.getElementById('turnLeft');
+                var rightPot = document.getElementById('turnRight');
+                var threeDegree = document.getElementById('3.6_degree');
+                var thirtySixDegree = document.getElementById('36_degree');
+                var threeSixtyDegree = document.getElementById('360_degree');
+                var potSteps=200;
+                var knob = this.document.getElementById('knob')
+            
+
+                // TOOL OPERATION
+                threeDegree.addEventListener('click', function(){
+                    potSteps=2;
+                })
+                thirtySixDegree.addEventListener('click', function(){
+                    potSteps=20;
+                })
+                threeSixtyDegree.addEventListener('click', function(){
+                    potSteps=200;
+                })
+
+                leftPot.addEventListener('click', function() {
+                    console.log("leftPot was clicked");
+                    dataChannel.send("Pot/move/"+(-potSteps));
+                })
+
+                rightPot.addEventListener('click', function() {
+                    console.log("rightPot was clicked");
+                    dataChannel.send("Pot/move/"+potSteps);
+                })
+
+            }
         }
     }
 
@@ -1106,12 +1097,12 @@ window.addEventListener('DOMContentLoaded', function () {
     var ambientState = false;
 
     //for Potentiometer
-    var leftPot = document.getElementById('turnLeft');
-    var rightPot = document.getElementById('turnRight');
-    var threeDegree = document.getElementById('3.6_degree');
-    var thirtySixDegree = document.getElementById('36_degree');
-    var threeSixtyDegree = document.getElementById('360_degree');
-    var potSteps=200;
+    // var leftPot = document.getElementById('turnLeft');
+    // var rightPot = document.getElementById('turnRight');
+    // var threeDegree = document.getElementById('3.6_degree');
+    // var thirtySixDegree = document.getElementById('36_degree');
+    // var threeSixtyDegree = document.getElementById('360_degree');
+    // var potSteps=200;
   
     ambientTOGGLE.addEventListener('click', function(){
         console.log("Ambient light was switched");
@@ -1159,25 +1150,25 @@ window.addEventListener('DOMContentLoaded', function () {
     var MultimeterState=false;
 
  //BEGIN Potentiometer Buttons 
-    threeDegree.addEventListener('click', function(){
-        potSteps=2;
-    })
-    thirtySixDegree.addEventListener('click', function(){
-        potSteps=20;
-    })
-    threeSixtyDegree.addEventListener('click', function(){
-        potSteps=200;
-    })
+    // threeDegree.addEventListener('click', function(){
+    //     potSteps=2;
+    // })
+    // thirtySixDegree.addEventListener('click', function(){
+    //     potSteps=20;
+    // })
+    // threeSixtyDegree.addEventListener('click', function(){
+    //     potSteps=200;
+    // })
 
-    leftPot.addEventListener('click', function() {
-        console.log("leftPot was clicked");
-        dataChannel.send("Pot/move/"+(-potSteps));
-    })
+    // leftPot.addEventListener('click', function() {
+    //     console.log("leftPot was clicked");
+    //     dataChannel.send("Pot/move/"+(-potSteps));
+    // })
 
-    rightPot.addEventListener('click', function() {
-        console.log("rightPot was clicked");
-        dataChannel.send("Pot/move/"+potSteps);
-    })
+    // rightPot.addEventListener('click', function() {
+    //     console.log("rightPot was clicked");
+    //     dataChannel.send("Pot/move/"+potSteps);
+    // })
 //END Potentiometer Buttons
 
 //BEGIN Color Filter Wheel Buttons 
