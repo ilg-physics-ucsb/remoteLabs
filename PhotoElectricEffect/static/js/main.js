@@ -495,36 +495,36 @@ window.addEventListener('DOMContentLoaded', function () {
                     }).parent().css({"margin":"0 auto"});
                 }
                 
-                var shift6514Button = this.document.getElementById('shift6514Button');
-                var local6514Button = this.document.getElementById('local6514Button');
-                var power6514Button = this.document.getElementById('power6514Button');
-                var voltageButton = this.document.getElementById('voltageButton');
-                var currentButton = this.document.getElementById('currentButton');
-                var resistanceButton = this.document.getElementById('resistanceButton');
-                var chargeButton = this.document.getElementById('chargeButton');
-                var externalFeedbackButton = this.document.getElementById('externalFeedbackButton');
-                var zeroCheckButton = this.document.getElementById('zeroCheckButton');
-                var zeroCorrectButton = this.document.getElementById('zeroCorrectButton');
-                var groundButton = this.document.getElementById('groundButton');
-                var averageButton = this.document.getElementById('averageButton');
-                var medianButton = this.document.getElementById('medianButton');
-                var relativeButton = this.document.getElementById('relativeButton');
-                var limitButton = this.document.getElementById('limitButton');
-                var digits6514Button = this.document.getElementById('digits6514Button');
-                var rate6514Button = this.document.getElementById('rate6514Button');
-                var cursorLeft6514Button = this.document.getElementById('cursorLeft6514Button');
-                var cursorRight6514Button = this.document.getElementById('cursorRight6514Button');
-                var store6514Button = this.document.getElementById('store6514Button');
-                var recall6514Button = this.document.getElementById('recall6514Button');
-                var delayButton = this.document.getElementById('delayButton');
-                var dampingButton = this.document.getElementById('dampingButton');
-                var haltButton = this.document.getElementById('haltButton');
-                var trigger6514Button = this.document.getElementById('trigger6514Button');
-                var exit6514Button = this.document.getElementById('exit6514Button');
-                var enter6514Button = this.document.getElementById('enter6514Button');
-                var upRange6514Button = this.document.getElementById('upRange6514Button');
-                var downRange6514Button = this.document.getElementById('downRange6514Button');
-                var autoRange6514Button = this.document.getElementById('autoRange6514Button');                
+                var shift6514Button = this.document.getElementById('Shift6514');
+                var local6514Button = this.document.getElementById('Local6514');
+                var power6514Button = this.document.getElementById('Power6514');
+                var voltageButton = this.document.getElementById('Voltage');
+                var currentButton = this.document.getElementById('Current');
+                var resistanceButton = this.document.getElementById('Resistance');
+                var chargeButton = this.document.getElementById('Charge');
+                var externalFeedbackButton = this.document.getElementById('ExternalFeedback');
+                var zeroCheckButton = this.document.getElementById('ZeroCheck');
+                var zeroCorrectButton = this.document.getElementById('ZeroCorrect');
+                var groundButton = this.document.getElementById('Ground');
+                var averageButton = this.document.getElementById('Average');
+                var medianButton = this.document.getElementById('Median');
+                var relativeButton = this.document.getElementById('Relative');
+                var limitButton = this.document.getElementById('Limit');
+                var digits6514Button = this.document.getElementById('Digits6514');
+                var rate6514Button = this.document.getElementById('Rate6514');
+                var cursorLeft6514Button = this.document.getElementById('CursorLeft6514');
+                var cursorRight6514Button = this.document.getElementById('CursorRight6514');
+                var store6514Button = this.document.getElementById('Store6514');
+                var recall6514Button = this.document.getElementById('Recall6514');
+                var delayButton = this.document.getElementById('Delay');
+                var dampingButton = this.document.getElementById('Damping');
+                var haltButton = this.document.getElementById('Halt');
+                var trigger6514Button = this.document.getElementById('Trigger6514');
+                var exit6514Button = this.document.getElementById('Exit6514');
+                var enter6514Button = this.document.getElementById('Enter6514');
+                var upRange6514Button = this.document.getElementById('UpRange6514');
+                var downRange6514Button = this.document.getElementById('DownRange6514');
+                var autoRange6514Button = this.document.getElementById('AutoRange6514');                
                 var electrometer = document.getElementById('electrometer')
 
                 shift6514Button.addEventListener('click', function(event) {
