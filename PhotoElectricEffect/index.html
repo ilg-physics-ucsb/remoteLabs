@@ -44,19 +44,19 @@
     <h4 style="color: white;">Lab Manuals</h4>
     <ul class="manuals-container">
       <li class="sidebar-item">
-        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/PenRayGasLamps.pdf" target="_blank">Hg-Ne Lamp</a>
+        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/PenRayGasLamps.pdf" target="_blank">Hg-Ne Lamp User Manual (with spectrum)</a>
         <img style="padding: 3px 5px;" src="static/imgs/transparent-imgs/penray-lamp.png" width="172" height="26"/>
       </li>
       <li class="sidebar-item">
-        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/Keithley%20multimeter%202000.pdf" target="_blank">Keithley Model 2000 Multimeter User</a>
+        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/Keithley%20multimeter%202000.pdf" target="_blank">Keithley Model 2000 Multimeter User Manual</a>
         <img style="padding: 10px;" src="static/imgs/Keithley2000Multimeter.jpg" width="224"/>
       </li>
       <li class="sidebar-item">
-        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/Keithley%20electrometer%206514.pdf" target="_blank">Keithley Model 6514 System Electrometer Instruction</a>
+        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/Keithley%20electrometer%206514.pdf" target="_blank">Keithley Model 6514 Electrometer User Manual</a>
         <img style="padding: 10px;" src="static/imgs/Keithley6514Electrometer.jpg" width="224"/>
       </li>
       <li class="sidebar-item">
-        <p>Filters: Edumund Optics&#174; Bandpass Interference Filters</p>
+        <p style="text-align: center;">Edumund Optics&#174; Bandpass Interference Filters</p>
         <figure class="Photo">
           <a target="_blank" href="static/docs/curv_f365.pdf">
               <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
@@ -139,184 +139,6 @@
     </div>
 
 
-    <!-- PREVIOUS CODE -->
-    
-  <!--<div id="SideImagesLeft" class="column w-col w-col-2">
-         <figure class="Icon">
-        (click to toggle the Hg-Ne lamp)<br>
-        <img id="toggleSwitch" src="static/imgs/toggleSwitch.png" usemap="#image-map-ts">
-        <map name="image-map-ts">
-            <area id="HgNeTOGGLE" title="Click here to turn ON" coords="72,45,128,95" shape="rect">
-        </map> 
-        <br>       
-      </figure>
-      <figure class="Photo">
-          <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
-          <a target="_blank" href="static/docs/PenRayGasLamps.pdf">
-            <div class = "outer1">
-              <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
-            </div>
-            </a><br>
-          <a target="_blank" href="static/docs/Hg-NeEmission.jpg">
-            <div class = "outer">
-              <img id="Spectrum" class="image" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
-            </div>
-          </a><br><br><br>
-      </figure>        
-      <figure class="Photo">
-          <strong>Filters: Edumund Optics&#174; Bandpass Interference Filters</strong> <br> 
-          <a target="_blank" href="static/docs/curv_f365.pdf">
-              <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
-          </a>
-          <a target="_blank" href="static/docs/curv_f436.pdf">
-              <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
-          </a>
-          <a target="_blank" href="static/docs/curv_f546.pdf">
-              <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
-          </a>
-          <a target="_blank" href="static/docs/curv_f577.pdf">
-              <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
-          </a><br>
-          (click each for its transmission curve)
-      </figure>
-    </div>    -->
-
-
-    <!--<div id="SideImagesRight" class="column w-col w-col-2">
-      <figure class="Icon">
-        (click to toggle the ambient light)<br>
-        <img id="lightSwitch" src="static/imgs/lightSwitch.png" usemap="#image-map-ls">
-        <map name="image-map-ls">
-          <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
-        </map>
-        <br> 
-        <br> 
-        <br>           
-      </figure> -->
-      <!-- <div id="radioButtonsPot" class="w-row">
-        <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
-        <div class="column w-col w-col-1" style="margin-bottom: 0px;">
-          <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
-          <label for="3.6_degree">3.6&#176;</label>
-        </div>  
-        <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-          <input type="radio" id="36_degree" name="angleStep" value="36">
-          <label for="36_degree">36&#176;</label>
-        </div>
-        <div class="column w-col w-col-1" style="margin-bottom: 0px;">
-          <input type="radio" id="360_degree" name="angleStep" value="360" checked>
-          <label for="360_degree">360&#176;</label>
-        </div>
-        <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
-      </div>  
-      <div id="potentiometerKnob" style="width: 100%; height: 100%">
-        <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
-        <map name="image-map-knob">
-          <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
-          <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
-        </map>
-        <br>
-        (click on the arrows to rotate the potentiometer)
-      </div>
-      <br> -->
-     
-      <!-- <figure class="Device embed wheel">
-        <center><img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw"></center>
-        <map name="image-map-dfw">
-          <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
-          <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
-          <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
-          <area id="nd10" href="#" title="ND 1.0" coords="315,555,68"  shape="circle">
-          <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
-          <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
-        </map>
-        <br>
-        (click on a filter to rotate it into position)   
-      </figure>
-    </div>-->
-    
-    <!--<div id="PageBottom" class="w-row">
-       <div id="BottomLeft" class="column w-col w-col-6">
-        <a target="_blank" href="static/docs/Keithley electrometer 6514.pdf"
-        style="font-size: large;font-weight: 600;color: crimson;">
-          (click here for the Keithley Model 6514 System Electrometer Instruction manual) 
-        </a>
-        <img id="electrometer" src="static/imgs/Keithley6514ElectrometerTXT.jpg" usemap="#image-map-6514"> 
-        <map name="image-map-6514">
-          <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
-          <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,399,17" shape="circle">
-          <area id="Power6514" 		    href="#"	title="Power" 		  coords="99,479,17" shape="circle">
-          <area id="Voltage" 		      href="#"	title="Voltage" 		coords="200,331,29" shape="circle">
-          <area id="Current" 		      href="#"	title="Current" 		coords="285,331,29" shape="circle">
-          <area id="Resistance" 	    href="#"	title="Resistance"  coords="381,331,29" shape="circle">
-          <area id="Charge" 		      href="#"	title="Charge" 		  coords="466,331,29" shape="circle">
-          <area id="ExternalFeedback" href="#"	title="ExternalFeedback" coords="562,331,29" shape="circle">
-          <area id="ZeroCheck" 		    href="#"	title="ZeroCheck" 	coords="647,331,29" shape="circle">
-          <area id="ZeroCorrect" 	    href="#"	title="ZeroCorrect" coords="743,331,29" shape="circle">
-          <area id="Ground" 		      href="#"	title="Ground" 		  coords="828,331,29" shape="circle">
-          <area id="Average" 		      href="#"	title="Average" 		coords="166,428,238,393" shape="rect">
-          <area id="Median" 		      href="#"	title="Median" 		  coords="242,393,316,428" shape="rect">
-          <area id="Relative" 		    href="#"	title="Relative" 	  coords="420,393,346,428" shape="rect">
-          <area id="Limit" 		        href="#"	title="Limit" 		  coords="423,393,499,428" shape="rect">
-          <area id="Digits6514" 	    href="#"	title="Digits"      coords="603,393,529,428" shape="rect">
-          <area id="Rate6514" 		    href="#"	title="Rate" 		    coords="606,393,678,428" shape="rect">
-          <area id="CursorLeft6514" 	href="#"	title="CursorLeft"  coords="786,393,712,428" shape="rect">
-          <area id="CursorRight6514" 	href="#"	title="CursorRight" coords="789,393,859,428" shape="rect">
-          <area id="Store6514" 		    href="#" title="Store" 		  coords="238,460,163,496" shape="rect">
-          <area id="Recall6514"		    href="#"	title="Recall" 		  coords="242,460,314,496" shape="rect">
-          <area id="Delay" 		        href="#"	title="Delay" 		  coords="420,460,346,496" shape="rect">
-          <area id="Damping" 		      href="#"	title="Damping" 		coords="423,460,495,496" shape="rect">
-          <area id="Halt" 		        href="#"	title="Halt" 		    coords="603,460,529,497" shape="rect">
-          <area id="Trigger6514" 	    href="#"	title="Trigger" 		coords="606,460,678,497" shape="rect">
-          <area id="Exit6514" 		    href="#"	title="Exit" 			  coords="786,460,712,498" shape="rect">
-          <area id="Enter6514" 		    href="#"	title="Enter" 		  coords="789,460,863,498" shape="rect">
-          <area id="UpRange6514" 	    href="#"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-          <area id="DownRange6514" 	  href="#"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-          <area id="AutoRange6514"	  href="#"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
-        </map>
-      </div> -->
-      <!-- <div id="BottomRight" class="column w-col w-col-6">
-          <a target="_blank" href="static/docs/Keithley multimeter 2000.pdf" 
-          style="font-size: large;font-weight: 600;color: crimson;">
-          (click here for the Keithley Model 2000 Multimeter User's manual) 
-          </a>
-        <img id="multimeter"  src="static/imgs/Keithley2000MultimeterTXT.jpg" usemap="#image-map-2000">
-        <map name="image-map-2000">
-          <area id="Shift2000" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
-          <area id="Local2000" 		    href="#"	title="Local" 		  coords="102,399,17" shape="circle">
-          <area id="Power2000" 		    href="#"	title="Power" 		  coords="99,479,17" shape="circle">
-          <area id="DCvoltage" 		    href="#"	title="DCvoltage" 	coords="200,331,29" shape="circle">
-          <area id="ACvoltage" 		    href="#"	title="ACvoltage" 	coords="285,331,29" shape="circle">
-          <area id="DCcurrent" 		    href="#"	title="DCcurrent" 	coords="381,331,29" shape="circle">
-          <area id="ACcurrent" 		    href="#"	title="ACcurrent" 	coords="466,331,29" shape="circle">
-          <area id="2wireResistance"  href="#"	title="2wireResistance"coords="562,331,29" shape="circle">
-          <area id="4wireResistance" 	href="#"	title="4wireResistance"coords="647,331,29" shape="circle">
-          <area id="Frequency" 		    href="#"	title="Frequency" 	coords="743,331,29" shape="circle">
-          <area id="Temperature" 		  href="#"	title="Temperature" coords="828,331,29" shape="circle">
-          <area id="ExternalTrigger" 	href="#"	title="ExternalTrigger"coords="166,428,238,393" shape="rect">
-          <area id="Trigger2000" 		  href="#"	title="Trigger" 		coords="242,393,316,428" shape="rect">
-          <area id="Store2000" 		    href="#"	title="Store" 	  	coords="420,393,346,428" shape="rect">
-          <area id="Recall2000" 		  href="#"	title="Recall" 		  coords="423,393,499,428" shape="rect">
-          <area id="Filter" 		      href="#"	title="Filter" 		  coords="603,393,529,428" shape="rect">
-          <area id="Relative" 		    href="#"	title="Relative" 		coords="606,393,678,428" shape="rect">
-          <area id="CursorLeft2000" 	href="#"	title="CursorLeft" 	coords="786,393,712,428" shape="rect">
-          <area id="CursorRight2000" 	href="#"	title="CursorRight" coords="789,393,859,428" shape="rect">
-          <area id="Open" 		        href="#"	title="Open" 		    coords="238,460,163,496" shape="rect">
-          <area id="Close" 		        href="#"	title="Close" 		  coords="242,460,314,496" shape="rect">
-          <area id="Step" 		        href="#"	title="Step" 		    coords="420,460,346,496" shape="rect">
-          <area id="Scan" 		        href="#"	title="Scan" 		    coords="423,460,495,496" shape="rect">
-          <area id="Digits2000" 		  href="#"	title="Digits" 		  coords="603,460,529,497" shape="rect">
-          <area id="Rate2000" 		    href="#"	title="Rate" 		    coords="606,460,678,497" shape="rect">
-          <area id="Exit2000" 		    href="#"	title="Exit" 			  coords="786,460,712,498" shape="rect">
-          <area id="Enter2000" 		    href="#"	title="Enter" 		  coords="789,460,863,498" shape="rect">
-          <area id="UpRange2000" 		  href="#"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-          <area id="DownRange2000" 		href="#"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-          <area id="AutoRange2000" 		href="#"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
-        </map>
-      </div> 
-    </div>
-  </div>-->
-
   <div class="modal fade" id="extremaModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -358,11 +180,8 @@
             </div>
         </div>
     </div>
-                <!--  </div> -->
-
-  <!-- End your project here-->
-  <!-- <script src="{{  url_for('static', filename='js/uv4l.js')  }}"></script> -->
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script> -->
+    
+   
 
   <!-- jQuery - These are all the scripts to do all the styling -->
   <script type="text/javascript" src="static/js/jquery.min.js"></script>
@@ -375,60 +194,6 @@
   <!-- Your custom scripts (optional) -->
   <!-- <script type="text/javascript" src="static/js/imageMapResizer.min.js"></script> -->
  <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
-  <!-- <script type="text/javascript">
-        $(document).ready(function () {
-          // $('#colorFilterWheel').mapster({
-          //   mapKey:'id',
-          //   fillColor: 'f5f5b5',
-          //   fillOpacity: 0.6,
-          //   render_select: { 
-          //       fillOpacity: 0.3
-          //   },
-          //   singleSelect: true
-          // }).parent().css({"margin":"0 auto"});
-          
-          // $('#densityFilterWheel').mapster({
-          //   mapKey:'id',
-          //   fillColor: 'f5f5b5',
-          //   fillOpacity: 0.6,
-          //   render_select: { 
-          //       fillOpacity: 0.3
-          //   },
-          //   singleSelect: true
-          // }).parent().css({"margin":"0 auto"});
-          
-          // $('#electrometer').mapster({
-          //   mapKey:'id',
-          //   fillColor: 'f5f5b5',
-          //   fillOpacity: 0.6,
-          //   render_select: { 
-          //       fillOpacity: 0.3
-          //   },
-          //   singleSelect: true
-          // }).parent().css({"margin":"0 auto"});
-
-          // $('#knob').mapster({
-          //   mapKey:'id',
-          //   fillColor: 'f5f5b5',
-          //   fillOpacity: 0.6,
-          //   render_select: { 
-          //       fillOpacity: 0.3
-          //   },
-          //   singleSelect: true
-          // }).parent().css({"margin":"0 auto"});
-
-          // $('#multimeter').mapster({
-          //   mapKey:'id',
-          //   fillColor: 'f5f5b5',
-          //   fillOpacity: 0.6,
-          //   render_select: { 
-          //       fillOpacity: 0.3
-          //   },
-          //   singleSelect: true
-          // }).parent().css({"margin":"0 auto"});
-       });    
- </script> -->
-  <!-- <script type="text/javascript">imageMapResize();</script> -->
  
     <style>
 	#video {width:100%; height:100%}
