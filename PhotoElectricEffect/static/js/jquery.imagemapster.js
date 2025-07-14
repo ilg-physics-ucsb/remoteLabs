@@ -4059,6 +4059,54 @@ A jQuery plugin to enhance image maps.
                 });
             });
         }
+//NEW CODE - dkf 250713 - doesn't seem to make a difference
+
+        // Resize the map to fit within the boundaries provided
+        var resizeTime = 100;     // total duration of the resize effect, 0 is instant
+        var resizeDelay = 100;    // time to wait before checking the window size again
+                                // the shorter the time, the more reactive it will be.
+                                // short or 0 times could cause problems with old browsers.
+
+        function resize(maxWidth,maxHeight) {
+            var image =  $('img'),
+                imgWidth = image.width(),
+                imgHeight = image.height(),
+                newWidth=0,
+                newHeight=0;
+
+            if (imgWidth/maxWidth>imgHeight/maxHeight) {
+                newWidth = maxWidth;
+            } else {
+                newHeight = maxHeight;
+            }
+            image.mapster('resize',newWidth,newHeight,resizeTime);   
+        }
+
+        // Track window resizing events, but only actually call the map resize when the
+        // window isn't being resized any more
+
+        function onWindowResize() {
+            
+            var curWidth = $('.content').width(),
+                curHeight = $('.content').height(),
+                checking=false;
+            if (checking) {
+                return;
+                    }
+            checking = true;
+            window.setTimeout(function() {
+                var newWidth = $('.content').width(),
+                newHeight = $('.content').height();
+                if (newWidth === curWidth &&
+                    newHeight === curHeight) {
+                    resize(newWidth,newHeight); 
+                }
+                checking=false;
+            },resizeDelay );
+        }
+
+        $(window).bind('resize',onWindowResize);
+//END NEW CODE
 
         if (me.scaleInfo.width === width && me.scaleInfo.height === height) {
             return;

@@ -107,36 +107,36 @@ window.addEventListener('DOMContentLoaded', function () {
     // var densityFilterwheel = document.getElementById('densityFilterWheel')
 
     // for Keithley 6514 Electrometer
-    var shift6514Button = document.getElementById('Shift6514');
-    var local6514Button = document.getElementById('Local6514');
-    var power6514Button = document.getElementById('Power6514');
-    var voltageButton = document.getElementById('Voltage');
-    var currentButton = document.getElementById('Current');
-    var resistanceButton = document.getElementById('Resistance');
-    var chargeButton = document.getElementById('Charge');
-    var externalFeedbackButton = document.getElementById('ExternalFeedback');
-    var zeroCheckButton = document.getElementById('ZeroCheck');
-    var zeroCorrectButton = document.getElementById('ZeroCorrect');
-    var groundButton = document.getElementById('Ground');
-    var averageButton = document.getElementById('Average');
-    var medianButton = document.getElementById('Median');
-    var relativeButton = document.getElementById('Relative');
-    var limitButton = document.getElementById('Limit');
-    var digits6514Button = document.getElementById('Digits6514');
-    var rate6514Button = document.getElementById('Rate6514');
-    var cursorLeft6514Button = document.getElementById('CursorLeft6514');
-    var cursorRight6514Button = document.getElementById('CursorRight6514');
-    var store6514Button = document.getElementById('Store6514');
-    var recall6514Button = document.getElementById('Recall6514');
-    var delayButton = document.getElementById('Delay');
-    var dampingButton = document.getElementById('Damping');
-    var haltButton = document.getElementById('Halt');
-    var trigger6514Button = document.getElementById('Trigger6514');
-    var exit6514Button = document.getElementById('Exit6514');
-    var enter6514Button = document.getElementById('Enter6514');
-    var upRange6514Button = document.getElementById('UpRange6514');
-    var downRange6514Button = document.getElementById('DownRange6514');
-    var autoRange6514Button = document.getElementById('AutoRange6514');
+    // var shift6514Button = document.getElementById('Shift6514');
+    // var local6514Button = document.getElementById('Local6514');
+    // var power6514Button = document.getElementById('Power6514');
+    // var voltageButton = document.getElementById('Voltage');
+    // var currentButton = document.getElementById('Current');
+    // var resistanceButton = document.getElementById('Resistance');
+    // var chargeButton = document.getElementById('Charge');
+    // var externalFeedbackButton = document.getElementById('ExternalFeedback');
+    // var zeroCheckButton = document.getElementById('ZeroCheck');
+    // var zeroCorrectButton = document.getElementById('ZeroCorrect');
+    // var groundButton = document.getElementById('Ground');
+    // var averageButton = document.getElementById('Average');
+    // var medianButton = document.getElementById('Median');
+    // var relativeButton = document.getElementById('Relative');
+    // var limitButton = document.getElementById('Limit');
+    // var digits6514Button = document.getElementById('Digits6514');
+    // var rate6514Button = document.getElementById('Rate6514');
+    // var cursorLeft6514Button = document.getElementById('CursorLeft6514');
+    // var cursorRight6514Button = document.getElementById('CursorRight6514');
+    // var store6514Button = document.getElementById('Store6514');
+    // var recall6514Button = document.getElementById('Recall6514');
+    // var delayButton = document.getElementById('Delay');
+    // var dampingButton = document.getElementById('Damping');
+    // var haltButton = document.getElementById('Halt');
+    // var trigger6514Button = document.getElementById('Trigger6514');
+    // var exit6514Button = document.getElementById('Exit6514');
+    // var enter6514Button = document.getElementById('Enter6514');
+    // var upRange6514Button = document.getElementById('UpRange6514');
+    // var downRange6514Button = document.getElementById('DownRange6514');
+    // var autoRange6514Button = document.getElementById('AutoRange6514');
 
     //for Keithley 2000 Multimeter
     var shift2000Button = document.getElementById('Shift2000');
@@ -299,16 +299,16 @@ window.addEventListener('DOMContentLoaded', function () {
                 if (target) {
                     target.innerHTML = `
                         <figure class="Device embed wheel">
-                            <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw" height= 45% width=45%>
+                            <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw" height="478" width="434">
                             <map name="image-map-cfw">
-                                <area id="f365" href="#" title="365 nm" coords="325,115,74" shape="circle">
-                                <area id="f436" href="#" title="436 nm" coords="528,236,72" shape="circle">
-                                <area id="f546" href="#" title="546 nm" coords="535,480,72" shape="circle">
-                                <area id="f577" href="#" title="577 nm" coords="325,600,74" shape="circle">
+                                <area id="f365" href="#" title="365 nm" coords="310,107,68" shape="circle">
+                                <area id="f436" href="#" title="436 nm" coords="505,228,67" shape="circle">
+                                <area id="f546" href="#" title="546 nm" coords="507,455,69" shape="circle">
+                                <area id="f577" href="#" title="577 nm" coords="312,568,72" shape="circle">
                             </map>   
                         </figure>
                     `;
-                     $('#colorFilterWheel').mapster({
+                    $('#colorFilterWheel').mapster({
                         mapKey:'id',
                         fillColor: 'f5f5b5',
                         fillOpacity: 0.6,
@@ -361,85 +361,85 @@ window.addEventListener('DOMContentLoaded', function () {
             width: 84,
             toolDirection: "Click on a filter to rotate it into position.",
             render: () => {
-                    const target = document.getElementById("tool-interactive-area");
-                    if (target) {
-                        target.innerHTML = `
-                            <figure class="Device embed wheel">
-                            <img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw" height= 50% width=50%></center>
-                                <map name="image-map-dfw">
-                                    <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
-                                    <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
-                                    <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
-                                    <area id="nd10" href="#" title="ND 1.0" coords="312,558,68"  shape="circle">
-                                    <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
-                                    <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
-                                </map>
-                            </figure>
-                        `;
-                       $('#densityFilterWheel').mapster({
-                            mapKey:'id',
-                            fillColor: 'f5f5b5',
-                            fillOpacity: 0.6,
-                            render_select: { 
-                                fillOpacity: 0.3
-                            },
-                            singleSelect: true
-                        }).parent().css({"margin":"0 auto"});
-                    }
+                const target = document.getElementById("tool-interactive-area");
+                if (target) {
+                    target.innerHTML = `
+                        <figure class="Device embed wheel">
+                        <img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw" height="478" width="434"></center>
+                            <map name="image-map-dfw">
+                                <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
+                                <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
+                                <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
+                                <area id="nd10" href="#" title="ND 1.0" coords="312,558,68"  shape="circle">
+                                <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
+                                <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
+                            </map>
+                        </figure>
+                    `;
+                    $('#densityFilterWheel').mapster({
+                        mapKey:'id',
+                        fillColor: 'f5f5b5',
+                        fillOpacity: 0.6,
+                        render_select: { 
+                            fillOpacity: 0.3
+                        },
+                        singleSelect: true
+                    }).parent().css({"margin":"0 auto"});
+                }
 
-                    var nd00 = document.getElementById('nd00');
-                    var nd03 = document.getElementById('nd03');
-                    var nd05 = document.getElementById('nd05');
-                    var nd10 = document.getElementById('nd10');
-                    var nd20 = document.getElementById('nd20');
-                    var nd40 = document.getElementById('nd40');
-                    var densityFilterwheel = document.getElementById('densityFilterWheel')
+                var nd00 = document.getElementById('nd00');
+                var nd03 = document.getElementById('nd03');
+                var nd05 = document.getElementById('nd05');
+                var nd10 = document.getElementById('nd10');
+                var nd20 = document.getElementById('nd20');
+                var nd40 = document.getElementById('nd40');
+                var densityFilterwheel = document.getElementById('densityFilterWheel')
 
-                    nd00.addEventListener('click', function(event) {
-                        console.log("ND OPEN was clicked");
-                        event.stopPropagation();
-                        dataChannel.send("densityWheel/goto/0deg");
-                        // filterwheel.style.transform='rotate(0deg)';
-                        return false
-                    })
-                    nd03.addEventListener('click', function(event) {
-                        console.log("ND 0.3 was clicked");
-                        event.stopPropagation();
-                        dataChannel.send("densityWheel/goto/300deg");
-                        // filterwheel.style.transform='rotate(-30deg)';
-                        return false
-                    })
-                    nd05.addEventListener('click', function(event) {
-                        console.log("ND 0.5 was clicked");
-                        event.stopPropagation();
-                        dataChannel.send("densityWheel/goto/240deg");
-                        // filterwheel.style.transform='rotate(-60deg)';
-                        return false
-                    })
-                    nd10.addEventListener('click', function(event) {
-                        console.log("ND 1.0 was clicked");
-                        event.stopPropagation();
-                        dataChannel.send("densityWheel/goto/180deg");
-                        // filterwheel.style.transform='rotate(-90deg)';
-                        return false
-                    })
-                    nd20.addEventListener('click', function(event) {
-                        console.log("ND 2.0 was clicked");
-                        event.stopPropagation();
-                        dataChannel.send("densityWheel/goto/120deg");
-                        // filterwheel.style.transform='rotate(-90deg)';
-                        return false
-                    })
-                    nd40.addEventListener('click', function(event) {
-                        console.log("ND 4.0 was clicked");
-                        event.stopPropagation();
-                        dataChannel.send("densityWheel/goto/60deg");
-                        // filterwheel.style.transform='rotate(-90deg)';
-                        return false
-                    })
+                nd00.addEventListener('click', function(event) {
+                    console.log("ND OPEN was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("densityWheel/goto/0deg");
+                    // filterwheel.style.transform='rotate(0deg)';
+                    return false
+                })
+                nd03.addEventListener('click', function(event) {
+                    console.log("ND 0.3 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("densityWheel/goto/300deg");
+                    // filterwheel.style.transform='rotate(-30deg)';
+                    return false
+                })
+                nd05.addEventListener('click', function(event) {
+                    console.log("ND 0.5 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("densityWheel/goto/240deg");
+                    // filterwheel.style.transform='rotate(-60deg)';
+                    return false
+                })
+                nd10.addEventListener('click', function(event) {
+                    console.log("ND 1.0 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("densityWheel/goto/180deg");
+                    // filterwheel.style.transform='rotate(-90deg)';
+                    return false
+                })
+                nd20.addEventListener('click', function(event) {
+                    console.log("ND 2.0 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("densityWheel/goto/120deg");
+                    // filterwheel.style.transform='rotate(-90deg)';
+                    return false
+                })
+                nd40.addEventListener('click', function(event) {
+                    console.log("ND 4.0 was clicked");
+                    event.stopPropagation();
+                    dataChannel.send("densityWheel/goto/60deg");
+                    // filterwheel.style.transform='rotate(-90deg)';
+                    return false
+                })
             }
         },
-        electrometer: { // TODO
+        electrometer: {
             name: 'Keithley Model 6514 System Electrometer',
             description: "The electrometer measures the photocurrent. The electrometer is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1pA = 10^−12 A)",
             width: 224,
@@ -448,7 +448,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
                     target.innerHTML = `
-                        <figure class="Device embed meter">
+                        <figure class="Device embed">
                         <img id="electrometer" src="static/imgs/Keithley6514ElectrometerTXTleft.jpg" usemap="#image-map-6514"> 
                             <map name="image-map-6514">
                                 <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
@@ -525,7 +525,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 var upRange6514Button = this.document.getElementById('upRange6514Button');
                 var downRange6514Button = this.document.getElementById('downRange6514Button');
                 var autoRange6514Button = this.document.getElementById('autoRange6514Button');                
-
+                var electrometer = document.getElementById('electrometer')
 
                 shift6514Button.addEventListener('click', function(event) {
                     //Prevent it from reloading
