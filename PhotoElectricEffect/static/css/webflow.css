@@ -276,7 +276,7 @@ ol {
 .w-embed:after {
   clear: both;
 }
-.w-video {
+/* .w-video {
   width: 100%;
   position: relative;
   padding: 0;
@@ -290,7 +290,7 @@ ol {
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
+} */
 fieldset {
   padding: 0;
   margin: 0;
