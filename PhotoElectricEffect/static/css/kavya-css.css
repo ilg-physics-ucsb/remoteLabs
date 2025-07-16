@@ -72,6 +72,8 @@ header {
     height: 100%;
 }
 
+video {width: 100%;}
+
 .tool-resizable {
     /* background-color: var(--secondary); */
     position: relative;
@@ -305,7 +307,7 @@ input:checked + .slider:before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 48px;
+  gap: 36px;
   margin-top: 32px;
   /* background-color: #375C3E; */
   padding: 0;
