@@ -217,27 +217,37 @@ window.addEventListener('DOMContentLoaded', function () {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
                     target.innerHTML = `
-                        <figure class="Device embed wheel">
-                            <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw" height="478" width="434">
-                            <map name="image-map-cfw">
-                                <area id="f365" href="#" title="365 nm" coords="310,107,68" shape="circle">
-                                <area id="f436" href="#" title="436 nm" coords="505,228,67" shape="circle">
-                                <area id="f546" href="#" title="546 nm" coords="507,455,69" shape="circle">
-                                <area id="f577" href="#" title="577 nm" coords="312,568,72" shape="circle">
-                            </map>   
-                        </figure>
-                    `;
-                    $('#colorFilterWheel').mapster({
-                        mapKey:'id',
-                        fillColor: 'f5f5b5',
-                        fillOpacity: 0.6,
-                        render_select: { 
-                            fillOpacity: 0.3
-                        },
-                        singleSelect: true
-                    }).parent().css({"margin":"0 auto"});
+                       <svg viewBox="0 0 622 685" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="pattern0_645_1186" patternUnits="userSpaceOnUse" width="622" height="685">
+                                    <image href="static/imgs/FilterWheelScaled.png"  />
+                                </pattern>
+                            </defs>
+                            <g id="ColorWheelMap">
+                                <rect id="FilterWheelScaledPNG" width="622" height="685" fill="url(#pattern0_645_1186)" />
+                                <circle class="map-button" id="f365" title="365 nm" cx="307" cy="110" r="69.5" stroke="black" />
+                                <circle class="map-button" id="f436" title="436 nm" cx="504" cy="227" r="68.5" stroke="black" />
+                                <circle class="map-button" id="f546" title="546 nm" cx="507" cy="455" r="68.5" stroke="black" />
+                                <circle class="map-button" id="f577" title="577 nm" cx="311" cy="567.5" r="72" stroke="black" />
+                            </g>
+                        </svg>
+                        <script>
+                            const buttons = document.querySelectorAll('.map-button');
+                            let selected = null;
+
+                            buttons.forEach(button => {
+                                button.addEventListener('click', () => {
+                                    if (selected) {
+                                        selected.classList.remove('selected');
+                                    }
+                                    button.classList.add('selected');
+                                    selected = button;
+                                });
+                            });
+                        </script>
+                   `;
                 }
-                console.log("Rendered colorFilterWheel interactive area!");    
+  
                 var f365 = document.getElementById('f365');
                 var f436 = document.getElementById('f436');
                 var f546 = document.getElementById('f546');
@@ -283,27 +293,37 @@ window.addEventListener('DOMContentLoaded', function () {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
                     target.innerHTML = `
-                        <figure class="Device embed wheel">
-                        <img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw" height="478" width="434"></center>
-                            <map name="image-map-dfw">
-                                <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
-                                <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
-                                <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
-                                <area id="nd10" href="#" title="ND 1.0" coords="312,558,68"  shape="circle">
-                                <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
-                                <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
-                            </map>
-                        </figure>
+                        <svg viewBox="0 0 622 685" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="pattern0_645_1186" patternUnits="userSpaceOnUse" width="622" height="685">
+                                    <image href="static/imgs/densityFilterWheelScaledCropped.png"  />
+                                </pattern>
+                            </defs>
+                            <g id="ColorWheelMap">
+                                <rect id="densityFilterWheel" width="622" height="685" fill="url(#pattern0_645_1186)" />
+                                <circle class="map-button" id="nd00" title="OPEN"   cx="312" cy="122" r="67" stroke="black" />
+                                <circle class="map-button" id="nd03" title="ND 0.3" cx="496" cy="235" r="67" stroke="black" />
+                                <circle class="map-button" id="nd05" title="ND 0.5" cx="496" cy="448" r="65" stroke="black" />
+                                <circle class="map-button" id="nd10" title="ND 1.0" cx="312" cy="558" r="68" stroke="black" />
+                                <circle class="map-button" id="nd20" title="ND 2.0" cx="139" cy="442" r="70" stroke="black" />
+                                <circle class="map-button" id="nd40" title="ND 4.0" cx="140" cy="240" r="74" stroke="black" />
+                            </g>
+                        </svg>
+                        <script>
+                            const buttons = document.querySelectorAll('.map-button');
+                            let selected = null;
+
+                            buttons.forEach(button => {
+                                button.addEventListener('click', () => {
+                                    if (selected) {
+                                        selected.classList.remove('selected');
+                                    }
+                                    button.classList.add('selected');
+                                    selected = button;
+                                });
+                            });
+                        </script>
                     `;
-                    $('#densityFilterWheel').mapster({
-                        mapKey:'id',
-                        fillColor: 'f5f5b5',
-                        fillOpacity: 0.6,
-                        render_select: { 
-                            fillOpacity: 0.3
-                        },
-                        singleSelect: true
-                    }).parent().css({"margin":"0 auto"});
                 }
 
                 var nd00 = document.getElementById('nd00');
@@ -871,8 +891,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 if (target) {
                     target.innerHTML = `
                         <div id="radioButtonsPot" class="w-row">
-                        <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>    
-                            <div class="column w-col w-col-1" style="margin-bottom: 0px;">
+                            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
                                 <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
                                 <label for="3.6_degree">3.6&#176;</label>
                             </div>  
@@ -880,20 +899,21 @@ window.addEventListener('DOMContentLoaded', function () {
                                 <input type="radio" id="36_degree" name="angleStep" value="36">
                                 <label for="36_degree">36&#176;</label>
                             </div>
-                                <div class="column w-col w-col-1" style="margin-bottom: 0px; ">
-                                <input type="radio" id="360_degree" name="angleStep" value="360" checked>
-                                <label for="360_degree">360&#176;</label>
+                            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
+                                <input type="radio" id="360_degree" name="angleStep" value="360">
+                                <label for="36_degree">360&#176;</label>
                             </div>
-                            <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
-                        </div>  
-                        <div id="potentiometerKnob" style="width: 50%; height: 50%">
+                        </div> 
+                        <div id="spacer" class="w-row">
+                            <br>
+                        </div>
+                        <div class="column w-col w-col-4" style="margin-bottom: 0px; width: 60%; height: 60%">
                             <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
                             <map name="image-map-knob">
                                 <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
                                 <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
                             </map>
                         </div>
-                         <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
                     `;
                     $('#knob').mapster({
                         mapKey:'id',
