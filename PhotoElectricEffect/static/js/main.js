@@ -215,20 +215,20 @@ window.addEventListener('DOMContentLoaded', function () {
                                 <circle class="map-button" id="f577" title="577 nm" cx="311" cy="567.5" r="72" stroke="black" />
                             </g>
                         </svg>
-                        <script>
-                            const buttons = document.querySelectorAll('.map-button');
-                            let selected = null;
+                        // <script>
+                        //     const buttons = document.querySelectorAll('.map-button');
+                        //     let selected = null;
 
-                            buttons.forEach(button => {
-                                button.addEventListener('click', () => {
-                                    if (selected) {
-                                        selected.classList.remove('selected');
-                                    }
-                                    button.classList.add('selected');
-                                    selected = button;
-                                });
-                            });
-                        </script>
+                        //     buttons.forEach(button => {
+                        //         button.addEventListener('click', () => {
+                        //             if (selected) {
+                        //                 selected.classList.remove('selected');
+                        //             }
+                        //             button.classList.add('selected');
+                        //             selected = button;
+                        //         });
+                        //     });
+                        // </script>
                    `;
                 }
   
@@ -293,20 +293,20 @@ window.addEventListener('DOMContentLoaded', function () {
                                 <circle class="map-button" id="nd40" title="ND 4.0" cx="140" cy="240" r="74" stroke="black" />
                             </g>
                         </svg>
-                        <script>
-                            const buttons = document.querySelectorAll('.map-button');
-                            let selected = null;
+                        // <script>
+                        //     const buttons = document.querySelectorAll('.map-button');
+                        //     let selected = null;
 
-                            buttons.forEach(button => {
-                                button.addEventListener('click', () => {
-                                    if (selected) {
-                                        selected.classList.remove('selected');
-                                    }
-                                    button.classList.add('selected');
-                                    selected = button;
-                                });
-                            });
-                        </script>
+                        //     buttons.forEach(button => {
+                        //         button.addEventListener('click', () => {
+                        //             if (selected) {
+                        //                 selected.classList.remove('selected');
+                        //             }
+                        //             button.classList.add('selected');
+                        //             selected = button;
+                        //         });
+                        //     });
+                        // </script>
                     `;
                 }
 
@@ -1080,7 +1080,8 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
 
-   
+// This code controls the ambient light
+
     var ambientTOGGLE = document.getElementById('ambientTOGGLE');
     var ambientState = false;
   
@@ -1115,6 +1116,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 window.addEventListener('beforeunload', function(e) {
     // mainCamSignal.hangup();
