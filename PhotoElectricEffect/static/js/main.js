@@ -29,26 +29,8 @@ function onWebsocketMessage(message){
     alert(message);
 }
 
-// What does this function do?
-function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
-    var signalling_server_hostname = location.hostname || "192.168.0.2";
-    // var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
-    var signalling_server_address = signalling_server_hostname + location.pathname + "ws"
-    var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-    // var address = url + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    // var address = location.hostname + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    // protocol = "wss:";
-    // var address = url + "/webrtc";
-    var wsurl = protocol + '//' + signalling_server_address;
 
-    console.log(videoElement);
-    if (videoElement && videoElement.getAttribute('data-playing') == "false") {
-        var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
-    }
-    return signalObj
-}
-
-// What does this function do?
+// This deals with messages the pi sends back to the client (e.g., when a device reaches its limit. )
 function controllerResponseHandler(cmd) {
     var components = cmd.split("/");
     var device = components[0]
@@ -77,9 +59,10 @@ function controllerResponseHandler(cmd) {
     }
 }
 
-
+// This code declares some variables
 var extremaModal, contactModal, bootModal
 
+// This function waits until everything is loaded, then runs
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
     var isStreaming2 = false;
@@ -91,15 +74,16 @@ window.addEventListener('DOMContentLoaded', function () {
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
-    
+    var timeLimit = 3 * 60 * 60;  // This value sets the starting time of the countdown timer (to 3 hours in sec)
 
-    window.setTimeout(timeOutHandler,10800000)
+    window.setTimeout(timeOutHandler,timeLimit). // This function passes the time limit to the function below, which alerts the user when their time is up.
 
     function timeOutHandler(){
         // mainCamSignal.hangup()
         alert("Your session has timed out.")
     }
 
+// This function displays the time remaining
     function startTimer(duration, display) {
         var timer = duration, hours, minutes, seconds;
         setInterval(function () {
@@ -118,11 +102,11 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }, 1000);
     }
-    
+
+ // This function calls the time remaining display once the window is fully loaded
     window.onload = function () {
-        var threeHours = 3 * 60 * 60,
             display = document.querySelector('#time');
-        startTimer(threeHours, display);
+        startTimer(timeLimit, display);
     }
 
     // SIDEBAR
