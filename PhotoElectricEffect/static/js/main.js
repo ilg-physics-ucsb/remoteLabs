@@ -74,9 +74,9 @@ window.addEventListener('DOMContentLoaded', function () {
     var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
-    var timeLimit = 3 * 60 * 60;  // This value sets the starting time of the countdown timer (to 3 hours in sec)
+    var timeLimit = 3 * 60 * 60 ;  // This value sets the starting time of the countdown timer (to 3 hours in sec)
 
-    window.setTimeout(timeOutHandler,timeLimit). // This function passes the time limit to the function below, which alerts the user when their time is up.
+    window.setTimeout(timeOutHandler,timeLimit*1000) // This function passes the time limit to the function below (in msec), which alerts the user when their time is up.
 
     function timeOutHandler(){
         // mainCamSignal.hangup()
@@ -91,7 +91,7 @@ window.addEventListener('DOMContentLoaded', function () {
             minutes = Math.floor(parseInt(timer % 3600 / 60 , 10));
             seconds = Math.floor(parseInt(timer % 3600 % 60, 10));
     
-            hours = hours <10 ? "0" + hours : hours;
+            // hours = hours <10 ? "0" + hours : hours;
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
     
@@ -215,20 +215,6 @@ window.addEventListener('DOMContentLoaded', function () {
                                 <circle class="map-button" id="f577" title="577 nm" cx="311" cy="567.5" r="72" stroke="black" />
                             </g>
                         </svg>
-                        // <script>
-                        //     const buttons = document.querySelectorAll('.map-button');
-                        //     let selected = null;
-
-                        //     buttons.forEach(button => {
-                        //         button.addEventListener('click', () => {
-                        //             if (selected) {
-                        //                 selected.classList.remove('selected');
-                        //             }
-                        //             button.classList.add('selected');
-                        //             selected = button;
-                        //         });
-                        //     });
-                        // </script>
                    `;
                 }
   
@@ -293,20 +279,6 @@ window.addEventListener('DOMContentLoaded', function () {
                                 <circle class="map-button" id="nd40" title="ND 4.0" cx="140" cy="240" r="74" stroke="black" />
                             </g>
                         </svg>
-                        // <script>
-                        //     const buttons = document.querySelectorAll('.map-button');
-                        //     let selected = null;
-
-                        //     buttons.forEach(button => {
-                        //         button.addEventListener('click', () => {
-                        //             if (selected) {
-                        //                 selected.classList.remove('selected');
-                        //             }
-                        //             button.classList.add('selected');
-                        //             selected = button;
-                        //         });
-                        //     });
-                        // </script>
                     `;
                 }
 
@@ -873,41 +845,8 @@ window.addEventListener('DOMContentLoaded', function () {
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
-                    target.innerHTML = `
-                        <div id="radioButtonsPot" class="w-row">
-                            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-                                <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
-                                <label for="3.6_degree">3.6&#176;</label>
-                            </div>  
-                            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-                                <input type="radio" id="36_degree" name="angleStep" value="36">
-                                <label for="36_degree">36&#176;</label>
-                            </div>
-                            <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-                                <input type="radio" id="360_degree" name="angleStep" value="360">
-                                <label for="36_degree">360&#176;</label>
-                            </div>
-                        </div> 
-                        <div id="spacer" class="w-row">
-                            <br>
-                        </div>
-                        <div class="column w-col w-col-4" style="margin-bottom: 0px; width: 60%; height: 60%">
-                            <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
-                            <map name="image-map-knob">
-                                <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
-                                <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
-                            </map>
-                        </div>
-                    `;
-                    $('#knob').mapster({
-                        mapKey:'id',
-                        fillColor: 'f5f5b5',
-                        fillOpacity: 0.6,
-                        render_select: { 
-                            fillOpacity: 0.3
-                        },
-                        singleSelect: true
-                    }).parent().css({"margin":"0 auto"});
+                   // target.innerHTML = 
+                   insertSvg(target,"static/svg/KnobMap.html")
                 }
 
                 console.log("Rendered potentiometer interactive area!");
@@ -1053,6 +992,30 @@ window.addEventListener('DOMContentLoaded', function () {
             document.getElementById("tool-detail-content").innerHTML = '';
         }
     }
+
+// Image Map code
+
+    const buttons = document.querySelectorAll('.map-button');
+    let selected = null;
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (selected) {
+                selected.classList.remove('selected');
+            }
+            button.classList.add('selected');
+            selected = button;
+        });
+    });
+
+    function insertSvg(target, svgPath) {
+        fetch(svgPath)
+            .then(response => response.text())
+            .then(svgText => {
+                target.innerHTML = svgText;
+        });
+    }
+
 
     // RESIZE LOGIC
     function attachResizeListeners(resizeTool) {

@@ -355,3 +355,8 @@ svg {
   fill: bisque;
   fill-opacity: 0.3;
 }
+
+.w-row-centered {
+  display: flex;
+  justify-content: center
+}
