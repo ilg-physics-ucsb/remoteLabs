@@ -529,252 +529,208 @@ window.addEventListener('DOMContentLoaded', function () {
             }    
         },
         multimeter: {
-            name: 'Keithley Model 2000 Multimeter User',
+            name: 'Keithley Model 2000 Multimeter',
             description: "This digital multimeter (DMM) measures the potential difference between the photocathode and the anode.",
             width: 224,
             toolDirection: "Click a button on the image below to press it on the device.",
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
-                    target.innerHTML = `
-                        <figure class="Device embed">
-                        <img id="multimeter" src="static/imgs/Keithley2000MultimeterTXTleft.jpg" usemap="#image-map-2000"> 
-                            <map name="image-map-2000">
-                                <area id="Shift2000" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
-                                <area id="Local2000" 		    href="#"	title="Local" 		  coords="102,399,17" shape="circle">
-                                <area id="Power2000" 		    href="#"	title="Power" 		  coords="99,479,17" shape="circle">
-                                <area id="DCvoltage" 		    href="#"	title="DCvoltage" 	coords="200,331,29" shape="circle">
-                                <area id="ACvoltage" 		    href="#"	title="ACvoltage" 	coords="285,331,29" shape="circle">
-                                <area id="DCcurrent" 		    href="#"	title="DCcurrent" 	coords="381,331,29" shape="circle">
-                                <area id="ACcurrent" 		    href="#"	title="ACcurrent" 	coords="466,331,29" shape="circle">
-                                <area id="2wireResistance"  href="#"	title="2wireResistance"coords="562,331,29" shape="circle">
-                                <area id="4wireResistance" 	href="#"	title="4wireResistance"coords="647,331,29" shape="circle">
-                                <area id="Frequency" 		    href="#"	title="Frequency" 	coords="743,331,29" shape="circle">
-                                <area id="Temperature" 		  href="#"	title="Temperature" coords="828,331,29" shape="circle">
-                                <area id="ExternalTrigger" 	href="#"	title="ExternalTrigger"coords="166,428,238,393" shape="rect">
-                                <area id="Trigger2000" 		  href="#"	title="Trigger" 		coords="242,393,316,428" shape="rect">
-                                <area id="Store2000" 		    href="#"	title="Store" 	  	coords="420,393,346,428" shape="rect">
-                                <area id="Recall2000" 		  href="#"	title="Recall" 		  coords="423,393,499,428" shape="rect">
-                                <area id="Filter" 		      href="#"	title="Filter" 		  coords="603,393,529,428" shape="rect">
-                                <area id="Relative" 		    href="#"	title="Relative" 		coords="606,393,678,428" shape="rect">
-                                <area id="CursorLeft2000" 	href="#"	title="CursorLeft" 	coords="786,393,712,428" shape="rect">
-                                <area id="CursorRight2000" 	href="#"	title="CursorRight" coords="789,393,859,428" shape="rect">
-                                <area id="Open" 		        href="#"	title="Open" 		    coords="238,460,163,496" shape="rect">
-                                <area id="Close" 		        href="#"	title="Close" 		  coords="242,460,314,496" shape="rect">
-                                <area id="Step" 		        href="#"	title="Step" 		    coords="420,460,346,496" shape="rect">
-                                <area id="Scan" 		        href="#"	title="Scan" 		    coords="423,460,495,496" shape="rect">
-                                <area id="Digits2000" 		  href="#"	title="Digits" 		  coords="603,460,529,497" shape="rect">
-                                <area id="Rate2000" 		    href="#"	title="Rate" 		    coords="606,460,678,497" shape="rect">
-                                <area id="Exit2000" 		    href="#"	title="Exit" 			  coords="786,460,712,498" shape="rect">
-                                <area id="Enter2000" 		    href="#"	title="Enter" 		  coords="789,460,863,498" shape="rect">
-                                <area id="UpRange2000" 		  href="#"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-                                <area id="DownRange2000" 		href="#"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-                                <area id="AutoRange2000" 		href="#"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
-                            </map>
-                        </figure>                    
-                    `;
-                    $('#multimeter').mapster({
-                        mapKey:'id',
-                        fillColor: 'f5f5b5',
-                        fillOpacity: 0.6,
-                        render_select: { 
-                            fillOpacity: 0.3
-                        },
-                        singleSelect: true
-                    }).parent().css({"margin":"0 auto"});
-                }
-                
-                var shift2000Button = document.getElementById('Shift2000');
-                var local2000Button = document.getElementById('Local2000');
-                var power2000Button = document.getElementById('Power2000');
-                var dcVoltageButton = document.getElementById('DCvoltage');
-                var acVoltageButton = document.getElementById('ACvoltage');
-                var dcCurrentButton = document.getElementById('DCcurrent');
-                var acCurrentButton = document.getElementById('ACcurrent');
-                var TWOwireResistanceButton = document.getElementById('2wireResistance');
-                var FOURwireResistanceButton = document.getElementById('4wireResistance');
-                var frequencyButton = document.getElementById('Frequency');
-                var temperatureButton = document.getElementById('Temperature');
-                var externalTriggerButton = document.getElementById('ExternalTrigger');
-                var trigger2000Button = document.getElementById('Trigger2000');
-                var store2000Button = document.getElementById('Store2000');
-                var recall2000Button = document.getElementById('Recall2000');
-                var filterButton = document.getElementById('Filter');
-                var relativeButton = document.getElementById('Relative');
-                var cursorLeft2000Button = document.getElementById('CursorLeft2000');
-                var cursorRight2000Button = document.getElementById('CursorRight2000');
-                var openButton = document.getElementById('Open');
-                var closeButton = document.getElementById('Close');
-                var stepButton = document.getElementById('Step');
-                var scanButton = document.getElementById('Scan');
-                var digits2000Button = document.getElementById('Digits2000');
-                var rate2000Button = document.getElementById('Rate2000');
-                var exit2000Button = document.getElementById('Exit2000');
-                var enter2000Button = document.getElementById('Enter2000');
-                var upRange2000Button = document.getElementById('UpRange2000');
-                var downRange2000Button = document.getElementById('DownRange2000');
-                var autoRange2000Button = document.getElementById('AutoRange2000');           
-                var multimeter = document.getElementById('multimeter')
+                    insertSvg(target,"static/svg/MultimeterMap.html",
+                    function(target){
+                                    var shift2000Button = document.getElementById('Shift2000');
+                                    var local2000Button = document.getElementById('Local2000');
+                                    var power2000Button = document.getElementById('Power2000');
+                                    var dcVoltageButton = document.getElementById('DCvoltage');
+                                    var acVoltageButton = document.getElementById('ACvoltage');
+                                    var dcCurrentButton = document.getElementById('DCcurrent');
+                                    var acCurrentButton = document.getElementById('ACcurrent');
+                                    var TWOwireResistanceButton = document.getElementById('2wireResistance');
+                                    var FOURwireResistanceButton = document.getElementById('4wireResistance');
+                                    var frequencyButton = document.getElementById('Frequency');
+                                    var temperatureButton = document.getElementById('Temperature');
+                                    var externalTriggerButton = document.getElementById('ExternalTrigger');
+                                    var trigger2000Button = document.getElementById('Trigger2000');
+                                    var store2000Button = document.getElementById('Store2000');
+                                    var recall2000Button = document.getElementById('Recall2000');
+                                    var filterButton = document.getElementById('Filter');
+                                    var relativeButton = document.getElementById('Relative');
+                                    var cursorLeft2000Button = document.getElementById('CursorLeft2000');
+                                    var cursorRight2000Button = document.getElementById('CursorRight2000');
+                                    var openButton = document.getElementById('Open');
+                                    var closeButton = document.getElementById('Close');
+                                    var stepButton = document.getElementById('Step');
+                                    var scanButton = document.getElementById('Scan');
+                                    var digits2000Button = document.getElementById('Digits2000');
+                                    var rate2000Button = document.getElementById('Rate2000');
+                                    var exit2000Button = document.getElementById('Exit2000');
+                                    var enter2000Button = document.getElementById('Enter2000');
+                                    var upRange2000Button = document.getElementById('UpRange2000');
+                                    var downRange2000Button = document.getElementById('DownRange2000');
+                                    var autoRange2000Button = document.getElementById('AutoRange2000');           
+                                    var multimeter = document.getElementById('multimeter')
 
-                
-                shift2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 1");
-                    return false
-                })
-                local2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:LOC");
-                    return false
-                })
-                power2000Button.addEventListener('click', function(){
-                    console.log("Multimeter was switched");
-                    if(MultimeterState){
-                        dataChannel.send("PEpdu/off/Multimeter");
-                        MultimeterState=false;
+                                    
+                                    shift2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 1");
+                                        return false
+                                    })
+                                    local2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:LOC");
+                                        return false
+                                    })
+                                    power2000Button.addEventListener('click', function(){
+                                        console.log("Multimeter was switched");
+                                        if(MultimeterState){
+                                            dataChannel.send("PEpdu/off/Multimeter");
+                                            MultimeterState=false;
+                                                    }
+                                        else{
+                                            dataChannel.send("PEpdu/on/Multimeter");
+                                            MultimeterState=true;
+                                        }
+                                    })
+                                    dcVoltageButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 2");
+                                        return false
+                                    })
+                                    acVoltageButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 3");
+                                        return false
+                                    })
+                                    dcCurrentButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 4");
+                                        return false
+                                    })
+                                    acCurrentButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 5");
+                                        return false
+                                    })
+                                    TWOwireResistanceButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 6");
+                                        return false
+                                    })
+                                    FOURwireResistanceButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 7");
+                                        return false
+                                    })
+                                    frequencyButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 8");
+                                        return false
+                                    })
+                                    temperatureButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 16");
+                                        return false
+                                    })
+                                    externalTriggerButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 18");
+                                        return false
+                                    })
+                                    trigger2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 19");
+                                        return false
+                                    })
+                                    store2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 20");
+                                        return false
+                                    })
+                                    recall2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 21");
+                                        return false
+                                    })
+                                    filterButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 22");
+                                        return false
+                                    })
+                                    relativeButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 23");
+                                        return false
+                                    })
+                                    cursorLeft2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 24");
+                                        return false
+                                    })
+                                    cursorRight2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 15");
+                                        return false
+                                    })
+                                    openButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 26");
+                                        return false
+                                    })
+                                    closeButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 27");
+                                        return false
+                                    })
+                                    stepButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 28");
+                                        return false
+                                    })
+                                    scanButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 29");
+                                        return false
+                                    })
+                                    digits2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 30");
+                                        return false
+                                    })
+                                    rate2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 31");
+                                        return false
+                                    })
+                                    exit2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 32");
+                                        return false
+                                    })
+                                    enter2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 14");
+                                        return false
+                                    })
+                                    upRange2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 11");
+                                        return false
+                                    })
+                                    downRange2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 13");
+                                        return false
+                                    })
+                                    autoRange2000Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Multimeter/press/SYST:KEY 12");
+                                        return false
+                                    })
                                 }
-                    else{
-                        dataChannel.send("PEpdu/on/Multimeter");
-                        MultimeterState=true;
-                    }
-                })
-                dcVoltageButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 2");
-                    return false
-                })
-                acVoltageButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 3");
-                    return false
-                })
-                dcCurrentButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 4");
-                    return false
-                })
-                acCurrentButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 5");
-                    return false
-                })
-                TWOwireResistanceButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 6");
-                    return false
-                })
-                FOURwireResistanceButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 7");
-                    return false
-                })
-                frequencyButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 8");
-                    return false
-                })
-                temperatureButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 16");
-                    return false
-                })
-                externalTriggerButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 18");
-                    return false
-                })
-                trigger2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 19");
-                    return false
-                })
-                store2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 20");
-                    return false
-                })
-                recall2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 21");
-                    return false
-                })
-                filterButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 22");
-                    return false
-                })
-                relativeButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 23");
-                    return false
-                })
-                cursorLeft2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 24");
-                    return false
-                })
-                cursorRight2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 15");
-                    return false
-                })
-                openButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 26");
-                    return false
-                })
-                closeButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 27");
-                    return false
-                })
-                stepButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 28");
-                    return false
-                })
-                scanButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 29");
-                    return false
-                })
-                digits2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 30");
-                    return false
-                })
-                rate2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 31");
-                    return false
-                })
-                exit2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 32");
-                    return false
-                })
-                enter2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 14");
-                    return false
-                })
-                upRange2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 11");
-                    return false
-                })
-                downRange2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 13");
-                    return false
-                })
-                autoRange2000Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Multimeter/press/SYST:KEY 12");
-                    return false
-                })
-
-            }    
+                            )
+                }    
+            }
         },
         knob: {
             name: 'Potentiometer',
