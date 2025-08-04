@@ -254,76 +254,64 @@ window.addEventListener('DOMContentLoaded', function () {
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
-                    target.innerHTML = `
-                        <svg viewBox="0 0 622 685" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <pattern id="pattern0_645_1186" patternUnits="userSpaceOnUse" width="622" height="685">
-                                    <image href="static/imgs/densityFilterWheelScaledCropped.png"  />
-                                </pattern>
-                            </defs>
-                            <g id="ColorWheelMap">
-                                <rect id="densityFilterWheel" width="622" height="685" fill="url(#pattern0_645_1186)" />
-                                <circle class="map-button" id="nd00" title="OPEN"   cx="312" cy="122" r="67" stroke="black" />
-                                <circle class="map-button" id="nd03" title="ND 0.3" cx="496" cy="235" r="67" stroke="black" />
-                                <circle class="map-button" id="nd05" title="ND 0.5" cx="496" cy="448" r="65" stroke="black" />
-                                <circle class="map-button" id="nd10" title="ND 1.0" cx="312" cy="558" r="68" stroke="black" />
-                                <circle class="map-button" id="nd20" title="ND 2.0" cx="139" cy="442" r="70" stroke="black" />
-                                <circle class="map-button" id="nd40" title="ND 4.0" cx="140" cy="240" r="74" stroke="black" />
-                            </g>
-                        </svg>
-                    `;
+                    insertSvg(target,"static/svg/DensityWheelMap.html",
+                    function(target){
+                                    var nd00 = document.getElementById('nd00');
+                                    var nd03 = document.getElementById('nd03');
+                                    var nd05 = document.getElementById('nd05');
+                                    var nd10 = document.getElementById('nd10');
+                                    var nd20 = document.getElementById('nd20');
+                                    var nd40 = document.getElementById('nd40');
+                                    var densityFilterwheel = document.getElementById('densityFilterWheel')
+
+                                    //TOOL OPERATION
+                                    nd00.addEventListener('click', function(event) {
+                                        console.log("ND OPEN was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("densityWheel/goto/0deg");
+                                        // filterwheel.style.transform='rotate(0deg)';
+                                        return false
+                                    })
+                                    nd03.addEventListener('click', function(event) {
+                                        console.log("ND 0.3 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("densityWheel/goto/300deg");
+                                        // filterwheel.style.transform='rotate(-30deg)';
+                                        return false
+                                    })
+                                    nd05.addEventListener('click', function(event) {
+                                        console.log("ND 0.5 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("densityWheel/goto/240deg");
+                                        // filterwheel.style.transform='rotate(-60deg)';
+                                        return false
+                                    })
+                                    nd10.addEventListener('click', function(event) {
+                                        console.log("ND 1.0 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("densityWheel/goto/180deg");
+                                        // filterwheel.style.transform='rotate(-90deg)';
+                                        return false
+                                    })
+                                    nd20.addEventListener('click', function(event) {
+                                        console.log("ND 2.0 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("densityWheel/goto/120deg");
+                                        // filterwheel.style.transform='rotate(-90deg)';
+                                        return false
+                                    })
+                                    nd40.addEventListener('click', function(event) {
+                                        console.log("ND 4.0 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("densityWheel/goto/60deg");
+                                        // filterwheel.style.transform='rotate(-90deg)';
+                                        return false
+                                    })
+                                }
+                            )
                 }
 
-                var nd00 = document.getElementById('nd00');
-                var nd03 = document.getElementById('nd03');
-                var nd05 = document.getElementById('nd05');
-                var nd10 = document.getElementById('nd10');
-                var nd20 = document.getElementById('nd20');
-                var nd40 = document.getElementById('nd40');
-                var densityFilterwheel = document.getElementById('densityFilterWheel')
-
-                nd00.addEventListener('click', function(event) {
-                    console.log("ND OPEN was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("densityWheel/goto/0deg");
-                    // filterwheel.style.transform='rotate(0deg)';
-                    return false
-                })
-                nd03.addEventListener('click', function(event) {
-                    console.log("ND 0.3 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("densityWheel/goto/300deg");
-                    // filterwheel.style.transform='rotate(-30deg)';
-                    return false
-                })
-                nd05.addEventListener('click', function(event) {
-                    console.log("ND 0.5 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("densityWheel/goto/240deg");
-                    // filterwheel.style.transform='rotate(-60deg)';
-                    return false
-                })
-                nd10.addEventListener('click', function(event) {
-                    console.log("ND 1.0 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("densityWheel/goto/180deg");
-                    // filterwheel.style.transform='rotate(-90deg)';
-                    return false
-                })
-                nd20.addEventListener('click', function(event) {
-                    console.log("ND 2.0 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("densityWheel/goto/120deg");
-                    // filterwheel.style.transform='rotate(-90deg)';
-                    return false
-                })
-                nd40.addEventListener('click', function(event) {
-                    console.log("ND 4.0 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("densityWheel/goto/60deg");
-                    // filterwheel.style.transform='rotate(-90deg)';
-                    return false
-                })
+                
             }
         },
         electrometer: {
