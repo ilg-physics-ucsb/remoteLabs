@@ -29,8 +29,10 @@ function onWebsocketMessage(message){
     alert(message);
 }
 
+// This code declares variables that the following function and event listener use.
+var extremaModal, contactModal, bootModal
 
-// This deals with messages the pi sends back to the client (e.g., when a device reaches its limit. )
+// This function deals with messages the pi sends back to the client (e.g., when a device reaches its limit. )
 function controllerResponseHandler(cmd) {
     var components = cmd.split("/");
     var device = components[0]
@@ -59,10 +61,7 @@ function controllerResponseHandler(cmd) {
     }
 }
 
-// This code declares some variables
-var extremaModal, contactModal, bootModal
-
-// This function waits until everything is loaded, then runs
+// This is the MAIN function.  It waits until everything is loaded, then runs all the rest of the java script
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
     var isStreaming2 = false;
@@ -83,7 +82,7 @@ window.addEventListener('DOMContentLoaded', function () {
         alert("Your session has timed out.")
     }
 
-// This function displays the time remaining
+    // This function displays the time remaining
     function startTimer(duration, display) {
         var timer = duration, hours, minutes, seconds;
         setInterval(function () {
@@ -103,7 +102,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }, 1000);
     }
 
- // This function calls the time remaining display once the window is fully loaded
+    // This function calls the time remaining display once the window is fully loaded
     window.onload = function () {
             display = document.querySelector('#time');
         startTimer(timeLimit, display);
@@ -133,6 +132,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const tools = document.getElementsByClassName('tool-item');
 
+    // These variables tell the code that the initial state of the meters is OFF
+    var ElectrometerState=false;
+    var MultimeterState=false;
 
     // TOOL DATA TO DISPLAY. Array name: toolData
     // Includes:
@@ -998,7 +1000,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-// Image Map code
+    // This code does for SVG what mapster used to do for image-maps
 
     const buttons = document.querySelectorAll('.map-button');
     let selected = null;
@@ -1013,8 +1015,9 @@ window.addEventListener('DOMContentLoaded', function () {
         });
     });
     
-// This code enables the image map html to be in a separate file (static/svg) 
-// by making sure that all the javascript code can see the button id's that are defined in the html file.
+    // This code enables the image map html to be in a separate file (static/svg) 
+    // by making sure that all the javascript code can see the button id's that are defined in the html file.
+
     function insertSvg(target, svgPath, callback) {
         fetch(svgPath)
             .then(response => response.text())
@@ -1053,7 +1056,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
 
-// This code controls the ambient light
+    // This code controls the ambient light
 
     var ambientTOGGLE = document.getElementById('ambientTOGGLE');
     var ambientState = false;
@@ -1083,13 +1086,9 @@ window.addEventListener('DOMContentLoaded', function () {
             // lightSwitch.style.transform='rotate(180deg)';
         }
     })
-   
-    var ElectrometerState=false;
-    var MultimeterState=false;
-
-
 });
 
+// This function runs when the user leaves the page
 
 window.addEventListener('beforeunload', function(e) {
     // mainCamSignal.hangup();
