@@ -202,58 +202,48 @@ window.addEventListener('DOMContentLoaded', function () {
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
-                    target.innerHTML = `
-                       <svg viewBox="0 0 622 685" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <pattern id="pattern0_645_1186" patternUnits="userSpaceOnUse" width="622" height="685">
-                                    <image href="static/imgs/FilterWheelScaled.png"  />
-                                </pattern>
-                            </defs>
-                            <g id="ColorWheelMap">
-                                <rect id="FilterWheelScaledPNG" width="622" height="685" fill="url(#pattern0_645_1186)" />
-                                <circle class="map-button" id="f365" title="365 nm" cx="307" cy="110" r="69.5" stroke="black" />
-                                <circle class="map-button" id="f436" title="436 nm" cx="504" cy="227" r="68.5" stroke="black" />
-                                <circle class="map-button" id="f546" title="546 nm" cx="507" cy="455" r="68.5" stroke="black" />
-                                <circle class="map-button" id="f577" title="577 nm" cx="311" cy="567.5" r="72" stroke="black" />
-                            </g>
-                        </svg>
-                   `;
+                    insertSvg(target,"static/svg/FilterWheelMap.html",
+                    function(target){
+                                    var f365 = document.getElementById('f365');
+                                    var f436 = document.getElementById('f436');
+                                    var f546 = document.getElementById('f546');
+                                    var f577 = document.getElementById('f577');
+                                    var colorFilterwheel = document.getElementById('colorFilterWheel')
+
+                                    // TOOL OPERATION
+                                    f577.addEventListener('click', function(event) {
+                                        console.log("f577 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("colorWheel/goto/180deg");
+                                        // filterwheel.style.transform='rotate(0deg)';
+                                        return false
+                                    })
+                                    f546.addEventListener('click', function(event) {
+                                        console.log("f546 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("colorWheel/goto/120deg");
+                                        // filterwheel.style.transform='rotate(-30deg)';
+                                        return false
+                                    })
+                                    f436.addEventListener('click', function(event) {
+                                        console.log("f436 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("colorWheel/goto/60deg");
+                                        // filterwheel.style.transform='rotate(-60deg)';
+                                        return false
+                                    })
+                                    f365.addEventListener('click', function(event) {
+                                        console.log("f365 was clicked");
+                                        event.stopPropagation();
+                                        dataChannel.send("colorWheel/goto/0deg");
+                                        // filterwheel.style.transform='rotate(-90deg)';
+                                        return false
+                                    })  
+                                }
+                            )   
                 }
   
-                var f365 = document.getElementById('f365');
-                var f436 = document.getElementById('f436');
-                var f546 = document.getElementById('f546');
-                var f577 = document.getElementById('f577');
-                var colorFilterwheel = document.getElementById('colorFilterWheel')
 
-                f577.addEventListener('click', function(event) {
-                    console.log("f577 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("colorWheel/goto/180deg");
-                    // filterwheel.style.transform='rotate(0deg)';
-                    return false
-                })
-                f546.addEventListener('click', function(event) {
-                    console.log("f546 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("colorWheel/goto/120deg");
-                    // filterwheel.style.transform='rotate(-30deg)';
-                    return false
-                })
-                f436.addEventListener('click', function(event) {
-                    console.log("f436 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("colorWheel/goto/60deg");
-                    // filterwheel.style.transform='rotate(-60deg)';
-                    return false
-                })
-                f365.addEventListener('click', function(event) {
-                    console.log("f365 was clicked");
-                    event.stopPropagation();
-                    dataChannel.send("colorWheel/goto/0deg");
-                    // filterwheel.style.transform='rotate(-90deg)';
-                    return false
-                })  
             }
         },
         densityFilterWheel: { 
@@ -847,7 +837,6 @@ window.addEventListener('DOMContentLoaded', function () {
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
-                   // target.innerHTML = (args) => {}
                    insertSvg(target,"static/svg/KnobMap.html",
                     function(target){
                                     console.log("Rendered potentiometer interactive area!");
@@ -885,7 +874,6 @@ window.addEventListener('DOMContentLoaded', function () {
                             )
                 }
 
-                
 
             }
         }
