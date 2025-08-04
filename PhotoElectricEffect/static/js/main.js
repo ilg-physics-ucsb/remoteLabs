@@ -316,256 +316,215 @@ window.addEventListener('DOMContentLoaded', function () {
         },
         electrometer: {
             name: 'Keithley Model 6514 System Electrometer',
-            description: "The electrometer measures the photocurrent. The electrometer is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1pA = 10^−12 A)",
+            description: "The electrometer measures the photocurrent. It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>−12</sup> A)",
             width: 224,
             toolDirection: "Click a button on the image below to press it on the device.",
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
-                    target.innerHTML = `
-                        <figure class="Device embed">
-                        <img id="electrometer" src="static/imgs/Keithley6514ElectrometerTXTleft.jpg" usemap="#image-map-6514"> 
-                            <map name="image-map-6514">
-                                <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
-                                <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,399,17" shape="circle">
-                                <area id="Power6514" 		    href="#"	title="Power" 		  coords="99,479,17" shape="circle">
-                                <area id="Voltage" 		      href="#"	title="Voltage" 		coords="200,331,29" shape="circle">
-                                <area id="Current" 		      href="#"	title="Current" 		coords="285,331,29" shape="circle">
-                                <area id="Resistance" 	    href="#"	title="Resistance"  coords="381,331,29" shape="circle">
-                                <area id="Charge" 		      href="#"	title="Charge" 		  coords="466,331,29" shape="circle">
-                                <area id="ExternalFeedback" href="#"	title="ExternalFeedback" coords="562,331,29" shape="circle">
-                                <area id="ZeroCheck" 		    href="#"	title="ZeroCheck" 	coords="647,331,29" shape="circle">
-                                <area id="ZeroCorrect" 	    href="#"	title="ZeroCorrect" coords="743,331,29" shape="circle">
-                                <area id="Ground" 		      href="#"	title="Ground" 		  coords="828,331,29" shape="circle">
-                                <area id="Average" 		      href="#"	title="Average" 		coords="166,428,238,393" shape="rect">
-                                <area id="Median" 		      href="#"	title="Median" 		  coords="242,393,316,428" shape="rect">
-                                <area id="Relative" 		    href="#"	title="Relative" 	  coords="420,393,346,428" shape="rect">
-                                <area id="Limit" 		        href="#"	title="Limit" 		  coords="423,393,499,428" shape="rect">
-                                <area id="Digits6514" 	    href="#"	title="Digits"      coords="603,393,529,428" shape="rect">
-                                <area id="Rate6514" 		    href="#"	title="Rate" 		    coords="606,393,678,428" shape="rect">
-                                <area id="CursorLeft6514" 	href="#"	title="CursorLeft"  coords="786,393,712,428" shape="rect">
-                                <area id="CursorRight6514" 	href="#"	title="CursorRight" coords="789,393,859,428" shape="rect">
-                                <area id="Store6514" 		    href="#" title="Store" 		  coords="238,460,163,496" shape="rect">
-                                <area id="Recall6514"		    href="#"	title="Recall" 		  coords="242,460,314,496" shape="rect">
-                                <area id="Delay" 		        href="#"	title="Delay" 		  coords="420,460,346,496" shape="rect">
-                                <area id="Damping" 		      href="#"	title="Damping" 		coords="423,460,495,496" shape="rect">
-                                <area id="Halt" 		        href="#"	title="Halt" 		    coords="603,460,529,497" shape="rect">
-                                <area id="Trigger6514" 	    href="#"	title="Trigger" 		coords="606,460,678,497" shape="rect">
-                                <area id="Exit6514" 		    href="#"	title="Exit" 			  coords="786,460,712,498" shape="rect">
-                                <area id="Enter6514" 		    href="#"	title="Enter" 		  coords="789,460,863,498" shape="rect">
-                                <area id="UpRange6514" 	    href="#"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-                                <area id="DownRange6514" 	  href="#"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-                                <area id="AutoRange6514"	  href="#"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
-                            </map>
-                        </figure>                    
-                    `;
-                    $('#electrometer').mapster({
-                        mapKey:'id',
-                        fillColor: 'f5f5b5',
-                        fillOpacity: 0.6,
-                        render_select: { 
-                            fillOpacity: 0.3
-                        },
-                        singleSelect: true
-                    }).parent().css({"margin":"0 auto"});
-                }
-                
-                var shift6514Button = this.document.getElementById('Shift6514');
-                var local6514Button = this.document.getElementById('Local6514');
-                var power6514Button = this.document.getElementById('Power6514');
-                var voltageButton = this.document.getElementById('Voltage');
-                var currentButton = this.document.getElementById('Current');
-                var resistanceButton = this.document.getElementById('Resistance');
-                var chargeButton = this.document.getElementById('Charge');
-                var externalFeedbackButton = this.document.getElementById('ExternalFeedback');
-                var zeroCheckButton = this.document.getElementById('ZeroCheck');
-                var zeroCorrectButton = this.document.getElementById('ZeroCorrect');
-                var groundButton = this.document.getElementById('Ground');
-                var averageButton = this.document.getElementById('Average');
-                var medianButton = this.document.getElementById('Median');
-                var relativeButton = this.document.getElementById('Relative');
-                var limitButton = this.document.getElementById('Limit');
-                var digits6514Button = this.document.getElementById('Digits6514');
-                var rate6514Button = this.document.getElementById('Rate6514');
-                var cursorLeft6514Button = this.document.getElementById('CursorLeft6514');
-                var cursorRight6514Button = this.document.getElementById('CursorRight6514');
-                var store6514Button = this.document.getElementById('Store6514');
-                var recall6514Button = this.document.getElementById('Recall6514');
-                var delayButton = this.document.getElementById('Delay');
-                var dampingButton = this.document.getElementById('Damping');
-                var haltButton = this.document.getElementById('Halt');
-                var trigger6514Button = this.document.getElementById('Trigger6514');
-                var exit6514Button = this.document.getElementById('Exit6514');
-                var enter6514Button = this.document.getElementById('Enter6514');
-                var upRange6514Button = this.document.getElementById('UpRange6514');
-                var downRange6514Button = this.document.getElementById('DownRange6514');
-                var autoRange6514Button = this.document.getElementById('AutoRange6514');                
-                var electrometer = document.getElementById('electrometer')
+                    insertSvg(target,"static/svg/ElectrometerMap.html",
+                    function(target){
+                                    var shift6514Button = this.document.getElementById('Shift6514');
+                                    var local6514Button = this.document.getElementById('Local6514');
+                                    var power6514Button = this.document.getElementById('Power6514');
+                                    var voltageButton = this.document.getElementById('Voltage');
+                                    var currentButton = this.document.getElementById('Current');
+                                    var resistanceButton = this.document.getElementById('Resistance');
+                                    var chargeButton = this.document.getElementById('Charge');
+                                    var externalFeedbackButton = this.document.getElementById('ExternalFeedback');
+                                    var zeroCheckButton = this.document.getElementById('ZeroCheck');
+                                    var zeroCorrectButton = this.document.getElementById('ZeroCorrect');
+                                    var groundButton = this.document.getElementById('Ground');
+                                    var averageButton = this.document.getElementById('Average');
+                                    var medianButton = this.document.getElementById('Median');
+                                    var relativeButton = this.document.getElementById('Relative');
+                                    var limitButton = this.document.getElementById('Limit');
+                                    var digits6514Button = this.document.getElementById('Digits6514');
+                                    var rate6514Button = this.document.getElementById('Rate6514');
+                                    var cursorLeft6514Button = this.document.getElementById('CursorLeft6514');
+                                    var cursorRight6514Button = this.document.getElementById('CursorRight6514');
+                                    var store6514Button = this.document.getElementById('Store6514');
+                                    var recall6514Button = this.document.getElementById('Recall6514');
+                                    var delayButton = this.document.getElementById('Delay');
+                                    var dampingButton = this.document.getElementById('Damping');
+                                    var haltButton = this.document.getElementById('Halt');
+                                    var trigger6514Button = this.document.getElementById('Trigger6514');
+                                    var exit6514Button = this.document.getElementById('Exit6514');
+                                    var enter6514Button = this.document.getElementById('Enter6514');
+                                    var upRange6514Button = this.document.getElementById('UpRange6514');
+                                    var downRange6514Button = this.document.getElementById('DownRange6514');
+                                    var autoRange6514Button = this.document.getElementById('AutoRange6514');                
+                                    var electrometer = document.getElementById('electrometer')
 
-                shift6514Button.addEventListener('click', function(event) {
-                    //Prevent it from reloading
-                    event.stopPropagation();
-                    //Run our command
-                    dataChannel.send("Electrometer/press/SYST:KEY 1");
-                    //Ensure it doesn't reload
-                    return false
-                })
-                local6514Button.addEventListener('click', function(event) {
-                    //Prevent it from reloading
-                    event.stopPropagation();
-                    //Run our command
-                    dataChannel.send("Electrometer/press/SYST:LOC");
-                    //Ensure it doesn't reload
-                    return false
-                })
-                power6514Button.addEventListener('click', function(){
-                    console.log("Electrometer was switched");
-                    if(ElectrometerState){
-                        dataChannel.send("PEpdu/off/Electrometer");
-                        ElectrometerState=false;
+                                    
+                                    //TOOL OPERATION
+                                    shift6514Button.addEventListener('click', function(event) {
+                                        //Prevent it from reloading
+                                        event.stopPropagation();
+                                        //Run our command
+                                        dataChannel.send("Electrometer/press/SYST:KEY 1");
+                                        //Ensure it doesn't reload
+                                        return false
+                                    })
+                                    local6514Button.addEventListener('click', function(event) {
+                                        //Prevent it from reloading
+                                        event.stopPropagation();
+                                        //Run our command
+                                        dataChannel.send("Electrometer/press/SYST:LOC");
+                                        //Ensure it doesn't reload
+                                        return false
+                                    })
+                                    power6514Button.addEventListener('click', function(){
+                                        console.log("Electrometer was switched");
+                                        if(ElectrometerState){
+                                            dataChannel.send("PEpdu/off/Electrometer");
+                                            ElectrometerState=false;
+                                                    }
+                                        else{
+                                            dataChannel.send("PEpdu/on/Electrometer");
+                                            ElectrometerState=true;
+                                        }
+                                    })
+                                    voltageButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 2");
+                                        return false
+                                    })
+                                    currentButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 3");
+                                        return false
+                                    })
+                                    resistanceButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 4");
+                                        return false
+                                    })
+                                    chargeButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 5");
+                                        return false
+                                    })
+                                    externalFeedbackButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 6");
+                                        return false
+                                    })
+                                    zeroCheckButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 7");
+                                        return false
+                                    })
+                                    zeroCorrectButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 8");
+                                        return false
+                                    })
+                                    groundButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 16");
+                                        return false
+                                    })
+                                    averageButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 18");
+                                        return false
+                                    })
+                                    medianButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 19");
+                                        return false
+                                    })
+                                    relativeButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 20");
+                                        return false
+                                    })
+                                    limitButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 21");
+                                        return false
+                                    })
+                                    digits6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 22");
+                                        return false
+                                    })
+                                    rate6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 23");
+                                        return false
+                                    })
+                                    cursorLeft6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 24");
+                                        return false
+                                    })
+                                    cursorRight6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 15");
+                                        return false
+                                    })
+                                    store6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 26");
+                                        return false
+                                    })
+                                    recall6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 27");
+                                        return false
+                                    })
+                                    delayButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 28");
+                                        return false
+                                    })
+                                    dampingButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 29");
+                                        return false
+                                    })
+                                    haltButton.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 30");
+                                        // dataChannel.send("Electrometer/press/SYST:ABOR");
+                                        return false
+                                    })
+                                    trigger6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 31");
+                                        // dataChannel.send("Electrometer/press/TRIG:");
+                                        return false
+                                    })
+                                    exit6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 32");
+                                        return false
+                                    })
+                                    enter6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 14");
+                                        return false
+                                    })
+                                    upRange6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 11");
+                                        return false
+                                    })
+                                    downRange6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 13");
+                                        return false
+                                    })
+                                    autoRange6514Button.addEventListener('click', function(event) {
+                                        event.stopPropagation();
+                                        dataChannel.send("Electrometer/press/SYST:KEY 12");
+                                        return false
+                                    })
                                 }
-                    else{
-                        dataChannel.send("PEpdu/on/Electrometer");
-                        ElectrometerState=true;
-                    }
-                })
-                voltageButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 2");
-                    return false
-                })
-                currentButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 3");
-                    return false
-                })
-                resistanceButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 4");
-                    return false
-                })
-                chargeButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 5");
-                    return false
-                })
-                externalFeedbackButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 6");
-                    return false
-                })
-                zeroCheckButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 7");
-                    return false
-                })
-                zeroCorrectButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 8");
-                    return false
-                })
-                groundButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 16");
-                    return false
-                })
-                averageButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 18");
-                    return false
-                })
-                medianButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 19");
-                    return false
-                })
-                relativeButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 20");
-                    return false
-                })
-                limitButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 21");
-                    return false
-                })
-                digits6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 22");
-                    return false
-                })
-                rate6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 23");
-                    return false
-                })
-                cursorLeft6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 24");
-                    return false
-                })
-                cursorRight6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 15");
-                    return false
-                })
-                store6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 26");
-                    return false
-                })
-                recall6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 27");
-                    return false
-                })
-                delayButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 28");
-                    return false
-                })
-                dampingButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 29");
-                    return false
-                })
-                haltButton.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 30");
-                    // dataChannel.send("Electrometer/press/SYST:ABOR");
-                    return false
-                })
-                trigger6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 31");
-                    // dataChannel.send("Electrometer/press/TRIG:");
-                    return false
-                })
-                exit6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 32");
-                    return false
-                })
-                enter6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 14");
-                    return false
-                })
-                upRange6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 11");
-                    return false
-                })
-                downRange6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 13");
-                    return false
-                })
-                autoRange6514Button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    dataChannel.send("Electrometer/press/SYST:KEY 12");
-                    return false
-                })
+                            )
+                }
 
             }    
         },
