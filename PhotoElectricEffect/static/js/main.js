@@ -845,40 +845,45 @@ window.addEventListener('DOMContentLoaded', function () {
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
                 if (target) {
-                   // target.innerHTML = 
-                   insertSvg(target,"static/svg/KnobMap.html")
+                   // target.innerHTML = (args) => {}
+                   insertSvg(target,"static/svg/KnobMap.html",
+                    function(target){
+                                    console.log("Rendered potentiometer interactive area!");
+                                    var leftPot = document.getElementById('turnLeft');
+                                    var rightPot = document.getElementById('turnRight');
+                                    var threeDegree = document.getElementById('3.6_degree');
+                                    var thirtySixDegree = document.getElementById('36_degree');
+                                    var threeSixtyDegree = document.getElementById('360_degree');
+                                    var potSteps=200;
+                                    var knob = this.document.getElementById('knob')
+                                
+
+                                    // TOOL OPERATION
+                                    threeDegree.addEventListener('click', function(){
+                                        potSteps=2; 
+                                        console.log("Click 3 degrees");
+                                    })
+                                    thirtySixDegree.addEventListener('click', function(){
+                                        potSteps=20;
+                                    })
+                                    threeSixtyDegree.addEventListener('click', function(){
+                                        potSteps=200;
+                                    })
+
+                                    leftPot.addEventListener('click', function() {
+                                        console.log("leftPot was clicked");
+                                        dataChannel.send("Pot/move/"+(-potSteps));
+                                    })
+
+                                    rightPot.addEventListener('click', function() {
+                                        console.log("rightPot was clicked");
+                                        dataChannel.send("Pot/move/"+potSteps);
+                                    })
+                                }
+                            )
                 }
 
-                console.log("Rendered potentiometer interactive area!");
-                var leftPot = document.getElementById('turnLeft');
-                var rightPot = document.getElementById('turnRight');
-                var threeDegree = document.getElementById('3.6_degree');
-                var thirtySixDegree = document.getElementById('36_degree');
-                var threeSixtyDegree = document.getElementById('360_degree');
-                var potSteps=200;
-                var knob = this.document.getElementById('knob')
-            
-
-                // TOOL OPERATION
-                threeDegree.addEventListener('click', function(){
-                    potSteps=2;
-                })
-                thirtySixDegree.addEventListener('click', function(){
-                    potSteps=20;
-                })
-                threeSixtyDegree.addEventListener('click', function(){
-                    potSteps=200;
-                })
-
-                leftPot.addEventListener('click', function() {
-                    console.log("leftPot was clicked");
-                    dataChannel.send("Pot/move/"+(-potSteps));
-                })
-
-                rightPot.addEventListener('click', function() {
-                    console.log("rightPot was clicked");
-                    dataChannel.send("Pot/move/"+potSteps);
-                })
+                
 
             }
         }
@@ -1007,14 +1012,19 @@ window.addEventListener('DOMContentLoaded', function () {
             selected = button;
         });
     });
-
-    function insertSvg(target, svgPath) {
+    
+// This code enables the image map html to be in a separate file (static/svg) 
+// by making sure that all the javascript code can see the button id's that are defined in the html file.
+    function insertSvg(target, svgPath, callback) {
         fetch(svgPath)
             .then(response => response.text())
             .then(svgText => {
-                target.innerHTML = svgText;
-        });
-    }
+            target.innerHTML = svgText;
+            if (typeof callback === 'function') {
+                callback(target); // Pass target so callback can easily query inside it
+            }
+            });
+        }
 
 
     // RESIZE LOGIC
