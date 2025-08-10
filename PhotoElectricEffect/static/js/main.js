@@ -33,7 +33,8 @@ function onWebsocketMessage(message){
 var extremaModal, contactModal, bootModal
 
 // This function deals with messages the pi sends back to the client (e.g., when a device reaches its limit. )
-function controllerResponseHandler(cmd) {
+function controllerResponseHandler(event) {
+    let cmd=event.data;
     var components = cmd.split("/");
     var device = components[0]
     var info = components[1]
@@ -60,6 +61,11 @@ function controllerResponseHandler(cmd) {
         }
     }
 }
+
+// This code enables the modals
+setWebSocketHandlers({
+    onMessage:controllerResponseHandler
+})
 
 // This is the MAIN function.  It waits until everything is loaded, then runs all the rest of the java script
 window.addEventListener('DOMContentLoaded', function () {
