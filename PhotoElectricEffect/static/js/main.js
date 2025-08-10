@@ -63,9 +63,9 @@ function controllerResponseHandler(event) {
 }
 
 // This code enables the modals
-setWebSocketHandlers({
-    onMessage:controllerResponseHandler
-})
+// setWebSocketHandlers({
+//     onMessage:controllerResponseHandler
+// })
 
 // This is the MAIN function.  It waits until everything is loaded, then runs all the rest of the java script
 window.addEventListener('DOMContentLoaded', function () {
