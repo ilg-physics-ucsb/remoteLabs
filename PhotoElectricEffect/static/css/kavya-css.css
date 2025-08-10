@@ -348,12 +348,15 @@ svg {
 
 .map-button:hover {
   fill: bisque;
-  fill-opacity: 0.6;
+  fill-opacity: 0.75;
 }
 
 .map-button.selected {
   fill: bisque;
-  fill-opacity: 0.3;
+  fill-opacity: 0.45;
+  stroke-opacity: 1;
+  stroke-width: 7px;
+  stroke: bisque;
 }
 
 .w-row-centered {

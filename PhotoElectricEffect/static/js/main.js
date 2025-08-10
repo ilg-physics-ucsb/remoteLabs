@@ -112,6 +112,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const manualsButton = document.getElementById('manuals');
     const sidebar = this.document.getElementById('sidebar');
     const closeSidebar = this.document.getElementById('sidebar-close');
+
     manualsButton.addEventListener('click', () => {
         sidebar.classList.add('active');
     })
@@ -129,12 +130,18 @@ window.addEventListener('DOMContentLoaded', function () {
     let toolClicked = false;
     const message = document.getElementById("click-on-tool-message");
     const close = document.getElementById("close");
-
     const tools = document.getElementsByClassName('tool-item');
 
-    // These variables tell the code that the initial state of the meters is OFF
+    // These variables tell the code that the initial state of the meters and light is OFF
     var ElectrometerState=false;
     var MultimeterState=false;
+    var HgNeState=false;
+    var LastButtonClicked={
+                            "ColorWheelMap": null,
+                            "DensityWheelMap": null,
+                            "ElectrometerMap": null,
+                            "MultimeterMap": null,
+                        }
 
     // TOOL DATA TO DISPLAY. Array name: toolData
     // Includes:
@@ -147,6 +154,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //      (b) clicking logic for tool
     const toolDetailArea = document.getElementById('tool-detail-content');
     const toolData = {
+
         hgNeLamp: {
             name: 'Hg-Ne Lamp',
             description: "The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source for this purpose because it emits a lot of light, but only in a small number of wavelengths.",
@@ -155,10 +163,16 @@ window.addEventListener('DOMContentLoaded', function () {
             toolDirection: "Click to toggle the lamp!",
             render: () => {
                 const target = document.getElementById("tool-interactive-area");
+                if (HgNeState) {
+                    var toggleSource = "static/imgs/figma-components/hgne-on.png";  
+                }
+                else{
+                    var toggleSource = "static/imgs/figma-components/hgne-off.png";
+                }
                 if (target) {
                     target.innerHTML = `
                     <figure class="Icon">
-                        <img id="toggleSwitch" src="static/imgs/figma-components/hgne-off.png" usemap="#image-map-ts">
+                        <img id="toggleSwitch" src="`+toggleSource+`" usemap="#image-map-ts">
                         <map name="image-map-ts">
                             <area id="HgNeTOGGLE" target="" alt="" title="" href="" coords="1,-1,123,155" shape="rect">
                         </map> 
@@ -169,7 +183,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 var HgNeTOGGLE = document.getElementById('HgNeTOGGLE');
                 var toggleSwitch = this.document.getElementById("toggleSwitch");
                 HgNeTOGGLE.style.transform='scaleY(1)';
-                var HgNeState = false;
+                // var HgNeState = false;
 
                 // TOOL OPERATION
                 HgNeTOGGLE.addEventListener('click', function(event){
@@ -177,18 +191,20 @@ window.addEventListener('DOMContentLoaded', function () {
                     event.stopPropagation();
                     console.log("HgNe lamp was switched");
                     if (HgNeState) {
-                        dataChannel.send("PEpdu/off/HgNeLamp");
                         HgNeState=false;
                         HgNeTOGGLE.title="Click here to turn ON";
                         // toggleSwitch.style.transform='scaleY(1)';
+                         console.log("HgNe lamp was turned OFF");
                         toggleSwitch.src = "static/imgs/figma-components/hgne-off.png"
+                        dataChannel.send("PEpdu/off/HgNeLamp");
                     }
                     else {
-                        dataChannel.send("PEpdu/on/HgNeLamp");
                         HgNeState=true;
                         HgNeTOGGLE.title="Click here to turn OFF";
                         // toggleSwitch.style.transform='scaleY(-1)';
+                        console.log("HgNe lamp was turned ON");
                         toggleSwitch.src = "static/imgs/figma-components/hgne-on.png"
+                        dataChannel.send("PEpdu/on/HgNeLamp");
                     }
                 })
 
@@ -241,6 +257,7 @@ window.addEventListener('DOMContentLoaded', function () {
                                     })  
                                 }
                             )   
+                    setLastSelected("ColorWheelMap")        
                 }
   
 
@@ -309,6 +326,7 @@ window.addEventListener('DOMContentLoaded', function () {
                                     })
                                 }
                             )
+                    setLastSelected("DensityWheelMap")        
                 }
 
                 
@@ -524,6 +542,7 @@ window.addEventListener('DOMContentLoaded', function () {
                                     })
                                 }
                             )
+                    setLastSelected("ElectrometerMap")        
                 }
 
             }    
@@ -729,6 +748,7 @@ window.addEventListener('DOMContentLoaded', function () {
                                     })
                                 }
                             )
+                    setLastSelected("MultimeterMap")        
                 }    
             }
         },
@@ -872,6 +892,10 @@ window.addEventListener('DOMContentLoaded', function () {
                 `;
 
                 currTool.render?.();
+                setTimeout(()=>{
+                    setButtonSelectionListeners();
+                },100)
+                
             }
 
 
@@ -891,20 +915,45 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // This code does for SVG what mapster used to do for image-maps
+    // IMAGE MAPS
+    //  This code does for SVG what mapster used to do for image-maps
+    // This code establishes which button was selected and writes it to LastButtonClicked
 
-    const buttons = document.querySelectorAll('.map-button');
-    let selected = null;
+    var selected=null;  //establishes a global variable in which to store the last selected button
 
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            if (selected) {
-                selected.classList.remove('selected');
-            }
-            button.classList.add('selected');
-            selected = button;
+    function setButtonSelectionListeners(){
+        const buttons = document.querySelectorAll('.map-button');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                if (selected) {
+                    selected.classList.remove('selected');
+                }
+                button.classList.add('selected');
+                LastButtonClicked[event.target.parentNode.id]=button.id;
+                console.log(LastButtonClicked)
+                selected = button;
+            });
         });
-    });
+    }
+
+    // This code adds the selected class to the object stored in the LastButtonClicked dictionary, if that object exists 
+    function setLastSelected(mapID){
+
+        setTimeout(                      // take some time so that the rendering can finish
+            ()=>{                        // then update the html to match the memory of which button (if any) was last clicked
+                if(LastButtonClicked[mapID]===null){
+                    return
+                }
+                else{
+                    let button = document.getElementById(LastButtonClicked[mapID]);
+                    button.classList.add("selected");
+                    selected=button;
+                };
+            },100
+        )
+       
+    }
     
     // This code enables the image map html to be in a separate file (static/svg) 
     // by making sure that all the javascript code can see the button id's that are defined in the html file.
