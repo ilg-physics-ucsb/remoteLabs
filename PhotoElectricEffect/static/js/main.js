@@ -30,42 +30,62 @@ function onWebsocketMessage(message){
 }
 
 // This code declares variables that the following function and event listener use.
-var extremaModal, contactModal, bootModal
+    const extremaModal = document.getElementById('extremaModal');
+    const bootModal = document.getElementById('bootModal');
+    const contactModal = document.getElementById('contactModal');
 
 // This function deals with messages the pi sends back to the client (e.g., when a device reaches its limit. )
 function controllerResponseHandler(event) {
-    let cmd=event.data;
-    var components = cmd.split("/");
-    var device = components[0]
-    var info = components[1]
-    var infoValue = components[2]
+    let response=event.data;
+    const components = response.split(":");
+    const messageType = components[0]
+    const messageText = components[1]
 
-    if (infoValue == "limit") {
-        extremaModal.modal("show")
+    if (messageType == "MESSAGE") {
+        console.log(messageText)
+        return
     }
-    if (device == "Messenger") {
-        console.log("Received Messenger")
-        if (info == "contactModal") {
-            if (infoValue == "show") {
-                contactModal.modal("show")
-            }
+    if (messageType == "ALERT") {
+        const [device,command,parameter] = messageText.split("/");
+        if (parameter == "limit") {
+            extremaModal.style.display = "block";
         }
-    }
-
-    if (device == "Messenger") {
-        console.log("Received Messenger")
-        if (info == "bootModal") {
-            if (infoValue == "show") {
-                bootModal.modal("show")
-            }
+        if (parameter == "boot") {
+            bootModal.style.display = "block";
+        }
+        if (parameter == "contact") {
+            contactModal.style.display = "block";
         }
     }
 }
 
-// This code enables the modals
-// setWebSocketHandlers({
-//     onMessage:controllerResponseHandler
-// })
+//This code enables the modals
+setWebSocketHandlers({
+    onMessage:controllerResponseHandler
+})
+
+
+// Get the modal
+var modals = document.getElementsByClassName('modal');
+// Get the <span> element that closes the modal
+//   var spans=document.getElementsByClassName("close");
+
+// When the user clicks the X in the upper right corner of the modal, close it
+// for(let i=0;i<spans.length;i++){
+//     spans[i].onclick = function() {
+//        modals[i].style.display = "none";
+//     }
+//  }
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	for(let i=0;i<modals.length;i++){
+  		if (event.target == modals[i]) {
+    		modals[i].style.display = "none";
+  			}
+		}
+   }
+
 
 // This is the MAIN function.  It waits until everything is loaded, then runs all the rest of the java script
 window.addEventListener('DOMContentLoaded', function () {
@@ -73,10 +93,10 @@ window.addEventListener('DOMContentLoaded', function () {
     var isStreaming2 = false;
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    extremaModal = $("#extremaModal")
-    contactModal = $("#contactModal")
-    bootModal = $("#bootModal")
-    var start = document.getElementById('start');
+    // extremaModal = $("#extremaModal")
+    // contactModal = $("#contactModal")
+    // bootModal = $("#bootModal")
+    // var start = document.getElementById('start');
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
     var timeLimit = 3 * 60 * 60 ;  // This value sets the starting time of the countdown timer (to 3 hours in sec)

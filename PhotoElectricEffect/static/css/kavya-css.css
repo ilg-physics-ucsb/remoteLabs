@@ -363,3 +363,91 @@ svg {
   display: flex;
   justify-content: center
 }
+
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 200px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0.5rem;
+  pointer-events: none;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  font-size: 20px;
+  border: 10px solid #fe1e1e;
+  width: 75%;
+  text-align: center;
+  color:#1e1e1e;
+  border-top-left-radius: calc(3rem - 1px);
+  border-top-right-radius: calc(3rem - 1px);
+  border-bottom-left-radius: calc(3rem - 1px);
+  border-bottom-right-radius: calc(3rem - 1px);
+}
+
+.modal-header {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: calc(0.3rem - 1px);
+  border-top-right-radius: calc(0.3rem - 1px);
+}
+
+ .modal-header {
+ background-color: #fe1e1e;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -ms-flex-pack: center;
+  position: relative;
+  z-index: 2;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-top: 4px solid #dee2e6;
+  border-bottom: 4px solid #dee2e6;
+  border-left: 4px solid #dee2e6;
+  border-right: 4px solid #dee2e6;
+  border-top-left-radius: calc(3rem - 1px);
+  border-top-right-radius: calc(3rem - 1px);
+  border-bottom-left-radius: calc(3rem - 1px);
+  border-bottom-right-radius: calc(3rem - 1px);
+}
+
+
+.modal-title {
+	color: #fe1e1e;
+  z-index: 2;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+
+.modal-body {
+  position: relative;
+  z-index: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1rem;
+}

@@ -5906,7 +5906,7 @@ a.close.disabled {
   overflow-x: hidden;
   overflow-y: auto;
 }
-
+/* 
 .modal {
   position: fixed;
   top: 0;
@@ -5924,7 +5924,7 @@ a.close.disabled {
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
-}
+} */
 
 .modal.fade .modal-dialog {
   transition: -webkit-transform 0.3s ease-out;
@@ -6000,7 +6000,7 @@ a.close.disabled {
 .modal-dialog-centered.modal-dialog-scrollable::before {
   content: none;
 }
-
+/* 
 .modal-content {
   position: relative;
   display: -ms-flexbox;
@@ -6014,7 +6014,7 @@ a.close.disabled {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
-}
+} */
 
 .modal-backdrop {
   position: fixed;
@@ -6033,7 +6033,7 @@ a.close.disabled {
 .modal-backdrop.show {
   opacity: 0.5;
 }
-
+/* 
 .modal-header {
   display: -ms-flexbox;
   display: flex;
@@ -6062,7 +6062,7 @@ a.close.disabled {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1rem;
-}
+} */
 
 .modal-footer {
   display: -ms-flexbox;
