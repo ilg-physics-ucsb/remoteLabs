@@ -29,11 +29,6 @@ function onWebsocketMessage(message){
     alert(message);
 }
 
-// This code declares variables that the following function and event listener use.
-    const extremaModal = document.getElementById('extremaModal');
-    const bootModal = document.getElementById('bootModal');
-    const contactModal = document.getElementById('contactModal');
-
 // This function deals with messages the pi sends back to the client (e.g., when a device reaches its limit. )
 function controllerResponseHandler(event) {
     let response=event.data;
@@ -65,17 +60,6 @@ setWebSocketHandlers({
 })
 
 
-// Get the modal
-var modals = document.getElementsByClassName('modal');
-// Get the <span> element that closes the modal
-//   var spans=document.getElementsByClassName("close");
-
-// When the user clicks the X in the upper right corner of the modal, close it
-// for(let i=0;i<spans.length;i++){
-//     spans[i].onclick = function() {
-//        modals[i].style.display = "none";
-//     }
-//  }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -93,10 +77,15 @@ window.addEventListener('DOMContentLoaded', function () {
     var isStreaming2 = false;
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    // extremaModal = $("#extremaModal")
-    // contactModal = $("#contactModal")
-    // bootModal = $("#bootModal")
-    // var start = document.getElementById('start');
+
+   // This code declares variables that the following function and event listener use.
+    const extremaModal = document.getElementById('extremaModal');
+    const bootModal = document.getElementById('bootModal');
+    const contactModal = document.getElementById('contactModal');
+
+    // Get the modal
+    var modals = document.getElementsByClassName('modal');
+
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
     var timeLimit = 3 * 60 * 60 ;  // This value sets the starting time of the countdown timer (to 3 hours in sec)
