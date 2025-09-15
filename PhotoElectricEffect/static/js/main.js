@@ -60,17 +60,6 @@ setWebSocketHandlers({
 })
 
 
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-	for(let i=0;i<modals.length;i++){
-  		if (event.target == modals[i]) {
-    		modals[i].style.display = "none";
-  			}
-		}
-   }
-
-
 // This is the MAIN function.  It waits until everything is loaded, then runs all the rest of the java script
 window.addEventListener('DOMContentLoaded', function () {
     var isStreaming = false;
@@ -85,6 +74,15 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // Get the modal
     var modals = document.getElementsByClassName('modal');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        for(let i=0;i<modals.length;i++){
+            if (event.target == modals[i]) {
+                modals[i].style.display = "none";
+                }
+            }
+    }
 
     var stop = document.getElementById('stop');
     var video = document.getElementById('v');
