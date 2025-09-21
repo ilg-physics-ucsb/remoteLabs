@@ -398,8 +398,8 @@ svg {
  background-color: #fe1e1e;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: start;
-  align-items: flex-start;
+  -ms-flex-align: center;
+  align-items: center;
   -ms-flex-pack: center;
   position: relative;
   z-index: 2;
