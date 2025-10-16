@@ -12,15 +12,16 @@ devices:
   Camera:
     type: ArduCamMultiCamera
     videoNumber: 0
-    i2cbus: 11
+    numCameras: 2
+    i2cbus: 1
     initialCamera: b
     controlPins:
       - 4
       - 17
       - 18
     cameraNamesDict:
-      counter: b
-      overview: d
+      counter: a
+      overview: b
   Stage:
     type: S42CStepperMotor
     EN: 26
@@ -30,7 +31,7 @@ devices:
       - 0
       - 22740
     refPoints:
-      s0: 22620
+      s0: 22619
       s1: 21820
       s2: 21020
       s3: 20220
@@ -66,12 +67,12 @@ devices:
     actuator: Actuator
     magnet: Magnet
     initialState:
-      s0: 
-      s1: 
-      s2: 
-      s3: 
-      s4: 
-      s5: 
+      s0:
+      s1:
+      s2:
+      s3:
+      s4:
+      s5:
       h0: A14
       h1: A13
       h2: A12
@@ -132,3 +133,17 @@ devices:
     outletMap:
       PowerSupply: 3
       ST160: 6
+
+locks:
+  pdu:
+    - GRpdu
+  absorberComponents:
+    - Actuator
+    - Stage
+    - Magnet
+  absorberController:
+    - AbsorberController
+  buttons:
+    - Buttons
+  camera:
+    - Camera

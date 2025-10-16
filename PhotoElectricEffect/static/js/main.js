@@ -89,6 +89,90 @@ window.addEventListener('DOMContentLoaded', function () {
     var timeLimit = 3 * 60 * 60 ;  // This value sets the starting time of the countdown timer (to 3 hours in sec)
 
     window.setTimeout(timeOutHandler,timeLimit*1000) // This function passes the time limit to the function below (in msec), which alerts the user when their time is up.
+    // var video2 = document.getElementById('v2');
+    // for Color Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
+    var f365 = document.getElementById('f365');
+    var f436 = document.getElementById('f436');
+    var f546 = document.getElementById('f546');
+    var f577 = document.getElementById('f577');
+    var colorFilterwheel = document.getElementById('colorFilterWheel')
+ 
+    // for Density Filter Wheel Motor -- converts the HTML element named in 'index' to a JS variable
+    var nd00 = document.getElementById('nd00');
+    var nd03 = document.getElementById('nd03');
+    var nd05 = document.getElementById('nd05');
+    var nd10 = document.getElementById('nd10');
+    var nd20 = document.getElementById('nd20');
+    var nd40 = document.getElementById('nd40');
+    var densityFilterwheel = document.getElementById('densityFilterWheel')
+
+    // for Keithley 6514 Electrometer
+    var shift6514Button = document.getElementById('Shift6514');
+    var local6514Button = document.getElementById('Local6514');
+    var power6514Button = document.getElementById('Power6514');
+    var voltageButton = document.getElementById('Voltage');
+    var currentButton = document.getElementById('Current');
+    var resistanceButton = document.getElementById('Resistance');
+    var chargeButton = document.getElementById('Charge');
+    var externalFeedbackButton = document.getElementById('ExternalFeedback');
+    var zeroCheckButton = document.getElementById('ZeroCheck');
+    var zeroCorrectButton = document.getElementById('ZeroCorrect');
+    var groundButton = document.getElementById('Ground');
+    var averageButton = document.getElementById('Average');
+    var medianButton = document.getElementById('Median');
+    var relativeButton = document.getElementById('Relative');
+    var limitButton = document.getElementById('Limit');
+    var digits6514Button = document.getElementById('Digits6514');
+    var rate6514Button = document.getElementById('Rate6514');
+    var cursorLeft6514Button = document.getElementById('CursorLeft6514');
+    var cursorRight6514Button = document.getElementById('CursorRight6514');
+    var store6514Button = document.getElementById('Store6514');
+    var recall6514Button = document.getElementById('Recall6514');
+    var delayButton = document.getElementById('Delay');
+    var dampingButton = document.getElementById('Damping');
+    var haltButton = document.getElementById('Halt');
+    var trigger6514Button = document.getElementById('Trigger6514');
+    var exit6514Button = document.getElementById('Exit6514');
+    var enter6514Button = document.getElementById('Enter6514');
+    var upRange6514Button = document.getElementById('UpRange6514');
+    var downRange6514Button = document.getElementById('DownRange6514');
+    var autoRange6514Button = document.getElementById('AutoRange6514');
+
+    //for Keithley 2000 Multimeter
+    var shift2000Button = document.getElementById('Shift2000');
+    var local2000Button = document.getElementById('Local2000');
+    var power2000Button = document.getElementById('Power2000');
+    var dcVoltageButton = document.getElementById('DCvoltage');
+    var acVoltageButton = document.getElementById('ACvoltage');
+    var dcCurrentButton = document.getElementById('DCcurrent');
+    var acCurrentButton = document.getElementById('ACcurrent');
+    var TWOwireResistanceButton = document.getElementById('2wireResistance');
+    var FOURwireResistanceButton = document.getElementById('4wireResistance');
+    var frequencyButton = document.getElementById('Frequency');
+    var temperatureButton = document.getElementById('Temperature');
+    var externalTriggerButton = document.getElementById('ExternalTrigger');
+    var trigger2000Button = document.getElementById('Trigger2000');
+    var store2000Button = document.getElementById('Store2000');
+    var recall2000Button = document.getElementById('Recall2000');
+    var filterButton = document.getElementById('Filter');
+    var relativeButton = document.getElementById('Relative');
+    var cursorLeft2000Button = document.getElementById('CursorLeft2000');
+    var cursorRight2000Button = document.getElementById('CursorRight2000');
+    var openButton = document.getElementById('Open');
+    var closeButton = document.getElementById('Close');
+    var stepButton = document.getElementById('Step');
+    var scanButton = document.getElementById('Scan');
+    var digits2000Button = document.getElementById('Digits2000');
+    var rate2000Button = document.getElementById('Rate2000');
+    var exit2000Button = document.getElementById('Exit2000');
+    var enter2000Button = document.getElementById('Enter2000');
+    var upRange2000Button = document.getElementById('UpRange2000');
+    var downRange2000Button = document.getElementById('DownRange2000');
+    var autoRange2000Button = document.getElementById('AutoRange2000');
+
+
+//     //for LiveFeed
+//     window.setTimeout(timeOutHandler,10800000)
 
     function timeOutHandler(){
         // mainCamSignal.hangup()

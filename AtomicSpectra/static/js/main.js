@@ -1,52 +1,8 @@
-// This is the function that adds the video stream. You can have it do other things (like turn off a loading element) once it receives a stream.
-function connectStream(stream, videoElement) {
-    if (videoElement) {
-        console.log("got a stream! Putting stream in the following video" );
-        console.log(videoElement);
-        videoElement.srcObject = stream;
-        videoElement.setAttribute("data-playing", "true");
-        resize_canvas()
-        // videoElement.play();
-    }
-}
-
-//This function runs if there is an error returned from teh websocket connecting to the stream.
-function errorStream(error){
-    alert(error);
-}
-
-// This functions gets run when the websocket is closed.
-function closeStream(videoElement) {
-    if (videoElement) {
-        videoElement.srcObject = null;
-        videoElement.setAttribute("data-playing", "false");
-        console.log("websocket closed. bye bye!");
-    }
-}
 
 // This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
 function onWebsocketMessage(message){
     alert(message);
 }
-
-function setupWebRTC(port, videoElement, vformat, hardwareCodec=false) {
-    var signalling_server_hostname = location.hostname || "192.168.0.2";
-    // var signalling_server_address = signalling_server_hostname + ':' + (port || (location.protocol === 'https:' ? 443 : 80));
-    var signalling_server_address = signalling_server_hostname + location.pathname + "ws"
-    var protocol = location.protocol === "https:" ? "wss:" : "ws:";
-    // var address = url + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    // var address = location.hostname + ':' + (port || (protocol === 'https:' ? 443 : 80)) + '/stream/webrtc';
-    // protocol = "wss:";
-    // var address = url + "/webrtc";
-    var wsurl = protocol + '//' + signalling_server_address;
-
-    console.log(videoElement);
-    if (videoElement && videoElement.getAttribute('data-playing') == "false") {
-        var signalObj = new signal(wsurl, videoElement, vformat, hardwareCodec, connectStream, errorStream, closeStream, onWebsocketMessage)
-    }
-    return signalObj
-}
-
 
 function getWidth(){
     return document.getElementById('v').clientWidth; //parseInt(video.css('width'),10)
@@ -165,7 +121,7 @@ var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnes
 $("document").ready(function () {
     var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    liveStream = document.getElementById("v");
+    liveStream = document.getElementById("video");
     exposureDisplay = $("#expVal")[0]
     exposureSlider = $("#exposureSlider")[0]
     brightnessDisplay = $("#briVal")[0]
@@ -292,13 +248,14 @@ $("document").ready(function () {
     // })
 
     //for LiveFeed  
-    var mainCamSignal = setupWebRTC(8081, liveStream, 100);
+    // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
  
     //for Time Limit
      window.setTimeout(timeOutHandler,10800000)
 
      function timeOutHandler(){
-         mainCamSignal.hangup()
+        //  mainCamSignal.hangup() 
+        //  add code here to make a pop-up that alerts the user that they are losing control
          alert("Your session has timed out.")
      }
 
@@ -1127,7 +1084,7 @@ $("document").ready(function () {
 
   window.addEventListener('beforeunload', function(e) {
     // TEMP CHANGE
-    mainCamSignal.hangup();
+    // mainCamSignal.hangup();
     // TEMP CHANGE
     dataChannel.close();
   })

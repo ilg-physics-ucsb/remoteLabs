@@ -42,7 +42,7 @@ function controllerResponseHandler(cmd) {
 $("document").ready(function () {
     var stepsPerMM= 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
-    var liveStream = document.getElementById("v");
+    var liveStream = document.getElementById("video");
     var staticCrossHairs = document.getElementById('imgCrossHairs')
     extremaModal = $("#extremaModal")
     contactModal = $("#contactModal")
