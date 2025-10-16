@@ -52,7 +52,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
 
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
@@ -61,7 +61,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fff;
-}
+} */
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -260,7 +260,7 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button;
+  /* -webkit-appearance: button; */
 }
 
 button:not(:disabled),
@@ -288,7 +288,7 @@ input[type="date"],
 input[type="time"],
 input[type="datetime-local"],
 input[type="month"] {
-  -webkit-appearance: listbox;
+  /* -webkit-appearance: listbox; */
 }
 
 textarea {
@@ -326,8 +326,8 @@ progress {
 
 [type="search"] {
   outline-offset: -2px;
-  -webkit-appearance: none;
-}
+  /* -webkit-appearance: none;
+} */
 
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
@@ -5906,7 +5906,7 @@ a.close.disabled {
   overflow-x: hidden;
   overflow-y: auto;
 }
-
+/* 
 .modal {
   position: fixed;
   top: 0;
@@ -5924,7 +5924,7 @@ a.close.disabled {
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
-}
+} */
 
 .modal.fade .modal-dialog {
   transition: -webkit-transform 0.3s ease-out;
@@ -6000,7 +6000,7 @@ a.close.disabled {
 .modal-dialog-centered.modal-dialog-scrollable::before {
   content: none;
 }
-
+/* 
 .modal-content {
   position: relative;
   display: -ms-flexbox;
@@ -6014,7 +6014,7 @@ a.close.disabled {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
-}
+} */
 
 .modal-backdrop {
   position: fixed;
@@ -6033,7 +6033,7 @@ a.close.disabled {
 .modal-backdrop.show {
   opacity: 0.5;
 }
-
+/* 
 .modal-header {
   display: -ms-flexbox;
   display: flex;
@@ -6062,7 +6062,7 @@ a.close.disabled {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1rem;
-}
+} */
 
 .modal-footer {
   display: -ms-flexbox;

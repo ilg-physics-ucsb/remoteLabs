@@ -82,7 +82,7 @@
         object-fit: contain;
         justify-self: center;
     }.ND_img{
-        width: 15%;
+        width: 18%;
         object-fit: contain;
         justify-self: center;
     }.wheel {
@@ -90,7 +90,7 @@
         /* grid-column-end: 4; */
         /* grid-row-start: 4; */
         /* grid-row-end: 6; */
-        /* object-fit: contain; */
+        object-fit: contain; 
         /* align-self: center; */
         justify-self: center; 
     }

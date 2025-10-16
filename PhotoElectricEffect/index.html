@@ -6,26 +6,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>UCSB Physics Remote Lab - Photoelectric Effect</title>
+  <title>UCSB Physics Remote Lab - Photoelectric effect</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="static/css/bootstrap.min.css">
-  <!-- Material Design Bootstrap -->
-  <link rel="stylesheet" href="static/css/mdb.min.css">
+
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="static/css/styleGrid.css">
   <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="static/css/webflow.css" rel="stylesheet" type="text/css">
-  <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css">
+  <link href="static/css/deborahs-blank-site-2b2ad7.webflow.css" rel="stylesheet" type="text/css"> 
+  <!-- REMOVE lines 19-22 WHEN FINISHED -->
+  <link href="static/css/kavya-css.css" rel="stylesheet" type="text/css">
  
 </head>
 <body>
         <!-- <script src="static/js/signalling.js"></script> -->
-        <script src="static/js/main.js"></script>
         <script src="static/js/remlaSocket.js"></script>
+        <script src="static/js/main.js"></script>
         <script defer type="text/javascript" src="static/js/reader.js"></script>
         <script defer type="text/javascript" src="static/js/mediaMTXGetFeed.js"></script>
 
@@ -35,363 +34,184 @@
   <!-- <script src="https://embed.small.chat/T01LL37HGMRC01LYGHBDL1.js" async></script> CHER's OLD HELPBOT-->
   <script src="https://embed.small.chat/T02U4DGKYV8C0310KCK7S7.js" async></script>
  
-  <div class="pagecontainer w-row">
-    <div id="PageHead" class="column w-row">
-      <h1 class="Title">Photoelectric Effect</h1>
-      <div class="text-block">
-       </div> 
-      <!-- <div id="TopTextLeft" class="column w-col w-col-6">
-        <h2 class="SubTitle">Get Set</h2>
-          <b>Lab Guides:&emsp;&emsp;</b>  
-          <a target="_blank" href="static/docs/_PEmarkdown/PE5L.html">PHYS 5L</a> &emsp;&emsp;
-          <a target="_blank" href="static/docs/PElabGuide.pdf">PHYS 25L</a><br> 
-          <b>GauchoSpaces:&emsp;&emsp;</b>
-          <a target="_blank" href="https://gauchospace.ucsb.edu/courses/course/view.php?id=83753&section=8">PHYS 5L</a> &emsp;&emsp;
-          <a target="_blank" href="https://gauchospace.ucsb.edu/courses/course/view.php?id=89250">PHYS 25L</a>
+  <!-- SIDEBAR -->
+
+  <div id="sidebar">
+    <button id="sidebar-close">&times;</button>
+    <h4 style="color: white; text-align: center;">Manuals</h4>
+    <ul class="manuals-container">
+      <li class="sidebar-item">
+        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/PenRayGasLamps.pdf" target="_blank">Hg-Ne Lamp User Manual (with spectrum)</a><br><br>
+        <img style="padding: 3px 5px;" src="static/imgs/transparent-imgs/penray-lamp.png" width="172" height="26"/>
+      </li>
+      <li class="sidebar-item">
+        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/Keithley%20multimeter%202000.pdf" target="_blank">Keithley Model 2000 Multimeter User Manual</a>
+        <img style="padding: 10px;" src="static/imgs/Keithley2000Multimeter.jpg" width="224"/>
+      </li>
+      <li class="sidebar-item">
+        <a class="link" href="http://remotelabs.physics.ucsb.edu/photo2/static/docs/Keithley%20electrometer%206514.pdf" target="_blank">Keithley Model 6514 Electrometer User Manual</a>
+        <img style="padding: 10px;" src="static/imgs/Keithley6514Electrometer.jpg" width="224"/>
+      </li>
+      <li class="sidebar-item">
+        <p style="text-align: center;">
+          <a class="link" href="https://www.edmundoptics.com/p/25mm-mercury-254-577nm-cwl-mounted-diameter-filter-kit/23255/" target="_blank">Edumund Optics&#174; Bandpass Interference Filters</a></p>
+        <figure class="Photo">
+          <a target="_blank" href="static/docs/curv_f365.pdf">
+              <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f436.pdf">
+              <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f546.pdf">
+              <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
+          </a>
+          <a target="_blank" href="static/docs/curv_f577.pdf">
+              <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
+          </a> 
+          <p style="text-align: center;">(click each for its transmission curve)</p>
+         </figure>
+      </li>
+      <li class="sidebar-item">
+        <p style="text-align: center;"><a class="link" href="https://www.thorlabs.com/thorproduct.cfm?partnumber=FW1AND" target="_blank">ThorLabs&#174 Absorptive Neutral Density Filters</a></p>
+        <figure class="Photo">
+          <a target="_blank" href="static/imgs/NE03Bcurve.jpg">
+              <img id="NE03" class="ND_img" alt="Filter Transmission Spectrum" src="static/imgs/ND0.3.png" >
+          </a>
+          <a target="_blank" href="static/imgs/NE05Bcurve.jpg">
+              <img id="NE05" class="ND_img" alt="Filter Transmission Spectrum" src="static/imgs/ND0.5.png" >
+          </a>
+          <a target="_blank" href="static/imgs/NE10Bcurve.jpg">
+              <img id="NE10" class="ND_img" alt="Filter Transmission Spectrum" src="static/imgs/ND1.png" >
+          </a>
+          <a target="_blank" href="static/imgs/NE20Bcurve.jpg">
+              <img id="NE20"  class="ND_img" alt="Filter Transmission Spectrum" src="static/imgs/ND2b.png" >
+          </a>
+          <a target="_blank" href="static/imgs/NE40Bcurve.jpg">
+              <img id="NE40"  class="ND_img" alt="Filter Transmission Spectrum" src="static/imgs/ND4.png" >
+          </a>
+          <p style="text-align: center;">(click each for its transmission curve)</p>
+         </figure>
+      </li> 
+    </ul>
+  </div>
+
+  <div class="new-container">
+
+    <!-- HEADER PANEL -->
+    <header>
+      <!-- first column has a button, whose style is defined in kavya-css.css-->
+      <div>
+        <button id="manuals">Manuals</button> 
       </div>
-      <div id="TopTextRight" class="column w-col w-col-6">
-        <h2 class="SubTitle">Get Help</h2>
-        <b>Section Zoom Rooms:&emsp;&emsp;</b>
-        <a target="_blank" href="https://ucsb.zoom.us/j/9333607071?pwd=TUE0cTBLRE5qbjNqU1BFRUhxSkg0Zz09">TA Connor Fitzgerald</a>&emsp;&emsp;
-        <a target="_blank" href="https://ucsb.zoom.us/j/9305930023?pwd=K0NJY1pnNENUL09LMWhWZ2tOK2Rwdz09">TA Carl Padgett</a>
-          <br><b>Slack Channel:&emsp;&emsp;</b>
-           <a target="_blank" href="https://ucsb-lowdiv-physlabs.slack.com">UCSB Sophomore Labs</a>  
-      </div> -->
-    </div>
-    <div id="PageMiddle" class="w-row">
-      <div id="SideImagesLeft" class="column w-col w-col-2">
-        <figure class="Icon">
-          (click to toggle the Hg-Ne lamp)<br>
-          <img id="toggleSwitch" src="static/imgs/toggleSwitch.png" usemap="#image-map-ts">
-          <map name="image-map-ts">
-              <area id="HgNeTOGGLE" title="Click here to turn ON" coords="72,45,128,95" shape="rect">
-          </map> 
-          <br>       
-        </figure>
-        <figure class="Photo">
-            <strong>Source: PenRay&#174; Hg-Ne Lamp</strong>
-            <a target="_blank" href="static/docs/PenRayGasLamps.pdf">
-              <div class = "outer1">
-                <img id="Lamp" class="lamp_img" alt="Lamp Manual" src="static/imgs/PenRayLamp.jpg">
-              </div>
-              </a><br>
-            <a target="_blank" href="static/docs/Hg-NeEmission.jpg">
-              <div class = "outer">
-                <img id="Spectrum" class="image" alt="Emission Spectrum" src="static/imgs/Hg-NeEmissionIcon.png">
-              </div>
-            </a><br><br><br>
-        </figure>        
-        <figure class="Photo">
-            <strong>Filters: Edumund Optics&#174; Bandpass Interference Filters</strong> <br> 
-            <a target="_blank" href="static/docs/curv_f365.pdf">
-                <img id="i365" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter365.png" >
-            </a>
-            <a target="_blank" href="static/docs/curv_f436.pdf">
-                <img id="i436" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter436.png" >
-            </a>
-            <a target="_blank" href="static/docs/curv_f546.pdf">
-                <img id="i546" class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter546.png" >
-            </a>
-            <a target="_blank" href="static/docs/curv_f577.pdf">
-                <img id="i577"  class="filter_img" alt="Filter Transmission Spectrum" src="static/imgs/filter577.png" >
-            </a><br>
-            (click each for its transmission curve)
-        </figure>
-        <figure class="Device embed wheel">
-            <img id="colorFilterWheel" src="static/imgs/FilterWheelScaled.png" usemap="#image-map-cfw">
-            <map name="image-map-cfw">
-              <area id="f365" href="#" title="365 nm" coords="321,110,108" shape="circle">
-              <area id="f436" href="#" title="436 nm" coords="536,232,106" shape="circle">
-              <area id="f546" href="#" title="546 nm" coords="539,481,107" shape="circle">
-              <area id="f577" href="#" title="577 nm" coords="325,600,111" shape="circle">
-            </map>   
-            <br>
-            (click on a filter to rotate it into position)
-        </figure>
-    </div>      
-      <div id="VideoCenter" class="column w-col w-col-8">
-        <div class="Warning">
+      <!-- second column has a the header, subheader and timer, also defined in kavya-css.css-->
+      <div class="header-section">
+        <h2>Photoelectric Effect</h2>
+        <p class="subheader">
           This session will end and the motors will reset in 
           <span id="time" style="color:red;font-weight:bold">3:00:00</span>
           hours.
-        </div>
-            <div class="video w-video w-embed">
-                <video id="video" autoplay></video>
-                <div id="message"></div>
-            </div>
+        </p>
+      </div>
+      <!-- third column has ambient toggle, whose style is defined in-line-->
+      <div
+      style="display: flex; flex-direction: column; gap: 12; align-items: end;"
+      >
+        <p style="color: white; font-weight:bold">TURN ON AMBIENT LIGHT</p>
+        <label class="switch">
+          <input id="ambientTOGGLE" type="checkbox">
+          <span class="slider round">
+          </span>
+        </label>
+      </div>
+    </header>
+    <!-- HEADER PANEL ENDS -->
 
-        <!-- <img id="webcam" src="" alt="" srcset=""> -->
-        <!-- <img src="http://192.168.0.2:8082/stream/video.mjpeg" alt="" srcset=""> -->
-      </div>  
-      <div id="SideImagesRight" class="column w-col w-col-2">
-        <figure class="Icon">
-          (click to toggle the ambient light)<br>
-          <img id="lightSwitch" src="static/imgs/lightSwitch.png" usemap="#image-map-ls">
-          <map name="image-map-ls">
-             <area id="ambientTOGGLE" title="Click here to turn ON" coords="50,68,78,92" shape="rect">
-          </map>
-          <br> 
-          <br> 
-          <br>           
-        </figure>
-        <div id="radioButtonsPot" class="w-row">
-          <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
-          <div class="column w-col w-col-1" style="margin-bottom: 0px;">
-            <input type="radio" id="3.6_degree" name="angleStep" value="3.6">
-            <label for="3.6_degree">3.6&#176;</label>
-          </div>  <!-- &nbsp;&nbsp;&nbsp; -->
-          <div class="column w-col w-col-4" style="margin-bottom: 0px;">
-            <input type="radio" id="36_degree" name="angleStep" value="36">
-            <label for="36_degree">36&#176;</label>
+    <!-- LIVESTREAM AND TOOL SECTION -->
+    <div>
+      <div class="livestream-and-tool-section">
+        <div class="livestream-resizable">
+          <div class="video w-video w-embed">
+              <video id="video" autoplay></video>
+              <div id="message"></div>
           </div>
-          <div class="column w-col w-col-1" style="margin-bottom: 0px;">
-            <input type="radio" id="360_degree" name="angleStep" value="360" checked>
-            <label for="360_degree">360&#176;</label>
-          </div>
-          <div class="column w-col w-col-3" style="margin-bottom: 0px;"><br></div>
-        </div>  
-        <div id="potentiometerKnob" style="width: 100%; height: 100%">
-          <img id="knob" src="static/imgs/Vstop_knob.png" usemap="#image-map-knob"> 
-          <map name="image-map-knob">
-            <area id="turnLeft" title="Lower Vs" href="#" coords="115,499,222,317,163,316,161,281,164,251,169,227,180,203,193,183,206,166,222,151,237,136,256,125,274,116,296,111,317,108,338,105,341,8,315,8,299,8,275,13,253,21,229,31,205,42,180,58,156,79,135,98,116,122,100,148,84,180,73,211,66,246,62,283,63,317,34,317,8,320" shape="poly">
-            <area id="turnRight" title="Raise Vs" href="#" coords="1023,498,1129,317,1073,313,1076,283,1073,244,1065,207,1050,173,1032,138,1015,109,991,83,967,64,939,43,907,30,873,19,838,13,798,9,798,99,832,104,862,114,893,128,918,149,942,175,960,206,969,230,976,268,973,313,915,318" shape="poly">
-          </map>
-          <br>
-          (click on the arrows to rotate the potentiometer)
         </div>
-        <br>
-        <figure class="Photo">
-          <strong>Filters: ThorLabs&#174; Absorptive Neutral Density Filters</strong> <br> 
-          <a target="_blank" href="static/docs/curv_03.gif">
-            <img id="0.3" title="ND 0.3" class ="ND_img" alt="ND Transmission" src="static/imgs/ND0.3.png">
-          </a>
-          <a target="_blank" href="static/docs/curv_03.gif">
-            <img id="0.5" title="ND 0.5" class ="ND_img" alt="ND Transmission" src="static/imgs/ND0.5.png">
-          </a>
-          <a target="_blank" href="static/docs/curv_1.gif">
-            <img id="1" title="ND 1"class ="ND_img" alt="ND Transmission" src="static/imgs/ND1.png">
-          </a>
-          <a target="_blank" href="static/docs/curv_1.gif">
-            <img id="2" title="ND 2" class ="ND_img" alt="ND Transmission" src="static/imgs/ND2.png">
-          </a>
-          <a target="_blank" href="static/docs/curv_4.gif">
-            <img id="4" title="ND 4" class ="ND_img" alt="ND Transmission" src="static/imgs/ND4.png">
-          </a>
-          <br>
-          (click each for its transmission curve)
-        </figure>
-        <figure class="Device embed wheel">
-          <center><img id="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" usemap="#image-map-dfw"></center>
-          <map name="image-map-dfw">
-            <area id="nd00" href="#" title="OPEN" coords="312,122,67"  shape="circle">
-            <area id="nd03" href="#" title="ND 0.3" coords="494,235,67"  shape="circle">
-            <area id="nd05" href="#" title="ND 0.5" coords="496,448,65"  shape="circle">
-            <area id="nd10" href="#" title="ND 1.0" coords="315,555,68"  shape="circle">
-            <area id="nd20" href="#" title="ND 2.0" coords="139,442,70"  shape="circle">
-            <area id="nd40" href="#" title="ND 4.0" coords="140,240,74"  shape="circle">
-          </map>
-          <br>
-          (click on a filter to rotate it into position)   
-        </figure>
+
+        <div class="tool-resizable">
+              <button id="close"></button>
+            <p 
+            style="font-weight: 400; color: white; font-size: 24px;" 
+            id="click-on-tool-message">Click on a tool below!</p>
+           <div id="tool-detail-content"></div>
+        </div>
       </div>
     </div>
-    <div id="PageBottom" class="w-row">
-      <div id="BottomLeft" class="column w-col w-col-6">
-        <a target="_blank" href="static/docs/Keithley electrometer 6514.pdf"
-        style="font-size: large;font-weight: 600;color: crimson;">
-          (click here for the Keithley Model 6514 System Electrometer Instruction manual) 
-        </a>
-        <img id="electrometer" src="static/imgs/Keithley6514ElectrometerTXT.jpg" usemap="#image-map-6514"> 
-        <map name="image-map-6514">
-          <area id="Shift6514" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
-          <area id="Local6514" 		    href="#"	title="Local" 		  coords="102,399,17" shape="circle">
-          <area id="Power6514" 		    href="#"	title="Power" 		  coords="99,479,17" shape="circle">
-          <area id="Voltage" 		      href="#"	title="Voltage" 		coords="200,331,29" shape="circle">
-          <area id="Current" 		      href="#"	title="Current" 		coords="285,331,29" shape="circle">
-          <area id="Resistance" 	    href="#"	title="Resistance"  coords="381,331,29" shape="circle">
-          <area id="Charge" 		      href="#"	title="Charge" 		  coords="466,331,29" shape="circle">
-          <area id="ExternalFeedback" href="#"	title="ExternalFeedback" coords="562,331,29" shape="circle">
-          <area id="ZeroCheck" 		    href="#"	title="ZeroCheck" 	coords="647,331,29" shape="circle">
-          <area id="ZeroCorrect" 	    href="#"	title="ZeroCorrect" coords="743,331,29" shape="circle">
-          <area id="Ground" 		      href="#"	title="Ground" 		  coords="828,331,29" shape="circle">
-          <area id="Average" 		      href="#"	title="Average" 		coords="166,428,238,393" shape="rect">
-          <area id="Median" 		      href="#"	title="Median" 		  coords="242,393,316,428" shape="rect">
-          <area id="Relative" 		    href="#"	title="Relative" 	  coords="420,393,346,428" shape="rect">
-          <area id="Limit" 		        href="#"	title="Limit" 		  coords="423,393,499,428" shape="rect">
-          <area id="Digits6514" 	    href="#"	title="Digits"      coords="603,393,529,428" shape="rect">
-          <area id="Rate6514" 		    href="#"	title="Rate" 		    coords="606,393,678,428" shape="rect">
-          <area id="CursorLeft6514" 	href="#"	title="CursorLeft"  coords="786,393,712,428" shape="rect">
-          <area id="CursorRight6514" 	href="#"	title="CursorRight" coords="789,393,859,428" shape="rect">
-          <area id="Store6514" 		    href="#" title="Store" 		  coords="238,460,163,496" shape="rect">
-          <area id="Recall6514"		    href="#"	title="Recall" 		  coords="242,460,314,496" shape="rect">
-          <area id="Delay" 		        href="#"	title="Delay" 		  coords="420,460,346,496" shape="rect">
-          <area id="Damping" 		      href="#"	title="Damping" 		coords="423,460,495,496" shape="rect">
-          <area id="Halt" 		        href="#"	title="Halt" 		    coords="603,460,529,497" shape="rect">
-          <area id="Trigger6514" 	    href="#"	title="Trigger" 		coords="606,460,678,497" shape="rect">
-          <area id="Exit6514" 		    href="#"	title="Exit" 			  coords="786,460,712,498" shape="rect">
-          <area id="Enter6514" 		    href="#"	title="Enter" 		  coords="789,460,863,498" shape="rect">
-          <area id="UpRange6514" 	    href="#"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-          <area id="DownRange6514" 	  href="#"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-          <area id="AutoRange6514"	  href="#"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
-        </map>
-      </div>
-      <div id="BottomRight" class="column w-col w-col-6">
-          <a target="_blank" href="static/docs/Keithley multimeter 2000.pdf" 
-          style="font-size: large;font-weight: 600;color: crimson;">
-          (click here for the Keithley Model 2000 Multimeter User's manual) 
-          </a>
-        <img id="multimeter"  src="static/imgs/Keithley2000MultimeterTXT.jpg" usemap="#image-map-2000">
-        <map name="image-map-2000">
-          <area id="Shift2000" 		    href="#"	title="Shift" 		  coords="102,331,17" shape="circle">
-          <area id="Local2000" 		    href="#"	title="Local" 		  coords="102,399,17" shape="circle">
-          <area id="Power2000" 		    href="#"	title="Power" 		  coords="99,479,17" shape="circle">
-          <area id="DCvoltage" 		    href="#"	title="DCvoltage" 	coords="200,331,29" shape="circle">
-          <area id="ACvoltage" 		    href="#"	title="ACvoltage" 	coords="285,331,29" shape="circle">
-          <area id="DCcurrent" 		    href="#"	title="DCcurrent" 	coords="381,331,29" shape="circle">
-          <area id="ACcurrent" 		    href="#"	title="ACcurrent" 	coords="466,331,29" shape="circle">
-          <area id="2wireResistance"  href="#"	title="2wireResistance"coords="562,331,29" shape="circle">
-          <area id="4wireResistance" 	href="#"	title="4wireResistance"coords="647,331,29" shape="circle">
-          <area id="Frequency" 		    href="#"	title="Frequency" 	coords="743,331,29" shape="circle">
-          <area id="Temperature" 		  href="#"	title="Temperature" coords="828,331,29" shape="circle">
-          <area id="ExternalTrigger" 	href="#"	title="ExternalTrigger"coords="166,428,238,393" shape="rect">
-          <area id="Trigger2000" 		  href="#"	title="Trigger" 		coords="242,393,316,428" shape="rect">
-          <area id="Store2000" 		    href="#"	title="Store" 	  	coords="420,393,346,428" shape="rect">
-          <area id="Recall2000" 		  href="#"	title="Recall" 		  coords="423,393,499,428" shape="rect">
-          <area id="Filter" 		      href="#"	title="Filter" 		  coords="603,393,529,428" shape="rect">
-          <area id="Relative" 		    href="#"	title="Relative" 		coords="606,393,678,428" shape="rect">
-          <area id="CursorLeft2000" 	href="#"	title="CursorLeft" 	coords="786,393,712,428" shape="rect">
-          <area id="CursorRight2000" 	href="#"	title="CursorRight" coords="789,393,859,428" shape="rect">
-          <area id="Open" 		        href="#"	title="Open" 		    coords="238,460,163,496" shape="rect">
-          <area id="Close" 		        href="#"	title="Close" 		  coords="242,460,314,496" shape="rect">
-          <area id="Step" 		        href="#"	title="Step" 		    coords="420,460,346,496" shape="rect">
-          <area id="Scan" 		        href="#"	title="Scan" 		    coords="423,460,495,496" shape="rect">
-          <area id="Digits2000" 		  href="#"	title="Digits" 		  coords="603,460,529,497" shape="rect">
-          <area id="Rate2000" 		    href="#"	title="Rate" 		    coords="606,460,678,497" shape="rect">
-          <area id="Exit2000" 		    href="#"	title="Exit" 			  coords="786,460,712,498" shape="rect">
-          <area id="Enter2000" 		    href="#"	title="Enter" 		  coords="789,460,863,498" shape="rect">
-          <area id="UpRange2000" 		  href="#"	title="UpRange" 		coords="957,301,935,336,976,338" shape="poly">
-          <area id="DownRange2000" 		href="#"	title="DownRange" 	coords="957,498,978,461,935,461" shape="poly">
-          <area id="AutoRange2000" 		href="#"	title="AutoRange" 	coords="908,381,1007,418" shape="rect">
-        </map>
+
+    <!-- TOOL SECTION (BOTTOM) -->
+    <div style="margin: 15px;">
+      <div class="tools-section">
+        <img id="hg-ne-lamp" style="padding: 3px 5px;" class="tool-item" data-tool="hgNeLamp" src="static/imgs/transparent-imgs/penray-lamp.png" width="172" height="26"/>
+        <img id="filter-wheel" style="padding: 5px;" class="tool-item" data-tool="filterWheel" src="static/imgs/FilterWheelScaled.png" width="84"/>
+        <img id="density-filter-wheel" style="padding: 5px;" class="tool-item" data-tool="densityFilterWheel" src="static/imgs/densityFilterWheelScaledCropped.png" width="84"/>
+        <img id="electrometer" style="padding: 10px;" class="tool-item" data-tool="electrometer" src="static/imgs/Keithley6514Electrometer.jpg" width="224"/>
+        <img id="multimeter" style="padding: 10px;" class="tool-item" data-tool="multimeter" src="static/imgs/Keithley2000Multimeter.jpg" width="224"/>
+        <img id="knob" style="padding: 5px;" class="tool-item" data-tool="knob" src="static/imgs/knob.png" width="72"/>
       </div>
     </div>
+
+
+  <div class="modal" id="extremaModal">
+        <div class="modal-content">
+          <div class="modal-body">
+             <img src="static/imgs/refereeIcon.png" style="width: 35%;">
+            <p style="font-size: 36px;">This object can't move any further in that direction.</p>
+            <p style="font-size: 18px;">(Click anywhere outside this box to return to operation.)</p>           
+          </div>
+        </div>
   </div>
 
-  <div class="modal fade" id="extremaModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div class="modal" id="contactModal">
         <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="loadingModalLabel">Limit Reached!</h5>
-            </div>
-            <div class="modal-body">
-                    <p>This object can't move any more in that direction.</p>
-            </div>
-        </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: red;">
-            <h5 class="modal-title" id="loadingModalLabel">STOP!</h5>
-            </div>
+            <!-- <div class="modal-header">
+              <h2>STOP!</h2>
+            </div> -->
             <div class="modal-body">
               <img src="static/imgs/stop.jpg">
-              <p>Before continuing the lab please send a message using the equipment help button at the bottom right of the screen</p>
-              <img src="static/imgs/equipmentHelp.JPG">
+              <p style="font-size: 36px;">We've noticed something is not right with the equipment. </p>
+              <p style="font-size: 18px;">Before continuing, please send a message using the "Equipment Help" button at the bottom right of the screen.</p>
+              <!-- <img src="static/imgs/equipmentHelp.JPG"> -->
             </div>
         </div>
-    </div>
   </div>
 
-  <div class="modal fade" id="bootModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+ 
+  <div class="modal" id="bootModal">
         <div class="modal-content">
-            <div class="modal-header" style="background-color: red;">
-            <h5 class="modal-title" id="loadingModalLabel">STOP!</h5>
-            </div>
-            <div class="modal-body">
-              <img src="static/imgs/booted.jpg">
-              <p>You are about to be booted! You have 10 seconds to finish taking measurements. If this is a mistake use the equipment help button at the bottom right of the screen. </p>
-              <img src="static/imgs/equipmentHelp.JPG">
-            </div>
+          <!-- <div class="modal-header" style="color: white;">
+            <h1 style="align-self: center;">Your Time is Ending!</h1>
+          </div> -->
+          <div class="modal-body">
+             <img src="static/imgs/AlarmClockRinging.png" style="width: 30%;">
+              <p style="font-size: 36px;">You will soon lose control of the equipment and it will reset. </p> 
+              <p style="font-size: 18px;">If you need more time, send a message using the "Equipment Help" button at the bottom right of the screen.</p>         
+          </div>
         </div>
-    </div>
-                <!--  </div> -->
-
-  <!-- End your project here-->
-  <!-- <script src="{{  url_for('static', filename='js/uv4l.js')  }}"></script> -->
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script> -->
+  </div>    
+   
 
   <!-- jQuery - These are all the scripts to do all the styling -->
-  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <!-- <script type="text/javascript" src="static/js/jquery.min.js"></script> -->
   <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="static/js/popper.min.js"></script>
+  <!-- <script type="text/javascript" src="static/js/popper.min.js"></script> -->
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+  <!-- <script type="text/javascript" src="static/js/bootstrap.min.js"></script> -->
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="static/js/mdb.min.js"></script>
+  <!-- <script type="text/javascript" src="static/js/mdb.min.js"></script> -->
   <!-- Your custom scripts (optional) -->
   <!-- <script type="text/javascript" src="static/js/imageMapResizer.min.js"></script> -->
- <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script> 
-  <script type="text/javascript">
-        $(document).ready(function () {
-          $('#colorFilterWheel').mapster({
-            mapKey:'id',
-            fillColor: 'f5f5b5',
-            fillOpacity: 0.6,
-            render_select: { 
-                fillOpacity: 0.3
-            },
-            singleSelect: true
-          }).parent().css({"margin":"0 auto"});
-          
-          $('#densityFilterWheel').mapster({
-            mapKey:'id',
-            fillColor: 'f5f5b5',
-            fillOpacity: 0.6,
-            render_select: { 
-                fillOpacity: 0.3
-            },
-            singleSelect: true
-          }).parent().css({"margin":"0 auto"});
-
-          $('#knob').mapster({
-            mapKey:'id',
-            fillColor: 'f5f5b5',
-            fillOpacity: 0.6,
-            render_select: { 
-                fillOpacity: 0.3
-            },
-            singleSelect: true
-          }).parent().css({"margin":"0 auto"});
-
-          $('#electrometer').mapster({
-            mapKey:'id',
-            fillColor: 'f5f5b5',
-            fillOpacity: 0.6,
-            render_select: { 
-                fillOpacity: 0.3
-            },
-            singleSelect: true
-          }).parent().css({"margin":"0 auto"});
-
-          $('#multimeter').mapster({
-            mapKey:'id',
-            fillColor: 'f5f5b5',
-            fillOpacity: 0.6,
-            render_select: { 
-                fillOpacity: 0.3
-            },
-            singleSelect: true
-          }).parent().css({"margin":"0 auto"});
-        });   
-  </script>
-  <!-- <script type="text/javascript">imageMapResize();</script> -->
+  <!-- <script type="text/javascript" src="static/js/jquery.imagemapster.js"></script>  -->
  
     <style>
 	#video {width:100%; height:100%}
-    </style>
+    </style> 
 </body>
 </html>
