@@ -46,7 +46,7 @@ devices:
     bounds:
       - -10000
       - 10000
-    stepDelay: 0.004
+    stepWaitTime: 0.004
   Carousel:
     type: S42CStepperMotor
     EN: 16
