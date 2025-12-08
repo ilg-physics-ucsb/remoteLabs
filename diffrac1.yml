@@ -2,14 +2,24 @@ devices:
   Camera:
     type: ArduCamMultiCamera
     videoNumber: 0
-    numCameras: 2
-    defaultSettings:
-      frame_rate: 15
-      brightness: 50
-      contrast: 0
-      shutter_speed: 0
-      awb_mode: 0
-      exposure_mode: 1
+    numCameras: 3
+    i2cbus: 11
+    initialCamera: a
+    controlPins:
+      - 4
+      - 17
+      - 18
+    cameraNamesDict:
+      view: a
+      ruler: b
+      screen: c
+    # defaultSettings:
+    #   frame_rate: 15
+    #   brightness: 50
+    #   contrast: 0
+    #   shutter_speed: 0
+    #   awb_mode: 0
+    #   exposure_mode: 1
   Ambient:
     type: SingleGPIO
     pin: 5
