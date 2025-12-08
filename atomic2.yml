@@ -59,7 +59,7 @@ devices:
       h2: 0
       a: -1600
       b: -3200
-    stepDelay: 0.002
+    stepWaitTime: 0.002
   Ambient:
     type: SingleGPIO
     pin: 5
