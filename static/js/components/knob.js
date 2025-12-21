@@ -90,11 +90,6 @@ export class Knob extends HTMLElement {
     });
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
-    console.log(`Attribute ${name} has changed.`);
-    this.knobImageUrl = newValue;
-  }
-
   up() {
     this.emit(+this.selectedInterval);
   }
