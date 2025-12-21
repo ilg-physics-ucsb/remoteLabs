@@ -39,7 +39,7 @@ export class Knob extends HTMLElement {
       <div class="knob">
         <h3></h3>
         <select>
-          <option value="" disabled>Sent interval</option>
+          <option value="" disabled>Select an interval</option>
         </select>
         <div class="row">
           <button id="down">&#8634;</button>
@@ -63,21 +63,23 @@ export class Knob extends HTMLElement {
 
     label.textContent = this.getAttribute('label');
 
-    if (this.intervals && this.intervals.length) {
-      this.intervals.forEach((interval, index) => {
-        const option = document.createElement('option');
-        option.value = interval;
-        option.innerHTML = interval;
-        if (index === 0) {
-          option.selected = true;
-        }
+    this.intervals.forEach((interval, index) => {
+      const option = document.createElement('option');
+      option.value = interval;
+      option.innerHTML = interval;
+      if (index === 0) {
+        option.selected = true;
+      }
 
-        intervalSelect.appendChild(option);
-      });
-    }
+      intervalSelect.appendChild(option);
+    });
 
     const image = this.shadowRoot.querySelector('#image');
     image.src = this.knobImageUrl ? this.knobImageUrl : this.defaultImageUrl;
+
+    intervalSelect.addEventListener('change', (event) => {
+      this.selectedInterval = event.target.value;
+    });
 
     downButton.addEventListener('click', () => {
       this.down();
@@ -94,15 +96,15 @@ export class Knob extends HTMLElement {
   }
 
   up() {
-    this.emit();
+    this.emit(+this.selectedInterval);
   }
 
   down() {
-    this.emit();
+    this.emit(-this.selectedInterval);
   }
 
-  emit() {
-    const knobEvent = new CustomEvent('knob', { detail: { componentId: this.componentId, value: this.value } });
+  emit(value) {
+    const knobEvent = new CustomEvent('knob', { detail: { componentId: this.componentId, value: value } });
     window.dispatchEvent(knobEvent);
   }
 }
