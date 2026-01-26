@@ -1,0 +1,24 @@
+/* Style components found in /static/js/components */
+
+/* Toolbar */
+toolbar-component {
+  margin: 1rem;
+  padding: 1rem 3rem;
+  background-color: var(--secondary);
+  border-radius: var(--border-radius);
+}
+
+toolbar-component ul {
+  list-style: none;
+  overflow: scroll;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+toolbar-component ul li img {
+  max-height: 100px;
+  max-width: 224px;
+}
