@@ -1,5 +1,10 @@
+import { WebSocketHandler } from "../../../static/js/services/web-socket-handler";
+
 addEventListener('DOMContentLoaded', () => {
-    window.addEventListener('knob', (event) => {
+  const wsHandler = new WebSocketHandler();
+  wsHandler.connect();
+
+  window.addEventListener('knob', (event) => {
     console.log('photo respond to knob: ', event)
   });
 });
