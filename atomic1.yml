@@ -12,6 +12,7 @@ devices:
   Camera:
     type: ArduCamMultiCamera
     videoNumber: 0
+    i2cbus: 11
     numCameras: 4
     defaultSettings:
       frame_rate: 15
@@ -72,3 +73,19 @@ devices:
       - 7
     outletMap:
       Carousel: 7
+
+locks:
+  camera:
+    - Camera
+  slit:
+    - Slit
+  grating:
+    - Grating
+  arm:
+    - Arm
+  carousel:
+    - Carousel
+  ambient:
+    - Ambient
+  asdipdu:
+    - ASDIpdu
