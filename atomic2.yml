@@ -47,7 +47,8 @@ devices:
     bounds:
       - -10000
       - 10000
-    stepWaitTime: 0.004
+    stepWaitTime: 0.0005
+    delay: 0.001
   Carousel:
     type: S42CStepperMotor
     EN: 16
@@ -60,7 +61,8 @@ devices:
       h2: 0
       a: -1600
       b: -3200
-    stepWaitTime: 0.002
+    stepWaitTime: 0.0005
+    delay: 0.001
   Ambient:
     type: SingleGPIO
     pin: 5

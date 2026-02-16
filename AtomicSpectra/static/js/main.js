@@ -1,15 +1,15 @@
 
 // This function runs when the WebSocket sends a message. Note that this is not the WebRTC Datachannel.
-function onWebsocketMessage(message){
+function onWebsocketMessage(message) {
     alert(message);
 }
 
-function getWidth(){
-    return document.getElementById('v').clientWidth; //parseInt(video.css('width'),10)
+function getWidth() {
+    return document.getElementById('video').clientWidth; //parseInt(video.css('width'),10)
 }
 
-function getHeight(){
-    return  document.getElementById('v').clientHeight;
+function getHeight() {
+    return document.getElementById('video').clientHeight;
 }
 
 function controllerResponseHandler(cmd) {
@@ -51,62 +51,62 @@ function controllerResponseHandler(cmd) {
     }
 }
 
-function sleep(ms){
+function sleep(ms) {
     return new Promise(r => setTimeout(r, ms));
 }
 
 //syncing page telescope radio button to modal telescope radio button
-function tHandleChange(src){
+function tHandleChange(src) {
     console.log(src.value);
-    if(src.value == 1){
+    if (src.value == 1) {
         document.getElementById('MfineArm').checked = true;
     }
-    else if(src.value == 5){
+    else if (src.value == 5) {
         document.getElementById('MmediumArm').checked = true;
     }
-    else{
+    else {
         document.getElementById('McoarseArm').checked = true;
     }
 }
 
 //syncing page grating radio button to modal grating radio button
-function gHandleChange(src){
+function gHandleChange(src) {
     console.log(src.value);
-    if(src.value == 20){
+    if (src.value == 20) {
         document.getElementById('MfineTable').checked = true;
     }
-    else if(src.value == 200){
+    else if (src.value == 200) {
         document.getElementById('MmediumTable').checked = true;
     }
-    else{
+    else {
         document.getElementById("McoarseTable").checked = true;
     }
 }
 
 // syncing modal telescope radio button to page telescope radio button
-function mtHandleChange(src){
+function mtHandleChange(src) {
     console.log(src.value);
-    if(src.value == 1){
+    if (src.value == 1) {
         document.getElementById('fineArm').checked = true;
     }
-    else if(src.value == 5){
+    else if (src.value == 5) {
         document.getElementById('mediumArm').checked = true;
     }
-    else{
+    else {
         document.getElementById('coarseArm').checked = true;
     }
 }
 
 //syncing modal Grating radio button to page grating radio button
-function mgHandleChange(src){
+function mgHandleChange(src) {
     console.log(src.value);
-    if(src.value == 20){
+    if (src.value == 20) {
         document.getElementById('fineTable').checked = true;
     }
-    else if(src.value == 200){
+    else if (src.value == 200) {
         document.getElementById('mediumTable').checked = true;
     }
-    else{
+    else {
         document.getElementById('coarseTable').checked = true;
     }
 }
@@ -119,7 +119,7 @@ var pValue = "coarsePicture"
 var exposureDisplay, cameraControl, exposureSlider, brightnessDisplay, brightnessSlider, contrastDisplay, contrastSlider
 
 $("document").ready(function () {
-    var stepPerDegree= 0.5; //This value is set by finalized mechanical arrangements.
+    var stepPerDegree = 0.5; //This value is set by finalized mechanical arrangements.
     var currentPosition = 0;
     liveStream = document.getElementById("video");
     exposureDisplay = $("#expVal")[0]
@@ -129,8 +129,8 @@ $("document").ready(function () {
     contrastDisplay = $("#conVal")[0]
     contrastSlider = $("#contrastSlider")[0]
     cameraControl = $("#myModalCamera")[0]
-    
-    
+
+
 
     c_wrap = $('#canvas_wrap')
 
@@ -144,21 +144,21 @@ $("document").ready(function () {
 
     var loadingModal = $("#loadingModal")
 
-    loadingModal.on("shown.bs.modal", function(e){
-        intervalId = setInterval(function() {
+    loadingModal.on("shown.bs.modal", function (e) {
+        intervalId = setInterval(function () {
             for (mWrap of mWrapList) {
                 if ($(mWrap).length == 0) {
                     OverviewCam.click()
                     return
                 }
-            } 
-            
+            }
+
             //Run when all mwraps exist.
             mWrap0 = $("#mapster_wrap_0")[0]
             mWrap1 = $("#mapster_wrap_1")[0]
             mWrap2 = $("#mapster_wrap_2")[0]
             mWrap3 = $("#mapster_wrap_3")[0]
-    
+
             // Do clicks here
             OverviewCam.click()
             H2pressOff.click()
@@ -166,7 +166,7 @@ $("document").ready(function () {
             //Hide Loading Screen
             loadingModal.modal("hide")
             //Stop repeating check
-            clearInterval(intervalId)    
+            clearInterval(intervalId)
         }, 500)
     })
     loadingModal.modal('show')
@@ -197,9 +197,9 @@ $("document").ready(function () {
     var Lamps = document.getElementById("Lamps");
     var SlitControl = document.getElementById("SlitControl");
     var cameraControl = document.getElementById("ModalCamera")
-    
+
     // OverviewCam.addEventListener('click', function() {
-        
+
     //     if(FirstTimeCam){
     //         console.log("Overview cam was clicked for the first time");
     //         FirstTimeCam=false;
@@ -208,20 +208,20 @@ $("document").ready(function () {
     //         dataChannel.send("Camera/camera/a");
     //         currentCam = "a"
     //     }
-        
+
     //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
     //     Lamps.style.visibility='visible';
     //     Crosshairs.style.visibility = "hidden";
     //     SlitControl.style.visibility = "hidden";
     //     cameraControl.style.visibility = "hidden"; 
     //     hide_crosshair()
-        
+
     // })
 
     // V1Cam.addEventListener('click', function() {
-       
+
     //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
-                
+
     //     Lamps.style.visibility = "hidden";
     //     Crosshairs.style.visibility = "hidden";
     //     SlitControl.style.visibility = "hidden";
@@ -232,7 +232,7 @@ $("document").ready(function () {
     // })
 
     // V2Cam.addEventListener('click', function() {
-       
+
     //     updateManyCameraSettings(currentCameraSettings, cameraDefaults)
     //     Lamps.style.visibility = "hidden";
     //     Crosshairs.style.visibility = "hidden";
@@ -249,42 +249,42 @@ $("document").ready(function () {
 
     //for LiveFeed  
     // var mainCamSignal = setupWebRTC(8081, liveStream, 100);
- 
-    //for Time Limit
-     window.setTimeout(timeOutHandler,10800000)
 
-     function timeOutHandler(){
+    //for Time Limit
+    window.setTimeout(timeOutHandler, 10800000)
+
+    function timeOutHandler() {
         //  mainCamSignal.hangup() 
         //  add code here to make a pop-up that alerts the user that they are losing control
-         alert("Your session has timed out.")
-     }
+        alert("Your session has timed out.")
+    }
 
-     function startTimer(duration, display) {
-         var timer = duration, hours, minutes, seconds;
-         setInterval(function () {
-             hours = Math.floor(parseInt(timer / 3600, 10));
-             minutes = Math.floor(parseInt(timer % 3600 / 60 , 10));
-             seconds = Math.floor(parseInt(timer % 3600 % 60, 10));
-     
-             hours = hours <10 ? "0" + hours : hours;
-             minutes = minutes < 10 ? "0" + minutes : minutes;
-             seconds = seconds < 10 ? "0" + seconds : seconds;
-     
-             display.textContent = hours + ":" + minutes + ":" + seconds;
-     
-             if (--timer < 0) {
-                 timer = duration;
-             }
-         }, 1000);
-     }
-     
-     window.onload = function () {
-         var threeHours = 3 * 60 * 60,
-             display = document.querySelector('#time');
-         startTimer(threeHours, display);
-     }
- 
-   
+    function startTimer(duration, display) {
+        var timer = duration, hours, minutes, seconds;
+        setInterval(function () {
+            hours = Math.floor(parseInt(timer / 3600, 10));
+            minutes = Math.floor(parseInt(timer % 3600 / 60, 10));
+            seconds = Math.floor(parseInt(timer % 3600 % 60, 10));
+
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = hours + ":" + minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var threeHours = 3 * 60 * 60,
+            display = document.querySelector('#time');
+        startTimer(threeHours, display);
+    }
+
+
     //for Ambient Light
     var lightSwitch = document.getElementById('lightSwitch');
     var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
@@ -331,8 +331,8 @@ $("document").ready(function () {
     var RcloseSlit = document.getElementById('CloseR');
     var fineSlit = document.getElementById('FineAdjustSlit');
     var coarseSlit = document.getElementById('CoarseAdjustSlit');
-    var slitSteps=200;
-   
+    var slitSteps = 200;
+
     //for Schematic
     var SchemaPIC = document.getElementById('Schema');
     //for Telescope Settings
@@ -341,7 +341,7 @@ $("document").ready(function () {
     var tFine = document.getElementById('fineArm');
     var tMedium = document.getElementById('mediumArm')
     var tCoarse = document.getElementById('coarseArm');
-    var telescopeSteps=1000; ///unknown number of degrees
+    var telescopeSteps = 1000; ///unknown number of degrees
     var telescopeCurrentPosition = 0;
     //for Grating Settings
     var gCW = document.getElementById('gratingCW');
@@ -349,9 +349,9 @@ $("document").ready(function () {
     var gFine = document.getElementById('fineTable');
     var gMedium = document.getElementById('mediumTable')
     var gCoarse = document.getElementById('coarseTable');
-    var gratingSteps=200; //roughly ten degrees
+    var gratingSteps = 200; //roughly ten degrees
 
-    
+
     //for Modal Telescope Settings
     var tmCW = document.getElementById('arrowbuttonCW');
     var tmCCW = document.getElementById('arrowbuttonCCW');
@@ -378,87 +378,87 @@ $("document").ready(function () {
     var Xe = document.getElementById('Xe_fullSpectrum')
 
     //BEGIN picture toggling setting
-    pFine.addEventListener('click', function(){
+    pFine.addEventListener('click', function () {
         pValue = pFine.value
     })
-    pCoarse.addEventListener('click', function(){
+    pCoarse.addEventListener('click', function () {
         pValue = pCoarse.value
     })
 
     //BEGIN picture toggling for Helium
-    He.addEventListener('click', function(){
-        if(pValue == "finePicture"){
+    He.addEventListener('click', function () {
+        if (pValue == "finePicture") {
             He.href = "static/docs/He_Spectrum.jpg";
         }
-        else if(pValue == "coarsePicture"){
+        else if (pValue == "coarsePicture") {
             He.href = "static/docs/He_majorPeaks.png";
         }
     })
 
     //BEGIN picture toggling for Neon
-    Ne.addEventListener('click', function(){
-        if(pValue == "finePicture"){
+    Ne.addEventListener('click', function () {
+        if (pValue == "finePicture") {
             Ne.href = "static/docs/Ne_Spectrum.jpg";
         }
-        else if(pValue == "coarsePicture"){
+        else if (pValue == "coarsePicture") {
             Ne.href = "static/docs/Ne_majorPeaks.jpg";
         }
     })
 
     //BEGIN picture toggling for Argon
-    Ar.addEventListener('click', function(){
-        if(pValue == "finePicture"){
+    Ar.addEventListener('click', function () {
+        if (pValue == "finePicture") {
             console.log("Fine should be clicked");
             Ar.href = "static/docs/Ar_Spectrum.jpg";
         }
-        else if(pValue == "coarsePicture"){
+        else if (pValue == "coarsePicture") {
             Ar.href = "static/docs/Ar_majorPeaks.jpg";
         }
     })
 
     //BEGIN picture toggling for Krypton
-    Kr.addEventListener('click', function(){
-        if(pValue == "finePicture"){
+    Kr.addEventListener('click', function () {
+        if (pValue == "finePicture") {
             Kr.href = "static/docs/Kr_Spectrum.jpg";
         }
-        else if(pValue == "coarsePicture"){
+        else if (pValue == "coarsePicture") {
             Kr.href = "static/docs/Kr_majorPeaks.jpg";
         }
     })
 
     //BEGIN picture toggling for Xenon
-    Xe.addEventListener('click', function(){
-        if(pValue == "finePicture"){
+    Xe.addEventListener('click', function () {
+        if (pValue == "finePicture") {
             Xe.href = "static/docs/Xe_Spectrum.jpg";
         }
-        else if(pValue == "coarsePicture"){
+        else if (pValue == "coarsePicture") {
             Xe.href = "static/docs/Xe_Spectrum.jpg";
         }
     })
 
     //BEGIN Ambient Toggling 
-     
-    AmbientTOGGLE.addEventListener('click', function(){
+
+    AmbientTOGGLE.addEventListener('click', function () {
         console.log("Ambient light was switched");
-        if(AmbientState){
-                //--------choose one of the following
+        if (AmbientState) {
+            //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/OFF");  //use this command with HS105
             // Commented line below - 20200716
             dataChannel.send("Ambient/off/")            //use this command with PDU
-                //---------
-            AmbientState=false;
-            AmbientTOGGLE.title="Click here to turn ON";
-            lightSwitch.style.transform='scaleY(1)';
-                     }
-        else{
-                //--------choose one of the following
+            //---------
+            AmbientState = false;
+            AmbientTOGGLE.title = "Click here to turn ON";
+            lightSwitch.style.transform = 'scaleY(1)';
+        }
+        else {
+            //--------choose one of the following
             //dataChannel.send("FilamentPower/setRelay/ON");   //use this command with HS105
             // Commented line below - 20200716
             dataChannel.send("Ambient/on/")                 //use this command with GPIO
-                //---------
-            AmbientState=true;
-            AmbientTOGGLE.title="Click here to turn OFF";
-            lightSwitch.style.transform='scaleY(-1)';
+            //---------
+            AmbientState = true;
+            AmbientTOGGLE.title = "Click here to turn OFF";
+            lightSwitch.style.transform = 'scaleY(-1)';
         }
     })
     //END Ambient Toggling
@@ -466,41 +466,41 @@ $("document").ready(function () {
     //BEGIN Dark Toggling
 
 
-    darkToggle.addEventListener('click', function(){
-        if(!darkState){
-         console.log("Background was darkened. Controls were hidden.");
-         //hide controls; turn background black
-         $('img').css("visibility", "hidden")
-         $('body').css("background", "black")
-         darkSwitchPic.style.visibility = "visible"
-         darkState=true;
-         darkToggle.title="Click here to reveal controls";
-         darkSwitchPic.style.transform='rotate(180deg)';
-                  }
-     else{
-         console.log("Background was lit. Controls were revealed.");
-         //reveal controls; turn background white
-         $('img').css("visibility", "visible")
-         $('body').css("background", "white")
-         darkState=false;
-         darkToggle.title="Click here to darken the background";
-         darkSwitchPic.style.transform='rotate(0deg)';
+    darkToggle.addEventListener('click', function () {
+        if (!darkState) {
+            console.log("Background was darkened. Controls were hidden.");
+            //hide controls; turn background black
+            $('img').css("visibility", "hidden")
+            $('body').css("background", "black")
+            darkSwitchPic.style.visibility = "visible"
+            darkState = true;
+            darkToggle.title = "Click here to reveal controls";
+            darkSwitchPic.style.transform = 'rotate(180deg)';
+        }
+        else {
+            console.log("Background was lit. Controls were revealed.");
+            //reveal controls; turn background white
+            $('img').css("visibility", "visible")
+            $('body').css("background", "white")
+            darkState = false;
+            darkToggle.title = "Click here to darken the background";
+            darkSwitchPic.style.transform = 'rotate(0deg)';
         }
     })
 
     //END Dark Toggling
 
 
-    
+
     //BEGIN Lamp Toggling
 
     async function H2PressCmd() {
         // If it is already on and is just switching to H2
         // Turn off carousel, move to H2, turn on carousel
-        if(lampSupplyState && (spectraLamp != "H2")){
+        if (lampSupplyState && (spectraLamp != "H2")) {
             console.log("Turning off and switching to H2");
             AmbientStatePrev = AmbientState;
-            if(!AmbientState){
+            if (!AmbientState) {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a");               //This should be overview camera
@@ -509,17 +509,17 @@ $("document").ready(function () {
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/admingoto/h2");
             dataChannel.send("ASDIpdu/on/Carousel");
-            if(!AmbientStatePrev){
+            if (!AmbientStatePrev) {
                 AmbientTOGGLE.click;
             }
             dataChannel.send("Camera/camera/" + currentCam);
             lampSupplyState = true;
-        // If it off and H2 is clicked while not on H2
-        // Move to H2, turn on carousel.
-        } else if (!lampSupplyState && (spectraLamp != "H2")){
+            // If it off and H2 is clicked while not on H2
+            // Move to H2, turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp != "H2")) {
             console.log("Switching to H2")
             AmbientStatePrev = AmbientState;
-            if(!AmbientState){
+            if (!AmbientState) {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
@@ -528,22 +528,22 @@ $("document").ready(function () {
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/admingoto/h2")
             dataChannel.send("ASDIpdu/on/Carousel");
-            if(!AmbientStatePrev){
+            if (!AmbientStatePrev) {
                 AmbientTOGGLE.click;
             }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
-        // If its off and already at H2
-        // Start by checking if it is the first time
-        // If so, setup all lamps off, dont move or send anything
-        // If not, just turn on carousel.
-        } else if (!lampSupplyState && (spectraLamp == "H2")){
+            // If its off and already at H2
+            // Start by checking if it is the first time
+            // If so, setup all lamps off, dont move or send anything
+            // If not, just turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp == "H2")) {
             if (H2FirstTime) {
-                mWrap0.style.display = "block";                     
+                mWrap0.style.display = "block";
                 mWrap1.style.display = "none";
-                mWrap2.style.display = "none";                     
-                mWrap3.style.display = "none";    
-                H2ONpic.style.display = "none";                      
+                mWrap2.style.display = "none";
+                mWrap3.style.display = "none";
+                H2ONpic.style.display = "none";
                 aONpic.style.display = "none";
                 bONpic.style.display = "none";
                 allOFFpic.style.display = "block"
@@ -554,15 +554,15 @@ $("document").ready(function () {
                 dataChannel.send("ASDIpdu/on/Carousel")
                 lampSupplyState = true;
             }
-        // If H2 is already on, turn it off and switch view to off view.
+            // If H2 is already on, turn it off and switch view to off view.
         } else if (lampSupplyState && (spectraLamp == "H2")) {
             dataChannel.send("ASDIpdu/off/Carousel");
             console.log("carousel was turned off");
-            mWrap0.style.display = "block";                     
+            mWrap0.style.display = "block";
             mWrap1.style.display = "none";
-            mWrap2.style.display = "none";                     
-            mWrap3.style.display = "none";    
-            H2ONpic.style.display = "none";                      
+            mWrap2.style.display = "none";
+            mWrap3.style.display = "none";
+            H2ONpic.style.display = "none";
             aONpic.style.display = "none";
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
@@ -572,24 +572,24 @@ $("document").ready(function () {
         }
 
         // Setup picture to have H2 on
-        mWrap0.style.display = "none";                     
+        mWrap0.style.display = "none";
         mWrap1.style.display = "none";
-        mWrap2.style.display = "none";                     
-        mWrap3.style.display = "block";  
-        H2ONpic.style.display = "block";                      
+        mWrap2.style.display = "none";
+        mWrap3.style.display = "block";
+        H2ONpic.style.display = "block";
         aONpic.style.display = "none";
         bONpic.style.display = "none";
         allOFFpic.style.display = "none"
         spectraLamp = "H2"
     }
-    
+
     async function APressCmd() {
-         // If it is already on and is just switching to A
+        // If it is already on and is just switching to A
         // Turn off carousel, move to A, turn on carousel
-        if(lampSupplyState && (spectraLamp != "A")){
+        if (lampSupplyState && (spectraLamp != "A")) {
             console.log("Turning off and switching to A")
             AmbientStatePrev = AmbientState;
-            if(!AmbientState){
+            if (!AmbientState) {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
@@ -599,17 +599,17 @@ $("document").ready(function () {
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/admingoto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
-            if(!AmbientStatePrev){
+            if (!AmbientStatePrev) {
                 AmbientTOGGLE.click;
             }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
-        // If it off and H2 is clicked while not on H2
-        // Move to A, turn on carousel.
-        } else if (!lampSupplyState && (spectraLamp != "A")){
+            // If it off and H2 is clicked while not on H2
+            // Move to A, turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp != "A")) {
             console.log("Switching to A")
             AmbientStatePrev = AmbientState;
-            if(!AmbientState){
+            if (!AmbientState) {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
@@ -619,26 +619,26 @@ $("document").ready(function () {
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/admingoto/a")
             dataChannel.send("ASDIpdu/on/Carousel");
-            if(!AmbientStatePrev){
+            if (!AmbientStatePrev) {
                 AmbientTOGGLE.click;
             }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
-        // If its off and already at A
-        // If not, just turn on carousel.
-        } else if (!lampSupplyState && (spectraLamp == "A")){
+            // If its off and already at A
+            // If not, just turn on carousel.
+        } else if (!lampSupplyState && (spectraLamp == "A")) {
             dataChannel.send("ASDIpdu/on/Carousel");
             lampSupplyState = true;
 
-        // If A is already on, turn it off and switch view to off view.
+            // If A is already on, turn it off and switch view to off view.
         } else if (lampSupplyState && (spectraLamp == "A")) {
             dataChannel.send("ASDIpdu/off/Carousel");
             console.log("carousel was turned off");
-            mWrap0.style.display = "block";                     
+            mWrap0.style.display = "block";
             mWrap1.style.display = "none";
-            mWrap2.style.display = "none";                     
-            mWrap3.style.display = "none";    
-            H2ONpic.style.display = "none";                      
+            mWrap2.style.display = "none";
+            mWrap3.style.display = "none";
+            H2ONpic.style.display = "none";
             aONpic.style.display = "none";
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
@@ -648,11 +648,11 @@ $("document").ready(function () {
         }
 
         // Setup picture to have A on
-        mWrap0.style.display = "none";                     
+        mWrap0.style.display = "none";
         mWrap1.style.display = "block";
-        mWrap2.style.display = "none";                     
-        mWrap3.style.display = "none";  
-        H2ONpic.style.display = "none";                      
+        mWrap2.style.display = "none";
+        mWrap3.style.display = "none";
+        H2ONpic.style.display = "none";
         aONpic.style.display = "block";
         bONpic.style.display = "none";
         allOFFpic.style.display = "none"
@@ -662,10 +662,10 @@ $("document").ready(function () {
     async function BPressCmd() {
         // If it is already on and is just switching to B
         // Turn off carousel, move to B, turn on carousel
-        if(lampSupplyState && spectraLamp != "B"){
+        if (lampSupplyState && spectraLamp != "B") {
             console.log("Turning off and switching to B")
             AmbientStatePrev = AmbientState;
-            if(!AmbientState){
+            if (!AmbientState) {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
@@ -674,17 +674,17 @@ $("document").ready(function () {
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/admingoto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
-            if(!AmbientStatePrev){
+            if (!AmbientStatePrev) {
                 AmbientTOGGLE.click;
             }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
-        // If it off and B is clicked while not on B
-        // Move to B, turn on carousel.
-        } else if (!lampSupplyState && spectraLamp != "B"){
+            // If it off and B is clicked while not on B
+            // Move to B, turn on carousel.
+        } else if (!lampSupplyState && spectraLamp != "B") {
             console.log("Switching to B")
             AmbientStatePrev = AmbientState;
-            if(!AmbientState){
+            if (!AmbientState) {
                 AmbientTOGGLE.click();
             }
             dataChannel.send("Camera/camera/a")               //This should be overview camera
@@ -693,25 +693,25 @@ $("document").ready(function () {
             dataChannel.send("ASDIpdu/off/Carousel");
             dataChannel.send("Carousel/admingoto/b");
             dataChannel.send("ASDIpdu/on/Carousel");
-            if(!AmbientStatePrev){
+            if (!AmbientStatePrev) {
                 AmbientTOGGLE.click;
             }
             dataChannel.send("Camera/camera/" + currentCam)
             lampSupplyState = true;
-        // If its off and already at B
-        // If not, just turn on carousel.
-        } else if (!lampSupplyState && spectraLamp == "B"){
+            // If its off and already at B
+            // If not, just turn on carousel.
+        } else if (!lampSupplyState && spectraLamp == "B") {
             dataChannel.send("ASDIpdu/on/Carousel");
             lampSupplyState = true;
-        // If A is already on, turn it off and switch view to off view.
+            // If A is already on, turn it off and switch view to off view.
         } else if (lampSupplyState && spectraLamp == "B") {
             dataChannel.send("ASDIpdu/off/Carousel");
             console.log("carousel was turned off");
-            mWrap0.style.display = "block";                     
+            mWrap0.style.display = "block";
             mWrap1.style.display = "none";
-            mWrap2.style.display = "none";                     
-            mWrap3.style.display = "none";    
-            H2ONpic.style.display = "none";                      
+            mWrap2.style.display = "none";
+            mWrap3.style.display = "none";
+            H2ONpic.style.display = "none";
             aONpic.style.display = "none";
             bONpic.style.display = "none";
             allOFFpic.style.display = "block"
@@ -721,11 +721,11 @@ $("document").ready(function () {
         }
 
         // Setup picture to have B on
-        mWrap0.style.display = "none";                     
+        mWrap0.style.display = "none";
         mWrap1.style.display = "none";
-        mWrap2.style.display = "block";                     
-        mWrap3.style.display = "none";  
-        H2ONpic.style.display = "none";                      
+        mWrap2.style.display = "block";
+        mWrap3.style.display = "none";
+        H2ONpic.style.display = "none";
         aONpic.style.display = "none";
         bONpic.style.display = "block";
         allOFFpic.style.display = "none"
@@ -751,128 +751,128 @@ $("document").ready(function () {
 
     //BEGIN Lamp Nudging
 
-    nudgeLeft.addEventListener('click',function() {
+    nudgeLeft.addEventListener('click', function () {
         console.log("Lamp nudged left");
         dataChannel.send("Carousel/move/20")
     })
-    nudgeRight.addEventListener('click',function() {
+    nudgeRight.addEventListener('click', function () {
         console.log("Lamp nudged right");
         dataChannel.send("Carousel/move/-20")
     })
     //END Lamp Nudging
 
     //BEGIN Modal Lamp Nudging
-    nudgeLeftModal.addEventListener('click',function(){
+    nudgeLeftModal.addEventListener('click', function () {
         console.log("Modal Lamp nudged left");
         dataChannel.send("Carousel/move/20")
     })
-    nudgeRightModal.addEventListener('click',function() {
+    nudgeRightModal.addEventListener('click', function () {
         console.log("Modal Lamp nudged right");
         dataChannel.send("Carousel/move/-20")
     })
     //END Modal Lamp Nudging
 
     //BEGIN Grating buttons
-    gFine.addEventListener('click', function(){gratingSteps=20;})        //roughly one degree
-    gMedium.addEventListener('click', function(){gratingSteps=200;})     //roughly ten degrees
-    gCoarse.addEventListener('click', function(){gratingSteps=600;})     //roughly 30 degrees
-    
-    gCW.addEventListener('click', function() {
+    gFine.addEventListener('click', function () { gratingSteps = 20; })        //roughly one degree
+    gMedium.addEventListener('click', function () { gratingSteps = 200; })     //roughly ten degrees
+    gCoarse.addEventListener('click', function () { gratingSteps = 600; })     //roughly 30 degrees
+
+    gCW.addEventListener('click', function () {
         console.log("Grating turned CW");
-        dataChannel.send("Grating/move/"+gratingSteps);
+        dataChannel.send("Grating/move/" + gratingSteps);
     })
-    gCCW.addEventListener('click', function() {
+    gCCW.addEventListener('click', function () {
         console.log("Grating turned CCW");
-        dataChannel.send("Grating/move/"+(-gratingSteps));
+        dataChannel.send("Grating/move/" + (-gratingSteps));
     })
 
     //END  Grating Buttons
 
     //BEGIN Modal Grating buttons
-    gMFine.addEventListener('click',function(){gratingSteps=20;})
-    gMMedium.addEventListener('click', function(){gratingSteps=200;})
-    gMCoarse.addEventListener('click', function(){gratingSteps=600;})  
-    gmCW.addEventListener('click', function(){
+    gMFine.addEventListener('click', function () { gratingSteps = 20; })
+    gMMedium.addEventListener('click', function () { gratingSteps = 200; })
+    gMCoarse.addEventListener('click', function () { gratingSteps = 600; })
+    gmCW.addEventListener('click', function () {
         console.log("Modal Grating turned CW");
-        dataChannel.send("Grating/move/"+gratingSteps)
+        dataChannel.send("Grating/move/" + gratingSteps)
     })
-    gmCCW.addEventListener('click', function(){
+    gmCCW.addEventListener('click', function () {
         console.log("Modal Grating turned CCW");
-        dataChannel.send("Grating/move/"+(-gratingSteps));
+        dataChannel.send("Grating/move/" + (-gratingSteps));
     })
     //End Modal Grating Buttons
 
-   //BEGIN Arm Buttons 
-   tFine.addEventListener('click', function(){telescopeSteps=25;})
-   tMedium.addEventListener('click', function(){telescopeSteps=250;})
-   tCoarse.addEventListener('click', function(){telescopeSteps=1000;})
+    //BEGIN Arm Buttons 
+    tFine.addEventListener('click', function () { telescopeSteps = 25; })
+    tMedium.addEventListener('click', function () { telescopeSteps = 250; })
+    tCoarse.addEventListener('click', function () { telescopeSteps = 1000; })
 
-   tCW.addEventListener('click', function() {
-       // Changed for AS 
-       console.log("Telescope turned CW");
-       dataChannel.send("Arm/move/"+telescopeSteps);
+    tCW.addEventListener('click', function () {
+        // Changed for AS 
+        console.log("Telescope turned CW");
+        dataChannel.send("Arm/move/" + telescopeSteps);
     })
-   tCCW.addEventListener('click', function() {
-       // Changed for AS 
-       console.log("Telescope turned CCW");
-       dataChannel.send("Arm/move/"+(-telescopeSteps));
+    tCCW.addEventListener('click', function () {
+        // Changed for AS 
+        console.log("Telescope turned CCW");
+        dataChannel.send("Arm/move/" + (-telescopeSteps));
     })
-   //END Arm Buttons
+    //END Arm Buttons
 
     //BEGIN Modal Arm Buttons
-    tMfine.addEventListener('click', function(){telescopeSteps=25;})
-    tMmedium.addEventListener('click', function(){telescopeSteps=250;})
-    tMcoarse.addEventListener('click', function(){telescopeSteps=1000;})
-    tmCW.addEventListener('click', function(){
+    tMfine.addEventListener('click', function () { telescopeSteps = 25; })
+    tMmedium.addEventListener('click', function () { telescopeSteps = 250; })
+    tMcoarse.addEventListener('click', function () { telescopeSteps = 1000; })
+    tmCW.addEventListener('click', function () {
         console.log("Modal Telescope turned CW");
-        dataChannel.send("Arm/move/"+telescopeSteps);
+        dataChannel.send("Arm/move/" + telescopeSteps);
     })
-    tmCCW.addEventListener('click', function() {
+    tmCCW.addEventListener('click', function () {
         // Changed for AS 
         console.log("Modal Telescope turned CCW");
-        dataChannel.send("Arm/move/"+(-telescopeSteps));
-     })
+        dataChannel.send("Arm/move/" + (-telescopeSteps));
+    })
     //END Modal Arm Buttons
 
-   //BEGIN Slit Buttons 
-   fineSlit.addEventListener('click', function(){
-        slitSteps=50;
+    //BEGIN Slit Buttons 
+    fineSlit.addEventListener('click', function () {
+        slitSteps = 50;
     })
-   coarseSlit.addEventListener('click', function(){
-        slitSteps=200;
+    coarseSlit.addEventListener('click', function () {
+        slitSteps = 200;
     })
 
-   async function openSlitCmd() {
-    console.log("Slit was made wider");
-    slitModal.modal("show")
-    await sleep(2500)
-    dataChannel.send("Slit/move/"+slitSteps);
-   }
+    async function openSlitCmd() {
+        console.log("Slit was made wider");
+        slitModal.modal("show")
+        await sleep(2500)
+        dataChannel.send("Slit/move/" + slitSteps);
+    }
 
-   async function closeSlitCmd() {
-    console.log("Slit was made narrower");
-    slitModal.modal("show")
-    console.log("Close Slit Modal Shown")
-    await sleep(2500)
-    dataChannel.send("Slit/move/"+(-slitSteps));
-   }
-   
-   LopenSlit.addEventListener('click', openSlitCmd);
-   RopenSlit.addEventListener('click', openSlitCmd);
-   
-   LcloseSlit.addEventListener('click', closeSlitCmd);
-   RcloseSlit.addEventListener('click', closeSlitCmd);
-   
+    async function closeSlitCmd() {
+        console.log("Slit was made narrower");
+        slitModal.modal("show")
+        console.log("Close Slit Modal Shown")
+        await sleep(2500)
+        dataChannel.send("Slit/move/" + (-slitSteps));
+    }
 
-   //END Slit Buttons
+    LopenSlit.addEventListener('click', openSlitCmd);
+    RopenSlit.addEventListener('click', openSlitCmd);
 
-   async function updateCameraSetting(setting, newValue) {
+    LcloseSlit.addEventListener('click', closeSlitCmd);
+    RcloseSlit.addEventListener('click', closeSlitCmd);
+
+
+    //END Slit Buttons
+
+    async function updateCameraSetting(setting, newValue) {
         dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
         currentCameraSettings[setting] = newValue
     }
 
-   async function updateManyCameraSettings(currentSettings, newSettings) {
-       for (const setting in newSettings) {
+    async function updateManyCameraSettings(currentSettings, newSettings) {
+        for (const setting in newSettings) {
             var newValue = newSettings[setting]
             var oldValue = currentSettings[setting]
             if (newValue !== oldValue) {
@@ -884,22 +884,22 @@ $("document").ready(function () {
 
     }
 
-   var cameraDefaults = {
-       "frame_rate":15,
-       "brightness": 50,
-       "contrast": 0,
-       "saturation": 0,
-       "red_balance": 100,
-       "blue_balance": 100,
-       "shutter_speed": 0,
-       "iso_sensitivity": 400,
-       "awb_mode": 0,
-       "exposure_mode": 1,
-       "drc_strength": 0
+    var cameraDefaults = {
+        "frame_rate": 15,
+        "brightness": 50,
+        "contrast": 0,
+        "saturation": 0,
+        "red_balance": 100,
+        "blue_balance": 100,
+        "shutter_speed": 0,
+        "iso_sensitivity": 400,
+        "awb_mode": 0,
+        "exposure_mode": 1,
+        "drc_strength": 0
     }
 
     var defaultScreenCameraSettings = {
-        "frame_rate":15,
+        "frame_rate": 15,
         "brightness": 50,
         "contrast": 0,
         "saturation": 0,
@@ -915,179 +915,179 @@ $("document").ready(function () {
     var currentCameraSettings = JSON.parse(JSON.stringify(cameraDefaults))
     var screenCameraSettings = JSON.parse(JSON.stringify(defaultScreenCameraSettings))
 
-    setExposure = function(){
+    setExposure = function () {
         updateCameraSetting("shutter_speed", exposureSlider.value)
         screenCameraSettings["shutter_speed"] = exposureSlider.value
         // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
     }
-    
-    exposureValue = function(){
-        exposureDisplay.innerHTML=exposureSlider.value
+
+    exposureValue = function () {
+        exposureDisplay.innerHTML = exposureSlider.value
     }
-    
-    setBrightness = function(){
+
+    setBrightness = function () {
         updateCameraSetting("brightness", brightnessSlider.value)
         screenCameraSettings["brightness"] = brightnessSlider.value
         // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
     }
-    
-    brightnessValue = function(){
-        brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+
+    brightnessValue = function () {
+        brightnessDisplay.innerHTML = brightnessSlider.value + "%"
     }
-    
-    setContrast = function(){
+
+    setContrast = function () {
         updateCameraSetting("contrast", contrastSlider.value)
         screenCameraSettings["contrast"] = contrastSlider.value
         // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
     }
-    
-    contrastValue = function(){
-        contrastDisplay.innerHTML=contrastSlider.value + "%"
+
+    contrastValue = function () {
+        contrastDisplay.innerHTML = contrastSlider.value + "%"
     }
 
-    OverviewCam.addEventListener('click', function() {
-        
-        if(FirstTimeCam){
+    OverviewCam.addEventListener('click', function () {
+
+        if (FirstTimeCam) {
             console.log("Overview cam was clicked for the first time");
-            FirstTimeCam=false;
+            FirstTimeCam = false;
         }
-        else{
+        else {
             dataChannel.send("Camera/camera/a");
             currentCam = "a"
         }
-        
+
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
-        Lamps.style.visibility='visible';
+        Lamps.style.visibility = 'visible';
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
-        cameraControl.style.visibility = "hidden"; 
+        cameraControl.style.visibility = "hidden";
         hide_crosshair()
-        
+
     })
 
-    V1Cam.addEventListener('click', function() {
-       
+    V1Cam.addEventListener('click', function () {
+
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
-                
+
         Lamps.style.visibility = "hidden";
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
-        cameraControl.style.visibility = "hidden"; 
+        cameraControl.style.visibility = "hidden";
         currentCam = "b"
         hide_crosshair()
         dataChannel.send("Camera/camera/b");
     })
 
-    V2Cam.addEventListener('click', function() {
-       
+    V2Cam.addEventListener('click', function () {
+
         updateManyCameraSettings(currentCameraSettings, cameraDefaults)
         Lamps.style.visibility = "hidden";
         Crosshairs.style.visibility = "hidden";
         SlitControl.style.visibility = "hidden";
-        cameraControl.style.visibility = "hidden"; 
+        cameraControl.style.visibility = "hidden";
         currentCam = "d"
         hide_crosshair()
         dataChannel.send("Camera/camera/d");
     })
-    
-    ArmCam.addEventListener('click', function() {
+
+    ArmCam.addEventListener('click', function () {
         //show_crosshair()
         resize_canvas()
-        Crosshairs.style.visibility='visible';
-        
-        Lamps.style.visibility='visible';
-        
-        SlitControl.style.visibility='visible';
-        cameraControl.style.visibility='visible';
+        Crosshairs.style.visibility = 'visible';
+
+        Lamps.style.visibility = 'visible';
+
+        SlitControl.style.visibility = 'visible';
+        cameraControl.style.visibility = 'visible';
         console.log(cameraControl);
         updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
-        currentCam = "c"       
+        currentCam = "c"
         dataChannel.send("Camera/camera/c");
     })
 
-   // makes modal draggable
-   $('#myModalschem').draggable()
-   $('#myModalCamera').draggable()
+    // makes modal draggable
+    $('#myModalschem').draggable()
+    $('#myModalCamera').draggable()
 
- //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
-    
+    //map highlights - This is the script that styles effect of mouseOver and clicks on image maps
+
     $('#LampsAllOff').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-    // scaleMap: true
-  }).parent().css({"margin":"0 auto"});
+        mapKey: 'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: {
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+        // scaleMap: true
+    }).parent().css({ "margin": "0 auto" });
 
-  $('#LampsAon').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
+    $('#LampsAon').mapster({
+        mapKey: 'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: {
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+    }).parent().css({ "margin": "0 auto" });
 
-  $('#LampsBon').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
+    $('#LampsBon').mapster({
+        mapKey: 'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: {
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+    }).parent().css({ "margin": "0 auto" });
 
-  $('#LampsH2on').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
+    $('#LampsH2on').mapster({
+        mapKey: 'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: {
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+    }).parent().css({ "margin": "0 auto" });
 
-  $('#Slit').mapster({
-    mapKey:'data-key',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
+    $('#Slit').mapster({
+        mapKey: 'data-key',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: {
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+    }).parent().css({ "margin": "0 auto" });
 
-  $('#Schema').mapster({
-    mapKey:'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select: { 
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"});
-  
-  $('Arrows').mapster({
-    mapKey: 'id',
-    fillColor: 'f5f5b5',
-    fillOpacity: 0.6,
-    render_select:{
-        fillOpacity: 0.3
-    },
-    singleSelect: true
-  }).parent().css({"margin":"0 auto"})
+    $('#Schema').mapster({
+        mapKey: 'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: {
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+    }).parent().css({ "margin": "0 auto" });
 
-  window.addEventListener('beforeunload', function(e) {
-    // TEMP CHANGE
-    // mainCamSignal.hangup();
-    // TEMP CHANGE
-    dataChannel.close();
-  })
+    $('Arrows').mapster({
+        mapKey: 'id',
+        fillColor: 'f5f5b5',
+        fillOpacity: 0.6,
+        render_select: {
+            fillOpacity: 0.3
+        },
+        singleSelect: true
+    }).parent().css({ "margin": "0 auto" })
+
+    window.addEventListener('beforeunload', function (e) {
+        // TEMP CHANGE
+        // mainCamSignal.hangup();
+        // TEMP CHANGE
+        dataChannel.close();
+    })
 
 });
 
