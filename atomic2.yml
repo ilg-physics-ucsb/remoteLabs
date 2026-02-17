@@ -72,9 +72,9 @@ devices:
     userid: "admin"
     password: "5tgb567ujnb"
     outlets:
-      - 7
+      - 3
     outletMap:
-      Carousel: 7
+      Carousel: 3
 
 locks:
   camera:
