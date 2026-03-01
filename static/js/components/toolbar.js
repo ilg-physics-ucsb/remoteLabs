@@ -3,7 +3,7 @@
  * Displays the different tool groups available to the application,
  * allowing selection. Group names and images are provided by
  * the application via slot and selection event is emitted to be
- * heard by ToolDetail.
+ * listened to by ToolDetail.
  */
 export class Toolbar extends HTMLElement {
   constructor() {
@@ -25,12 +25,30 @@ export class Toolbar extends HTMLElement {
   }
 
   connectedCallback() {
+    const slot = this.shadowRoot.querySelector('slot');
 
+    slot.addEventListener('click', (event) => {
+      let toolGroupId = '';
+
+      try {
+        toolGroupId = event.target.attributes.getNamedItem('group-id').value;
+      } catch (error) {
+        console.error('Toolbar was unable to find and emit selected toolbar id: ', error);
+        return;
+      }
+
+      if (!toolGroupId) {
+        console.error('Invalid group id in Toolbar: ', event);
+        return;
+      }
+
+      this.emit(toolGroupId);
+    });
   }
 
   emit(value) {
-    const toolbarEvent = new CustomEvent('toolbar', { detail: {} });
-    window.dispatchEvent(toolbarEvent);
+    const toolbarSelectionEvent = new CustomEvent('toolbarSelection', { detail: { toolGroupId: value } });
+    window.dispatchEvent(toolbarSelectionEvent);
   }
 }
 
