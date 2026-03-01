@@ -13,7 +13,7 @@
 
   <!-- Your custom styles (optional) -->
   <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="../static/css/kavya-css.css" rel="stylesheet" type="text/css">
+  <link href="../static/css/app.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="../static/css/component-styles.css">
 
 </head>
@@ -22,9 +22,29 @@
   <script src="static/js/app.js" type="module"></script>
   <script src="../static/js/lib.js" type="module"></script>
 
+  <div class="video-row">
+    <video-component></video-component>
+    <tool-detail-component>
+      <div id="mercury-neon-lamp">
+        <h2>Hg-Ne Lamp</h2>
+        <p>The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source for this purpose because it emits a lot of light, but only in a small number of wavelengths.</p>
+        <h3>Use tool</h3>
+        <p>Click to toggle the lamp!</p>
+      </div>
+      <div id="potentiometer">
+        <h2>Potentiometer</h2>
+        <p>The voltage is adjusted by turning the knob of a variable resistor (also known as a potentiometer).</p>
+        <h3>Use tool</h3>
+        <p>Choose an option to set the amount of rotation per click. Click an arrow to rotate the knob in that direction.</p>
+        <knob-component component-id="knob-1" intervals="[3.6, 36, 360]"></knob-component>
+      </div>
+    </tool-detail-component>
+  </div>
+
   <toolbar-component>
     <ul>
-      <li><img group-id="penray" src="static/imgs/transparent-imgs/penray-lamp.png" /></li>
+      <li><img group-id="mercury-neon-lamp" src="static/imgs/transparent-imgs/penray-lamp.png" /></li>
+      <li><img group-id="potentiometer" src="static/imgs/knob.png" /></li>
       <li><img group-id="filter-wheel" src="static/imgs/FilterWheelScaled.png" /></li>
       <li><img group-id="electrometer" src="static/imgs/Keithley6514Electrometer.jpg" /></li>
     </ul>

@@ -2,10 +2,9 @@
 
 /* Toolbar */
 toolbar-component {
-  margin: 1rem;
   padding: 1rem 3rem;
   background-color: var(--secondary);
-  border-radius: var(--border-radius);
+  border-radius: 10px;
 }
 
 toolbar-component ul {
@@ -21,4 +20,28 @@ toolbar-component ul {
 toolbar-component ul li img {
   max-height: 100px;
   max-width: 224px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+toolbar-component ul li img:hover {
+  background-color: #375C3E;
+  box-shadow: 0px 4px 4px rgb(0, 0, 0, 0.15);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+/* Video */
+video-component {
+  padding: 1rem;
+  background-color: var(--secondary);
+  border-radius: 10px;
+  min-height: 360px;
+}
+
+/* Tool Detail */
+tool-detail-component {
+  padding: 1rem;
+  background-color: var(--secondary);
+  border-radius: 10px;
 }
