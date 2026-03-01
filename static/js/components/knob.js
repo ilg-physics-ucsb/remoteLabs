@@ -72,7 +72,6 @@ export class Knob extends HTMLElement {
   }
 
   connectedCallback() {
-    const label = this.shadowRoot.querySelector('h3');
     const downButton = this.shadowRoot.querySelector('#down');
     const upButton = this.shadowRoot.querySelector('#up');
     const intervalSelect = this.shadowRoot.querySelector('select');
@@ -80,8 +79,6 @@ export class Knob extends HTMLElement {
     this.componentId = this.getAttribute('component-id');
     this.intervals = JSON.parse(this.getAttribute('intervals'));
     this.knobImageUrl = this.getAttribute('knobImageUrl');
-
-    label.textContent = this.getAttribute('label');
 
     this.intervals.forEach((interval) => {
       const option = document.createElement('option');
