@@ -1,5 +1,6 @@
 import { WebSocketHandler } from "../../../static/js/services/web-socket-handler";
 
+// Photo Electric Effect Lab
 addEventListener('DOMContentLoaded', () => {
   const wsHandler = new WebSocketHandler();
   wsHandler.connect();
