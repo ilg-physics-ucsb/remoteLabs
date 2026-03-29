@@ -3,13 +3,6 @@
  * Displays the group of tools based on the currently
  * selected tool group in the toolbar.
  */
-
-/**
- * TODO
- * listen to 'toolbar' type events
- * display logic based on id provided in toolbar event
- * default no-group selected
- */
 export class ToolDetail extends HTMLElement {
   constructor() {
     super();
