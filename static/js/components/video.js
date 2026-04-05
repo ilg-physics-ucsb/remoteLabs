@@ -46,7 +46,21 @@ export class Video extends HTMLElement {
           z-index: 9999;
         }
 
-        .video.measureEnabled .distance {
+        .video .start-marker {
+          display: none;
+          width: 2px;
+          height: 2px;
+          background-color: #FFFFFF;
+          border-radius: 50%;
+          border: solid 1px #000000;
+        }
+
+        .video .distance-path {
+          display: none;
+        }
+
+        .video.measureEnabled .distance,
+        .video.measureEnabled .distance-path {
           display: block;
         }
 
@@ -77,6 +91,8 @@ export class Video extends HTMLElement {
           <button id="measure-button" title="Measure">📏 Measure</button>
         </div>
         <div class="distance">Click to start measuring</div>
+        <div class="distance-path"></div>
+        <div class="start-marker"></div>
       </div>
     `;
   }
@@ -88,39 +104,52 @@ export class Video extends HTMLElement {
     const measureButton = this.shadowRoot.querySelector('#measure-button');
     const videoContainer = this.shadowRoot.querySelector('.video');
     const distance = this.shadowRoot.querySelector('.distance');
+    const startMarker = this.shadowRoot.querySelector('.start-marker');
 
     measureButton.addEventListener('click', (event) => {
       event.stopPropagation(); // Prevent button click from triggering video container click
       this.measureEnabled = !this.measureEnabled;
 
       if (this.measureEnabled) {
-        const distanceEl = this.shadowRoot.querySelector('.distance');
+        const distanceLabel = this.shadowRoot.querySelector('.distance');
+
+
 
         videoContainer.classList.add('measureEnabled');
         measureButton.textContent = '❌ Stop Measuring';
         measureButton.title = 'Stop measuring';
-        this.repositionLabel(distanceEl, [event.clientX, event.clientY]);
+        this.repositionLabel(distanceLabel, [event.clientX, event.clientY]);
       } else {
         videoContainer.classList.remove('measureEnabled');
         this.startCoordinate = [];
         measureButton.textContent = '📏 Measure';
         measureButton.title = 'Measure';
         distance.textContent = 'Click to start measuring';
+
+        // remove class instead
+        startMarker.style.display = 'none';
       }
     });
 
     videoContainer.addEventListener('click', (event) => {
+
       if (this.measureEnabled) {
         this.startCoordinate = [event.clientX, event.clientY];
+
+        // add class instead
+        startMarker.style.display = 'block';
+        startMarker.style.position = 'absolute';
+        startMarker.style.left = `${event.clientX}px`;
+        startMarker.style.top = `${event.clientY}px`;
       }
     });
 
 
     videoContainer.addEventListener('mousemove', (event) => {
       if (this.measureEnabled) {
-        const distanceEl = this.shadowRoot.querySelector('.distance');
+        const distanceLabel = this.shadowRoot.querySelector('.distance');
 
-        if (!distanceEl) {
+        if (!distanceLabel) {
           return;
         }
 
@@ -128,12 +157,12 @@ export class Video extends HTMLElement {
         const dy = event.clientY - this.startCoordinate[1];
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        this.repositionLabel(distanceEl, [event.clientX, event.clientY]);
+        this.repositionLabel(distanceLabel, [event.clientX, event.clientY]);
 
         if (!this.startCoordinate.length) {
-          distanceEl.textContent = 'Click to start measuring';
+          distanceLabel.textContent = 'Click to start measuring';
         } else {
-          distanceEl.textContent = `Distance: ${distance.toFixed(1)}px`;
+          distanceLabel.textContent = `Distance: ${distance.toFixed(1)}px`;
         }
       }
     });
