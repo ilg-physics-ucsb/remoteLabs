@@ -97,7 +97,7 @@ export class Video extends HTMLElement {
       <div class="video">
         <video id="video" autoplay src="https://6922136c-83f3-4f95-ad86-9ef1221337ac.mdnplay.dev/shared-assets/videos/flower.webm"></video>
         <div class="controls">
-          <!-- <button id="take-snapshot" title="Take snapshot">📸 Take Snapshot</button> -->
+          <button id="take-snapshot" title="Take snapshot">📸 Take Snapshot</button>
           <button id="measure-button" title="Measure">📏 Measure</button>
         </div>
         <div class="distance">Click to start measuring</div>
