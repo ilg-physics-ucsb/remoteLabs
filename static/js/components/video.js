@@ -48,15 +48,25 @@ export class Video extends HTMLElement {
 
         .video .start-marker {
           display: none;
-          width: 2px;
-          height: 2px;
+          position: absolute;
+          width: 5px;
+          height: 5px;
           background-color: #FFFFFF;
           border-radius: 50%;
           border: solid 1px #000000;
+          pointer-events: none;
+          z-index: 2;
         }
 
         .video .distance-path {
           display: none;
+          position: absolute;
+          height: 1px;
+          border-bottom: dashed 1px #000000;
+          border-top: dashed 1px #FFFFFF;
+          transform-origin: left center;
+          pointer-events: none;
+          z-index: 1;
         }
 
         .video.measureEnabled .distance,
@@ -87,7 +97,7 @@ export class Video extends HTMLElement {
       <div class="video">
         <video id="video" autoplay src="https://6922136c-83f3-4f95-ad86-9ef1221337ac.mdnplay.dev/shared-assets/videos/flower.webm"></video>
         <div class="controls">
-          <button id="take-snapshot" title="Take snapshot">📸 Take Snapshot</button>
+          <!-- <button id="take-snapshot" title="Take snapshot">📸 Take Snapshot</button> -->
           <button id="measure-button" title="Measure">📏 Measure</button>
         </div>
         <div class="distance">Click to start measuring</div>
@@ -104,6 +114,7 @@ export class Video extends HTMLElement {
     const measureButton = this.shadowRoot.querySelector('#measure-button');
     const videoContainer = this.shadowRoot.querySelector('.video');
     const distance = this.shadowRoot.querySelector('.distance');
+    const distancePath = this.shadowRoot.querySelector('.distance-path');
     const startMarker = this.shadowRoot.querySelector('.start-marker');
 
     measureButton.addEventListener('click', (event) => {
@@ -112,8 +123,6 @@ export class Video extends HTMLElement {
 
       if (this.measureEnabled) {
         const distanceLabel = this.shadowRoot.querySelector('.distance');
-
-
 
         videoContainer.classList.add('measureEnabled');
         measureButton.textContent = '❌ Stop Measuring';
@@ -128,19 +137,25 @@ export class Video extends HTMLElement {
 
         // remove class instead
         startMarker.style.display = 'none';
+        distancePath.style.display = 'none';
       }
     });
 
     videoContainer.addEventListener('click', (event) => {
 
       if (this.measureEnabled) {
-        this.startCoordinate = [event.clientX, event.clientY];
+        this.startCoordinate = this.getRelativeCoordinate(videoContainer, event);
 
         // add class instead
         startMarker.style.display = 'block';
-        startMarker.style.position = 'absolute';
-        startMarker.style.left = `${event.clientX}px`;
-        startMarker.style.top = `${event.clientY}px`;
+        startMarker.style.left = `${this.startCoordinate[0] - 3}px`;
+        startMarker.style.top = `${this.startCoordinate[1] -3}px`;
+
+        distancePath.style.display = 'block';
+        distancePath.style.left = `${this.startCoordinate[0]}px`;
+        distancePath.style.top = `${this.startCoordinate[1]}px`;
+        distancePath.style.width = '0px';
+        distancePath.style.transform = 'rotate(0deg)';
       }
     });
 
@@ -153,19 +168,32 @@ export class Video extends HTMLElement {
           return;
         }
 
-        const dx = event.clientX - this.startCoordinate[0];
-        const dy = event.clientY - this.startCoordinate[1];
+        const currentCoordinate = this.getRelativeCoordinate(videoContainer, event);
+        const dx = currentCoordinate[0] - this.startCoordinate[0];
+        const dy = currentCoordinate[1] - this.startCoordinate[1];
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         this.repositionLabel(distanceLabel, [event.clientX, event.clientY]);
 
         if (!this.startCoordinate.length) {
           distanceLabel.textContent = 'Click to start measuring';
+          distancePath.style.display = 'none';
         } else {
           distanceLabel.textContent = `Distance: ${distance.toFixed(1)}px`;
+          distancePath.style.display = 'block';
+          distancePath.style.left = `${this.startCoordinate[0]}px`;
+          distancePath.style.top = `${this.startCoordinate[1]}px`;
+          distancePath.style.width = `${distance}px`;
+          distancePath.style.transform = `rotate(${Math.atan2(dy, dx)}rad)`;
         }
       }
     });
+  }
+
+  getRelativeCoordinate(container, event) {
+    const rect = container.getBoundingClientRect();
+
+    return [event.clientX - rect.left, event.clientY - rect.top];
   }
 
   repositionLabel(distanceLabel, coordinate) {
