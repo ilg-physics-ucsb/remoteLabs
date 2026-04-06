@@ -579,6 +579,10 @@ $("document").ready(function () {
         return new Promise(r => setTimeout(r, ms));
     }
 
+    function sliderNumber(slider) {
+        return parseFloat(slider.value)
+    }
+
     const supportedCameraSettings = new Set([
         "brightness",
         "contrast",
@@ -610,16 +614,16 @@ $("document").ready(function () {
     }
 
     var cameraDefaults = {
-        "brightness": 50,
-        "contrast": 0,
-        "saturation": 0,
+        "brightness": 0.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
         "aeenable": true
     }
 
     var defaultScreenCameraSettings = {
-        "brightness": 50,
-        "contrast": 0,
-        "saturation": 0,
+        "brightness": 0.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
         "aeenable": false,
         "exposuretime": 6000
     }
@@ -639,23 +643,25 @@ $("document").ready(function () {
     }
     
     setBrightness = function(){
-        updateCameraSetting("brightness", brightnessSlider.value)
-        screenCameraSettings["brightness"] = brightnessSlider.value
-        // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+        const value = sliderNumber(brightnessSlider)
+        updateCameraSetting("brightness", value)
+        screenCameraSettings["brightness"] = value
+        // dataChannel.send("Camera/imageMod/brightness,"+value)
     }
     
     brightnessValue = function(){
-        brightnessDisplay.innerHTML=brightnessSlider.value + "%"
+        brightnessDisplay.innerHTML=sliderNumber(brightnessSlider).toFixed(2)
     }
     
     setContrast = function(){
-        updateCameraSetting("contrast", contrastSlider.value)
-        screenCameraSettings["contrast"] = contrastSlider.value
-        // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+        const value = sliderNumber(contrastSlider)
+        updateCameraSetting("contrast", value)
+        screenCameraSettings["contrast"] = value
+        // dataChannel.send("Camera/imageMod/contrast,"+value)
     }
     
     contrastValue = function(){
-        contrastDisplay.innerHTML=contrastSlider.value + "%"
+        contrastDisplay.innerHTML=sliderNumber(contrastSlider).toFixed(2) + "x"
     }
     
 

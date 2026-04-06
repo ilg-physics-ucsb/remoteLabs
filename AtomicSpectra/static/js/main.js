@@ -884,11 +884,15 @@ $("document").ready(function () {
 
     }
 
+    function sliderNumber(slider) {
+        return parseFloat(slider.value)
+    }
+
     var cameraDefaults = {
         "frame_rate": 15,
-        "brightness": 50,
-        "contrast": 0,
-        "saturation": 0,
+        "brightness": 0.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
         "red_balance": 100,
         "blue_balance": 100,
         "shutter_speed": 0,
@@ -900,9 +904,9 @@ $("document").ready(function () {
 
     var defaultScreenCameraSettings = {
         "frame_rate": 15,
-        "brightness": 50,
-        "contrast": 0,
-        "saturation": 0,
+        "brightness": 0.0,
+        "contrast": 1.0,
+        "saturation": 1.0,
         "red_balance": 100,
         "blue_balance": 100,
         "shutter_speed": 6000,
@@ -926,23 +930,25 @@ $("document").ready(function () {
     }
 
     setBrightness = function () {
-        updateCameraSetting("brightness", brightnessSlider.value)
-        screenCameraSettings["brightness"] = brightnessSlider.value
-        // dataChannel.send("Camera/imageMod/brightness,"+brightnessSlider.value)
+        const value = sliderNumber(brightnessSlider)
+        updateCameraSetting("brightness", value)
+        screenCameraSettings["brightness"] = value
+        // dataChannel.send("Camera/imageMod/brightness,"+value)
     }
 
     brightnessValue = function () {
-        brightnessDisplay.innerHTML = brightnessSlider.value + "%"
+        brightnessDisplay.innerHTML = sliderNumber(brightnessSlider).toFixed(2)
     }
 
     setContrast = function () {
-        updateCameraSetting("contrast", contrastSlider.value)
-        screenCameraSettings["contrast"] = contrastSlider.value
-        // dataChannel.send("Camera/imageMod/contrast,"+contrastSlider.value)
+        const value = sliderNumber(contrastSlider)
+        updateCameraSetting("contrast", value)
+        screenCameraSettings["contrast"] = value
+        // dataChannel.send("Camera/imageMod/contrast,"+value)
     }
 
     contrastValue = function () {
-        contrastDisplay.innerHTML = contrastSlider.value + "%"
+        contrastDisplay.innerHTML = sliderNumber(contrastSlider).toFixed(2) + "x"
     }
 
     OverviewCam.addEventListener('click', function () {
