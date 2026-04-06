@@ -579,7 +579,19 @@ $("document").ready(function () {
         return new Promise(r => setTimeout(r, ms));
     }
 
+    const supportedCameraSettings = new Set([
+        "brightness",
+        "contrast",
+        "saturation",
+        "aeenable",
+        "exposuretime"
+    ])
+
     async function updateCameraSetting(setting, newValue) {
+        if (!supportedCameraSettings.has(setting)) {
+            console.log("Skipping unsupported camera setting " + setting)
+            return
+        }
         dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
         currentCameraSettings[setting] = newValue
     }
@@ -598,31 +610,18 @@ $("document").ready(function () {
     }
 
     var cameraDefaults = {
-        "frame_rate":15,
         "brightness": 50,
         "contrast": 0,
         "saturation": 0,
-        "red_balance": 100,
-        "blue_balance": 100,
-        "shutter_speed": 0,
-        "iso_sensitivity": 400,
-        "awb_mode": 0,
-        "exposure_mode": 1,
-        "drc_strength": 0
+        "aeenable": true
     }
 
     var defaultScreenCameraSettings = {
-        "frame_rate":2,
         "brightness": 50,
         "contrast": 0,
         "saturation": 0,
-        "red_balance": 100,
-        "blue_balance": 100,
-        "shutter_speed": 6000,
-        "iso_sensitivity": 400,
-        "awb_mode": 6,
-        "exposure_mode": 5,
-        "drc_strength": 0
+        "aeenable": false,
+        "exposuretime": 6000
     }
 
     var currentCameraSettings = JSON.parse(JSON.stringify(cameraDefaults))
@@ -630,9 +629,9 @@ $("document").ready(function () {
 
 
     setExposure = function(){
-        updateCameraSetting("shutter_speed", exposureSlider.value)
-        screenCameraSettings["shutter_speed"] = exposureSlider.value
-        // dataChannel.send("Camera/imageMod/shutter_speed,"+exposureSlider.value)
+        updateCameraSetting("exposuretime", exposureSlider.value)
+        screenCameraSettings["exposuretime"] = exposureSlider.value
+        // dataChannel.send("Camera/imageMod/exposuretime,"+exposureSlider.value)
     }
     
     exposureValue = function(){
