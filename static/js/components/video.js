@@ -112,6 +112,7 @@ export class Video extends HTMLElement {
     this.views = JSON.parse(this.getAttribute('views'));
 
     const measureButton = this.shadowRoot.querySelector('#measure-button');
+    const snapshotButton = this.shadowRoot.querySelector('#take-snapshot');
     const videoContainer = this.shadowRoot.querySelector('.video');
     const distance = this.shadowRoot.querySelector('.distance');
     const distancePath = this.shadowRoot.querySelector('.distance-path');
@@ -139,6 +140,11 @@ export class Video extends HTMLElement {
         startMarker.style.display = 'none';
         distancePath.style.display = 'none';
       }
+    });
+
+    snapshotButton.addEventListener('click', () => {
+      // implement GET for once snapshot is made available for download
+      console.warn('snapshot not yet implemented');
     });
 
     videoContainer.addEventListener('click', (event) => {
