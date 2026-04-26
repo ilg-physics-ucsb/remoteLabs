@@ -68,7 +68,7 @@ export class Toolbar extends HTMLElement {
 
   handleCameraChange(event) {
     const cameraGroupId = event?.detail?.value || '';
-    const buttons = this.querySelectorAll('button[group-id]');
+    const buttons = Array.from(this.querySelectorAll('button[group-id]'));
 
     buttons.forEach((button) => {
       const buttonCameraGroup = button.getAttribute('camera-group');
