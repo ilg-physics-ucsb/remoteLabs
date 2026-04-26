@@ -44,7 +44,6 @@ toolbar-component {
 
 @media (min-width: 768px) {
   .video-row {
-    height: 65vh;
     flex-direction: row;
   }
 
