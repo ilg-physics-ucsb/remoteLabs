@@ -1,4 +1,4 @@
-import { WebSocketHandler } from "../../../static/js/services/web-socket-handler";
+import { WebSocketHandler } from "../../../static/js/services/web-socket-handler.js";
 
 // Photo Electric Effect Lab
 addEventListener('DOMContentLoaded', () => {
