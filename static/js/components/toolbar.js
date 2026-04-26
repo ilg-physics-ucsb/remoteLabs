@@ -9,6 +9,7 @@ export class Toolbar extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.handleCameraChange = this.handleCameraChange.bind(this);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -56,7 +57,48 @@ export class Toolbar extends HTMLElement {
       this.emit(toolGroupId);
     });
 
-    // TODO listen to camera view selection
+    // Handle cameraChange event emitted by video component to filter
+    // toolbar buttons based on camera group.
+    window.addEventListener('cameraChange', this.handleCameraChange);
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('cameraChange', this.handleCameraChange);
+  }
+
+  handleCameraChange(event) {
+    const cameraGroupId = event?.detail?.value || '';
+    const buttons = this.querySelectorAll('button[group-id]');
+
+    buttons.forEach((button) => {
+      const buttonCameraGroup = button.getAttribute('camera-group');
+      const isVisible = !cameraGroupId || !buttonCameraGroup || buttonCameraGroup === cameraGroupId;
+      const buttonContainer = button.closest('li');
+
+      if (buttonContainer && this.contains(buttonContainer)) {
+        buttonContainer.style.display = isVisible ? '' : 'none';
+      } else {
+        button.style.display = isVisible ? '' : 'none';
+      }
+
+      if (!isVisible) {
+        button.classList.remove('active');
+      }
+    });
+
+    const visibleButtons = buttons.filter((button) => button.offsetParent !== null);
+
+    if (visibleButtons.length < 1) {
+      return;
+    }
+
+    const hasActiveVisibleButton = visibleButtons.some((button) => button.classList.contains('active'));
+
+    if (!hasActiveVisibleButton) {
+      const firstVisibleButton = visibleButtons[0];
+      firstVisibleButton.classList.add('active');
+      this.emit(firstVisibleButton.getAttribute('group-id'));
+    }
   }
 
   emit(value) {
