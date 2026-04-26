@@ -42,8 +42,21 @@ export class Toolbar extends HTMLElement {
         return;
       }
 
+      // Set active class on selected tool button
+      const buttons = this.querySelectorAll('button[group-id]');
+
+      buttons.forEach((button) => {
+        if (button.attributes.getNamedItem('group-id').value === toolGroupId) {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
+
       this.emit(toolGroupId);
     });
+
+    // TODO listen to camera view selection
   }
 
   emit(value) {

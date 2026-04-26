@@ -17,14 +17,21 @@ toolbar-component ul {
   padding: 0;
 }
 
-toolbar-component ul li img {
+toolbar-component ul li button {
   max-height: 100px;
   max-width: 224px;
-  padding: 8px;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
+  background: #5e5e5e;
+  border: none;
+  text-transform: uppercase;
 }
 
-toolbar-component ul li img:hover {
+toolbar-component ul li button.active {
+  background-color: #0D8B28;
+}
+
+toolbar-component ul li button:hover {
   background-color: #375C3E;
   box-shadow: 0px 4px 4px rgb(0, 0, 0, 0.15);
   transition: 0.3s ease;
