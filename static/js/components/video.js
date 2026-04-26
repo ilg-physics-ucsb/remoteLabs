@@ -6,7 +6,6 @@
  * TODO
  * camera selection (should emit message for application to pass to API) name: display in UI, id: API knows (zak)
  * connect to video feed
- * pixel measuring tool
  * camera settings: exposure, brightness, contrast
  */
 export class Video extends HTMLElement {
@@ -22,7 +21,6 @@ export class Video extends HTMLElement {
           display: flex;
           justify-content: center;
           align-items: center;
-          height: 100%;
           position: relative;
         }
 
@@ -92,8 +90,35 @@ export class Video extends HTMLElement {
           background-color: var(--tertiary);
           border-radius: 8px;
         }
+
+        .views {
+          display: none;
+        }
+
+        .views.has-views {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 2rem;
+            margin: 0.5rem 0 1.5rem 0;
+            justify-content: center;
+        }
+
+        .views button {
+          background-color: #5E5E5E;
+          color: #FFFFFF;
+          border: none;
+          border-radius: 1rem;
+          padding: 0.5rem 1rem;
+          cursor: pointer;
+          text-transform: uppercase;
+        }
+
+        .views button.active {
+          background-color: #0D8B28
+        }
       </style>
 
+      <div class="views"></div>
       <div class="video">
         <video id="video" autoplay src="https://6922136c-83f3-4f95-ad86-9ef1221337ac.mdnplay.dev/shared-assets/videos/flower.webm"></video>
         <div class="controls">
@@ -108,15 +133,15 @@ export class Video extends HTMLElement {
   }
 
   connectedCallback() {
-    // TODO: show different views/cameras to select from
-    this.views = JSON.parse(this.getAttribute('views'));
-
+    const videoContainer = this.shadowRoot.querySelector('.video');
     const measureButton = this.shadowRoot.querySelector('#measure-button');
     const snapshotButton = this.shadowRoot.querySelector('#take-snapshot');
-    const videoContainer = this.shadowRoot.querySelector('.video');
     const distance = this.shadowRoot.querySelector('.distance');
     const distancePath = this.shadowRoot.querySelector('.distance-path');
     const startMarker = this.shadowRoot.querySelector('.start-marker');
+
+    // Set up camera views when provided
+    this.setUpCameraViews();
 
     measureButton.addEventListener('click', (event) => {
       event.stopPropagation(); // Prevent button click from triggering video container click
@@ -148,7 +173,6 @@ export class Video extends HTMLElement {
     });
 
     videoContainer.addEventListener('click', (event) => {
-
       if (this.measureEnabled) {
         this.startCoordinate = this.getRelativeCoordinate(videoContainer, event);
 
@@ -205,6 +229,52 @@ export class Video extends HTMLElement {
   repositionLabel(distanceLabel, coordinate) {
     distanceLabel.style.left = `${coordinate[0] + 10}px`;
     distanceLabel.style.top = `${coordinate[1] + 10}px`;
+  }
+
+  setUpCameraViews() {
+    let views = [];
+
+    try {
+      views = JSON.parse(this.dataset.views);
+    } catch (e) {
+      console.warn('Failed to parse views for video component.', e);
+    }
+
+    if (views.length < 1) {
+      return;
+    }
+
+    const viewsContainer = this.shadowRoot.querySelector('.views');
+    viewsContainer.classList.add('has-views');
+
+    views.forEach((view) => {
+      const button = document.createElement('button');
+      button.textContent = view.name;
+      button.setAttribute('view-name', view.name);
+      button.setAttribute('view-id', view.id);
+      viewsContainer.appendChild(button);
+    });
+
+    const buttons = viewsContainer.querySelectorAll('button');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const cameraId = button.getAttribute('view-id');
+
+        buttons.forEach((btn) => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        this.emit(cameraId);
+      });
+    });
+
+    // Set first view as active by default.
+    buttons[0].click();
+  }
+
+  emit(value) {
+    const cameraEvent = new CustomEvent('cameraChange', { detail: { value: value } });
+    window.dispatchEvent(cameraEvent);
   }
 }
 
