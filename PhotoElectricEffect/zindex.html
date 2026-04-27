@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>UCSB Physics Remote Lab - Photoelectric effect</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
+  <!-- Your custom styles (optional) -->
+  <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../static/css/app.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../static/css/component-styles.css">
+
+</head>
+
+<body>
+  <script src="static/js/app.js" type="module"></script>
+  <script src="../static/js/lib.js" type="module"></script>
+
+  <div class="video-row">
+    <video-component data-views='[{ "name": "Camera 1", "id": "camera-1" }, { "name": "Camera 2", "id": "camera-2" }]'></video-component>
+    <tool-detail-component>
+      <div id="mercury-neon-lamp">
+        <h2>Hg-Ne Lamp</h2>
+        <p>The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source
+          for this
+          purpose because it emits a lot of light, but only in a small number of wavelengths.</p>
+        <h3>Use tool</h3>
+        <p>Click to toggle the lamp!</p>
+      </div>
+      <div id="potentiometer">
+        <h2>Potentiometer</h2>
+        <p>The voltage is adjusted by turning the knob of a variable resistor (also known as a potentiometer).</p>
+        <h3>Use tool</h3>
+        <p>Choose an option to set the amount of rotation per click. Click an arrow to rotate the knob in that
+          direction.</p>
+        <knob-component component-id="knob-1" intervals="[3.6, 36, 360]"></knob-component>
+      </div>
+    </tool-detail-component>
+  </div>
+
+  <toolbar-component>
+    <ul>
+      <li>
+        <button group-id="mercury-neon-lamp" camera-group="camera-1">Mercury Neon Lamp</button>
+      </li>
+      <li>
+        <button group-id="potentiometer" camera-group="camera-1">Potentiometer</button>
+      </li>
+      <li>
+        <button group-id="filter-wheel" camera-group="camera-2">Filter Wheel</button>
+      </li>
+      <li>
+        <button group-id="electrometer" camera-group="camera-2">Electrometer</button>
+      </li>
+    </ul>
+  </toolbar-component>
+
+  <settings-dialog></settings-dialog>
+</body>
+
+</html>
