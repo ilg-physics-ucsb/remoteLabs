@@ -24,13 +24,13 @@ export class Demo extends HTMLElement {
 
     /**
      * The innerHTML of the shadow root defines the HTML content for a component.
-     * If there is a need for 
      * 
      * A note on styles. When using the shadow DOM, styles defined in the
      * main document do not affect the elements in the shadow DOM, and
      * vice versa.
      * 
-     * Styles for web component shadow dom can be defined
+     * Styles for web component shadow dom are defined in the shadow root
+     * as with the style tag below.
      */
     this.shadowRoot.innerHTML = `
       <style>
