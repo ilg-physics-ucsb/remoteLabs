@@ -41,6 +41,7 @@ export class Demo extends HTMLElement {
 
       <div class="demo">
         <h2>Demo Component</h2>
+        <p>input: <span id="input"></span></p>
         <p>result: <span id="result"></span></p>
         <button id="button">Double</button>
       </div>
@@ -56,25 +57,30 @@ export class Demo extends HTMLElement {
     // Get the input value from the HTML template. This input is a simple
     // integer, but input can also be JSON strings that can be parsed into
     // objects for more complex use cases.
-    let result = parseInt(this.getAttribute('data-input'));
+    let input = parseInt(this.getAttribute('data-input'));
+    let result = input;
 
     // Throw an error to let developer know that a critical input
     // is missing.
-    if (!result) {
+    if (!input) {
       throw new Error('Demo component requires a data-input attribute with an integer value.');
     }
 
     const button = this.shadowRoot.querySelector('#button');
+    const inputSpan = this.shadowRoot.querySelector('#input');
     const resultSpan = this.shadowRoot.querySelector('#result');
+
+    inputSpan.textContent = input;
 
     button.addEventListener('click', () => {
       // Double the current value.
+      input = result;
       result = this.double(result);
 
       // Display the updated value.
+      inputSpan.textContent = input;
       resultSpan.textContent = result;
 
-      // TODO: emit event and explain
       this.emit(result);
     });
   }
