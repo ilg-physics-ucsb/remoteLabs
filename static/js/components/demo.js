@@ -83,20 +83,27 @@ export class Demo extends HTMLElement {
 
       this.emit(result);
     });
+
+    // Listen to the custom demo event 
+    window.addEventListener('demo', (event) => {
+      console.log(event.detail.multiple);
+    });
   }
 
   /**
-   * A user provided method that doubles the input value.
+   * A developer provided method that doubles the input value.
    */
   double(input) {
     return input * 2;
   }
 
   /**
-   * A user provided method that emits the latest value as
+   * A developer provided method that emits the latest value as
    * a custom demo event. Other components, or the main application
    * script may care about this and can listen for the event
    * to react to it.
+   * 
+   * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
    */
   emit(multiple) {
     const demoEvent = new CustomEvent('demo', { detail: { multiple: multiple } });
