@@ -69,22 +69,11 @@ export class Header extends HTMLElement {
           display: flex;
           justify-content: space-between;
           align-items: center;
+          margin-bottom: 1rem;
         }
 
         .manuals-header h2 {
           margin: 0;
-        }
-
-        .manuals-menu a {
-          padding: 8px 8px 8px 32px;
-          text-decoration: none;
-          font-size: 25px;
-          color: #818181;
-          display: block;
-        }
-
-        .manuals-menu a:hover {
-          color: #f1f1f1;
         }
 
         .manuals-menu .close {
