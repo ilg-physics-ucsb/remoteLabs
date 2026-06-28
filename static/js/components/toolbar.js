@@ -9,7 +9,6 @@ export class Toolbar extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.handleCameraChange = this.handleCameraChange.bind(this);
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -26,6 +25,8 @@ export class Toolbar extends HTMLElement {
   }
 
   connectedCallback() {
+    this.handleCameraChange = this.handleCameraChange.bind(this);
+
     const slot = this.shadowRoot.querySelector('slot');
 
     slot.addEventListener('click', (event) => {
