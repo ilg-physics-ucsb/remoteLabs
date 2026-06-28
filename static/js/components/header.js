@@ -55,6 +55,7 @@ export class Header extends HTMLElement {
           <p class="session-message">This session will end and the motors will reset in <span class="time"></span></p>
         </div>
         <button class="toggle button">temp toggle</button>
+        <slot name="menu"></slot>
       </header>
     `;
   }
