@@ -31,13 +31,11 @@ header-component {
   display: block;
 }
 
-.manuals {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.manual {
+  text-align: center;
 }
 
-.manual .manual-images img {
+.manual .manual-link img {
   max-width: 100%;
 }
 
