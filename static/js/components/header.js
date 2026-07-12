@@ -26,12 +26,17 @@ export class Header extends HTMLElement {
         }
 
         header {
-          display: flex;
-          gap: 1rem;
+          display: grid;
+          grid-template-columns: 160px auto 160px;
           align-items: center;
-          justify-content: space-between;
+          padding: 0.5rem 1rem;
           background-color: var(--header-color);
           border-radius: var(--border-radius);
+        }
+
+        .button-container {
+          display: flex;
+          justify-content: center;
         }
 
         .button {
@@ -41,14 +46,6 @@ export class Header extends HTMLElement {
           padding: 0.5rem 1rem;
           border: none;
           cursor: pointer;
-        }
-
-        .manuals {
-          margin-left: 1rem;
-        }
-
-        .toggle {
-          margin-right: 1rem;
         }
 
         .manuals-menu {
@@ -86,12 +83,16 @@ export class Header extends HTMLElement {
       </style>
 
       <header>
-        <button class="manuals button">Manuals</button>
+        <div class="button-container">
+          <button class="manuals button">Manuals</button>
+        </div>
         <div class="text">
           <h1></h1>
           <p class="session-message">This session will end and the motors will reset in <span class="time"></span></p>
         </div>
-        <button class="toggle button">temp toggle</button>
+        <div class="button-container">
+          <button class="toggle button">temp toggle</button>
+        </div>
         <div class="manuals-menu">
           <div class="manuals-header">
             <h2>Manuals</h2>
@@ -116,6 +117,7 @@ export class Header extends HTMLElement {
     this.manualsButton = this.shadowRoot.querySelector('.manuals');
     this.manualsSlot = this.shadowRoot.querySelector('slot[name="manuals"]');
     this.closeButton = this.shadowRoot.querySelector('.close');
+    this.ambientLightSwitch = this.shadowRoot.querySelector('.toggle');
 
     if (this.manualsButton) {
       this.manualsButton.addEventListener('click', this.handleManualsClick);
@@ -133,6 +135,14 @@ export class Header extends HTMLElement {
 
     // Session time limit in minutes
     const minutesRemaining = parseFloat(this.getAttribute('data-time-limit')) || 0;
+
+    const ambientLightEnabled = this.getAttribute('data-enable-ambient-light') === 'true';
+
+    if (ambientLightEnabled) {
+      this.ambientLightSwitch.style.display = 'block';
+    } else {
+      this.ambientLightSwitch.style.display = 'none';
+    }
 
     if (minutesRemaining) {
       this.startSessionTimer(minutesRemaining);
