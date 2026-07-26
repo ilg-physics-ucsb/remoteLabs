@@ -29,14 +29,21 @@ export class Header extends HTMLElement {
           display: grid;
           grid-template-columns: 160px auto 160px;
           align-items: center;
-          padding: 0.5rem 1rem;
+          padding: 0.5rem 2rem;
           background-color: var(--header-color);
           border-radius: var(--border-radius);
         }
 
         .button-container {
           display: flex;
-          justify-content: center;
+        }
+
+        .button-container:nth-child(1) {
+          justify-content: start;
+        }
+
+        .button-container:nth-child(2) {
+          justify-content: end;
         }
 
         .button {
