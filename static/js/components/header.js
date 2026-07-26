@@ -73,6 +73,25 @@ export class Header extends HTMLElement {
           margin: 0;
         }
 
+        .toggle {
+          display: flex;
+          flex-direction: column;
+          align-items: end;
+          width: 100%;
+        }
+
+        .toggle-label {
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          font-weight: bold;
+          margin-bottom: 0.25rem;
+        }
+
+        toggle-component {
+          display: block;
+          width: 64px;
+        }
+
         .manuals-menu .close {
           font-size: 36px;
           background: none;
@@ -91,7 +110,10 @@ export class Header extends HTMLElement {
           <p class="session-message">This session will end and the motors will reset in <span class="time"></span></p>
         </div>
         <div class="button-container">
-          <button class="toggle button">temp toggle</button>
+          <div class="toggle">
+            <span class="toggle-label">Turn on ambient light</span>
+            <toggle-component></toggle-component>
+          </div>
         </div>
         <div class="manuals-menu">
           <div class="manuals-header">
@@ -139,7 +161,7 @@ export class Header extends HTMLElement {
     const ambientLightEnabled = this.getAttribute('data-enable-ambient-light') === 'true';
 
     if (ambientLightEnabled) {
-      this.ambientLightSwitch.style.display = 'block';
+      this.ambientLightSwitch.style.display = 'flex';
     } else {
       this.ambientLightSwitch.style.display = 'none';
     }
