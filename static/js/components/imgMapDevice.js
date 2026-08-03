@@ -33,21 +33,27 @@ export class imgMapDevice extends HTMLElement {
     // we'll also have to set up an event-listener that will call the function associated with the button presses. 
     
     const mapHTMLfile = this.getAttribute('map-html-file'); 
+    const deviceName = this.getAttribute('device-name'); 
     const target = this.shadowRoot.querySelector('.image-map-device');    
     fetch(mapHTMLfile)
         .then(response => response.text())
         .then(svgText => {
-        target.innerHTML = svgText;
-        });
+          target.innerHTML = svgText;
+          const controls = target.querySelectorAll('[data-cmd]') 
+            controls.forEach((control) => {
+              control.addEventListener('click', (event) => {
+                const buttonValue = event.target.getAttribute('data-cmd')
+                console.log('ziti', buttonValue)
+              }); 
+              
+            })
 
-   
-    // this.imageMap.addEventListener('click', () => {
-    //   this.runCommand();
-    // });
+        });
+    
   }
 
-  runCommand() { //to be written to use the data-cmd attribute of the svg elements, so that we can send the correct command to the correct device when a button is clicked
-   
+  runCommand(event) { //to be written to use the data-cmd attribute of the svg elements, so that we can send the correct command to the correct device when a button is clicked
+            console.log('spaghetti',event)
   }
 
   emit(value) {
