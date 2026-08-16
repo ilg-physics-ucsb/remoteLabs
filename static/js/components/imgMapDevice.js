@@ -64,7 +64,8 @@ export class imgMapDevice extends HTMLElement {
           }
 
           const buttonValue = control.getAttribute('data-cmd');
-          this.runCommand(buttonValue);
+          const deviceCommand = `${deviceName}/${buttonValue}`
+          this.emit(deviceCommand);
         });
       })
       .catch((error) => {
@@ -72,13 +73,10 @@ export class imgMapDevice extends HTMLElement {
       });
   }
 
-  runCommand(command) { //to be written to use the data-cmd attribute of the svg elements, so that we can send the correct command to the correct device when a button is clicked
-    console.log(command)
-  }
 
   emit(value) {
-    const toggleEvent = new CustomEvent('toggle', { detail: { componentId: this.componentId, value: value } });
-    window.dispatchEvent(toggleEvent);
+    const imgMapEvent = new CustomEvent('imgMapDeviceEvent', { detail: { value: value } });
+    window.dispatchEvent(imgMapEvent);
   }
 }
 
