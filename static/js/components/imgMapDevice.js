@@ -11,6 +11,16 @@ export class imgMapDevice extends HTMLElement {
           flex-direction: column;
         }
 
+        .image-map-device svg {
+          width: 100%;
+          height: auto;
+        }
+
+        .image-map-device .map-button {
+          pointer-events: all;
+          cursor: pointer;
+        }
+
         img {
           width: 100%;
           height: 100%;
@@ -18,12 +28,9 @@ export class imgMapDevice extends HTMLElement {
           max-height: 128px;
           cursor: pointer;
         }
-
       </style>
 
-      <div class="image-map-device">
-        What I do to debug spaghetti
-      </div>
+      <div class="image-map-device"></div>
     `;
   }
 
@@ -32,28 +39,41 @@ export class imgMapDevice extends HTMLElement {
     // this will allow us to use the same component for different svg files, just by changing the attribute in the html file
     // we'll also have to set up an event-listener that will call the function associated with the button presses. 
     
-    const mapHTMLfile = this.getAttribute('map-html-file'); 
-    const deviceName = this.getAttribute('device-name'); 
-    const target = this.shadowRoot.querySelector('.image-map-device');    
-    fetch(mapHTMLfile)
-        .then(response => response.text())
-        .then(svgText => {
-          target.innerHTML = svgText;
-          const controls = target.querySelectorAll('[data-cmd]') 
-            controls.forEach((control) => {
-              control.addEventListener('click', (event) => {
-                const buttonValue = event.target.getAttribute('data-cmd')
-                console.log('ziti', buttonValue)
-              }); 
-              
-            })
+    const mapHTMLfile = this.getAttribute('map-html-file');
+    const deviceName = this.getAttribute('device-name');
+    const target = this.shadowRoot.querySelector('.image-map-device');
 
+    if (!mapHTMLfile) {
+      console.error('img-map-device: missing map-html-file attribute');
+      return;
+    }
+
+    fetch(mapHTMLfile)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch map file: ${mapHTMLfile} (${response.status})`);
+        }
+        return response.text();
+      })
+      .then((svgText) => {
+        target.innerHTML = svgText;
+        target.addEventListener('click', (event) => {
+          const control = event.target instanceof Element ? event.target.closest('[data-cmd]') : null;
+          if (!control) {
+            return;
+          }
+
+          const buttonValue = control.getAttribute('data-cmd');
+          this.runCommand(buttonValue);
         });
-    
+      })
+      .catch((error) => {
+        console.error('img-map-device: could not initialize image map', error);
+      });
   }
 
-  runCommand(event) { //to be written to use the data-cmd attribute of the svg elements, so that we can send the correct command to the correct device when a button is clicked
-            console.log('spaghetti',event)
+  runCommand(command) { //to be written to use the data-cmd attribute of the svg elements, so that we can send the correct command to the correct device when a button is clicked
+    console.log(command)
   }
 
   emit(value) {
@@ -62,4 +82,6 @@ export class imgMapDevice extends HTMLElement {
   }
 }
 
-customElements.define('img-map-device', imgMapDevice); //this line registers the toggle element so we can use <img-map-device> in our HTML.
+if (!customElements.get('img-map-device')) {
+  customElements.define('img-map-device', imgMapDevice); //this line registers the toggle element so we can use <img-map-device> in our HTML.
+}
