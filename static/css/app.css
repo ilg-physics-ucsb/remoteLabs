@@ -35,12 +35,15 @@ header-component {
 /* Tool Detail Component */
 tool-detail-component {
   margin-top: 1rem;
-}
-
-tool-detail-component {
   padding: 1rem;
   background-color: var(--secondary);
   border-radius: 10px;
+}
+
+/* Tool Detail Component */
+tool-detail-component knob-component {
+  justify-content: center;
+  display: flex
 }
 
 /* Toolbar Component */
