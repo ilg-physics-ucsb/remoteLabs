@@ -20,7 +20,57 @@
   <script src="static/js/app.js" type="module"></script>
   <script src="../static/js/lib.js" type="module"></script>
 
-  <header-component data-title="Photo Electric Effect"></header-component>
+  <header-component data-title="Photoelectric Effect" data-time-limit="180" data-enable-ambient-light="true">
+    <div slot="manuals">
+      <div class="manual">
+        <a class="manual-link" href="./static/docs/PenRayGasLamps.pdf" target="_blank">
+          <img src="./static/imgs/transparent-imgs/penray-lamp.png">
+        </a>
+        <p class="manual-title">Hg Ne Lamp</p>
+      </div>
+      <div class="manual">
+        <a class="manual-link" href="./static/docs/Keithley multimeter 2000.pdf" target="_blank">
+          <img src="./static/imgs/Keithley6514Electrometer.jpg">
+        </a>
+        <p class="manual-title">Keithly Model 2000 MultiMeter User</p>
+      </div>
+      <div class="manual">
+        <svg width="130" height="29" viewBox="0 0 130 29" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <a href="./static/docs/curv_f365.pdf" target="_blank">
+            <rect width="28" height="29" fill="url(#pattern0_883_1718)"/>
+          </a>
+          <a href="./static/docs/curv_f365.pdf" target="_blank">
+            <rect x="33.3333" width="29" height="29" fill="url(#pattern1_883_1718)"/>
+          </a>
+          <a href="./static/docs/curv_f365.pdf" target="_blank">
+              <rect x="67.6667" width="29" height="29" fill="url(#pattern2_883_1718)"/>
+          </a>
+          <a href="./static/docs/curv_f365.pdf" target="_blank">
+            <rect x="102" width="28" height="29" fill="url(#pattern3_883_1718)"/>
+          </a>
+          <defs>
+          <pattern id="pattern0_883_1718" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlink:href="#image0_883_1718" transform="matrix(0.00314807 0 0 0.00303951 -0.0178571 0)"/>
+          </pattern>
+          <pattern id="pattern1_883_1718" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlink:href="#image1_883_1718" transform="scale(0.00303951)"/>
+          </pattern>
+          <pattern id="pattern2_883_1718" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlink:href="#image2_883_1718" transform="scale(0.00303951)"/>
+          </pattern>
+          <pattern id="pattern3_883_1718" patternContentUnits="objectBoundingBox" width="1" height="1">
+          <use xlink:href="#image3_883_1718" transform="matrix(0.00314807 0 0 0.00303951 -0.0178571 0)"/>
+          </pattern>
+          <image id="image0_883_1718" width="329" height="329" preserveAspectRatio="none" href="./static/imgs/filter365.png"></image>
+          <image id="image1_883_1718" width="329" height="329" preserveAspectRatio="none" href="./static/imgs/filter436.png"></image>
+          <image id="image2_883_1718" width="329" height="329" preserveAspectRatio="none" href="./static/imgs/filter546.png"></image>
+          <image id="image3_883_1718" width="329" height="329" preserveAspectRatio="none" href="./static/imgs/filter577.png"></image>
+          </defs>
+        </svg>
+        <p class="manual-title">Edmund Optics&#174; Bandpass Interference Filters</p>
+      </div>
+    </div>
+  </header-component>
   <div class="video-row">
     <video-component data-views='[{ "name": "Camera 1", "id": "camera-1" }, { "name": "Camera 2", "id": "camera-2" }]'></video-component>
     <tool-detail-component>

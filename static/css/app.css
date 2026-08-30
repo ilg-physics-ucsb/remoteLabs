@@ -8,7 +8,8 @@ and handle standard lab index.html layout. */
     --tertiary: #5E5E5E;
     --header-color: #06390D;
     --h2: 24px;
-    --body-text: 18px
+    --body-text: 18px;
+    --light-text: #FFFFFF;
     --border-radius: 10px;
 }
 
@@ -26,11 +27,23 @@ body {
 /* Header */
 header-component {
   border-radius: 10px;
-  background-color: var(--accent);
-  /* margin-top: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem; */
+  margin: 1rem;
+  display: block;
 }
+
+.manual {
+  text-align: center;
+}
+
+.manual .manual-link img {
+  max-width: 100%;
+}
+
+.manual .manual-title {
+  text-align: center;
+}
+
+/* End Header */
 
 /* Tool Detail Component */
 tool-detail-component {
