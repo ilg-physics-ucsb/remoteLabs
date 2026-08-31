@@ -39,13 +39,13 @@
           <a href="./static/docs/curv_f365.pdf" target="_blank">
             <rect width="28" height="29" fill="url(#pattern0_883_1718)"/>
           </a>
-          <a href="./static/docs/curv_f365.pdf" target="_blank">
+          <a href="./static/docs/curv_f436.pdf" target="_blank">
             <rect x="33.3333" width="29" height="29" fill="url(#pattern1_883_1718)"/>
           </a>
-          <a href="./static/docs/curv_f365.pdf" target="_blank">
+          <a href="./static/docs/curv_f546.pdf" target="_blank">
               <rect x="67.6667" width="29" height="29" fill="url(#pattern2_883_1718)"/>
           </a>
-          <a href="./static/docs/curv_f365.pdf" target="_blank">
+          <a href="./static/docs/curv_f577.pdf" target="_blank">
             <rect x="102" width="28" height="29" fill="url(#pattern3_883_1718)"/>
           </a>
           <defs>
@@ -69,6 +69,49 @@
         </svg>
         <p class="manual-title">Edmund Optics&#174; Bandpass Interference Filters</p>
       </div>
+      <div class="manual">
+        <svg width="165" height="29" viewBox="0 0 165 29" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <a href="./static/imgs/NE03Bcurve.jpg" target="_blank">
+            <rect width="28" height="29" fill="url(#pattern0_883_1725)"/>
+          </a>
+          <a href="./static/imgs/NE05Bcurve.jpg" target="_blank">
+            <rect x="33.75" width="29" height="29" fill="url(#pattern1_883_1725)"/>
+          </a>
+          <a href="./static/imgs/NE10Bcurve.jpg" target="_blank">
+            <rect x="68.5" width="29" height="29" fill="url(#pattern2_883_1725)"/>
+          </a>
+          <a href="./static/imgs/NE20Bcurve.jpg" target="_blank">
+            <rect x="103.25" width="28" height="29" fill="url(#pattern3_883_1725)"/>
+          </a>
+          <a href="./static/imgs/NE40Bcurve.jpg" target="_blank">
+            <rect x="137" y="0.5" width="28" height="28" fill="url(#pattern4_883_1725)"/>
+          </a>
+
+        <defs>
+        <pattern id="pattern0_883_1725" patternContentUnits="objectBoundingBox" width="1" height="1">
+        <use xlink:href="#image0_883_1725" transform="matrix(0.00623924 0 0 0.0060241 -0.0178571 0)"/>
+        </pattern>
+        <pattern id="pattern1_883_1725" patternContentUnits="objectBoundingBox" width="1" height="1">
+        <use xlink:href="#image1_883_1725" transform="scale(0.00609756)"/>
+        </pattern>
+        <pattern id="pattern2_883_1725" patternContentUnits="objectBoundingBox" width="1" height="1">
+        <use xlink:href="#image2_883_1725" transform="translate(0 -0.00574713) scale(0.00574713)"/>
+        </pattern>
+        <pattern id="pattern3_883_1725" patternContentUnits="objectBoundingBox" width="1" height="1">
+        <use xlink:href="#image3_883_1725" transform="matrix(0.00559846 0 0 0.00540541 -0.0206564 0)"/>
+        </pattern>
+        <pattern id="pattern4_883_1725" patternContentUnits="objectBoundingBox" width="1" height="1">
+        <use xlink:href="#image4_883_1725" transform="translate(0 -0.00549451) scale(0.00549451)"/>
+        </pattern>
+        <image id="image0_883_1725" width="166" height="166" preserveAspectRatio="none" href="./static/imgs/ND0.3.png"/>
+        <image id="image1_883_1725" width="164" height="164" preserveAspectRatio="none" href="./static/imgs/ND0.5.png"/>
+        <image id="image2_883_1725" width="174" height="176" preserveAspectRatio="none" href="./static/imgs/ND1.png"/>
+        <image id="image3_883_1725" width="186" height="185" preserveAspectRatio="none" href="./static/imgs/ND2b.png"/>
+        <image id="image4_883_1725" width="182" height="184" preserveAspectRatio="none" href="./static/imgs/ND4.png"/>
+        </defs>
+        </svg>
+                <p class="manual-title">Thor Labs&#174; Neutral Density Filters</p>
+      </div>     
     </div>
   </header-component>
   <div class="video-row">
@@ -104,6 +147,16 @@
         <h3>Use tool</h3>
         <img-map-device map-html-file="../../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
       </div>
+      <div id="density-wheel">
+        <h2>Neutral Denisty Filters</h2>
+        <p>This device places a neutral density filter in the light path, allowing you to modulate the intensity of the light that hits the photocathode.</p>
+        <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
+      </div>
+      <div id="filter-wheel">
+        <h2>Transmission Interference Filters</h2>
+        <p>This device places an interference filter in the light path, allowing you to select for the desired frequency of light that hits the photocathode.</p>
+        <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="filter-wheel"></img-map-device>
+      </div>
     </tool-detail-component>
   </div>
 
@@ -115,9 +168,12 @@
       <li>
         <button group-id="potentiometer" camera-group="camera-1">Potentiometer</button>
       </li>
-      <!-- <li>
+      <li>
         <button group-id="filter-wheel" camera-group="camera-2">Filter Wheel</button>
-      </li> -->
+      </li>
+      <li>
+        <button group-id="density-wheel" camera-group="camera-2">Density Wheel</button>
+      </li>
       <li>
         <button group-id="electrometer" camera-group="camera-2">Electrometer</button>
       </li>

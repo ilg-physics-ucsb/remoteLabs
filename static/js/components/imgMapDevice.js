@@ -77,6 +77,7 @@ export class imgMapDevice extends HTMLElement {
   emit(value) {
     const imgMapEvent = new CustomEvent('imgMapDeviceEvent', { detail: { value: value } });
     window.dispatchEvent(imgMapEvent);
+    console.log(value);
   }
 }
 
