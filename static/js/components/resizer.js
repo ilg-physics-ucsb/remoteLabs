@@ -34,18 +34,19 @@ export class Resizer extends HTMLElement {
     const handle = this.shadowRoot.querySelector('.handle');
 
     const leftElement = document.querySelector('video-component');
-    const rightElement = document.querySelector('tool-detail-component');
 
     let resizing = false;
 
-    if (!leftElement || !rightElement) {
-      console.error('Resizer - one or both of the componenets next to the resizer could not be found');
+    if (!leftElement) {
+      console.error('Resizer - the video component could not be found');
       return;
     }
 
-    const handleResize = () => {
-      console.log('moving mouse');
-    }
+    const handleResize = (event) => {
+      let leftBounding = leftElement.getBoundingClientRect();
+
+      leftElement.style.width = `${event.screenX - leftBounding.left}px`;
+    };
 
     handle.addEventListener('mousedown', (event) => {
       // Set resizing to true so its known whether the window scoped mouse move
@@ -57,11 +58,8 @@ export class Resizer extends HTMLElement {
     window.addEventListener('mouseup', () => {
       if (resizing) {
         window.removeEventListener('mousemove', handleResize);
-        console.log('removing');
       }
     });
-
-
   }
 }
 

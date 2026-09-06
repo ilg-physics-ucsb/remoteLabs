@@ -113,14 +113,17 @@ video-component {
   flex-direction: column;
   margin: 0 1rem 1rem 1rem;
   gap: 0.5rem;
+  max-width: 100vw;
+  width: calc(100vw - 2rem);
 }
 
 .video-row video-component {
-  flex: 2;
+  flex: 0 0 auto;
 }
 
 .video-row tool-detail-component {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 @media (min-width: 768px) {
@@ -130,6 +133,5 @@ video-component {
 
   tool-detail-component {
     margin-top: 0;
-    max-width: 360px;
   }
 }
