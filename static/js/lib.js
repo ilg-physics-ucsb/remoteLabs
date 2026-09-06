@@ -2,6 +2,7 @@ import { AlertDialog } from './components/alert-dialog.js';
 import { Demo } from './components/demo.js';
 import { Header } from './components/header.js';
 import { Knob } from './components/knob.js';
+import { Resizer } from './components/resizer.js';
 import { Toggle } from './components/toggle.js';
 import { Toolbar } from './components/toolbar.js';
 import { ToolDetail } from './components/tool-detail.js';
