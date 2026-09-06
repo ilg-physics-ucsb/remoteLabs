@@ -103,6 +103,7 @@ toolbar-component ul li button:hover {
 
 /* Video Component */
 video-component {
+  box-sizing: border-box;
   padding: 0 1rem;
   background-color: var(--secondary);
   border-radius: 10px;

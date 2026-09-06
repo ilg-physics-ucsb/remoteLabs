@@ -42,13 +42,22 @@ export class Resizer extends HTMLElement {
       return;
     }
 
+    let pointerOffset = 0;
+    let leftToHandle = 0;
+
     const handleResize = (event) => {
       let leftBounding = leftElement.getBoundingClientRect();
 
-      leftElement.style.width = `${event.screenX - leftBounding.left}px`;
+      leftElement.style.width = `${event.clientX - pointerOffset - leftBounding.left - leftToHandle}px`;
     };
 
     handle.addEventListener('mousedown', (event) => {
+      const leftBounding = leftElement.getBoundingClientRect();
+      const handleBounding = handle.getBoundingClientRect();
+
+      pointerOffset = event.clientX - handleBounding.left;
+      leftToHandle = handleBounding.left - leftBounding.right;
+
       // Set resizing to true so its known whether the window scoped mouse move
       // listener needs to be removed when mouseup happens
       resizing = true;
