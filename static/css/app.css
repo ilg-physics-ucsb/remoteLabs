@@ -22,6 +22,9 @@ body {
     color: white;
     text-align: left;
     background-color: #000;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    height: 100vh;
 }
 
 /* Header */
@@ -61,7 +64,7 @@ tool-detail-component knob-component {
 
 /* Toolbar Component */
 toolbar-component {
-  margin: 0 1rem 0 1rem;
+  margin: 0 1rem 1rem 1rem;
   padding: 1rem 3rem;
   background-color: var(--secondary);
   border-radius: 10px;
@@ -100,16 +103,15 @@ toolbar-component ul li button:hover {
 
 /* Video Component */
 video-component {
-  padding: 1rem;
+  padding: 0 1rem;
   background-color: var(--secondary);
   border-radius: 10px;
-  min-height: 360px;
 }
 
 .video-row {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 0 1rem 1rem 1rem;
 }
 
 .video-row video-component {
