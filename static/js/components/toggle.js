@@ -6,6 +6,9 @@ export class Toggle extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
+        :host {
+          text-align: center;
+        }
         .toggle {
           display: inline-flex;
           flex-direction: column;

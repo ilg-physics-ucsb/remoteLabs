@@ -121,47 +121,78 @@
     </div>
   </header-component>
   <div class="video-row">
-    <video-component data-views='[{ "name": "Camera 1", "id": "camera-1" }, { "name": "Camera 2", "id": "camera-2" }]'></video-component>
+    <video-component data-views='[]'></video-component> <!-- [{ "name": "Camera 1", "id": "camera-1" }, { "name": "Camera 2", "id": "camera-2"}] -->
     <tool-detail-component>
-      <div id="mercury-neon-lamp">
-        <demo-component data-input="4"></demo-component>
-        <h2>Hg-Ne Lamp</h2>
-        <p>The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source
-          for this
-          purpose because it emits a lot of light, but only in a small number of wavelengths.</p>
-        <h3>Use tool</h3>
-        <toggle-component component-id="mercury-neon-lamp" on-image-url="../static/imgs/figma-components/hgne-on.png" off-image-url="../static/imgs/figma-components/hgne-off.png"></toggle-component> 
-        <p>Click to toggle the lamp!</p>
+      <div class="container" id="mercury-neon-lamp">
+        <!-- <demo-component data-input="4"></demo-component> -->
+        <div>
+          <h2><img src="./static/imgs/transparent-imgs/penray-lamp.png" alt="photo of Hg-Ne Pen Ray Lamp" style="max-width: 100%; height: auto; display: block;"></h2>
+          <h2 style="text-align: center;">Hg-Ne Lamp</h2>
+          <p>The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source
+            for this purpose because it emits a lot of light, but only in a small number of wavelengths.</p>
+        </div>
+       <div style="background-color: #5e5e5e;">
+          <p style="text-align: center;"><b>Use Tool</b></p>
+          <toggle-component component-id="mercury-neon-lamp" on-image-url="../static/imgs/figma-components/hgne-on.png" off-image-url="../static/imgs/figma-components/hgne-off.png"></toggle-component> 
+          <p style="text-align: center;">Click to toggle the lamp!</p>
+        </div>
       </div>
-      <div id="potentiometer">
-        <h2>Potentiometer</h2>
-        <p>The voltage is adjusted by turning the knob of a variable resistor (also known as a potentiometer).</p>
-        <h3>Use tool</h3>
-        <p>Choose an option to set the amount of rotation per click. Click an arrow to rotate the knob in that
-          direction.</p>
-        <knob-component component-id="potentiometer" component-ImageUrl="" intervals="[3.6, 36, 360]"></knob-component>
+      <div class="container" id="potentiometer">
+        <div>
+          <h2 style="text-align: center;">Potentiometer</h2>
+          <p>The voltage between the photocathode and the anode is adjusted by turning the knob of a variable resistor (also known as a potentiometer).</p>
+        </div> 
+       <div style="background-color: #5e5e5e;">
+          <p style="text-align: center;"><b>Use Tool</b></p>
+          <knob-component component-id="potentiometer" component-ImageUrl="" intervals="[3.6, 36, 360]"></knob-component>
+          <p style="text-align: center;">Use the drop-down menu to set the angular rotation (in degrees) per click. 
+            Click an arrow to turn the knob in that direction.</p>
+        </div>
       </div>
-      <div id="electrometer">
-        <h2>Electrometer</h2>
-        <p>The current is measured.</p>
-        <h3>Use tool</h3>
-        <img-map-device map-html-file="../static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
+      <div class="container" id="electrometer">
+        <div>
+          <h2 style="text-align: center;">Keithley Model 6514 Electrometer</h2>
+          <p>The electrometer measures the photocurrent (<em>i.e.</em>, the current that flows from the cathode to the anode when light hits the cathode). It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>-12</sup> A)</p>
+        </div>
+       <div style="background-color: #5e5e5e;">
+          <p style="text-align: center;"><b>Use Tool</b></p>
+          <img-map-device map-html-file="../static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
+          <p style="text-align: center;">Click any button in the image above to press it on the device.</p>
+        </div>
       </div>
-       <div id="multimeter">
-        <h2>Multimeter</h2>
-        <p>This device measures the voltage between the photocathode and the electrode.</p>
-        <h3>Use tool</h3>
-        <img-map-device map-html-file="../../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
+       <div class="container" id="multimeter">
+        <div>
+          <h2 style="text-align: center;">Keithley Model 2000 Digital Multimeter (DMM)</h2>
+          <p>When properly configured, the DMM measures the potential difference between the cathode and the anode.</p>
+        </div>
+       <div style="background-color: #5e5e5e;">
+          <p style="text-align: center;"><b>Use Tool</b></p>
+          <img-map-device map-html-file="../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
+          <p style="text-align: center;">Click any button in the image above to press it on the device.</p>
+        </div>
       </div>
-      <div id="density-wheel">
-        <h2>Neutral Denisty Filters</h2>
-        <p>This device places a neutral density filter in the light path, allowing you to modulate the intensity of the light that hits the photocathode.</p>
-        <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
+      <div class="container" id="density-wheel">
+       <div>
+          <h2 style="text-align: center;">ThorLabs® Absorptive Neutral Density Filters</h2>
+          <p>A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. 
+            This filter wheel places one (or none) of five different ND filters in front of the Hg-discharge lamp, changing the intensity of the light (i.e., the number of photons per unit area) that falls on the photocathode.</p>
+       </div>
+       <div style="background-color: #5e5e5e;">
+          <p style="text-align: center;"><b>Use Tool</b></p>
+          <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
+          <p style="text-align: center;">Click on a filter to rotate it into position.</p>
+       </div>
       </div>
-      <div id="filter-wheel">
-        <h2>Transmission Interference Filters</h2>
-        <p>This device places an interference filter in the light path, allowing you to select for the desired frequency of light that hits the photocathode.</p>
-        <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="filter-wheel"></img-map-device>
+      <div class="container" id="filter-wheel">
+        <div>
+          <h2 style="text-align: center;">Edumund Optics® Bandpass Interference Filters</h2>
+          <p>This device places one of four different bandpass filters in front of the Hg-discharge lamp, allowing you to limit the light that hits the photocathode to a narrow range of the Hg-Ne lamp's spectrum.</p>
+        </div>
+       <div style="background-color: #5e5e5e;">
+          <p style="text-align: center;"><b>Use Tool</b></p>
+          <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="filter-wheel"></img-map-device>
+          <p style="text-align: center;">Click on a filter to rotate it into position.</p>
+        </div>
       </div>
     </tool-detail-component>
   </div>
@@ -169,22 +200,22 @@
   <toolbar-component>
     <ul>
       <li>
-        <button group-id="mercury-neon-lamp" camera-group="camera-1">Mercury Neon Lamp</button>
+        <button group-id="mercury-neon-lamp">Mercury Neon Lamp</button>
       </li>
       <li>
-        <button group-id="potentiometer" camera-group="camera-1">Potentiometer</button>
+        <button group-id="filter-wheel">Bandpass Filters</button>
       </li>
       <li>
-        <button group-id="filter-wheel" camera-group="camera-2">Filter Wheel</button>
+        <button group-id="density-wheel">Neutral Density Filters</button>
       </li>
       <li>
-        <button group-id="density-wheel" camera-group="camera-2">Density Wheel</button>
+        <button group-id="electrometer">Electrometer</button>
       </li>
       <li>
-        <button group-id="electrometer" camera-group="camera-2">Electrometer</button>
+        <button group-id="multimeter">Multimeter</button>
       </li>
       <li>
-        <button group-id="multimeter" camera-group="camera-2">Multimeter</button>
+        <button group-id="potentiometer">Potentiometer</button>
       </li>
     </ul>
   </toolbar-component>

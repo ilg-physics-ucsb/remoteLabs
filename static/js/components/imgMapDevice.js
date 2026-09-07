@@ -30,7 +30,7 @@ export class imgMapDevice extends HTMLElement {
         }
       </style>
 
-      <div class="image-map-device"></div>
+      <div class="image-map-device" style="text-align: center"></div>
     `;
   }
 
