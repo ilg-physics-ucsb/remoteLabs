@@ -1,5 +1,7 @@
 /**
- * Works in conjunction with 
+ * Allows students to resize the video stream and tool detail windows.
+ * 
+ * @param attribute allow-resize: string e.g. "true", "false" whether the student should be able to resize or not.
  */
 export class Resizer extends HTMLElement {
   constructor() {
@@ -33,6 +35,15 @@ export class Resizer extends HTMLElement {
   connectedCallback() {
     const handle = this.shadowRoot.querySelector('.handle');
     const leftElement = document.querySelector('video-component');
+
+    const allowResize = this.getAttribute('allow-resize');
+
+    // If not set to allow resizing in the lab html, hide the handle
+    // and don't allow resizing.
+    if (allowResize !== 'true') {
+      handle.style.display = 'none';
+      return;
+    }
 
     let resizing = false;
 
