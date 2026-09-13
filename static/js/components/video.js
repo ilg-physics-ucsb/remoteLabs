@@ -17,11 +17,21 @@ export class Video extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
+        :host {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
         .video {
           display: flex;
           justify-content: center;
           align-items: center;
           position: relative;
+          overflow: hidden;
+          width: 100%;
+          flex: 1;
+          margin-bottom: 1rem;
         }
 
         .video:hover .controls {
@@ -74,7 +84,7 @@ export class Video extends HTMLElement {
 
         video {
           width: 100%;
-          max-height: 100%;
+          height: 100%;
         }
 
         .controls {
@@ -99,7 +109,7 @@ export class Video extends HTMLElement {
             display: flex;
             gap: 0.5rem;
             padding: 0 2rem;
-            margin: 0.5rem 0 1.5rem 0;
+            margin: 1rem;
             justify-content: center;
         }
 
