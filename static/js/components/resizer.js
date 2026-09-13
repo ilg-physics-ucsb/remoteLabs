@@ -32,7 +32,6 @@ export class Resizer extends HTMLElement {
 
   connectedCallback() {
     const handle = this.shadowRoot.querySelector('.handle');
-
     const leftElement = document.querySelector('video-component');
 
     let resizing = false;
@@ -45,7 +44,15 @@ export class Resizer extends HTMLElement {
     let pointerOffset = 0;
     let leftToHandle = 0;
 
+    const rightBoundary = 200;
+    const leftBoundary = 200;
+
     const handleResize = (event) => {
+      // If user is close to the edge of the window, exit to prevent the layout from breaking.
+      if (event.clientX < leftBoundary || event.clientX > window.innerWidth - rightBoundary) {
+        return;
+      }
+
       let leftBounding = leftElement.getBoundingClientRect();
 
       leftElement.style.width = `${event.clientX - pointerOffset - leftBounding.left - leftToHandle}px`;
