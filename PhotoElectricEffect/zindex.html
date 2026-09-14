@@ -132,7 +132,7 @@
           <p class="tool-description">The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source
             for this purpose because it emits a lot of light, but only in a small number of wavelengths.</p>
         </div>
-       <div class="tool-interface">
+        <div class="tool-interface">
           <toggle-component 
             component-id="mercury-neon-lamp" 
             on-image-url="../static/imgs/figma-components/hgne-on.png" 
@@ -142,56 +142,62 @@
           <p class="tool-instruction">Click to toggle the lamp!</p>
         </div>
       </div>
-      <div class="container" id="potentiometer">
-        <div>
-          <h2 style="text-align: center;">Potentiometer</h2>
-          <p>The voltage between the photocathode and the anode is adjusted by turning the knob of a variable resistor (also known as a potentiometer).</p>
+      <div class="tool" id="potentiometer">
+        <div class="tool-heading">
+          <p class="tool-title">Potentiometer</p>
+          <p class="tool-description">The voltage between the photocathode and the anode is adjusted by turning the knob of a variable resistor (also known as a potentiometer).</p>
         </div> 
-       <div>
-          <knob-component component-id="potentiometer" component-ImageUrl="" intervals="[3.6, 36, 360]"></knob-component>
-          <p style="text-align: center;">Use the drop-down menu to set the angular rotation (in degrees) per click. 
+        <div class="tool-interface">
+          <knob-component 
+            component-id="potentiometer" 
+            component-ImageUrl="" 
+            intervals="[3.6, 36, 360]">
+          </knob-component>
+          <p class="tool-instruction">Use the drop-down menu to set the angular rotation (in degrees) per click. 
             Click an arrow to turn the knob in that direction.</p>
         </div>
       </div>
-      <div class="container" id="electrometer">
-        <div>
-          <h2 style="text-align: center;">Keithley Model 6514 Electrometer</h2>
-          <p>The electrometer measures the photocurrent (<em>i.e.</em>, the current that flows from the cathode to the anode when light hits the cathode). It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>-12</sup> A)</p>
+      <div class="tool" id="electrometer">
+        <div class="tool-heading">
+          <p class="tool-title">Keithley Model 6514 Electrometer</p>
+          <p class="tool-description">The electrometer measures the photocurrent (<em>i.e.</em>, the current that flows from the cathode to the anode when light hits the cathode). 
+            It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>-12</sup> A)</p>
         </div>
-       <div>
+        <div class="tool-interface">
           <img-map-device map-html-file="../static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
-          <p style="text-align: center;">Click any button in the image above to press it on the device.</p>
+          <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
         </div>
       </div>
-       <div class="container" id="multimeter">
-        <div>
-          <h2 style="text-align: center;">Keithley Model 2000 Digital Multimeter (DMM)</h2>
-          <p>When properly configured, the DMM measures the potential difference between the cathode and the anode.</p>
+       <div class="tool" id="multimeter">
+        <div class="tool-heading">
+          <p class="tool-title">Keithley Model 2000 Digital Multimeter (DMM)</p>
+          <p class="tool-description">When properly configured, the DMM measures the potential difference between the cathode and the anode.</p>
         </div>
-       <div>
+        <div class="tool-interface">
           <img-map-device map-html-file="../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
-          <p style="text-align: center;">Click any button in the image above to press it on the device.</p>
+          <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
         </div>
       </div>
-      <div class="container" id="density-wheel">
-       <div>
-          <h2 style="text-align: center;">ThorLabs® Absorptive Neutral Density Filters</h2>
-          <p>A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. 
+      <div class="tool" id="density-wheel">
+       <div class="tool-heading">
+          <p class="tool-title">ThorLabs® Absorptive Neutral Density Filters</p>
+          <p class="tool-description">A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. 
             This filter wheel places one (or none) of five different ND filters in front of the Hg-discharge lamp, changing the intensity of the light (i.e., the number of photons per unit area) that falls on the photocathode.</p>
        </div>
-       <div>
+       <div class="tool-interface">
           <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
-          <p style="text-align: center;">Click on a filter to rotate it into position.</p>
+          <p class="tool-instruction">Click on a filter to rotate it into position.</p>
        </div>
       </div>
-      <div class="container" id="filter-wheel">
-        <div>
-          <h2 style="text-align: center;">Edumund Optics® Bandpass Interference Filters</h2>
-          <p>This device places one of four different bandpass filters in front of the Hg-discharge lamp, allowing you to limit the light that hits the photocathode to a narrow range of the Hg-Ne lamp's spectrum.</p>
+      <div class="tool" id="filter-wheel">
+        <div class="tool-heading">
+          <p class="tool-title">Edumund Optics® Bandpass Interference Filters</p>
+          <p class="tool-description">This device places one of four different bandpass filters in front of the Hg-discharge lamp, 
+            allowing you to limit the light that hits the photocathode to a narrow range of the Hg-Ne lamp's spectrum.</p>
         </div>
-       <div>
+       <div class="tool-interface">
           <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="filter-wheel"></img-map-device>
-          <p style="text-align: center;">Click on a filter to rotate it into position.</p>
+          <p class="tool-instruction">Click on a filter to rotate it into position.</p>
         </div>
       </div>
     </tool-detail-component>
