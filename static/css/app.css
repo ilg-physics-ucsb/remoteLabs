@@ -59,7 +59,7 @@ tool-detail-component {
   border-radius: 10px;
 }
 
-/* Container */
+/* Overall Container */
 tool-detail-component .tool  {
   margin-top: 1rem;
   padding: 1rem;
@@ -69,30 +69,45 @@ tool-detail-component .tool  {
   justify-content: space-between;
 } 
 
-/* Div */
+/* Common to all Tool Divs */
 tool-detail-component .tool div {
   display: flex;
   flex-direction: column;
 }
 
-/* Header */
+/* UPPER Div */
 .tool-heading {
   
 }
 
-/* Description */
+/* Image */
+.tool-header-img {
+
+}
+/* Title */
+.tool-title {
+
+}
+/* Description - put this in a left-justified, scrollable textbox with 1rem margins on the left and right*/
 .tool-description {
 
 }
 
-
+/* LOWER Div */
+.tool-interface {
+  
+}
+/* Instructions */
+.tool-instruction {
+  text-align: center;
+}
 
 /* Tool Detail Component */
 tool-detail-component knob-component {
   justify-content: center;
   display: flex
 }
-/* END - Tool Detail Component Styling*/
+/* END - Tool Detail Styling*/
 
 
 /* Toolbar Component */
