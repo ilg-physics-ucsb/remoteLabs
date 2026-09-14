@@ -50,33 +50,50 @@ header-component {
 
 /* End Header */
 
-/* Tool Detail Component */
+/* BEGIN - Tool Detail Component Styling*/
+/* General */
 tool-detail-component {
-  margin-top: 1rem;
-  padding: 1rem;
+  margin-top: 0rem;
+  padding: 0rem;
   background-color: var(--secondary);
   border-radius: 10px;
 }
 
-/* Tool Detail Component Container */
-tool-detail-component .container  {
+/* Container */
+tool-detail-component .tool  {
+  margin-top: 1rem;
+  padding: 1rem;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 } 
 
-/* Tool Detail Component Container Div */
-tool-detail-component .container div {
+/* Div */
+tool-detail-component .tool div {
   display: flex;
   flex-direction: column;
 }
+
+/* Header */
+.tool-heading {
+  
+}
+
+/* Description */
+.tool-description {
+
+}
+
+
 
 /* Tool Detail Component */
 tool-detail-component knob-component {
   justify-content: center;
   display: flex
 }
+/* END - Tool Detail Component Styling*/
+
 
 /* Toolbar Component */
 toolbar-component {

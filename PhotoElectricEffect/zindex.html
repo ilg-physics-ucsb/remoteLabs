@@ -125,18 +125,21 @@
     <video-component data-views='[]'></video-component> <!-- [{ "name": "Camera 1", "id": "camera-1" }, { "name": "Camera 2", "id": "camera-2"}] -->
     <resizer-component allow-resize="true"></resizer-component>
     <tool-detail-component>
-      <div class="container" id="mercury-neon-lamp">
-        <!-- <demo-component data-input="4"></demo-component> -->
-        <div>
-          <h2><img src="./static/imgs/transparent-imgs/penray-lamp.png" alt="photo of Hg-Ne Pen Ray Lamp" style="max-width: 100%; height: auto; display: block;"></h2>
-          <h2 style="text-align: center;">Hg-Ne Lamp</h2>
-          <p>The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source
+      <div class="tool" id="mercury-neon-lamp">
+        <div class="tool-heading">
+          <img class="tool-header-img" src="./static/imgs/transparent-imgs/penray-lamp.png" alt="photo of Hg-Ne Pen Ray Lamp" style="max-width: 100%; height: auto; display: block;">
+          <p class="tool-title">Hg-Ne Lamp</p>
+          <p class="tool-description">The Hg-Ne Lamp provides the light that will eject electrons from the metal. Mercury is an ideal light source
             for this purpose because it emits a lot of light, but only in a small number of wavelengths.</p>
         </div>
-       <div style="background-color: #5e5e5e;">
-          <p style="text-align: center;"><b>Use Tool</b></p>
-          <toggle-component component-id="mercury-neon-lamp" on-image-url="../static/imgs/figma-components/hgne-on.png" off-image-url="../static/imgs/figma-components/hgne-off.png"></toggle-component> 
-          <p style="text-align: center;">Click to toggle the lamp!</p>
+       <div class="tool-interface">
+          <toggle-component 
+            component-id="mercury-neon-lamp" 
+            on-image-url="../static/imgs/figma-components/hgne-on.png" 
+            off-image-url="../static/imgs/figma-components/hgne-off.png"
+            instruction="Click to toggle the lamp!">
+          </toggle-component> 
+          <p class="tool-instruction">Click to toggle the lamp!</p>
         </div>
       </div>
       <div class="container" id="potentiometer">
@@ -144,8 +147,7 @@
           <h2 style="text-align: center;">Potentiometer</h2>
           <p>The voltage between the photocathode and the anode is adjusted by turning the knob of a variable resistor (also known as a potentiometer).</p>
         </div> 
-       <div style="background-color: #5e5e5e;">
-          <p style="text-align: center;"><b>Use Tool</b></p>
+       <div>
           <knob-component component-id="potentiometer" component-ImageUrl="" intervals="[3.6, 36, 360]"></knob-component>
           <p style="text-align: center;">Use the drop-down menu to set the angular rotation (in degrees) per click. 
             Click an arrow to turn the knob in that direction.</p>
@@ -156,8 +158,7 @@
           <h2 style="text-align: center;">Keithley Model 6514 Electrometer</h2>
           <p>The electrometer measures the photocurrent (<em>i.e.</em>, the current that flows from the cathode to the anode when light hits the cathode). It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>-12</sup> A)</p>
         </div>
-       <div style="background-color: #5e5e5e;">
-          <p style="text-align: center;"><b>Use Tool</b></p>
+       <div>
           <img-map-device map-html-file="../static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
           <p style="text-align: center;">Click any button in the image above to press it on the device.</p>
         </div>
@@ -167,8 +168,7 @@
           <h2 style="text-align: center;">Keithley Model 2000 Digital Multimeter (DMM)</h2>
           <p>When properly configured, the DMM measures the potential difference between the cathode and the anode.</p>
         </div>
-       <div style="background-color: #5e5e5e;">
-          <p style="text-align: center;"><b>Use Tool</b></p>
+       <div>
           <img-map-device map-html-file="../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
           <p style="text-align: center;">Click any button in the image above to press it on the device.</p>
         </div>
@@ -179,8 +179,7 @@
           <p>A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. 
             This filter wheel places one (or none) of five different ND filters in front of the Hg-discharge lamp, changing the intensity of the light (i.e., the number of photons per unit area) that falls on the photocathode.</p>
        </div>
-       <div style="background-color: #5e5e5e;">
-          <p style="text-align: center;"><b>Use Tool</b></p>
+       <div>
           <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
           <p style="text-align: center;">Click on a filter to rotate it into position.</p>
        </div>
@@ -190,8 +189,7 @@
           <h2 style="text-align: center;">Edumund Optics® Bandpass Interference Filters</h2>
           <p>This device places one of four different bandpass filters in front of the Hg-discharge lamp, allowing you to limit the light that hits the photocathode to a narrow range of the Hg-Ne lamp's spectrum.</p>
         </div>
-       <div style="background-color: #5e5e5e;">
-          <p style="text-align: center;"><b>Use Tool</b></p>
+       <div>
           <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="filter-wheel"></img-map-device>
           <p style="text-align: center;">Click on a filter to rotate it into position.</p>
         </div>
