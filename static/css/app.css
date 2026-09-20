@@ -112,6 +112,11 @@ tool-detail-component .tool div {
   height: 60%;
   background-color: var(--tertiary);
   overflow: scroll;
+  gap: 1rem;
+}
+
+.tool-interface p {
+  margin: 0;
 }
 
 /* Instructions */
