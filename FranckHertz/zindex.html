@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>UCSB Physics Remote Lab - Franck-Hertz Experiment</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+
+  <!-- Your custom styles (optional) -->
+  <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../static/css/app.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <script src="static/js/app.js" type="module"></script>
+  <script src="../static/js/lib.js" type="module"></script>
+  <script src="https://embed.small.chat/T02U4DGKYV8C0310KCK7S7.js" async></script>
+
+  <header-component data-title="Franck-Hertz" data-time-limit="180" data-enable-ambient-light="false">
+    <div slot="manuals">
+      <div class="manual">
+        <a class="manual-link" href="./static/imgs/FHCircuitDiagram.jpg" target="_blank">
+          <img src="./static/imgs/FHtube.jpg">
+        </a>
+        <p class="manual-title">Franck-Hertz Tube</p>
+      </div>
+      <div class="manual">
+        <a class="manual-link" href="./static/docs/variac_user_manual.pdf" target="_blank">
+          <img src="./static/imgs/variac.png">
+        </a>
+        <p class="manual-title">Variac</p>
+      </div>
+      <div class="manual">
+        <a class="manual-link" href="../static/docs/Keithley electrometer 6514.pdf" target="_blank">
+          <img src="./static/imgs/Keithley6514Electrometer.jpg">
+        </a>
+        <p class="manual-title">Keithly Model 6514 Electrometer</p>
+      </div>
+     <div class="manual">
+        <a class="manual-link" href="https://electroindustries.net/product/model-2555a-triple-0-25v-0-5a-x2-5v-3a/" target="_blank">
+          <img src="./static/imgs/VaPowerSupply.png">
+        </a>
+        <p class="manual-title">Electro Industries Trile Output Power Supply</p>
+      </div>
+    </div>
+  </header-component>
+  <div class="video-row">
+    <video-component data-views='[{ "name": "Variac", "id": "camera-1" }, { "name": "Tube", "id": "camera-2"}{ "name": "Pots", "id": "camera-3" }, { "name": "Data", "id": "camera-4"}]'></video-component> 
+    <resizer-component allow-resize="true"></resizer-component>
+    <tool-detail-component>
+      <div class="tool" id="variac">
+        <div class="tool-heading">
+          <h2 class="tool-title">Variac</h2>
+          <p class="tool-description">The Variac provides power to the oven, which heats the Franck-Hertz tube and vaporizes the mercury (Hg) it contains.  
+            The temperature in the oven thereby controls the density of Hg atoms between the cathode and the anode, which in turn affects the probability that emitted electrons collide with Hg atoms.</p>
+        </div>
+        <div class="tool-interface">
+          <knob-component 
+            component-id="variac-knob" 
+            component-ImageUrl="" 
+            intervals="[3.6, 36]"
+            instruction="Choose a step size, then click the arrows to rotate the knob">
+          </knob-component>
+          <img-map-device map-html-file="../../static/svg/VariacKnobMap.html" device-name="variac"></img-map-device>
+          <toggle-component 
+            component-id="variac-switch" 
+            on-image-url="../static/imgs/VariacSwitchON.jpg" 
+            off-image-url="../static/imgs/VariacSwitchOFF.jpg"
+            instruction="Click the switch to turn the Variac on and off">
+          </toggle-component> 
+        </div>
+      </div>
+      <div class="tool" id="tube">
+        <div class="tool-heading">
+          <h2 class="tool-title">The Franck-Hertz Tube</h2>
+          <p class="tool-description">This is a live, infra-red view of the tube in the apparatus.  
+            We can put text here about the elements of the tube, and maybe a schematic, but I don’t think any of the tools should be operational in this view... 
+            Not sure if that logic is going to be difficult to encode</p>
+        </div> 
+      </div>
+      <div class="tool" id="filament">
+        <div class="tool-heading">
+          <h2 class="tool-title">Filament</h2>
+          <p class="tool-description">The filament  releases electrons when heated (ie, it undergoes thermionic emmsion).  
+            The filament is heated by passing a current through it.  
+            The tools below allow you to control the voltage source that drives current through the filament. </p>
+        </div>
+        <div class="tool-interface">
+          <img-map-device map-html-file="../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
+          <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
+        </div>
+      </div>
+      <div class="tool" id="retarding-voltage">
+        <div class="tool-heading">
+          <h2 class="tool-title">Retarding Voltage</h2>
+          <p class="tool-description"></p>
+        </div>
+        <div class="tool-interface">
+          <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the retarding voltage.</p>
+          <knob-component 
+            component-id="potentiometer" 
+            component-ImageUrl="" 
+            intervals="[3.6, 36]">
+          </knob-component>
+        </div>
+      </div>
+      <div class="tool" id="accelerating-voltage">
+       <div class="tool-heading">
+          <h2 class="tool-title">Accelerating Voltage</h2>
+          <p class="tool-description"></p>
+       </div>
+       <div class="tool-interface">
+          <p class="tool-instruction"></p>
+          <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
+       </div>
+      </div>
+      <div class="tool" id="electrometer">
+        <div class="tool-heading">
+          <h2 class="tool-title">Keithley Model 6514 Electrometer</h2>
+          <p class="tool-description">The electrometer measures the photocurrent (<em>i.e.</em>, the current that flows from the cathode to the anode when light hits the cathode). 
+            It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>-12</sup> A)</p>
+        </div>
+        <div class="tool-interface">
+          <img-map-device map-html-file="../static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
+          <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
+        </div>
+      </div>
+    </tool-detail-component>
+  </div>
+
+  <toolbar-component>
+    <ul>
+      <li>
+        <button group-id="variac">VARIAC</button>
+      </li>
+      <li>
+        <button group-id="filament">FILAMENT</button>
+      </li>
+      <li>
+        <button group-id="retardation">RETARDATION</button>
+      </li>
+      <li>
+        <button group-id="acceleration">ACCELERATION</button>
+      </li>
+      <li>
+        <button group-id="electrometer">ELECTROMETER</button>
+      </li>
+    </ul>
+  </toolbar-component>
+
+  <settings-dialog></settings-dialog>
+</body>
+
+</html>
