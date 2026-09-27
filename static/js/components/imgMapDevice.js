@@ -6,11 +6,6 @@ export class imgMapDevice extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
-        .imgMapDevice {
-          display: inline-flex;
-          flex-direction: column;
-        }
-
         .image-map-device svg {
           width: 100%;
           height: auto;
@@ -27,6 +22,11 @@ export class imgMapDevice extends HTMLElement {
           max-width: 128px;
           max-height: 128px;
           cursor: pointer;
+        }
+
+        .image-map-device [data-cmd]:hover {
+          fill: bisque;
+          fill-opacity: 0.75;
         }
       </style>
 

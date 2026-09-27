@@ -29,7 +29,7 @@ body {
 
 /* Header */
 header-component {
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   margin: 1rem;
   display: block;
 }
@@ -50,26 +50,78 @@ header-component {
 
 /* End Header */
 
-/* Tool Detail Component */
+/* BEGIN - Tool Detail Component Styling*/
+/* General */
 tool-detail-component {
-  margin-top: 1rem;
-  padding: 1rem;
+  margin-top: 0rem;
+  padding: 0rem;
   background-color: var(--secondary);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
-/* Tool Detail Component Container */
-tool-detail-component .container  {
+/* Overall Container */
+tool-detail-component .tool {
   flex-direction: column;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 } 
 
-/* Tool Detail Component Container Div */
-tool-detail-component .container div {
+/* Common to all Tool Divs */
+tool-detail-component .tool div {
   display: flex;
   flex-direction: column;
+}
+
+/* UPPER Div */
+.tool-heading {
+  padding: 1rem;
+  height: 40%;
+  gap: 1rem;
+}
+
+.tool-title,
+.tool-description {
+  margin: 0;
+}
+
+.tool-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Image */
+.tool-header-img {
+
+}
+/* Title */
+.tool-title {
+  text-align: center;
+}
+
+/* Description - put this in a left-justified, scrollable textbox with 1rem margins on the left and right*/
+.tool-description {
+  overflow: scroll;
+}
+
+/* LOWER Div */
+.tool-interface {
+  width: calc(100% - 2rem);
+  padding: 1rem;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  height: 60%;
+  background-color: var(--tertiary);
+  overflow: scroll;
+  gap: 1rem;
+}
+
+.tool-interface p {
+  margin: 0;
+}
+
+/* Instructions */
+.tool-instruction {
+  text-align: center;
 }
 
 /* Tool Detail Component */
@@ -77,13 +129,15 @@ tool-detail-component knob-component {
   justify-content: center;
   display: flex
 }
+/* END - Tool Detail Styling*/
+
 
 /* Toolbar Component */
 toolbar-component {
   margin: 0 1rem 1rem 1rem;
   padding: 1rem 3rem;
   background-color: var(--secondary);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
 toolbar-component ul {
@@ -122,7 +176,7 @@ video-component {
   box-sizing: border-box;
   padding: 0 1rem;
   background-color: var(--secondary);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
 .video-row {
