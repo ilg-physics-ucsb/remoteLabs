@@ -94,14 +94,22 @@
             The tools below allow you to control the voltage source that drives current through the filament. </p>
         </div>
         <div class="tool-interface">
-          <img-map-device map-html-file="../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
-          <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
+          <knob-component 
+            component-id="filament" 
+            knob-image-url="static/imgs/filament knob.png" 
+            intervals="[3.6, 36]"
+            instruction="Choose a step size, then click the arrows to turn the knob and adjust 
+            the voltage that drives current through the filament, heating it up">
+          </knob-component>
+          <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust 
+            the voltage that drives current through the filament, heating it up</p>
         </div>
       </div>
       <div class="tool" id="retarding-voltage">
         <div class="tool-heading">
           <h2 class="tool-title">Retarding Voltage</h2>
-          <p class="tool-description"></p>
+          <p class="tool-description">A potential difference between the wire mesh anode and the collection electrode can be adjusted to ensure that
+            only the most energetic electrons arrive at the collection electrode and therefore contribute to the measured current.</p>
         </div>
         <div class="tool-interface">
           <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the retarding voltage.</p>
@@ -116,11 +124,26 @@
       <div class="tool" id="accelerating-voltage">
        <div class="tool-heading">
           <h2 class="tool-title">Accelerating Voltage</h2>
-          <p class="tool-description"></p>
+          <p class="tool-description">A potential difference accelerates electrons that are emitted from the filament cathode
+            toward the wire mesh anode. The power supply that provides for this potential difference is not connected to ground.
+          </p>
+          <!-- <img src="static/imgs/FHwiringDiagram.jpg" width="50%" align="center"> -->
        </div>
        <div class="tool-interface">
-          <p class="tool-instruction"></p>
-          <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
+         <toggle-component 
+            component-id="VaPowerSupply" 
+            on-image-url="static/imgs/PowerSupplyON.jpg" 
+            off-image-url="static/imgs/PowerSupplyOFF.jpg"
+            instruction="Click the switch to turn the accelerating voltage power supply on and off.">
+          </toggle-component> 
+          <p class="tool-instruction">Click the switch to turn the accelerating voltage power supply on and off.</p>
+          <knob-component 
+            component-id="Va" 
+            knob-image-url="" 
+            intervals="[10, 36, 360]"
+            instruction="Choose a step size, then click the arrows to turn the knob and adjust the accelerating voltage.">
+        </knob-component>
+        <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the accelerating voltage.</p>
        </div>
       </div>
       <div class="tool" id="electrometer">
