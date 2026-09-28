@@ -50,7 +50,7 @@
     </div>
   </header-component>
   <div class="video-row">
-    <video-component data-views='[{ "name": "Variac", "id": "camera-1" }, { "name": "Tube", "id": "camera-2"}{ "name": "Pots", "id": "camera-3" }, { "name": "Data", "id": "camera-4"}]'></video-component> 
+    <video-component data-views='[{"name": "Variac", "id": "camera-1"},{"name": "Tube", "id": "camera-2"},{"name": "Pots", "id": "camera-3"},{"name": "Data","id": "camera-4"}]'></video-component> 
     <resizer-component allow-resize="true"></resizer-component>
     <tool-detail-component>
       <div class="tool" id="variac">
@@ -62,15 +62,15 @@
         <div class="tool-interface">
           <knob-component 
             component-id="variac-knob" 
-            component-ImageUrl="" 
+            knob-image-url="static/imgs/VariacKnob.png" 
             intervals="[3.6, 36]"
             instruction="Choose a step size, then click the arrows to rotate the knob">
           </knob-component>
-          <img-map-device map-html-file="../../static/svg/VariacKnobMap.html" device-name="variac"></img-map-device>
+          <!-- <img-map-device map-html-file="../../static/svg/VariacKnobMap.html" device-name="variac"></img-map-device> -->
           <toggle-component 
             component-id="variac-switch" 
-            on-image-url="../static/imgs/VariacSwitchON.jpg" 
-            off-image-url="../static/imgs/VariacSwitchOFF.jpg"
+            on-image-url="static/imgs/VariacSwitchON.jpg" 
+            off-image-url="static/imgs/VariacSwitchOFF.jpg"
             instruction="Click the switch to turn the Variac on and off">
           </toggle-component> 
         </div>
@@ -81,12 +81,15 @@
           <p class="tool-description">This is a live, infra-red view of the tube in the apparatus.  
             We can put text here about the elements of the tube, and maybe a schematic, but I don’t think any of the tools should be operational in this view... 
             Not sure if that logic is going to be difficult to encode</p>
-        </div> 
+        </div>
+        <div class="tool-interface">
+          <img src="static/imgs/AnnotatedCloseUp.jpg">
+        </div>
       </div>
       <div class="tool" id="filament">
         <div class="tool-heading">
           <h2 class="tool-title">Filament</h2>
-          <p class="tool-description">The filament  releases electrons when heated (ie, it undergoes thermionic emmsion).  
+          <p class="tool-description">The filament releases electrons when heated (ie, it undergoes thermionic emmsion).  
             The filament is heated by passing a current through it.  
             The tools below allow you to control the voltage source that drives current through the filament. </p>
         </div>
@@ -104,8 +107,9 @@
           <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the retarding voltage.</p>
           <knob-component 
             component-id="potentiometer" 
-            component-ImageUrl="" 
-            intervals="[3.6, 36]">
+            knob-image-url="" 
+            intervals="[3.6, 36]"
+            instruction="Choose a step size, then click the arrows to rotate the knob">
           </knob-component>
         </div>
       </div>
@@ -142,10 +146,10 @@
         <button group-id="filament">FILAMENT</button>
       </li>
       <li>
-        <button group-id="retardation">RETARDATION</button>
+        <button group-id="retarding-voltage">RETARDATION</button>
       </li>
       <li>
-        <button group-id="acceleration">ACCELERATION</button>
+        <button group-id="accelerating-voltage">ACCELERATION</button>
       </li>
       <li>
         <button group-id="electrometer">ELECTROMETER</button>
