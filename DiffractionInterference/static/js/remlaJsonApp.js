@@ -28,6 +28,15 @@
         return;
     }
 
+    function retainState(state, change) {
+        window.remlaJsonLatestState = {
+            ...state,
+            ...change,
+            devices: { ...(state?.devices || {}), ...(change.devices || {}) },
+        };
+        return window.remlaJsonLatestState;
+    }
+
     const client = new window.RemlaJsonSocket({
         handlers: {
             onOpen: () => {
@@ -43,8 +52,8 @@
                 emit("remla:connection-closed", { event });
             },
             onError: (error) => emit("remla:connection-error", { error }),
-            onSnapshot: (state) => emit("remla:state-snapshot", state),
-            onStateChange: (change) => emit("remla:state-changed", change),
+            onSnapshot: (state) => emit("remla:state-snapshot", retainState({}, state)),
+            onStateChange: (change) => emit("remla:state-changed", retainState(window.remlaJsonLatestState, change)),
             onQueue: (queue) => emit("remla:ownership-queue", queue),
             onFault: (fault) => emit("remla:fault", fault),
             onResyncRequired: (currentRevision, receivedRevision) => {
@@ -55,6 +64,12 @@
                 if (name === "command" && data && typeof data.command === "string") {
                     emitCameraSwitch(data.command);
                 }
+                if (name === "ownership.control") {
+                    emit("remla:ownership-control", data);
+                }
+                if (name === "ownership.handoff") {
+                    emit("remla:ownership-handoff", data);
+                }
                 emit("remla:event", { name, data, meta });
             },
         },
@@ -63,13 +78,14 @@
     window.remlaJson = client;
     window.remlaJsonConnected = false;
     window.remlaCommand = function (deviceName, commandName, arguments = []) {
-        return client.command(deviceName, commandName, { arguments }).then(
+        const commandParameters = Array.isArray(arguments) ? { arguments } : arguments;
+        return client.command(deviceName, commandName, commandParameters).then(
             (result) => {
-                emit("remla:command-result", { deviceName, commandName, arguments, result });
+                emit("remla:command-result", { deviceName, commandName, commandParameters, result });
                 return result;
             },
             (error) => {
-                emit("remla:command-error", { deviceName, commandName, arguments, error });
+                emit("remla:command-error", { deviceName, commandName, commandParameters, error });
                 throw error;
             },
         );

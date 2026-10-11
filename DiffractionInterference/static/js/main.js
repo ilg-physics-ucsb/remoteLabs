@@ -284,6 +284,24 @@ $("document").ready(function () {
         }
     }
 
+    function applyAmbientState(state) {
+        AmbientState = state == "on";
+        AmbientTOGGLE.title = AmbientState ? "Click here to turn OFF" : "Click here to turn ON";
+        lightSwitch.style.transform = AmbientState ? "rotate(180deg)" : "rotate(0deg)";
+    }
+
+    function applyRemoteState(devices) {
+        if (devices.Laser && devices.Laser.power) {
+            applyPowerResult(devices.Laser.power, "Laser");
+        }
+        if (devices.Screen && devices.Screen.power) {
+            applyPowerResult(devices.Screen.power, "Screen");
+        }
+        if (typeof devices.Ambient === "string") {
+            applyAmbientState(devices.Ambient);
+        }
+    }
+
     async function requestPowerCommand(commandName, target) {
         if (pendingPowerCommand) {
             return;
@@ -291,7 +309,7 @@ $("document").ready(function () {
         pendingPowerCommand = { commandName, target };
         setPowerControlsPending(true);
         try {
-            await remlaCommand("ASDIpdu", commandName, [target]);
+            await remlaCommand(target, "power_" + commandName, []);
             applyPowerResult(commandName, target);
         } catch (error) {
             console.error("Power command failed", error);
@@ -306,6 +324,31 @@ $("document").ready(function () {
  
     //for Snapshot 
     var snapShot = document.getElementById("pushButton")
+
+    window.addEventListener("remla:state-snapshot", function(event) {
+        applyRemoteState(event.detail.devices);
+    });
+
+    window.addEventListener("remla:state-changed", function(event) {
+        applyRemoteState(event.detail.devices);
+    });
+
+    if (window.remlaJsonLatestState) {
+        applyRemoteState(window.remlaJsonLatestState.devices);
+    }
+
+    window.addEventListener("remla:ownership-handoff", async function() {
+        var continueWithoutReset = window.confirm(
+            "The previous controller disconnected. Select OK to continue, or Cancel to reset the lab before taking control.",
+        );
+        try {
+            await remlaCommand("Experiment", "handoff", {
+                choice: continueWithoutReset ? "continue" : "reset",
+            });
+        } catch (error) {
+            reportCommandError(error);
+        }
+    });
     
 
     //BEGIN Switches 

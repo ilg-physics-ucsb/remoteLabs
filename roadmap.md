@@ -23,6 +23,10 @@
 - [x] Reconcile power, ambient, stage, slit, and camera UI updates after JSON
   command completion. Serialize slit commands/nudges and prevent overlapping
   stage moves.
+- [x] Retain and render the latest JSON snapshot/state changes for Laser, Screen,
+  and Ambient, including snapshots received before the jQuery page is ready.
+- [x] Prompt a handoff-pending JSON client to choose continue or reset through
+  the structured `Experiment/handoff` command.
 - [x] Synchronize the active diffrac2 lab YAML into this branch without copying
   a plaintext credential.
 - [ ] Deploy this branch and perform browser smoke tests against diffrac2 with

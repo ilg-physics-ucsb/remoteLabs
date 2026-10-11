@@ -25,8 +25,12 @@ class DiffractionJsonFrontendTests(unittest.TestCase):
         content = JSON_APP.read_text(encoding="utf-8")
 
         self.assertIn("window.remlaCommand", content)
-        self.assertIn("client.command(deviceName, commandName, { arguments })", content)
+        self.assertIn("window.remlaJsonLatestState", content)
+        self.assertIn("client.command(deviceName, commandName, commandParameters)", content)
         self.assertIn("client.pending.clear()", content)
+        self.assertIn('name === "ownership.control"', content)
+        self.assertIn('name === "ownership.handoff"', content)
+        self.assertIn("window.remlaCommand", content)
         self.assertNotIn("dataChannel", content)
         for event_name in (
             "remla:state-snapshot",
@@ -42,11 +46,14 @@ class DiffractionJsonFrontendTests(unittest.TestCase):
         content = MAIN.read_text(encoding="utf-8")
 
         self.assertIn("function requestPowerCommand", content)
-        self.assertIn('await remlaCommand("ASDIpdu", commandName, [target])', content)
+        self.assertIn('await remlaCommand(target, "power_" + commandName, [])', content)
         self.assertIn("var slitSelectionQueue = Promise.resolve()", content)
         self.assertIn("function queueSlitNudge", content)
         self.assertIn("var stageMovePending = false", content)
         self.assertIn("var ambientCommandPending = false", content)
+        self.assertIn('window.addEventListener("remla:state-snapshot"', content)
+        self.assertIn("window.remlaJsonLatestState", content)
+        self.assertIn('window.addEventListener("remla:ownership-handoff"', content)
         self.assertNotIn("dataChannel", content)
 
 
