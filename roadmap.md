@@ -1,7 +1,8 @@
 # Frontend JSON Adoption Roadmap
 
 ## Current state
-- `feature/json-remla-client` branches from `justLabs`; it is not deployed.
+- `feature/json-remla-client` is deployed to diffrac2. ReMLA `0.4.3` is active and
+  `/var/www/remla/static/js/remlaJsonApp.js` matches this branch's source.
 - `DiffractionInterference/index.html` retains its jQuery/image-map UI, but now
   uses a page-level JSON client and explicit JSON commands rather than
   `remlaSocket.js` or `window.dataChannel`.
@@ -29,8 +30,9 @@
   the structured `Experiment/handoff` command.
 - [x] Synchronize the active diffrac2 lab YAML into this branch without copying
   a plaintext credential.
-- [ ] Deploy this branch and perform browser smoke tests against diffrac2 with
-  an operator present:
+- [x] Deploy this branch to diffrac2 and verify the active ReMLA service, local
+  HTTP endpoint, and deployed JSON-app asset hash.
+- [ ] Perform browser smoke tests against diffrac2 with an operator present:
   ownership/handoff, one camera selection, a non-motion control, a scoped power
   action, command rejection, disconnect/reconnect, and revision-gap recovery.
 - [ ] Add the shared declarative-control adapter for Web Components: parse
