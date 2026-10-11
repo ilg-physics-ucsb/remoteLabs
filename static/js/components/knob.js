@@ -77,6 +77,8 @@ export class Knob extends HTMLElement {
     const intervalSelect = this.shadowRoot.querySelector('select');
 
     this.componentId = this.getAttribute('component-id');
+    this.deviceName = this.getAttribute('device-name');
+    this.commandName = this.getAttribute('command-name');
     this.intervals = JSON.parse(this.getAttribute('intervals'));
     this.knobImageUrl = this.getAttribute('knobImageUrl');
 
@@ -125,6 +127,15 @@ export class Knob extends HTMLElement {
   emit(value) {
     const knobEvent = new CustomEvent('knob', { detail: { componentId: this.componentId, value: value } });
     window.dispatchEvent(knobEvent);
+    if (this.deviceName && this.commandName) {
+      window.dispatchEvent(new CustomEvent('remla-command', {
+        detail: {
+          deviceName: this.deviceName,
+          commandName: this.commandName,
+          arguments: [String(value)],
+        },
+      }));
+    }
   }
 }
 

@@ -10,6 +10,10 @@
   named-secret reference, power consumers, camera selection, and website setup.
 - The reusable Web Component architecture is documented in `static/js/README.md`
   and used by `PhotoElectricEffect/zindex.html`, not by DiffractionInterference.
+- The Photoelectric web-component page now uses the JSON client, structured
+  component command events, remote Lamp/Ambient state, and ownership handoff
+  prompts. Its local `photo1.yml` uses power consumers and a named secret, but
+  photo1 still runs legacy ReMLA `0.2.6dev0` and has not been deployed.
 - `sudo remla setup deploy-website` already installs both `remlaSocket.js` and
   `remlaJsonSocket.js` into the deployed `static/js/` directory. A page must use
   exactly one of those protocol clients.
@@ -30,6 +34,14 @@
   the structured `Experiment/handoff` command.
 - [x] Synchronize the active diffrac2 lab YAML into this branch without copying
   a plaintext credential.
+- [x] Migrate PhotoElectricEffect to the JSON client while retaining the Web
+  Component architecture. Shared toggle, knob, and SVG image-map components now
+  emit structured commands that the page app relays to ReMLA.
+- [ ] Upgrade photo1 to ReMLA `0.4.3` or later, provision root-owned
+  `pepdu-password`, and validate its PDU API mode before selecting/deploying the
+  migrated `photo1.yml`. Do not send hardware commands during this migration.
+- [ ] Deploy PhotoElectricEffect to photo1 and perform the same operator browser
+  smoke tests as diffrac2, including Lamp/Ambient cross-tab state and handoff.
 - [x] Deploy this branch to diffrac2 and verify the active ReMLA service, local
   HTTP endpoint, and deployed JSON-app asset hash.
 - [ ] Perform browser smoke tests against diffrac2 with an operator present:

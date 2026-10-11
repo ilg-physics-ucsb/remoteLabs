@@ -66,6 +66,10 @@ export class imgMapDevice extends HTMLElement {
           const buttonValue = control.getAttribute('data-cmd');
           const deviceCommand = `${deviceName}/${buttonValue}`
           this.emit(deviceCommand);
+          const [commandName, ...arguments] = buttonValue.split('/');
+          window.dispatchEvent(new CustomEvent('remla-command', {
+            detail: { deviceName, commandName, arguments },
+          }));
         });
       })
       .catch((error) => {

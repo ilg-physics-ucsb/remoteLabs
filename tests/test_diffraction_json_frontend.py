@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "DiffractionInterference" / "index.html"
-JSON_APP = ROOT / "DiffractionInterference" / "static" / "js" / "remlaJsonApp.js"
+JSON_APP = ROOT / "static" / "js" / "remlaJsonApp.js"
 MAIN = ROOT / "DiffractionInterference" / "static" / "js" / "main.js"
 
 
@@ -13,12 +13,12 @@ class DiffractionJsonFrontendTests(unittest.TestCase):
         content = INDEX.read_text(encoding="utf-8")
 
         self.assertIn('src="static/js/remlaJsonSocket.js"', content)
-        self.assertIn('src="static/js/remlaJsonApp.js"', content)
+        self.assertIn('src="../static/js/remlaJsonApp.js"', content)
         self.assertNotIn('src="static/js/remlaSocket.js"', content)
         self.assertNotIn('src="static/js/remlaJsonBridge.js"', content)
         self.assertLess(
             content.index('src="static/js/remlaJsonSocket.js"'),
-            content.index('src="static/js/remlaJsonApp.js"'),
+            content.index('src="../static/js/remlaJsonApp.js"'),
         )
 
     def test_json_app_exposes_direct_commands_and_events(self):
@@ -30,6 +30,7 @@ class DiffractionJsonFrontendTests(unittest.TestCase):
         self.assertIn("client.pending.clear()", content)
         self.assertIn('name === "ownership.control"', content)
         self.assertIn('name === "ownership.handoff"', content)
+        self.assertIn("window.remlaJsonPendingHandoff", content)
         self.assertIn("window.remlaCommand", content)
         self.assertNotIn("dataChannel", content)
         for event_name in (

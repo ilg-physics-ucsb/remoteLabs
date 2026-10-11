@@ -337,7 +337,8 @@ $("document").ready(function () {
         applyRemoteState(window.remlaJsonLatestState.devices);
     }
 
-    window.addEventListener("remla:ownership-handoff", async function() {
+    async function handleOwnershipHandoff() {
+        window.remlaJsonPendingHandoff = null;
         var continueWithoutReset = window.confirm(
             "The previous controller disconnected. Select OK to continue, or Cancel to reset the lab before taking control.",
         );
@@ -348,7 +349,12 @@ $("document").ready(function () {
         } catch (error) {
             reportCommandError(error);
         }
-    });
+    }
+
+    window.addEventListener("remla:ownership-handoff", handleOwnershipHandoff);
+    if (window.remlaJsonPendingHandoff) {
+        handleOwnershipHandoff();
+    }
     
 
     //BEGIN Switches 

@@ -119,7 +119,7 @@ export class Header extends HTMLElement {
         <div class="button-container">
           <div class="toggle">
             <span class="toggle-label">Turn on ambient light</span>
-            <toggle-component></toggle-component>
+            <toggle-component device-name="Ambient"></toggle-component>
           </div>
         </div>
         <div class="manuals-menu">
@@ -215,6 +215,13 @@ export class Header extends HTMLElement {
 
   getSidenavElement() {
     return this.shadowRoot.querySelector('.manuals-menu');
+  }
+
+  setAmbientLightState(enabled) {
+    const toggle = this.shadowRoot.querySelector('toggle-component');
+    if (toggle) {
+      toggle.setState(enabled);
+    }
   }
 
   startSessionTimer(minutes) {

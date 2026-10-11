@@ -68,6 +68,7 @@
                     emit("remla:ownership-control", data);
                 }
                 if (name === "ownership.handoff") {
+                    window.remlaJsonPendingHandoff = data;
                     emit("remla:ownership-handoff", data);
                 }
                 emit("remla:event", { name, data, meta });

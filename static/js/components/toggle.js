@@ -40,6 +40,7 @@ export class Toggle extends HTMLElement {
         : '../static/imgs/figma-components/lightSwitchOFF.png';
 
     this.componentId = this.getAttribute('component-id'); //input three attributes: the name and the two images
+    this.deviceName = this.getAttribute('device-name');
 
     this.enabled = false; //initialize the toggle state to false (OFF)
 
@@ -54,14 +55,42 @@ export class Toggle extends HTMLElement {
   }
 
 toggle() {
-    this.enabled = !this.enabled;
-    this.image.src = this.enabled ? this.ONImageUrl : this.OFFImageUrl;
-    this.emit(this.enabled);
+    if (this.pending) {
+      return;
+    }
+    const requestedState = !this.enabled;
+    this.setPending(true);
+    this.emit(requestedState);
+  }
+
+  setState(enabled) {
+    this.enabled = Boolean(enabled);
+    if (this.image) {
+      this.image.src = this.enabled ? this.ONImageUrl : this.OFFImageUrl;
+    }
+  }
+
+  setPending(pending) {
+    this.pending = Boolean(pending);
+    if (this.image) {
+      this.image.style.opacity = this.pending ? '0.5' : '1';
+      this.image.style.pointerEvents = this.pending ? 'none' : 'auto';
+    }
   }
 
   emit(value) {
     const toggleEvent = new CustomEvent('toggle', { detail: { componentId: this.componentId, value: value } });
     window.dispatchEvent(toggleEvent);
+    if (this.deviceName) {
+      window.dispatchEvent(new CustomEvent('remla-command', {
+        detail: {
+          deviceName: this.deviceName,
+          commandName: value ? 'power_on' : 'power_off',
+          arguments: [],
+          source: this,
+        },
+      }));
+    }
   }
 }
 

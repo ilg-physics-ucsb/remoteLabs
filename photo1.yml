@@ -34,14 +34,20 @@ devices:
   Electrometer:
     type: Keithley6514Electrometer
     usbAddress: 1
+    power:
+      provider: PEpdu
+      outlet: Electrometer
   Multimeter:
     type: Keithley2000Multimeter
     usbAddress: 0
+    power:
+      provider: PEpdu
+      outlet: Multimeter
   PEpdu:
     type: PDUOutlet
     hostname: "pepdu.inst.physics.ucsb.edu"
     userid: "admin"
-    password: "5tgb567ujnb"
+    password: ${secret:pepdu-password}
     outlets:
       - 5
       - 6
@@ -52,16 +58,26 @@ devices:
       Multimeter: 6
       HgNeLamp: 7
       Ambient: 8
+  HgNeLamp:
+    type: PowerConsumer
+    power:
+      provider: PEpdu
+      outlet: HgNeLamp
+  Ambient:
+    type: PowerConsumer
+    power:
+      provider: PEpdu
+      outlet: Ambient
 locks:
   pdu:
     - PEpdu
+    - Electrometer
+    - Multimeter
+    - HgNeLamp
+    - Ambient
   pot:
     - Pot
   colorwheel:
     - colorWheel
   densityWheel:
     - densityWheel
-  mulimeter:
-    - Multimeter
-  electrometer:
-    - Electrometer

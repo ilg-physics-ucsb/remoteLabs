@@ -6,6 +6,11 @@ Components communicate with each other and with lab apps via [custom javascript 
 
 Each lab has its own app (`app.js`) which is unique to each lab, and is responsible for relaying component (lab tool, e.g. potentiometer) actions to the server, and for processing messages from the server. As a rule of thumb, components do not communicate directly with the server.
 
+Components configured with `device-name` (and, where needed, `command-name`) emit a
+`remla-command` CustomEvent with `{ deviceName, commandName, arguments }`. The lab
+app is the only listener that sends it through `window.remlaCommand`; it also applies
+JSON snapshot/state events back to components without emitting another command.
+
 These applications may make use of resources in `/services` rather than duplicate scripts for common functionality like handling websocket messages.
 
 server <-> app (`app.js`) <-> component <-> component

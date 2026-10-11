@@ -17,6 +17,8 @@
 </head>
 
 <body>
+  <script src="../static/js/remlaJsonSocket.js"></script>
+  <script src="../static/js/remlaJsonApp.js"></script>
   <script src="static/js/app.js" type="module"></script>
   <script src="../static/js/lib.js" type="module"></script>
   <script src="https://embed.small.chat/T02U4DGKYV8C0310KCK7S7.js" async></script>
@@ -135,6 +137,7 @@
         <div class="tool-interface">
           <toggle-component 
             component-id="mercury-neon-lamp" 
+            device-name="HgNeLamp"
             on-image-url="../static/imgs/figma-components/hgne-on.png" 
             off-image-url="../static/imgs/figma-components/hgne-off.png"
             instruction="Click to toggle the lamp!">
@@ -150,6 +153,8 @@
         <div class="tool-interface">
           <knob-component 
             component-id="potentiometer" 
+            device-name="Pot"
+            command-name="move"
             component-ImageUrl="" 
             intervals="[3.6, 36, 360]">
           </knob-component>
@@ -186,7 +191,7 @@
        </div>
        <div class="tool-interface">
           <p class="tool-instruction">Click on a filter to rotate it into position.</p>
-          <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="density-wheel"></img-map-device>
+          <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="densityWheel"></img-map-device>
        </div>
       </div>
       <div class="tool" id="filter-wheel">
@@ -197,7 +202,7 @@
         </div>
        <div class="tool-interface">
           <p class="tool-instruction">Click on a filter to rotate it into position.</p>
-          <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="filter-wheel"></img-map-device>
+          <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="colorWheel"></img-map-device>
         </div>
       </div>
     </tool-detail-component>
