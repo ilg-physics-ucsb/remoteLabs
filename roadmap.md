@@ -1,0 +1,38 @@
+# Frontend JSON Adoption Roadmap
+
+## Current state
+- `feature/json-remla-client` branches from `justLabs`; it is not deployed.
+- `DiffractionInterference/index.html` retains its jQuery/image-map UI, but now
+  uses a page-level JSON client and explicit JSON commands rather than
+  `remlaSocket.js` or `window.dataChannel`.
+- `diffrac2.yml` matches the active Pi configuration, including REST PDU mode,
+  named-secret reference, power consumers, camera selection, and website setup.
+- The reusable Web Component architecture is documented in `static/js/README.md`
+  and used by `PhotoElectricEffect/zindex.html`, not by DiffractionInterference.
+- `sudo remla setup deploy-website` already installs both `remlaSocket.js` and
+  `remlaJsonSocket.js` into the deployed `static/js/` directory. A page must use
+  exactly one of those protocol clients.
+
+## Plan
+- [x] Add `remlaJsonApp.js`, a page-level `RemlaJsonSocket` owner that exposes
+  structured `remlaCommand(deviceName, commandName, arguments)` calls and
+  emits snapshot, state, queue, fault, connection, and command-result/error
+  browser events.
+- [x] Migrate every active diffraction command to explicit JSON calls; no active
+  page code uses slash-command WebSocket framing or `window.dataChannel`.
+- [x] Reconcile power, ambient, stage, slit, and camera UI updates after JSON
+  command completion. Serialize slit commands/nudges and prevent overlapping
+  stage moves.
+- [x] Synchronize the active diffrac2 lab YAML into this branch without copying
+  a plaintext credential.
+- [ ] Deploy this branch and perform browser smoke tests against diffrac2 with
+  an operator present:
+  ownership/handoff, one camera selection, a non-motion control, a scoped power
+  action, command rejection, disconnect/reconnect, and revision-gap recovery.
+- [ ] Add the shared declarative-control adapter for Web Components: parse
+  `data-cmd` into a structured CustomEvent, while each lab app remains the sole
+  JSON server boundary. Then migrate DiffractionInterference UI controls only
+  when its visual rewrite is desired.
+
+## Blockers and decisions
+- Do not load legacy and JSON socket clients on the same page.

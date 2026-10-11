@@ -1,98 +1,112 @@
 devices:
+  ASDIpdu:
+    hostname: asdipdu.inst.physics.ucsb.edu
+    outletMap:
+      Laser: 5
+      Screen: 6
+    outlets:
+    - 5
+    - 6
+    type: PDUOutlet
+    userid: admin
+    password: ${secret:asdipdu-password}
+    apiMode: rest
+  Ambient:
+    pin: 5
+    type: SingleGPIO
   Camera:
-    type: ArduCamMultiCamera
-    videoNumber: 0
-    numCameras: 3
-    i2cbus: 11
-    initialCamera: a
     cameraNamesDict:
-      view: a
       ruler: b
       screen: c
-    # defaultSettings:
-    #   frame_rate: 15
-    #   brightness: 50
-    #   contrast: 0
-    #   shutter_speed: 0
-    #   awb_mode: 0
-    #   exposure_mode: 1
-  Ambient:
-    type: SingleGPIO
-    pin: 5
+      view: a
+    # cameraSwitchMode: restart
+    i2cbus: 11
+    initialCamera: b
+    numCameras: 3
+    type: ArduCamMultiCamera
+    videoNumber: 0
   MultiSlits:
-    type: StepperI2C
-    terminal: 1
     bounds:
-      - -16000
-      - 16000
-    style: MICROSTEP
+    - -16000
+    - 16000
     delay: 0.001
     refPoints:
-      MultiOpen: 0
-      FarClose: 900
-      WideThin: 1800
-      ThreeTwo: 2700
-      TwoSlit: 3900
-      ThreeSlit: 4800
-      FourSlit: 5700
-      FiveSlit: 6600
       A04D25: 8000
       A04D50: 8900
       A08D25: 9900
       A08D50: 10800
+      FarClose: 900
+      FiveSlit: 6600
+      FourSlit: 5700
+      MultiOpen: 0
+      ThreeSlit: 4800
+      ThreeTwo: 2700
+      TwoSlit: 3900
       VarySpacing: 12400
-  SingleSlits:
-    type: StepperI2C
-    terminal: 2
-    bounds:
-      - -16000
-      - 16000
+      WideThin: 1800
     style: MICROSTEP
+    terminal: 1
+    type: StepperI2C
+  SingleSlits:
+    bounds:
+    - -16000
+    - 16000
     delay: 0.001
     refPoints:
-      SingleOpen: 0
-      LineSlit: 1100
-      LittleHole: 2000
-      BigHole: 2850
       A02: 4000
       A04: 4950
       A08: 5850
       A16: 6750
-      VaryWidth: 8400
-      Square: 12400
-      Hex: 13300
+      BigHole: 2850
       Dots: 14300
+      Hex: 13300
       Holes: 15200
-  Stage:
+      LineSlit: 1100
+      LittleHole: 2000
+      SingleOpen: 0
+      Square: 12400
+      VaryWidth: 8400
+    style: MICROSTEP
+    terminal: 2
     type: StepperI2C
-    terminal: 4
+  Stage:
     bounds:
-      - -9750
-      - 0
-    style: DOUBLE
+    - -9750
+    - 0
     delay: 0.004
-  ASDIpdu:
-    type: PDUOutlet
-    hostname: "asdipdu.inst.physics.ucsb.edu"
-    userid: "admin"
-    password: "5tgb567ujnb"
-    outlets:
-      - 5
-      - 6
-    outletMap:
-      Laser: 5
-      Screen: 6
-
+    style: DOUBLE
+    terminal: 4
+    type: StepperI2C
+  Laser:
+    type: PowerConsumer
+    power:
+      provider: ASDIpdu
+      outlet: Laser
+  Screen:
+    type: PowerConsumer
+    power:
+      provider: ASDIpdu
+      outlet: Screen
 locks:
-  camera:
-    - Camera
-  pdu:
-    - ASDIpdu
-  multislits:
-    - MultiSlits
-  singleslits:
-    - SingleSlits
-  stage:
-    - Stage
   ambient:
-    - Ambient
+  - Ambient
+  camera:
+  - Camera
+  multislits:
+  - MultiSlits
+  pdu:
+  - ASDIpdu
+  - Laser
+  - Screen
+  singleslits:
+  - SingleSlits
+  stage:
+  - Stage
+network:
+  domain: diffrac2.inst.physics.ucsb.edu
+  port: 8080
+  wsPort: 8675
+website:
+  commonStaticFolder: true
+  index: !path remoteLabs/DiffractionInterference/index.html
+  staticFolder: !path remoteLabs/DiffractionInterference/static
