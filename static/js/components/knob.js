@@ -78,7 +78,7 @@ export class Knob extends HTMLElement {
 
     this.componentId = this.getAttribute('component-id');
     this.intervals = JSON.parse(this.getAttribute('intervals'));
-    this.knobImageUrl = this.getAttribute('knobImageUrl');
+    this.knobImageUrl = this.getAttribute('knob-image-url');
 
     this.intervals.forEach((interval) => {
       const option = document.createElement('option');
@@ -89,6 +89,10 @@ export class Knob extends HTMLElement {
     });
 
     const image = this.shadowRoot.querySelector('#image');
+    console.log("checking for the knob image")
+    console.log(this.knobImageUrl)
+    console.log(this.defaultImageUrl)
+    console.log(this.knobImageUrl ? this.knobImageUrl : this.defaultImageUrl)
     image.src = this.knobImageUrl ? this.knobImageUrl : this.defaultImageUrl;
 
     intervalSelect.addEventListener('change', (event) => {
