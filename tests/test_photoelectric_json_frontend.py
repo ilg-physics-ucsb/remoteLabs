@@ -50,6 +50,8 @@ class PhotoelectricJsonFrontendTests(unittest.TestCase):
         self.assertIn("provider: PEpdu", content)
         self.assertIn("- HgNeLamp", content)
         self.assertIn("- Ambient", content)
+        self.assertIn("domain: photo1.inst.physics.ucsb.edu", content)
+        self.assertIn("index: !path PhotoElectricEffect/zindex.html", content)
 
 
 if __name__ == "__main__":

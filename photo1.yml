@@ -81,3 +81,11 @@ locks:
     - colorWheel
   densityWheel:
     - densityWheel
+network:
+  domain: photo1.inst.physics.ucsb.edu
+  port: 8080
+  wsPort: 8675
+website:
+  commonStaticFolder: true
+  index: !path PhotoElectricEffect/zindex.html
+  staticFolder: !path PhotoElectricEffect/static
