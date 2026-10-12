@@ -13,15 +13,15 @@
 
   <!-- Your custom styles (optional) -->
   <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="../static/css/app.css" rel="stylesheet" type="text/css">
+  <link href="static/css/app.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-  <script src="../static/js/reader.js"></script>
-  <script src="../static/js/remlaJsonSocket.js"></script>
-  <script src="../static/js/remlaJsonApp.js"></script>
+  <script src="static/js/reader.js"></script>
+  <script src="static/js/remlaJsonSocket.js"></script>
+  <script src="static/js/remlaJsonApp.js"></script>
   <script src="static/js/app.js" type="module"></script>
-  <script src="../static/js/lib.js" type="module"></script>
+  <script src="static/js/lib.js" type="module"></script>
   <script src="https://embed.small.chat/T02U4DGKYV8C0310KCK7S7.js" async></script>
 
   <header-component data-title="Photoelectric Effect" data-time-limit="180" data-enable-ambient-light="true">
@@ -39,7 +39,7 @@
         <p class="manual-title">Keithly Model 2000 MultiMeter</p>
       </div>
       <div class="manual">
-        <a class="manual-link" href="../static/docs/Keithley electrometer 6514.pdf" target="_blank">
+        <a class="manual-link" href="static/docs/Keithley electrometer 6514.pdf" target="_blank">
           <img src="./static/imgs/Keithley6514Electrometer.jpg">
         </a>
         <p class="manual-title">Keithly Model 2000 Electrometer</p>
@@ -139,8 +139,8 @@
           <toggle-component 
             component-id="mercury-neon-lamp" 
             device-name="HgNeLamp"
-            on-image-url="../static/imgs/figma-components/hgne-on.png" 
-            off-image-url="../static/imgs/figma-components/hgne-off.png"
+            on-image-url="static/imgs/figma-components/hgne-on.png"
+            off-image-url="static/imgs/figma-components/hgne-off.png"
             instruction="Click to toggle the lamp!">
           </toggle-component> 
           <p class="tool-instruction">Click to toggle the lamp!</p>
@@ -170,7 +170,7 @@
             It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>-12</sup> A)</p>
         </div>
         <div class="tool-interface">
-          <img-map-device map-html-file="../static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
+          <img-map-device map-html-file="static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
           <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
         </div>
       </div>
@@ -180,7 +180,7 @@
           <p class="tool-description">When properly configured, the DMM measures the potential difference between the cathode and the anode.</p>
         </div>
         <div class="tool-interface">
-          <img-map-device map-html-file="../static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
+          <img-map-device map-html-file="static/svg/MultimeterMap.html" device-name="Multimeter"></img-map-device>
           <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
         </div>
       </div>
@@ -192,7 +192,7 @@
        </div>
        <div class="tool-interface">
           <p class="tool-instruction">Click on a filter to rotate it into position.</p>
-          <img-map-device map-html-file="../../static/svg/DensityWheelMap.html" device-name="densityWheel"></img-map-device>
+          <img-map-device map-html-file="static/svg/DensityWheelMap.html" device-name="densityWheel"></img-map-device>
        </div>
       </div>
       <div class="tool" id="filter-wheel">
@@ -203,7 +203,7 @@
         </div>
        <div class="tool-interface">
           <p class="tool-instruction">Click on a filter to rotate it into position.</p>
-          <img-map-device map-html-file="../../static/svg/FilterWheelMap.html" device-name="colorWheel"></img-map-device>
+          <img-map-device map-html-file="static/svg/FilterWheelMap.html" device-name="colorWheel"></img-map-device>
         </div>
       </div>
     </tool-detail-component>
