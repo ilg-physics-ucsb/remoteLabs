@@ -66,7 +66,8 @@ export class Resizer extends HTMLElement {
 
       let leftBounding = leftElement.getBoundingClientRect();
 
-      leftElement.style.width = `${event.clientX - pointerOffset - leftBounding.left - leftToHandle}px`;
+      const width = `${event.clientX - pointerOffset - leftBounding.left - leftToHandle}px`;
+      leftElement.style.flexBasis = width;
     };
 
     handle.addEventListener('mousedown', (event) => {

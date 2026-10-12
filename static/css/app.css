@@ -188,18 +188,20 @@ video-component {
   width: calc(100vw - 2rem);
 }
 
-.video-row video-component {
-  flex: 0 0 auto;
-}
-
-.video-row tool-detail-component {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
 @media (min-width: 768px) {
   .video-row {
     flex-direction: row;
+    height: 65vh;
+  }
+
+  .video-row video-component {
+    flex: 0 1 66%;
+    min-width: 0;
+  }
+
+  .video-row tool-detail-component {
+    flex: 1 1 34%;
+    min-width: 0;
   }
 
   tool-detail-component {

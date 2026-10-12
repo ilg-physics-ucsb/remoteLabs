@@ -5,10 +5,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PHOTO_PAGE = ROOT / "PhotoElectricEffect" / "zindex.html"
 PHOTO_APP = ROOT / "PhotoElectricEffect" / "static" / "js" / "app.js"
+APP_CSS = ROOT / "static" / "css" / "app.css"
 TOGGLE = ROOT / "static" / "js" / "components" / "toggle.js"
 KNOB = ROOT / "static" / "js" / "components" / "knob.js"
 IMAGE_MAP_DEVICE = ROOT / "static" / "js" / "components" / "imgMapDevice.js"
 VIDEO = ROOT / "static" / "js" / "components" / "video.js"
+RESIZER = ROOT / "static" / "js" / "components" / "resizer.js"
 JSON_APP = ROOT / "static" / "js" / "remlaJsonApp.js"
 PHOTO_CONFIG = ROOT / "photo1.yml"
 
@@ -45,6 +47,14 @@ class PhotoelectricJsonFrontendTests(unittest.TestCase):
         self.assertIn("this.componentInitialized", component)
         self.assertIn("this.whepReader !== reader", component)
         self.assertIn("params.set('remla_reload'", component)
+
+    def test_desktop_video_and_tool_detail_match_photoelectric_proportions(self):
+        content = APP_CSS.read_text(encoding="utf-8")
+
+        self.assertIn("height: 65vh", content)
+        self.assertIn("flex: 0 1 66%", content)
+        self.assertIn("flex: 1 1 34%", content)
+        self.assertIn("leftElement.style.flexBasis", RESIZER.read_text(encoding="utf-8"))
 
     def test_components_emit_structured_commands(self):
         for path in (TOGGLE, KNOB, IMAGE_MAP_DEVICE):
