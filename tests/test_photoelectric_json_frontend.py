@@ -54,6 +54,8 @@ class PhotoelectricJsonFrontendTests(unittest.TestCase):
             self.assertIn("commandName", content)
             self.assertNotIn("...arguments", content)
         self.assertIn("setPending", TOGGLE.read_text(encoding="utf-8"))
+        self.assertIn("'static/imgs/figma-components/lightSwitchON.png'", TOGGLE.read_text(encoding="utf-8"))
+        self.assertNotIn("'../static/imgs/figma-components/lightSwitchON.png'", TOGGLE.read_text(encoding="utf-8"))
 
     def test_photoelectric_app_maps_component_events_to_json_commands(self):
         content = PHOTO_APP.read_text(encoding="utf-8")

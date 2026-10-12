@@ -34,10 +34,10 @@ export class Toggle extends HTMLElement {
 
     this.ONImageUrl = this.getAttribute('on-image-url')  //use kabob-case for html attributes, but camelCase for javascript variables
         ? this.getAttribute('on-image-url') 
-        : '../static/imgs/figma-components/lightSwitchON.png';
+        : 'static/imgs/figma-components/lightSwitchON.png';
     this.OFFImageUrl = this.getAttribute('off-image-url') //if the attributes are not provided, the component will use the default images defined in the constructor
         ? this.getAttribute('off-image-url') 
-        : '../static/imgs/figma-components/lightSwitchOFF.png';
+        : 'static/imgs/figma-components/lightSwitchOFF.png';
 
     this.componentId = this.getAttribute('component-id'); //input three attributes: the name and the two images
     this.deviceName = this.getAttribute('device-name');
