@@ -14,6 +14,7 @@ export class Video extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.measureEnabled = false;
     this.startCoordinate = [];
+    this.componentInitialized = false;
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -87,6 +88,16 @@ export class Video extends HTMLElement {
           height: 100%;
         }
 
+        .message {
+          position: absolute;
+          bottom: 0.5rem;
+          left: 0.5rem;
+          right: 0.5rem;
+          color: #FFFFFF;
+          text-align: center;
+          text-shadow: 0 1px 2px #000000;
+        }
+
         .controls {
           position: absolute;
           bottom: 0.5rem;
@@ -130,7 +141,8 @@ export class Video extends HTMLElement {
 
       <div class="views"></div>
       <div class="video">
-        <video id="video" autoplay src="https://6922136c-83f3-4f95-ad86-9ef1221337ac.mdnplay.dev/shared-assets/videos/flower.webm"></video>
+        <video id="video" autoplay muted playsinline></video>
+        <div class="message"></div>
         <div class="controls">
           <button id="take-snapshot" title="Take snapshot">📸 Take Snapshot</button>
           <button id="measure-button" title="Measure">📏 Measure</button>
@@ -143,12 +155,20 @@ export class Video extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.componentInitialized) {
+      this.connectWhepFeed();
+      return;
+    }
+    this.componentInitialized = true;
+
     const videoContainer = this.shadowRoot.querySelector('.video');
     const measureButton = this.shadowRoot.querySelector('#measure-button');
     const snapshotButton = this.shadowRoot.querySelector('#take-snapshot');
     const distance = this.shadowRoot.querySelector('.distance');
     const distancePath = this.shadowRoot.querySelector('.distance-path');
     const startMarker = this.shadowRoot.querySelector('.start-marker');
+
+    this.connectWhepFeed();
 
     // Set up camera views when provided
     this.setUpCameraViews();
@@ -228,6 +248,53 @@ export class Video extends HTMLElement {
         }
       }
     });
+  }
+
+  connectWhepFeed() {
+    const video = this.shadowRoot.querySelector('#video');
+    const message = this.shadowRoot.querySelector('.message');
+    const Reader = window.MediaMTXWebRTCReader;
+    if (!Reader) {
+      message.textContent = 'The live video client did not load.';
+      return;
+    }
+    if (this.whepReader) {
+      this.whepReader.close();
+    }
+
+    const whepUrl = new URL("whep", window.location.href);
+    const params = new URLSearchParams(window.location.search);
+    params.set('remla_reload', Date.now().toString());
+    whepUrl.search = params.toString();
+    let reader;
+    reader = new Reader({
+      url: whepUrl,
+      onError: (error) => {
+        if (this.whepReader !== reader || !this.isConnected) {
+          return;
+        }
+        message.textContent = String(error);
+      },
+      onTrack: (event) => {
+        if (this.whepReader !== reader || !this.isConnected) {
+          return;
+        }
+        message.textContent = '';
+        video.srcObject = event.streams[0];
+      },
+    });
+    this.whepReader = reader;
+  }
+
+  disconnectedCallback() {
+    if (this.whepReader) {
+      this.whepReader.close();
+      this.whepReader = null;
+    }
+    const video = this.shadowRoot.querySelector('#video');
+    if (video) {
+      video.srcObject = null;
+    }
   }
 
   getRelativeCoordinate(container, event) {

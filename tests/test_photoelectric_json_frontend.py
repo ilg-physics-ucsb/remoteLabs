@@ -8,6 +8,7 @@ PHOTO_APP = ROOT / "PhotoElectricEffect" / "static" / "js" / "app.js"
 TOGGLE = ROOT / "static" / "js" / "components" / "toggle.js"
 KNOB = ROOT / "static" / "js" / "components" / "knob.js"
 IMAGE_MAP_DEVICE = ROOT / "static" / "js" / "components" / "imgMapDevice.js"
+VIDEO = ROOT / "static" / "js" / "components" / "video.js"
 JSON_APP = ROOT / "static" / "js" / "remlaJsonApp.js"
 PHOTO_CONFIG = ROOT / "photo1.yml"
 
@@ -23,6 +24,21 @@ class PhotoelectricJsonFrontendTests(unittest.TestCase):
         self.assertIn('device-name="HgNeLamp"', content)
         self.assertIn('device-name="Pot"', content)
         self.assertTrue(JSON_APP.exists())
+
+    def test_video_component_uses_the_local_mediamtx_whep_feed(self):
+        page = PHOTO_PAGE.read_text(encoding="utf-8")
+        component = VIDEO.read_text(encoding="utf-8")
+
+        self.assertIn("reader.js", page)
+        self.assertIn("MediaMTXWebRTCReader", component)
+        self.assertIn('new URL("whep", window.location.href)', component)
+        self.assertIn("video.srcObject = event.streams[0]", component)
+        self.assertNotIn("mdnplay.dev", component)
+        self.assertIn("disconnectedCallback", component)
+        self.assertIn("this.whepReader.close()", component)
+        self.assertIn("this.componentInitialized", component)
+        self.assertIn("this.whepReader !== reader", component)
+        self.assertIn("params.set('remla_reload'", component)
 
     def test_components_emit_structured_commands(self):
         for path in (TOGGLE, KNOB, IMAGE_MAP_DEVICE):
