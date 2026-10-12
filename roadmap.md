@@ -26,6 +26,8 @@
 - The shared JSON app and image-map component avoid strict-mode `arguments`
   bindings; Photoelectric's deployed command bridge and component module now
   parse in module-capable browsers.
+- The Header's ambient toggle now resolves its default images through the
+  Photo1 proxy mount; the deployed off-state image returns HTTP 200.
   The Small.chat MIME warning remains intentionally unchanged pending a provider
   decision.
 - `sudo remla setup deploy-website` already installs both `remlaSocket.js` and
