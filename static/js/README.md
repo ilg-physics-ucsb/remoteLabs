@@ -11,6 +11,10 @@ Components configured with `device-name` (and, where needed, `command-name`) emi
 app is the only listener that sends it through `window.remlaCommand`; it also applies
 JSON snapshot/state events back to components without emitting another command.
 
+`video-component` uses the deployed `reader.js` MediaMTX client to request the
+same-origin `whep` feed. It releases the WHEP session when detached and adds a
+fresh `remla_reload` query value when reconnecting.
+
 These applications may make use of resources in `/services` rather than duplicate scripts for common functionality like handling websocket messages.
 
 server <-> app (`app.js`) <-> component <-> component

@@ -12,8 +12,11 @@
   and used by `PhotoElectricEffect/zindex.html`, not by DiffractionInterference.
 - The Photoelectric web-component page now uses the JSON client, structured
   component command events, remote Lamp/Ambient state, and ownership handoff
-  prompts. photo1 runs ReMLA `0.4.4`; its selected configuration uses the
+  prompts. photo1 runs ReMLA `0.4.5`; its selected configuration uses the
   root-owned `pepdu-password` secret and provider-routed power consumers.
+- Photoelectric's `video-component` now uses photo1's same-origin MediaMTX
+  WHEP feed instead of the former demo video. The deployed `reader.js` and
+  component assets match source; browser playback remains operator validation.
 - `sudo remla setup deploy-website` already installs both `remlaSocket.js` and
   `remlaJsonSocket.js` into the deployed `static/js/` directory. A page must use
   exactly one of those protocol clients.
@@ -43,8 +46,9 @@
 - [x] Deploy PhotoElectricEffect to photo1 and verify the active service, local
   HTTP endpoint, and deployed JSON-app asset hash.
 - [ ] Perform PhotoElectricEffect browser smoke tests against photo1 with an
-  operator present: Lamp/Ambient cross-tab state, potentiometer, both filter
-  wheels, meter controls, command rejection, disconnect/reconnect, and handoff.
+  operator present: WHEP video playback/reconnect, Lamp/Ambient cross-tab state,
+  potentiometer, both filter wheels, meter controls, command rejection,
+  disconnect/reconnect, and handoff.
 - [x] Deploy this branch to diffrac2 and verify the active ReMLA service, local
   HTTP endpoint, and deployed JSON-app asset hash.
 - [ ] Perform browser smoke tests against diffrac2 with an operator present:
