@@ -14,6 +14,9 @@
   component command events, remote Lamp/Ambient state, and ownership handoff
   prompts. photo1 runs ReMLA `0.4.5`; its selected configuration uses the
   root-owned `pepdu-password` secret and provider-routed power consumers.
+- On photo1, `~/remla` now links to `/var/lib/remla/labs`, including its shared
+  `static/` directory. The pre-migration tree is preserved at `~/remla_legacy`
+  until operator validation is complete.
 - Photoelectric's `video-component` now uses photo1's same-origin MediaMTX
   WHEP feed instead of the former demo video. The deployed `reader.js` and
   component assets match source; browser playback remains operator validation.
