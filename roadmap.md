@@ -28,6 +28,8 @@
   parse in module-capable browsers.
 - The Header's ambient toggle now resolves its default images through the
   Photo1 proxy mount; the deployed off-state image returns HTTP 200.
+- Photoelectric's desktop video/tool row now has Photo2-style 66%/34%
+  proportions and a definite 65vh height; its drag resizer updates flex basis.
   The Small.chat MIME warning remains intentionally unchanged pending a provider
   decision.
 - `sudo remla setup deploy-website` already installs both `remlaSocket.js` and
