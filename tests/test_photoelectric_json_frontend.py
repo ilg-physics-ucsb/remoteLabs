@@ -58,6 +58,8 @@ class PhotoelectricJsonFrontendTests(unittest.TestCase):
         content = PHOTO_APP.read_text(encoding="utf-8")
 
         self.assertIn("window.remlaCommand", content)
+        self.assertIn("commandArguments = []", JSON_APP.read_text(encoding="utf-8"))
+        self.assertNotIn("commandName, arguments = []", JSON_APP.read_text(encoding="utf-8"))
         self.assertIn('"remla-command"', content)
         self.assertIn('"HgNeLamp"', content)
         self.assertIn('"remla:state-snapshot"', content)

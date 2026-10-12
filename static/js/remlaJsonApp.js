@@ -78,8 +78,8 @@
 
     window.remlaJson = client;
     window.remlaJsonConnected = false;
-    window.remlaCommand = function (deviceName, commandName, arguments = []) {
-        const commandParameters = Array.isArray(arguments) ? { arguments } : arguments;
+    window.remlaCommand = function (deviceName, commandName, commandArguments = []) {
+        const commandParameters = Array.isArray(commandArguments) ? { arguments: commandArguments } : commandArguments;
         return client.command(deviceName, commandName, commandParameters).then(
             (result) => {
                 emit("remla:command-result", { deviceName, commandName, commandParameters, result });
