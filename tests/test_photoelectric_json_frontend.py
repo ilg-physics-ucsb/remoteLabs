@@ -52,6 +52,7 @@ class PhotoelectricJsonFrontendTests(unittest.TestCase):
             self.assertIn("remla-command", content)
             self.assertIn("deviceName", content)
             self.assertIn("commandName", content)
+            self.assertNotIn("...arguments", content)
         self.assertIn("setPending", TOGGLE.read_text(encoding="utf-8"))
 
     def test_photoelectric_app_maps_component_events_to_json_commands(self):
