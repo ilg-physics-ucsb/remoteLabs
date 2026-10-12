@@ -23,6 +23,10 @@
 - Photoelectric pages use page-relative `static/...` URLs so they work through
   the `remotelabs.physics.ucsb.edu/photo1/` proxy mount; do not use
   `../static/...`, which escapes that mount.
+- The shared JSON app avoids a strict-mode `arguments` parameter binding;
+  Photoelectric's deployed command bridge now parses in module-capable browsers.
+  The Small.chat MIME warning remains intentionally unchanged pending a provider
+  decision.
 - `sudo remla setup deploy-website` already installs both `remlaSocket.js` and
   `remlaJsonSocket.js` into the deployed `static/js/` directory. A page must use
   exactly one of those protocol clients.
