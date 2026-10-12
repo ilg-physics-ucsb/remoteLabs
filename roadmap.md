@@ -20,6 +20,9 @@
 - Photoelectric's `video-component` now uses photo1's same-origin MediaMTX
   WHEP feed instead of the former demo video. The deployed `reader.js` and
   component assets match source; browser playback remains operator validation.
+- Photoelectric pages use page-relative `static/...` URLs so they work through
+  the `remotelabs.physics.ucsb.edu/photo1/` proxy mount; do not use
+  `../static/...`, which escapes that mount.
 - `sudo remla setup deploy-website` already installs both `remlaSocket.js` and
   `remlaJsonSocket.js` into the deployed `static/js/` directory. A page must use
   exactly one of those protocol clients.
@@ -52,6 +55,10 @@
   operator present: WHEP video playback/reconnect, Lamp/Ambient cross-tab state,
   potentiometer, both filter wheels, meter controls, command rejection,
   disconnect/reconnect, and handoff.
+- [ ] Normalize photo1's canonical source layout to match diffrac2
+  (`static/` alongside a `remoteLabs/` workspace) and remove only the inactive
+  migration artifacts after operator validation. Preserve `~/remla_legacy`
+  until rollback is no longer needed.
 - [x] Deploy this branch to diffrac2 and verify the active ReMLA service, local
   HTTP endpoint, and deployed JSON-app asset hash.
 - [ ] Perform browser smoke tests against diffrac2 with an operator present:
