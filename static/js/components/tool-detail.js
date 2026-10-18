@@ -76,6 +76,10 @@ export class ToolDetail extends HTMLElement {
         .carousel button {
           cursor: pointer;
         }
+
+        .carousel button:disabled {
+          cursor: not-allowed;
+        }
       </style>
 
       <div class="tool-container">
@@ -109,7 +113,12 @@ export class ToolDetail extends HTMLElement {
     }
 
     const current = this.groupToolIndex.get(this.selectedGroupId) || 0;
-    this.groupToolIndex.set(this.selectedGroupId, (current + direction + count) % count);
+    const next = current + direction;
+    if (next < 0 || next >= count) {
+      return;
+    }
+
+    this.groupToolIndex.set(this.selectedGroupId, next);
     this.render();
   }
 
@@ -156,6 +165,8 @@ export class ToolDetail extends HTMLElement {
 
     const multiple = groupTools.length > 1;
     carousel.classList.toggle('visible', multiple);
+    carousel.querySelector('.prev').disabled = activeIndex === 0;
+    carousel.querySelector('.next').disabled = activeIndex === groupTools.length - 1;
     carousel.querySelector('.carousel-label').textContent = `(${activeIndex + 1} of ${groupTools.length})`;
   }
 }
