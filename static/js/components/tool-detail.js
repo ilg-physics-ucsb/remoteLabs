@@ -38,13 +38,11 @@ export class ToolDetail extends HTMLElement {
         .tool-container div {
           display: none;
           flex-direction: column;
-          // overflow: scroll;
         }
 
         ::slotted(div) {
           display: none;
           flex-direction: column;
-          // overflow: scroll;
         }
 
         .active {
@@ -61,22 +59,22 @@ export class ToolDetail extends HTMLElement {
           flex: 1 1 auto;
         }
 
-        .sub-tabs {
-          display: none;
+        .carousel {
+          display: flex;
+          flex-direction: row !important;
           flex: 0 0 auto;
+          align-items: center;
+          justify-content: center;
           gap: 0.5rem;
+          margin-top: 0.5rem;
         }
 
-        .sub-tabs.visible {
+        .carousel.visible {
           display: flex;
         }
 
-        .sub-tabs button {
+        .carousel button {
           cursor: pointer;
-        }
-
-        .sub-tabs button.active {
-          font-weight: bold;
         }
       </style>
 
@@ -84,23 +82,47 @@ export class ToolDetail extends HTMLElement {
         <div class="default active">
           <p>Click on a tool below!</p>
         </div>
-        <div class="sub-tabs"></div>
+        <div class="carousel">
+          <button type="button" class="prev">Previous</button>
+          <span class="carousel-label"></span>
+          <button type="button" class="next">Next</button>
+        </div>
         <slot></slot>
       </div>
     `;
   }
 
   connectedCallback() {
+    this.shadowRoot.querySelector('.prev').addEventListener('click', () => this.step(-1));
+    this.shadowRoot.querySelector('.next').addEventListener('click', () => this.step(1));
+
     window.addEventListener('toolbarSelection', (event) => {
       this.selectedGroupId = event.detail.toolGroupId;
       this.render();
     });
   }
 
+  step(direction) {
+    const count = this.getGroupTools().length;
+    if (count < 2) {
+      return;
+    }
+
+    const current = this.groupToolIndex.get(this.selectedGroupId) || 0;
+    this.groupToolIndex.set(this.selectedGroupId, (current + direction + count) % count);
+    this.render();
+  }
+
+  getGroupTools() {
+    const slot = this.shadowRoot.querySelector('slot');
+    const slotted = slot ? slot.assignedElements({ flatten: true }) : [];
+    return slotted.filter(el => (el.getAttribute('group-id') || el.id) === this.selectedGroupId);
+  }
+
   render() {
     const container = this.shadowRoot.querySelector('.tool-container');
     const defaultDiv = container.querySelector('.default');
-    const subTabs = container.querySelector('.sub-tabs');
+    const carousel = container.querySelector('.carousel');
     const slot = container.querySelector('slot');
     const slotted = slot ? slot.assignedElements({ flatten: true }) : [];
 
@@ -110,16 +132,14 @@ export class ToolDetail extends HTMLElement {
       }
     });
 
-    subTabs.innerHTML = '';
-    subTabs.classList.remove('visible');
+    carousel.classList.remove('visible');
 
     if (this.selectedGroupId === '') {
       defaultDiv.classList.add('active');
       return;
     }
 
-    const matchesSelectedGroup = (el) => (el.getAttribute('group-id') || el.id) === this.selectedGroupId;
-    const groupTools = slotted.filter(matchesSelectedGroup);
+    const groupTools = this.getGroupTools();
 
     if (!groupTools.length) {
       console.error(`ToolDetail: unable to find tool(s) by group id: ${this.selectedGroupId}`);
@@ -134,26 +154,9 @@ export class ToolDetail extends HTMLElement {
 
     groupTools[activeIndex].classList.add('active');
 
-    if (groupTools.length > 1) {
-      subTabs.classList.add('visible');
-
-      groupTools.forEach((tool, index) => {
-        const label = tool.getAttribute('data-tool-label')
-          || tool.querySelector('.tool-title')?.textContent?.trim()
-          || `Tool ${index + 1}`;
-
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = label;
-        button.classList.toggle('active', index === activeIndex);
-        button.addEventListener('click', () => {
-          this.groupToolIndex.set(this.selectedGroupId, index);
-          this.render();
-        });
-
-        subTabs.appendChild(button);
-      });
-    }
+    const multiple = groupTools.length > 1;
+    carousel.classList.toggle('visible', multiple);
+    carousel.querySelector('.carousel-label').textContent = `(${activeIndex + 1} of ${groupTools.length})`;
   }
 }
 
