@@ -10,6 +10,10 @@ export class ToolDetail extends HTMLElement {
 
     this.selectedGroupId = '';
 
+    // Remembers which tool within a group was last shown, keyed by group id,
+    // so switching away and back to a group restores the same sub-tool.
+    this.groupToolIndex = new Map();
+
     this.shadowRoot.innerHTML = `
       <style>
         :host {
@@ -24,19 +28,21 @@ export class ToolDetail extends HTMLElement {
         }
 
         .tool-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
           height: 100%;
+          overflow: auto;
         }
 
         .tool-container div {
           display: none;
-          height: 100%;
           flex-direction: column;
           // overflow: scroll;
         }
 
         ::slotted(div) {
           display: none;
-          height: 100%;
           flex-direction: column;
           // overflow: scroll;
         }
@@ -47,6 +53,30 @@ export class ToolDetail extends HTMLElement {
 
         ::slotted(.active) {
           display: flex;
+          flex: 1 1 0;
+          min-height: 0;
+        }
+
+        .default.active {
+          flex: 1 1 auto;
+        }
+
+        .sub-tabs {
+          display: none;
+          flex: 0 0 auto;
+          gap: 0.5rem;
+        }
+
+        .sub-tabs.visible {
+          display: flex;
+        }
+
+        .sub-tabs button {
+          cursor: pointer;
+        }
+
+        .sub-tabs button.active {
+          font-weight: bold;
         }
       </style>
 
@@ -54,6 +84,7 @@ export class ToolDetail extends HTMLElement {
         <div class="default active">
           <p>Click on a tool below!</p>
         </div>
+        <div class="sub-tabs"></div>
         <slot></slot>
       </div>
     `;
@@ -62,28 +93,67 @@ export class ToolDetail extends HTMLElement {
   connectedCallback() {
     window.addEventListener('toolbarSelection', (event) => {
       this.selectedGroupId = event.detail.toolGroupId;
+      this.render();
+    });
+  }
 
-      const container = this.shadowRoot.querySelector('.tool-container');
-      const defaultDiv = container.querySelector('.default');
-      const slot = container.querySelector('slot');
-      const slotted = slot ? slot.assignedElements({ flatten: true }) : [];
+  render() {
+    const container = this.shadowRoot.querySelector('.tool-container');
+    const defaultDiv = container.querySelector('.default');
+    const subTabs = container.querySelector('.sub-tabs');
+    const slot = container.querySelector('slot');
+    const slotted = slot ? slot.assignedElements({ flatten: true }) : [];
 
-      const tools = [defaultDiv, ...slotted];
-
-      tools.forEach(tool => {
-        if (tool && tool.classList) {
-          tool.classList.remove('active');
-        }
-      });
-
-      const selectedTool = slotted.find(el => el.id === this.selectedGroupId) || (this.selectedGroupId === '' ? defaultDiv : null);
-
-      if (selectedTool && selectedTool.classList) {
-        selectedTool.classList.add('active');
-      } else {
-        console.error(`ToolDetail: unable to find tool by id: ${this.selectedGroupId}`);
+    [defaultDiv, ...slotted].forEach(tool => {
+      if (tool && tool.classList) {
+        tool.classList.remove('active');
       }
     });
+
+    subTabs.innerHTML = '';
+    subTabs.classList.remove('visible');
+
+    if (this.selectedGroupId === '') {
+      defaultDiv.classList.add('active');
+      return;
+    }
+
+    const matchesSelectedGroup = (el) => (el.getAttribute('group-id') || el.id) === this.selectedGroupId;
+    const groupTools = slotted.filter(matchesSelectedGroup);
+
+    if (!groupTools.length) {
+      console.error(`ToolDetail: unable to find tool(s) by group id: ${this.selectedGroupId}`);
+      return;
+    }
+
+    let activeIndex = this.groupToolIndex.get(this.selectedGroupId) || 0;
+    if (activeIndex >= groupTools.length) {
+      activeIndex = 0;
+    }
+    this.groupToolIndex.set(this.selectedGroupId, activeIndex);
+
+    groupTools[activeIndex].classList.add('active');
+
+    if (groupTools.length > 1) {
+      subTabs.classList.add('visible');
+
+      groupTools.forEach((tool, index) => {
+        const label = tool.getAttribute('data-tool-label')
+          || tool.querySelector('.tool-title')?.textContent?.trim()
+          || `Tool ${index + 1}`;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = label;
+        button.classList.toggle('active', index === activeIndex);
+        button.addEventListener('click', () => {
+          this.groupToolIndex.set(this.selectedGroupId, index);
+          this.render();
+        });
+
+        subTabs.appendChild(button);
+      });
+    }
   }
 }
 
