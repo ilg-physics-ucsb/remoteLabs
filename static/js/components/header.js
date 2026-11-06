@@ -29,7 +29,7 @@ export class Header extends HTMLElement {
           display: grid;
           grid-template-columns: 160px auto 160px;
           align-items: center;
-          padding: 0.5rem 2rem;
+          padding: 0 2rem;
           background-color: var(--header-color);
           border-radius: var(--border-radius);
         }
