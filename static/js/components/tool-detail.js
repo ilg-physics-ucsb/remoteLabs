@@ -31,14 +31,12 @@ export class ToolDetail extends HTMLElement {
           display: none;
           height: 100%;
           flex-direction: column;
-          // overflow: scroll;
         }
 
         ::slotted(div) {
           display: none;
           height: 100%;
           flex-direction: column;
-          // overflow: scroll;
         }
 
         .active {
