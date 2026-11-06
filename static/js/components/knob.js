@@ -12,10 +12,6 @@ export class Knob extends HTMLElement {
           flex-direction: column;
         }
 
-        h3 {
-          text-align: center;
-        }
-
         select {
           margin-bottom: 8px;
         }
@@ -54,7 +50,6 @@ export class Knob extends HTMLElement {
       </style>
 
       <div class="knob">
-        <h3></h3>
         <select>
           <option value="">Select an interval</option>
         </select>
