@@ -63,16 +63,15 @@
           <knob-component 
             component-id="variac-knob" 
             knob-image-url="static/imgs/VariacKnob.png" 
-            intervals="[3.6, 36]"
-            instruction="Choose a step size, then click the arrows to rotate the knob">
+            intervals="[3.6, 36]">
           </knob-component>
-          <!-- <img-map-device map-html-file="../../static/svg/VariacKnobMap.html" device-name="variac"></img-map-device> -->
+          <p>Choose a step size, then click the arrows to rotate the knob</p>
           <toggle-component 
             component-id="variac-switch" 
             on-image-url="static/imgs/VariacSwitchON.jpg" 
-            off-image-url="static/imgs/VariacSwitchOFF.jpg"
-            instruction="Click the switch to turn the Variac on and off">
-          </toggle-component> 
+            off-image-url="static/imgs/VariacSwitchOFF.jpg">
+          </toggle-component>
+          <p>Click the switch to turn the Variac on and off</p>
         </div>
       </div>
       <div class="tool" id="tube">
@@ -112,13 +111,12 @@
             only the most energetic electrons arrive at the collection electrode and therefore contribute to the measured current.</p>
         </div>
         <div class="tool-interface">
-          <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the retarding voltage.</p>
           <knob-component 
             component-id="potentiometer" 
             knob-image-url="" 
-            intervals="[3.6, 36]"
-            instruction="Choose a step size, then click the arrows to rotate the knob">
+            intervals="[3.6, 36]">
           </knob-component>
+          <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the retarding voltage.</p>
         </div>
       </div>
       <div class="tool" id="accelerating-voltage">
@@ -134,14 +132,13 @@
             component-id="VaPowerSupply" 
             on-image-url="static/imgs/PowerSupplyON.jpg" 
             off-image-url="static/imgs/PowerSupplyOFF.jpg"
-            instruction="Click the switch to turn the accelerating voltage power supply on and off.">
+            max-width="256px">
           </toggle-component> 
           <p class="tool-instruction">Click the switch to turn the accelerating voltage power supply on and off.</p>
           <knob-component 
             component-id="Va" 
             knob-image-url="" 
-            intervals="[10, 36, 360]"
-            instruction="Choose a step size, then click the arrows to turn the knob and adjust the accelerating voltage.">
+            intervals="[10, 36, 360]">
         </knob-component>
         <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the accelerating voltage.</p>
        </div>
