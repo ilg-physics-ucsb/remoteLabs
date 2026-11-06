@@ -60,18 +60,22 @@
             The temperature in the oven thereby controls the density of Hg atoms between the cathode and the anode, which in turn affects the probability that emitted electrons collide with Hg atoms.</p>
         </div>
         <div class="tool-interface">
-          <knob-component 
-            component-id="variac-knob" 
-            knob-image-url="static/imgs/VariacKnob.png" 
-            intervals="[3.6, 36]">
-          </knob-component>
-          <p>Choose a step size, then click the arrows to rotate the knob</p>
-          <toggle-component 
-            component-id="variac-switch" 
-            on-image-url="static/imgs/VariacSwitchON.jpg" 
-            off-image-url="static/imgs/VariacSwitchOFF.jpg">
-          </toggle-component>
-          <p>Click the switch to turn the Variac on and off</p>
+          <div>
+            <knob-component 
+              component-id="variac-knob" 
+              knob-image-url="static/imgs/VariacKnob.png" 
+              intervals="[3.6, 36]">
+            </knob-component>
+            <p>Choose a step size, then click the arrows to rotate the knob</p>
+          </div>
+          <div>
+            <toggle-component 
+              component-id="variac-switch" 
+              on-image-url="static/imgs/VariacSwitchON.jpg" 
+              off-image-url="static/imgs/VariacSwitchOFF.jpg">
+            </toggle-component>
+            <p>Click the switch to turn the Variac on and off</p>
+          </div>
         </div>
       </div>
       <div class="tool" id="tube">
@@ -128,6 +132,7 @@
           <!-- <img src="static/imgs/FHwiringDiagram.jpg" width="50%" align="center"> -->
        </div>
        <div class="tool-interface">
+        <div>
          <toggle-component 
             component-id="VaPowerSupply" 
             on-image-url="static/imgs/PowerSupplyON.jpg" 
@@ -135,12 +140,15 @@
             max-width="256px">
           </toggle-component> 
           <p class="tool-instruction">Click the switch to turn the accelerating voltage power supply on and off.</p>
+        </div>
+        <div>
           <knob-component 
             component-id="Va" 
             knob-image-url="" 
             intervals="[10, 36, 360]">
-        </knob-component>
-        <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the accelerating voltage.</p>
+          </knob-component>
+          <p class="tool-instruction">Choose a step size, then click the arrows to turn the knob and adjust the accelerating voltage.</p>
+        </div>
        </div>
       </div>
       <div class="tool" id="electrometer">
