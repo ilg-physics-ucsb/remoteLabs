@@ -209,6 +209,16 @@ video-component {
     flex-direction: row;
   }
 
+  .video-row video-component {
+    flex: 0 1 auto;
+    width: 60%;
+    min-width: 0;
+  }
+
+  .video-row tool-detail-component {
+    flex: 1 1 40%;
+  }
+
   tool-detail-component {
     margin-top: 0;
   }

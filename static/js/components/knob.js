@@ -72,6 +72,9 @@ export class Knob extends HTMLElement {
     const intervalSelect = this.shadowRoot.querySelector('select');
 
     this.componentId = this.getAttribute('component-id');
+    this.deviceName = this.getAttribute('device-name');
+    this.commandName = this.getAttribute('command-name');
+    this.degreesPerStep = Number(this.getAttribute('degrees-per-step'));
     this.intervals = JSON.parse(this.getAttribute('intervals'));
     this.knobImageUrl = this.getAttribute('knob-image-url');
 
@@ -84,10 +87,6 @@ export class Knob extends HTMLElement {
     });
 
     const image = this.shadowRoot.querySelector('#image');
-    console.log("checking for the knob image")
-    console.log(this.knobImageUrl)
-    console.log(this.defaultImageUrl)
-    console.log(this.knobImageUrl ? this.knobImageUrl : this.defaultImageUrl)
     image.src = this.knobImageUrl ? this.knobImageUrl : this.defaultImageUrl;
 
     intervalSelect.addEventListener('change', (event) => {
@@ -108,14 +107,14 @@ export class Knob extends HTMLElement {
   }
 
   up() {
-    if (!this.selectedInterval) {
+    if (!this.selectedInterval || this.pending) {
       return;
     }
     this.emit(+this.selectedInterval);
   }
 
   down() {
-    if (!this.selectedInterval) {
+    if (!this.selectedInterval || this.pending) {
       return;
     }
     this.emit(-this.selectedInterval);
@@ -124,6 +123,24 @@ export class Knob extends HTMLElement {
   emit(value) {
     const knobEvent = new CustomEvent('knob', { detail: { componentId: this.componentId, value: value } });
     window.dispatchEvent(knobEvent);
+    if (this.deviceName && this.commandName) {
+      this.setPending(true);
+      window.dispatchEvent(new CustomEvent('remla-command', {
+        detail: {
+          deviceName: this.deviceName,
+          commandName: this.commandName,
+          arguments: [String(this.degreesPerStep > 0 ? Math.round(value / this.degreesPerStep) : value)],
+          source: this,
+        },
+      }));
+    }
+  }
+
+  setPending(pending) {
+    this.pending = Boolean(pending);
+    const row = this.shadowRoot.querySelector('.row');
+    row.style.opacity = this.pending ? '0.5' : '1';
+    row.style.pointerEvents = this.pending ? 'none' : 'auto';
   }
 }
 

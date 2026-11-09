@@ -13,12 +13,13 @@
 
   <!-- Your custom styles (optional) -->
   <link href="static/css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="../static/css/app.css" rel="stylesheet" type="text/css">
+  <link href="static/css/app.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
+  <script src="static/js/reader.js"></script>
   <script src="static/js/app.js" type="module"></script>
-  <script src="../static/js/lib.js" type="module"></script>
+  <script src="static/js/lib.js" type="module"></script>
   <script src="https://embed.small.chat/T02U4DGKYV8C0310KCK7S7.js" async></script>
 
   <header-component data-title="Franck-Hertz" data-time-limit="180" data-enable-ambient-light="false">
@@ -36,7 +37,7 @@
         <p class="manual-title">Variac</p>
       </div>
       <div class="manual">
-        <a class="manual-link" href="../static/docs/Keithley electrometer 6514.pdf" target="_blank">
+        <a class="manual-link" href="static/docs/Keithley electrometer 6514.pdf" target="_blank">
           <img src="./static/imgs/Keithley6514Electrometer.jpg">
         </a>
         <p class="manual-title">Keithly Model 6514 Electrometer</p>
@@ -49,6 +50,7 @@
       </div>
     </div>
   </header-component>
+  <p role="status">Device controls are unavailable on this page; live video only.</p>
   <div class="video-row">
     <video-component data-views='[{"name": "Variac", "id": "camera-1"},{"name": "Tube", "id": "camera-2"},{"name": "Pots", "id": "camera-3"},{"name": "Data","id": "camera-4"}]'></video-component> 
     <resizer-component allow-resize="true"></resizer-component>
@@ -158,7 +160,7 @@
             It is an especially sophisticated instrument that can reliably detect fractions of a picoamp. (1 pA = 10<sup>-12</sup> A)</p>
         </div>
         <div class="tool-interface">
-          <img-map-device map-html-file="../static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
+          <img-map-device map-html-file="static/svg/ElectrometerMap.html" device-name="Electrometer"></img-map-device>
           <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
         </div>
       </div>

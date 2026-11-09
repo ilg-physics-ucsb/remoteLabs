@@ -115,11 +115,12 @@ export class Header extends HTMLElement {
         <div class="text">
           <h1></h1>
           <p class="session-message">This session will end and the motors will reset in <span class="time"></span></p>
+          <p class="queue-status" aria-live="polite"></p>
         </div>
         <div class="button-container">
           <div class="toggle">
             <span class="toggle-label">Turn on ambient light</span>
-            <toggle-component></toggle-component>
+            <toggle-component device-name="Ambient"></toggle-component>
           </div>
         </div>
         <div class="manuals-menu">
@@ -147,6 +148,25 @@ export class Header extends HTMLElement {
     this.manualsSlot = this.shadowRoot.querySelector('slot[name="manuals"]');
     this.closeButton = this.shadowRoot.querySelector('.close');
     this.ambientLightSwitch = this.shadowRoot.querySelector('.toggle');
+    this.handleQueue = (event) => {
+      this.queueState = event.detail;
+      this.renderQueueStatus();
+    };
+    this.handleControl = (event) => {
+      this.hasControl = event.detail?.hasControl === true;
+      this.renderQueueStatus();
+    };
+    this.handleConnectionClosed = () => {
+      this.queueState = null;
+      this.hasControl = false;
+      this.shadowRoot.querySelector('.queue-status').textContent = 'Disconnected from lab; refresh to reconnect.';
+    };
+    window.addEventListener('remla:ownership-queue', this.handleQueue);
+    window.addEventListener('remla:ownership-control', this.handleControl);
+    window.addEventListener('remla:connection-closed', this.handleConnectionClosed);
+    this.queueState = window.remlaJsonLatestQueue || null;
+    this.hasControl = window.remlaJsonLatestControl?.hasControl === true;
+    this.renderQueueStatus();
 
     if (this.manualsButton) {
       this.manualsButton.addEventListener('click', this.handleManualsClick);
@@ -179,6 +199,9 @@ export class Header extends HTMLElement {
   }
 
   disconnectedCallback() {
+    window.removeEventListener('remla:ownership-queue', this.handleQueue);
+    window.removeEventListener('remla:ownership-control', this.handleControl);
+    window.removeEventListener('remla:connection-closed', this.handleConnectionClosed);
     if (this.manualsButton) {
       this.manualsButton.removeEventListener('click', this.handleManualsClick);
     }
@@ -215,6 +238,23 @@ export class Header extends HTMLElement {
 
   getSidenavElement() {
     return this.shadowRoot.querySelector('.manuals-menu');
+  }
+
+  setAmbientLightState(enabled) {
+    this.shadowRoot.querySelector('toggle-component')?.setState(enabled);
+  }
+
+  renderQueueStatus() {
+    const status = this.shadowRoot.querySelector('.queue-status');
+    const queue = this.queueState;
+    if (queue?.position != null) {
+      status.textContent = `Queue position ${queue.position} of ${queue.waitingCount}`;
+    } else if (this.hasControl && queue) {
+      const count = queue.waitingCount;
+      status.textContent = count ? `${count} ${count === 1 ? 'person' : 'people'} waiting` : 'You have control';
+    } else if (queue) {
+      status.textContent = queue.hasActiveOwner ? 'Waiting for lab control' : 'Waiting for lab to be ready';
+    }
   }
 
   startSessionTimer(minutes) {

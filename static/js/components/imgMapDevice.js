@@ -28,6 +28,11 @@ export class imgMapDevice extends HTMLElement {
           fill: bisque;
           fill-opacity: 0.75;
         }
+
+        :host([data-command-pending]) .image-map-device {
+          pointer-events: none;
+          opacity: 0.5;
+        }
       </style>
 
       <div class="image-map-device" style="text-align: center"></div>
@@ -58,14 +63,27 @@ export class imgMapDevice extends HTMLElement {
       .then((svgText) => {
         target.innerHTML = svgText;
         target.addEventListener('click', (event) => {
+          if (this.hasAttribute('data-command-pending')) {
+            return;
+          }
           const control = event.target instanceof Element ? event.target.closest('[data-cmd]') : null;
           if (!control) {
             return;
           }
 
           const buttonValue = control.getAttribute('data-cmd');
-          const deviceCommand = `${deviceName}/${buttonValue}`
+          if (!buttonValue || !deviceName) {
+            return;
+          }
+          const deviceCommand = `${deviceName}/${buttonValue}`;
           this.emit(deviceCommand);
+          const [commandName, ...commandArguments] = buttonValue.split('/');
+          const command = { deviceName, commandName, arguments: commandArguments };
+          if (this.hasAttribute('lock-while-commanding')) {
+            this.setPending(true);
+            command.source = this;
+          }
+          window.dispatchEvent(new CustomEvent('remla-command', { detail: command }));
         });
       })
       .catch((error) => {
@@ -78,6 +96,10 @@ export class imgMapDevice extends HTMLElement {
     const imgMapEvent = new CustomEvent('imgMapDeviceEvent', { detail: { value: value } });
     window.dispatchEvent(imgMapEvent);
     console.log(value);
+  }
+
+  setPending(pending) {
+    this.toggleAttribute('data-command-pending', pending);
   }
 }
 

@@ -58,6 +58,38 @@ $("document").ready(function () {
     mcameraControl = $("#ModalCamera")[0]
     cartDisplay = $("#cartVal")[0]
     cartSlider = $('#cartSlider')[0]
+    var queueStatus = document.getElementById('queue-status');
+    var queueState = window.remlaJsonLatestQueue || null;
+    var hasControl = window.remlaJsonLatestControl?.hasControl === true;
+
+    function renderQueueStatus() {
+        if (queueState?.position != null) {
+            queueStatus.textContent = `Queue position ${queueState.position} of ${queueState.waitingCount}`;
+        } else if (hasControl && queueState) {
+            var count = queueState.waitingCount;
+            queueStatus.textContent = count ? `${count} ${count === 1 ? 'person' : 'people'} waiting` : 'You have control';
+        } else if (queueState) {
+            queueStatus.textContent = queueState.hasActiveOwner ? 'Waiting for lab control' : 'Waiting for lab to be ready';
+        }
+    }
+    window.addEventListener("remla:ownership-queue", function(event) {
+        queueState = event.detail;
+        renderQueueStatus();
+    });
+    window.addEventListener("remla:ownership-control", function(event) {
+        hasControl = event.detail?.hasControl === true;
+        renderQueueStatus();
+    });
+    window.addEventListener("remla:connection-closed", function() {
+        queueState = null;
+        hasControl = false;
+        queueStatus.textContent = 'Disconnected from lab; refresh to reconnect.';
+    });
+    renderQueueStatus();
+
+    function reportCommandError(error) {
+        console.error("ReMLA command failed", error);
+    }
 
   
 //for modal
@@ -66,11 +98,10 @@ $("document").ready(function () {
 
     loadingModal.on("shown.bs.modal", function(e){
         intervalId = setInterval(function() {
-            if(!dataChannel){
+            if(!window.remlaJsonConnected){
                 return
             }    
-            //Run when all mwraps exist.
-            viewCam.click()
+            // Do not issue a camera switch merely because a viewer connected.
             console.log("hiding modal")
             //Hide Loading Screen
             loadingModal.modal("hide")
@@ -85,7 +116,7 @@ $("document").ready(function () {
 
 
     // OffCam.addEventListener('click', function() {
-    //     dataChannel.send("Camera/camera/off")
+    //     remlaCommand("Camera", "camera", ["off"])
     // })
 
     //for Time Limit
@@ -161,6 +192,31 @@ $("document").ready(function () {
     var FarClose = document.getElementById('farClose');
     var WideThin = document.getElementById('wideThin');
     var ThreeTwo = document.getElementById('threeTwo');
+
+    var slitSelectionQueue = Promise.resolve();
+
+    function selectSlit(type, selection) {
+        slitSelectionQueue = slitSelectionQueue.then(async function() {
+            var activeDevice = type == "single" ? "SingleSlits" : "MultiSlits";
+            var inactiveDevice = type == "single" ? "MultiSlits" : "SingleSlits";
+            var inactiveSelection = type == "single" ? "MultiOpen" : "SingleOpen";
+            await remlaCommand(inactiveDevice, "goto", [inactiveSelection]);
+            await remlaCommand(activeDevice, "goto", [selection]);
+            lastSlit = type;
+        }).catch(reportCommandError);
+    }
+
+    function queueSlitNudge(singleSteps, multiSteps) {
+        slitSelectionQueue = slitSelectionQueue.then(async function() {
+            if (lastSlit == "single") {
+                await remlaCommand("SingleSlits", "move", [singleSteps]);
+            } else if (lastSlit == "multi") {
+                await remlaCommand("MultiSlits", "move", [multiSteps]);
+            } else {
+                console.log("No slit to move yet.");
+            }
+        }).catch(reportCommandError);
+    }
     
 
     //for Screen
@@ -180,6 +236,7 @@ $("document").ready(function () {
     var lightSwitch = document.getElementById('lightSwitch');
     var AmbientTOGGLE = document.getElementById('ambientTOGGLE');
     var AmbientState = false;
+    var ambientCommandPending = false;
 
     // for Nudging Slits
     var nudgeUp = document.getElementById("up")
@@ -195,33 +252,172 @@ $("document").ready(function () {
     var moveStageTo = 0;
     var currValue = cartSlider.value;
     var prevValue;
+    var stageMovePending = false;
+
+    function setStageControlsPending(isPending) {
+        var pointerEvents = isPending ? "none" : "auto";
+        stageCloser.style.pointerEvents = pointerEvents;
+        stageFarther.style.pointerEvents = pointerEvents;
+        cartSlider.disabled = isPending;
+    }
+
+    async function requestStageMove(steps, onSuccess, onFailure) {
+        if (stageMovePending) {
+            return;
+        }
+        stageMovePending = true;
+        setStageControlsPending(true);
+        try {
+            await remlaCommand("Stage", "move", [steps]);
+            onSuccess();
+        } catch (error) {
+            if (onFailure) {
+                onFailure();
+            }
+            reportCommandError(error);
+        } finally {
+            stageMovePending = false;
+            setStageControlsPending(false);
+            stageModal.modal("hide");
+        }
+    }
 
     //for Laser Power
     //UNCOMMENT WHEN ADDED -- THEN MOVE EVENT LISTENER DOWN TO PROPER LOCATION
     var laser = document.getElementById("laserSwitch")
     var laserState = false;
     laser.style.opacity=0.2;
+    var pendingPowerCommand = null;
+
+    function setPowerControlsPending(isPending) {
+        var pointerEvents = isPending ? "none" : "auto";
+        laser.style.pointerEvents = pointerEvents;
+        screenWhite.style.pointerEvents = pointerEvents;
+        screenClear.style.pointerEvents = pointerEvents;
+    }
+
+    function applyPowerResult(commandName, target) {
+        if (commandName == "off" && target == "Screen") {
+            TransparencyOff.style.display = "block";
+            TransparencyOn.style.display = "none";
+        } else if (commandName == "on" && target == "Screen") {
+            TransparencyOff.style.display = "none";
+            TransparencyOn.style.display = "block";
+        } else if (commandName == "off" && target == "Laser") {
+            laserState = false;
+            laser.style.opacity = 0.2;
+        } else if (commandName == "on" && target == "Laser") {
+            laserState = true;
+            laser.style.opacity = 1;
+        }
+    }
+
+    function applyAmbientState(state) {
+        AmbientState = state === "on" || state === true;
+        AmbientTOGGLE.title = AmbientState ? "Click here to turn OFF" : "Click here to turn ON";
+        lightSwitch.style.transform = AmbientState ? "rotate(180deg)" : "rotate(0deg)";
+    }
+
+    function applyRemoteState(devices) {
+        if (devices.Laser && devices.Laser.power) {
+            applyPowerResult(devices.Laser.power, "Laser");
+        }
+        if (devices.Screen && devices.Screen.power) {
+            applyPowerResult(devices.Screen.power, "Screen");
+        }
+        if (typeof devices.Ambient === "string") {
+            applyAmbientState(devices.Ambient);
+        }
+    }
+
+    async function requestPowerCommand(commandName, target) {
+        if (pendingPowerCommand) {
+            return;
+        }
+        var previousState = target === "Laser" ? (laserState ? "on" : "off")
+            : (TransparencyOn.style.display === "block" ? "on" : "off");
+        pendingPowerCommand = { commandName, target };
+        setPowerControlsPending(true);
+        applyPowerResult(commandName, target);
+        try {
+            await remlaCommand(target, "power_" + commandName, []);
+        } catch (error) {
+            applyPowerResult(window.remlaJsonLatestState?.devices?.[target]?.power || previousState, target);
+            console.error("Power command failed", error);
+            laser.title = "Power command failed. Try again.";
+            screenWhite.title = "Power command failed. Try again.";
+            screenClear.title = "Power command failed. Try again.";
+        } finally {
+            pendingPowerCommand = null;
+            setPowerControlsPending(false);
+        }
+    }
  
     //for Snapshot 
     var snapShot = document.getElementById("pushButton")
+
+    window.addEventListener("remla:state-snapshot", function(event) {
+        applyRemoteState(event.detail.devices);
+    });
+
+    window.addEventListener("remla:state-changed", function(event) {
+        applyRemoteState(event.detail.devices);
+    });
+
+    window.addEventListener("remla:event", function(event) {
+        const { name, data } = event.detail;
+        if ((name === "message" || name === "alert") && typeof data?.message === "string") {
+            controllerResponseHandler(data.message);
+        }
+    });
+
+    if (window.remlaJsonLatestState) {
+        applyRemoteState(window.remlaJsonLatestState.devices);
+    }
+
+    async function handleOwnershipHandoff() {
+        window.remlaJsonPendingHandoff = null;
+        var continueWithoutReset = window.confirm(
+            "The previous controller disconnected. Select OK to continue, or Cancel to reset the lab before taking control.",
+        );
+        try {
+            await remlaCommand("Experiment", "handoff", {
+                choice: continueWithoutReset ? "continue" : "reset",
+            });
+        } catch (error) {
+            reportCommandError(error);
+        }
+    }
+
+    window.addEventListener("remla:ownership-handoff", handleOwnershipHandoff);
+    if (window.remlaJsonPendingHandoff) {
+        handleOwnershipHandoff();
+    }
     
 
     //BEGIN Switches 
     //BEGIN Ambient Toggling 
      
-    AmbientTOGGLE.addEventListener('click', function(){
+    AmbientTOGGLE.addEventListener('click', async function(){
+        if (ambientCommandPending) {
+            return;
+        }
         console.log("Ambient light was switched");
-        if(AmbientState){
-            dataChannel.send("Ambient/off/")            //use this command with GPIO
-            AmbientState=false;
-            AmbientTOGGLE.title="Click here to turn ON";
-            lightSwitch.style.transform='rotate(0deg)';
-                     }
-        else{
-            dataChannel.send("Ambient/on/")                 //use this command with GPIO
-            AmbientState=true;
-            AmbientTOGGLE.title="Click here to turn OFF";
-            lightSwitch.style.transform='rotate(180deg)';
+        var nextState = !AmbientState;
+        var previousState = AmbientState;
+        ambientCommandPending = true;
+        AmbientTOGGLE.style.pointerEvents = "none";
+        applyAmbientState(nextState);
+        try {
+            await remlaCommand("Ambient", nextState ? "on" : "off", [])
+        } catch (error) {
+            applyAmbientState(window.remlaJsonLatestState?.devices?.Ambient === "on" ||
+                (window.remlaJsonLatestState?.devices?.Ambient == null && previousState));
+            reportCommandError(error);
+            return;
+        } finally {
+            ambientCommandPending = false;
+            AmbientTOGGLE.style.pointerEvents = "auto";
         }
     })
 
@@ -263,32 +459,24 @@ $("document").ready(function () {
         console.log("Screen power was turned off, thus the screen is opaque");
         // if (!eyeFirstClick) {
         //     eyeFirstClick = false
-        //     dataChannel.send("Screen/off/");
+        //     remlaCommand("Screen", "off", []);
         //     console.log("Eye clicked for the first time")
         // }  
-        dataChannel.send("ASDIpdu/off/Screen");
-        TransparencyOff.style.display = "block";                      
-        TransparencyOn.style.display = "none";  
+        requestPowerCommand("off", "Screen");
     })
     screenClear.addEventListener('click', function(){        
         console.log("Screen power was turned on, thus the screen is clear");         
-        dataChannel.send("ASDIpdu/on/Screen");
-        TransparencyOff.style.display = "none";                      
-        TransparencyOn.style.display = "block"; 
+        requestPowerCommand("on", "Screen");
     })
 
     //BEGIN Laser
     laser.addEventListener("click", function() {
         if (laserState) {
             console.log("Laser was turned off")
-            dataChannel.send("ASDIpdu/off/Laser")
-            laserState = false;
-            laser.style.opacity=0.2;
+            requestPowerCommand("off", "Laser")
         } else {
             console.log("Laser was turned on")
-            dataChannel.send("ASDIpdu/on/Laser")
-            laserState = true;
-            laser.style.opacity=1;
+            requestPowerCommand("on", "Laser")
         }
     })
    //END Laser
@@ -307,93 +495,67 @@ $("document").ready(function () {
     A02.addEventListener('click', function(event) {
         console.log("A02 was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/A02");
-        lastSlit = "single"
+        selectSlit("single", "A02");
     })
     A04.addEventListener('click', function(event) {
         console.log("A04 was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/A04");
-        lastSlit = "single"
+        selectSlit("single", "A04");
     })
     A08.addEventListener('click', function(event) {
         console.log("A08 was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/A08");
-        lastSlit = "single"
+        selectSlit("single", "A08");
     })
     A16.addEventListener('click', function(event) {
         console.log("A16 was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/A16");
-        lastSlit = "single"
+        selectSlit("single", "A16");
     })
     VaryWidth.addEventListener('click', function(event) {
         console.log("Variable Width Slit was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/VaryWidth");
-        lastSlit = "single"
+        selectSlit("single", "VaryWidth");
     })
     SingleOpen.addEventListener('click', function(event) {
         console.log("SingleOpen was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        lastSlit = "single"
+        selectSlit("single", "SingleOpen");
     })
     LineSlit.addEventListener('click', function(event) {
         console.log("Line+Slit was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/LineSlit");
-        lastSlit = "single"
+        selectSlit("single", "LineSlit");
     })
     LittleHole.addEventListener('click', function(event) {
         console.log("Little hole was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/LittleHole");
-        lastSlit = "single"
+        selectSlit("single", "LittleHole");
     })
     BigHole.addEventListener('click', function(event) {
         console.log("Big hole was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/BigHole");
-        lastSlit = "single"
+        selectSlit("single", "BigHole");
     })
     Square.addEventListener('click', function(event) {
         console.log("Square grid was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/Square");
-        lastSlit = "single"
+        selectSlit("single", "Square");
     })
     Hex.addEventListener('click', function(event) {
         console.log("Hexagonal grid was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/Hex");
-        lastSlit = "single"
+        selectSlit("single", "Hex");
     })
     Dots.addEventListener('click', function(event) {
         console.log("Random dots was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/Dots");
-        lastSlit = "single"
+        selectSlit("single", "Dots");
     })
     Holes.addEventListener('click', function(event) {
         console.log("Random holes was clicked");
         event.stopPropagation();
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        dataChannel.send("SingleSlits/goto/Holes");
-        lastSlit = "single"
+        selectSlit("single", "Holes");
     })
 }
    // END Single Slite Wheel Buttons
@@ -403,114 +565,96 @@ $("document").ready(function () {
     A04D25.addEventListener('click', function(event) {
         console.log("a=0.04, d=0.25 was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/A04D25");
-        lastSlit = "multi"
+        selectSlit("multi", "A04D25");
     })
     A04D50.addEventListener('click', function(event) {
         console.log("a=0.04, d=0.50 was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/A04D50");
-        lastSlit = "multi"
+        selectSlit("multi", "A04D50");
     })
     A08D25.addEventListener('click', function(event) {
         console.log("a=0.08, d=0.25 was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/A08D25");
-        lastSlit = "multi"
+        selectSlit("multi", "A08D25");
     })
     A08D50.addEventListener('click', function(event) {
         console.log("a=0.08, d=0.50 was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/A08D50");
-        lastSlit = "multi"
+        selectSlit("multi", "A08D50");
     })
     varySpacing.addEventListener('click', function(event) {
         console.log("Variable Slit Spacing was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/VarySpacing");
-        lastSlit = "multi"
+        selectSlit("multi", "VarySpacing");
     })
     TwoSlit.addEventListener('click', function(event) {
         console.log("2 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/TwoSlit");
-        lastSlit = "multi"
+        selectSlit("multi", "TwoSlit");
     })
     ThreeSlit.addEventListener('click', function(event) {
         console.log("3 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/ThreeSlit");
-        lastSlit = "multi"
+        selectSlit("multi", "ThreeSlit");
     })
     FourSlit.addEventListener('click', function(event) {
         console.log("4 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/FourSlit");
-        lastSlit = "multi"
+        selectSlit("multi", "FourSlit");
     })
     FiveSlit.addEventListener('click', function(event) {
         console.log("5 slits was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/FiveSlit");
-        lastSlit = "multi"
+        selectSlit("multi", "FiveSlit");
     })
     MultiOpen.addEventListener('click', function(event) {
         console.log("2 slits vs 1 slit was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/MultiOpen");
-        lastSlit = "multi"
+        selectSlit("multi", "MultiOpen");
     })
     FarClose.addEventListener('click', function(event) {
         console.log("Comparison of slit separations was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/FarClose");
-        lastSlit = "multi"
+        selectSlit("multi", "FarClose");
     })
     WideThin.addEventListener('click', function(event) {
         console.log("Wide slit vs thin slit was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/WideThin");
-        lastSlit = "multi"
+        selectSlit("multi", "WideThin");
     })
     ThreeTwo.addEventListener('click', function(event) {
         console.log("3 slits vs 2 slit was clicked");
         event.stopPropagation();
-        dataChannel.send("SingleSlits/goto/SingleOpen");
-        dataChannel.send("MultiSlits/goto/ThreeTwo");
-        lastSlit = "multi"
+        selectSlit("multi", "ThreeTwo");
     })
 }
     // END Single Slite Wheel Buttons
 
     // BEGIN Stage Motion
     stageCloser.addEventListener('click', function() {
+        if (stageMovePending) {
+            return;
+        }
         console.log("Stage moved closer to slits.")
-        moveStageTo = Math.round(currValue - ((stageSteps*100)/9750))
-        dataChannel.send("Stage/move/" + (-stageSteps))
-        cartSlider.value = moveStageTo
-        cartDisplay.innerHTML = cartSlider.value
-        currValue = cartSlider.value
+        var nextStagePosition = Math.round(currValue - ((stageSteps*100)/9750))
+        requestStageMove(-stageSteps, function() {
+            cartSlider.value = nextStagePosition
+            cartDisplay.innerHTML = cartSlider.value
+            currValue = cartSlider.value
+        })
     })
 
     stageFarther.addEventListener('click', function() {
+        if (stageMovePending) {
+            return;
+        }
         console.log("Stage moved farther from slits.")
-        moveStageTo = Math.round(+currValue+((stageSteps*100)/9750))
-        dataChannel.send("Stage/move/" + stageSteps)
-        cartSlider.value = moveStageTo
-        cartDisplay.innerHTML = cartSlider.value
-        currValue = cartSlider.value
+        var nextStagePosition = Math.round(+currValue+((stageSteps*100)/9750))
+        requestStageMove(stageSteps, function() {
+            cartSlider.value = nextStagePosition
+            cartDisplay.innerHTML = cartSlider.value
+            currValue = cartSlider.value
+        })
     })
 
     getCartSliderValue = function(){
@@ -519,14 +663,23 @@ $("document").ready(function () {
     }
 
     setCart = function(){
+        if (stageMovePending) {
+            return;
+        }
         console.log("move cart to "+cartSlider.value)
-        moveStageTo = Math.round(9750*((cartSlider.value-prevValue)/100))
-        if (Math.abs(moveStageTo) > 9750/6) {
+        var requestedPosition = cartSlider.value
+        var requestedMove = Math.round(9750*((requestedPosition-prevValue)/100))
+        if (Math.abs(requestedMove) > 9750/6) {
             console.log("Show Modal")
             showStageModal()
         }
-        dataChannel.send("Stage/move/"+ moveStageTo)
-        currValue = cartSlider.value
+        requestStageMove(requestedMove, function() {
+            currValue = requestedPosition
+        }, function() {
+            cartSlider.value = prevValue
+            cartDisplay.innerHTML = prevValue
+            currValue = prevValue
+        })
     }
 
     async function showStageModal() {
@@ -544,27 +697,11 @@ $("document").ready(function () {
     // BEGIN Nudge of Slits
     // Motion defined with respect looking at face
     nudgeUp.addEventListener("click", function() {
-        if (lastSlit == "single") {
-            console.log("Nudging Single Slit Up")
-            dataChannel.send("SingleSlits/move/" + (-nudgeSingleSteps))
-        } else if (lastSlit == "multi") {
-            console.log("Nudging Multi Slit Up")
-            dataChannel.send("MultiSlits/move/" + nudgeSteps)
-        } else {
-            console.log("No slit to move yet.")
-        }
+        queueSlitNudge(-nudgeSingleSteps, nudgeSteps)
     })
 
     nudgeDown.addEventListener("click", function() {
-        if (lastSlit == "single") {
-            console.log("Nudging Single Slit Down")
-            dataChannel.send("SingleSlits/move/" + nudgeSingleSteps)
-        } else if (lastSlit == "multi") {
-            console.log("Nudging Multi Slit Down")
-            dataChannel.send("MultiSlits/move/" + (-nudgeSteps))
-        } else {
-            console.log("No slit to move yet.")
-        }
+        queueSlitNudge(nudgeSingleSteps, -nudgeSteps)
     })
     // END Nudge of Slits
 
@@ -596,8 +733,12 @@ $("document").ready(function () {
             console.log("Skipping unsupported camera setting " + setting)
             return
         }
-        dataChannel.send("Camera/imageMod/" + setting + "," + newValue)
-        currentCameraSettings[setting] = newValue
+        try {
+            await remlaCommand("Camera", "imageMod", [setting, newValue])
+            currentCameraSettings[setting] = newValue
+        } catch (error) {
+            reportCommandError(error)
+        }
     }
 
     async function updateManyCameraSettings(currentSettings, newSettings) {
@@ -606,8 +747,7 @@ $("document").ready(function () {
             var oldValue = currentSettings[setting]
             if (newValue !== oldValue) {
                 console.log("Updating " + setting)
-                updateCameraSetting(setting, newValue)
-                await sleep(50)
+                await updateCameraSetting(setting, newValue)
             }
         }
 
@@ -635,7 +775,7 @@ $("document").ready(function () {
     setExposure = function(){
         updateCameraSetting("exposuretime", exposureSlider.value)
         screenCameraSettings["exposuretime"] = exposureSlider.value
-        // dataChannel.send("Camera/imageMod/exposuretime,"+exposureSlider.value)
+        // remlaCommand("Camera", "imageMod", ["exposuretime", exposureSlider.value])
     }
     
     exposureValue = function(){
@@ -646,7 +786,7 @@ $("document").ready(function () {
         const value = sliderNumber(brightnessSlider)
         updateCameraSetting("brightness", value)
         screenCameraSettings["brightness"] = value
-        // dataChannel.send("Camera/imageMod/brightness,"+value)
+        // remlaCommand("Camera", "imageMod", ["brightness", value])
     }
     
     brightnessValue = function(){
@@ -657,7 +797,7 @@ $("document").ready(function () {
         const value = sliderNumber(contrastSlider)
         updateCameraSetting("contrast", value)
         screenCameraSettings["contrast"] = value
-        // dataChannel.send("Camera/imageMod/contrast,"+value)
+        // remlaCommand("Camera", "imageMod", ["contrast", value])
     }
     
     contrastValue = function(){
@@ -667,31 +807,43 @@ $("document").ready(function () {
 
 
 
-    viewCam.addEventListener("click", function() {
+    viewCam.addEventListener("click", async function() {
         console.log("Switched to view cam")
-        dataChannel.send("Camera/camera/b")
-        // await sleep(100);
-        updateManyCameraSettings(currentCameraSettings, cameraDefaults) 
+        try {
+            await remlaCommand("Camera", "cameraName", ["view"])
+            await updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        } catch (error) {
+            reportCommandError(error)
+            return
+        }
         liveStream.style.transform = "rotate(0deg)"
         // cameraControl.style.display = "None"
         mcameraControl.style.display = "None"
     })
 
-    rulerCam.addEventListener("click", function() {
+    rulerCam.addEventListener("click", async function() {
         console.log("Switched to ruler cam")
-        dataChannel.send("Camera/camera/a") //Needs to be updated to proper camera
-        // await sleep(100)
-        updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        try {
+            await remlaCommand("Camera", "cameraName", ["ruler"])
+            await updateManyCameraSettings(currentCameraSettings, cameraDefaults)
+        } catch (error) {
+            reportCommandError(error)
+            return
+        }
         liveStream.style.transform = "rotate(0deg)"
         // cameraControl.style.display = "None"
         mcameraControl.style.display = "None"
     })
 
-    screenCam.addEventListener("click", function() {
+    screenCam.addEventListener("click", async function() {
         console.log("Switched to screen cam")
-        dataChannel.send("Camera/camera/c")
-        // await sleep(100)
-        updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
+        try {
+            await remlaCommand("Camera", "cameraName", ["screen"])
+            await updateManyCameraSettings(currentCameraSettings, screenCameraSettings)
+        } catch (error) {
+            reportCommandError(error)
+            return
+        }
         // cameraControl.style.display = "Block"
         mcameraControl.style.display = "Block"
     })
@@ -799,7 +951,7 @@ $("document").ready(function () {
         // // TEMP CHANGE
         // mainCamSignal.hangup();
         // // TEMP CHANGE
-        dataChannel.close();
+        window.remlaJson.socket?.close();
     })
   
 //   console.log('mapster calls have been made');
