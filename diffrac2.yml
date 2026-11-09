@@ -75,19 +75,31 @@ devices:
     type: PDUOutlet
     hostname: "asdipdu.inst.physics.ucsb.edu"
     userid: "admin"
-    password: "5tgb567ujnb"
+    password: ${secret:asdipdu-password}
     outlets:
       - 5
       - 6
     outletMap:
       Laser: 5
       Screen: 6
+  Laser:
+    type: PowerConsumer
+    power:
+      provider: ASDIpdu
+      outlet: Laser
+  Screen:
+    type: PowerConsumer
+    power:
+      provider: ASDIpdu
+      outlet: Screen
 
 locks:
   camera:
     - Camera
   pdu:
     - ASDIpdu
+    - Laser
+    - Screen
   multislits:
     - MultiSlits
   singleslits:
