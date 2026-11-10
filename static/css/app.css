@@ -126,6 +126,34 @@ tool-detail-component .tool div {
   justify-content: center;
 }
 
+/* Opt-in wheel panels bound both dimensions; other instrument maps keep their layout. */
+tool-detail-component .wheel-tool {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.wheel-tool .tool-heading {
+  box-sizing: border-box;
+  flex: 0 1 30%;
+  height: auto;
+  min-height: 0;
+}
+
+.wheel-tool .tool-interface {
+  box-sizing: border-box;
+  flex: 1 1 0;
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.wheel-tool img-map-device[fit-panel] {
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+}
+
 /* Instructions */
 .tool-instruction {
   text-align: center;
@@ -221,5 +249,12 @@ video-component {
 
   tool-detail-component {
     margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .video-row tool-detail-component.wheel-containing-tools {
+    flex-shrink: 0;
+    min-height: 380px;
   }
 }

@@ -127,7 +127,7 @@
   <div class="video-row">
     <video-component data-views='[]'></video-component> <!-- [{ "name": "Camera 1", "id": "camera-1" }, { "name": "Camera 2", "id": "camera-2"}] -->
     <resizer-component allow-resize="true"></resizer-component>
-    <tool-detail-component>
+    <tool-detail-component class="wheel-containing-tools">
       <div class="tool" id="mercury-neon-lamp">
         <div class="tool-heading">
           <img class="tool-header-img" src="./static/imgs/transparent-imgs/penray-lamp.png" alt="photo of Hg-Ne Pen Ray Lamp" style="max-width: 100%; height: auto; display: block;">
@@ -185,7 +185,7 @@
           <p class="tool-instruction">Click any button in the image above to press it on the device.</p>
         </div>
       </div>
-      <div class="tool" id="density-wheel">
+      <div class="tool wheel-tool" id="density-wheel">
        <div class="tool-heading">
           <h2 class="tool-title">ThorLabs® Absorptive Neutral Density Filters</h2>
           <p class="tool-description">A neutral density (ND) filter attenuates light uniformly across a wide range of wavelengths. 
@@ -193,10 +193,10 @@
        </div>
        <div class="tool-interface">
           <p class="tool-instruction">Click on a filter to rotate it into position.</p>
-          <img-map-device lock-while-commanding map-html-file="static/svg/DensityWheelMap.html" device-name="densityWheel"></img-map-device>
+           <img-map-device fit-panel lock-while-commanding map-html-file="static/svg/DensityWheelMap.html" device-name="densityWheel"></img-map-device>
        </div>
       </div>
-      <div class="tool" id="filter-wheel">
+      <div class="tool wheel-tool" id="filter-wheel">
         <div class="tool-heading">
           <h2 class="tool-title">Edumund Optics® Bandpass Interference Filters</h2>
           <p class="tool-description">This device places one of four different bandpass filters in front of the Hg-discharge lamp, 
@@ -204,7 +204,7 @@
         </div>
        <div class="tool-interface">
           <p class="tool-instruction">Click on a filter to rotate it into position.</p>
-          <img-map-device lock-while-commanding map-html-file="static/svg/FilterWheelMap.html" device-name="colorWheel"></img-map-device>
+           <img-map-device fit-panel lock-while-commanding map-html-file="static/svg/FilterWheelMap.html" device-name="colorWheel"></img-map-device>
         </div>
       </div>
     </tool-detail-component>

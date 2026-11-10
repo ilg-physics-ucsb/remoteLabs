@@ -51,7 +51,7 @@ class PhotoelectricJsonFrontendTests(unittest.TestCase):
                             and attrs.get("intervals") == "[3.6, 36, 360]"
                             for tag, attrs in page.elements))
 
-    def run_browser(self, scenario):
+    def run_browser(self, scenario, viewport=None):
         firefox = shutil.which("firefox")
         if not firefox:
             self.skipTest("Firefox is required for real-DOM frontend regressions")
@@ -105,6 +105,7 @@ try {
                 with tempfile.TemporaryDirectory(prefix="frontend-firefox-") as profile:
                     with subprocess.Popen(
                         [firefox, "--headless", "--no-remote", "--profile", profile,
+                         *([f"--width={viewport[0]}", f"--height={viewport[1]}"] if viewport else []),
                          f"http://127.0.0.1:{server.server_port}/__test"],
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                     ) as browser:
@@ -377,6 +378,83 @@ assert(detail.getBoundingClientRect().width > detailBounds.width + 40,
     'tool detail must gain the space released by video resizing');
 row.remove();
 """)
+
+    def test_photoelectric_wheels_fit_panel_and_keep_clickable_hotspots(self):
+        scenario = """
+const stylesheet = document.createElement('link');
+stylesheet.rel = 'stylesheet';
+stylesheet.href = '/static/css/app.css';
+document.head.append(stylesheet);
+await new Promise((resolve, reject) => { stylesheet.onload = resolve; stylesheet.onerror = reject; });
+window.MediaMTXWebRTCReader = class { close() {} };
+await import('/static/js/components/video.js');
+await import('/static/js/components/resizer.js');
+await import('/static/js/components/tool-detail.js');
+await import('/static/js/components/imgMapDevice.js');
+const source = new DOMParser().parseFromString(
+    await (await reportFetch('/PhotoElectricEffect/zindex.html')).text(), 'text/html');
+const row = document.createElement('div');
+row.className = 'video-row';
+row.style.height = innerWidth < 768 ? 'auto' : '440px';
+const tools = ['filter-wheel', 'density-wheel'].map(id => source.querySelector('#' + id).outerHTML);
+row.innerHTML = '<video-component data-views="[]"></video-component>' +
+    '<resizer-component allow-resize="true"></resizer-component>' +
+    '<tool-detail-component class="' + source.querySelector('tool-detail-component').className + '">' +
+    tools.join('') + '</tool-detail-component>';
+document.body.innerHTML = '<div style="height:130px"></div>';
+document.body.append(row);
+document.body.insertAdjacentHTML('beforeend', '<div style="height:75px"></div>');
+const detail = row.querySelector('tool-detail-component');
+if (innerWidth < 768) {
+    row.querySelector('video-component').style.height = '220px';
+}
+const commands = [];
+window.addEventListener('remla-command', event => commands.push(event.detail));
+async function checkWheel(id, hotspot, expectedDevice, expectedArgument) {
+    window.dispatchEvent(new CustomEvent('toolbarSelection', {detail: {toolGroupId: id}}));
+    const tool = row.querySelector('#' + id);
+    const panel = tool.querySelector('.tool-interface');
+    const map = tool.querySelector('img-map-device');
+    await eventually(() => map.shadowRoot.querySelector('svg'));
+    map.scrollIntoView({block: 'center'});
+    const svg = map.shadowRoot.querySelector('svg');
+    const bounds = svg.getBoundingClientRect();
+    const available = panel.getBoundingClientRect();
+    assert(available.height >= 120,
+        `fixture must have a usable panel height: ${JSON.stringify({viewport: innerWidth, row: row.getBoundingClientRect().height, detail: detail.getBoundingClientRect().height, tool: tool.getBoundingClientRect().height, panel: available.height})}`);
+    assert(bounds.width >= 100 && bounds.height >= 100, 'wheel must remain visible');
+    assert(bounds.left >= available.left - 2 && bounds.right <= available.right + 2 &&
+        bounds.top >= available.top - 2 && bounds.bottom <= available.bottom + 2,
+        `wheel must fit panel at ${innerWidth}px: ${JSON.stringify({wheel: [bounds.width,bounds.height,bounds.top,bounds.bottom],panel: [available.width,available.height,available.top,available.bottom]})}`);
+    assert(Math.abs(bounds.width / bounds.height - 622 / 685) < 0.02, 'preserve wheel aspect ratio');
+    const circle = svg.querySelector('#' + hotspot);
+    const hit = circle.getBoundingClientRect();
+    const x = hit.left + hit.width / 2, y = hit.top + hit.height / 2;
+    assert(map.shadowRoot.elementFromPoint(x, y) === circle,
+        'wheel hotspot must be hit-testable after scaling');
+    circle.dispatchEvent(new MouseEvent('click', {bubbles: true, clientX: x, clientY: y}));
+    equal(commands.at(-1).deviceName, expectedDevice);
+    equal(commands.at(-1).arguments, [expectedArgument]);
+    map.setPending(false);
+}
+await checkWheel('filter-wheel', 'f365', 'colorWheel', '0deg');
+await checkWheel('density-wheel', 'nd03', 'densityWheel', '300deg');
+if (innerWidth >= 768) {
+    const video = row.querySelector('video-component');
+    const before = video.getBoundingClientRect().width;
+    const handle = row.querySelector('resizer-component').shadowRoot.querySelector('.handle');
+    const box = handle.getBoundingClientRect();
+    handle.dispatchEvent(new MouseEvent('mousedown', {bubbles: true, clientX: box.left + 2}));
+    window.dispatchEvent(new MouseEvent('mousemove', {clientX: row.getBoundingClientRect().left + row.clientWidth * .48}));
+    window.dispatchEvent(new MouseEvent('mouseup'));
+    assert(Math.abs(video.getBoundingClientRect().width - before) > 30, 'fixture must resize the live row');
+    await checkWheel('filter-wheel', 'f365', 'colorWheel', '0deg');
+    await checkWheel('density-wheel', 'nd03', 'densityWheel', '300deg');
+}
+"""
+        for viewport in ((1200, 800), (650, 800), (375, 667)):
+            with self.subTest(viewport=viewport):
+                self.run_browser(scenario, viewport=viewport)
 
     def test_knob_and_image_map_emit_structured_commands(self):
         self.run_browser("""

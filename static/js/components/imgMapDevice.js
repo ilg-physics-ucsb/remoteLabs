@@ -11,6 +11,21 @@ export class imgMapDevice extends HTMLElement {
           height: auto;
         }
 
+        :host([fit-panel]) .image-map-device {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+        }
+
+        :host([fit-panel]) .image-map-device svg {
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          max-height: 100%;
+        }
+
         .image-map-device .map-button {
           pointer-events: all;
           cursor: pointer;
