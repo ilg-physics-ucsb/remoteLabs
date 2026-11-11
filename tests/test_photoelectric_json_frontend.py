@@ -456,6 +456,118 @@ if (innerWidth >= 768) {
             with self.subTest(viewport=viewport):
                 self.run_browser(scenario, viewport=viewport)
 
+    def test_selected_tools_and_instrument_maps_fill_without_overflow(self):
+        for page, ids in (
+            ('PhotoElectricEffect/zindex.html', ['mercury-neon-lamp', 'electrometer', 'filter-wheel', 'potentiometer']),
+            ('FranckHertz/zindex.html', ['electrometer', 'variac']),
+        ):
+            for viewport in ((1200, 800), (375, 667)):
+                with self.subTest(page=page, viewport=viewport):
+                    self.run_browser('const page = ' + json.dumps(page) + '; const ids = ' +
+                                     json.dumps(ids) + ';\n' + """
+const stylesheet = document.createElement('link');
+stylesheet.rel = 'stylesheet';
+stylesheet.href = '/static/css/app.css';
+document.head.append(stylesheet);
+await new Promise((resolve, reject) => { stylesheet.onload = resolve; stylesheet.onerror = reject; });
+window.MediaMTXWebRTCReader = class { close() {} };
+await import('/static/js/components/video.js');
+await import('/static/js/components/resizer.js');
+await import('/static/js/components/tool-detail.js');
+await import('/static/js/components/imgMapDevice.js');
+await import('/static/js/components/knob.js');
+await import('/static/js/components/toggle.js');
+const source = new DOMParser().parseFromString(
+    await (await reportFetch('/' + page)).text(), 'text/html');
+const row = document.createElement('div');
+row.className = 'video-row';
+row.style.height = innerWidth < 768 ? 'auto' : '320px';
+row.innerHTML = '<video-component data-views="[]"></video-component>' +
+    '<resizer-component allow-resize="true"></resizer-component>' +
+    source.querySelector('tool-detail-component').outerHTML;
+document.body.append(row);
+const detail = row.querySelector('tool-detail-component');
+if (innerWidth < 768) {
+    row.style.width = '343px';
+    row.querySelector('video-component').style.height = '220px';
+    detail.style.height = '380px';
+}
+for (const id of ids) {
+    window.dispatchEvent(new CustomEvent('toolbarSelection', {detail: {toolGroupId: id}}));
+    const tool = detail.querySelector('#' + id);
+    const heading = tool.querySelector('.tool-heading');
+    const panel = tool.querySelector('.tool-interface');
+    const outer = detail.getBoundingClientRect();
+    const bounds = tool.getBoundingClientRect();
+    const head = heading.getBoundingClientRect();
+    const body = panel.getBoundingClientRect();
+    assert(bounds.height >= outer.height - 2, `selected ${id} must fill detail: ${bounds.height}/${outer.height}`);
+    for (const [name, rect] of [['tool', bounds], ['heading', head], ['interface', body]]) {
+        assert(rect.left >= outer.left - 2 && rect.right <= outer.right + 2 &&
+            rect.top >= outer.top - 2 && rect.bottom <= outer.bottom + 2,
+            `${page} ${id} ${name} escaped detail: ${JSON.stringify({outer: [outer.width, outer.height], rect: [rect.width, rect.height, rect.top, rect.bottom]})}`);
+    }
+    const map = panel.querySelector('img-map-device');
+    if (map) {
+        await eventually(() => map.shadowRoot.querySelector('svg'));
+        const svg = map.shadowRoot.querySelector('svg').getBoundingClientRect();
+        assert(svg.width > 0 && svg.height > 0, 'instrument map must remain visible');
+        assert(svg.left >= body.left - 2 && svg.right <= body.right + 2 &&
+            svg.top >= body.top - 2 && svg.bottom <= body.bottom + 2,
+            `${page} ${id} SVG escaped its panel: ${JSON.stringify({svg: [svg.width, svg.height], panel: [body.width, body.height]})}`);
+    }
+    if (heading.scrollHeight > heading.clientHeight + 2) {
+        assert(getComputedStyle(heading).overflowY === 'auto', 'long headings must remain scrollable');
+    }
+    const description = heading.querySelector('.tool-description');
+    if (description) {
+        assert(description.getBoundingClientRect().height > 0, `${page} ${id} description collapsed`);
+    }
+    const knob = panel.querySelector('knob-component');
+    if (knob) {
+        const select = knob.shadowRoot.querySelector('select').getBoundingClientRect();
+        assert(select.height > 0 && select.top >= body.top - 2 && select.bottom <= body.bottom + 2,
+            `${page} ${id} knob step selector must be reachable inside panel: ${JSON.stringify({select: [select.top, select.bottom], panel: [body.top, body.bottom]})}`);
+    }
+}
+""", viewport=viewport)
+
+    def test_full_mobile_pages_keep_toolbar_below_tool_detail(self):
+        for page in ('PhotoElectricEffect/zindex.html', 'FranckHertz/zindex.html'):
+            with self.subTest(page=page):
+                self.run_browser('const page = ' + json.dumps(page) + ';\n' + """
+const stylesheet = document.createElement('link');
+stylesheet.rel = 'stylesheet';
+stylesheet.href = '/static/css/app.css';
+document.head.append(stylesheet);
+await new Promise((resolve, reject) => { stylesheet.onload = resolve; stylesheet.onerror = reject; });
+window.MediaMTXWebRTCReader = class { close() {} };
+const source = new DOMParser().parseFromString(
+    await (await reportFetch('/' + page)).text(), 'text/html');
+document.body.innerHTML = source.body.innerHTML;
+await import('/static/js/components/toggle.js');
+await import('/static/js/components/header.js');
+await import('/static/js/components/video.js');
+await import('/static/js/components/resizer.js');
+await import('/static/js/components/tool-detail.js');
+await import('/static/js/components/toolbar.js');
+assert(innerWidth < 768, `expected mobile breakpoint; got ${innerWidth}px`);
+const row = document.querySelector('.video-row');
+const detail = row.querySelector('tool-detail-component');
+const toolbar = document.querySelector('toolbar-component');
+window.dispatchEvent(new CustomEvent('toolbarSelection', {detail: {
+    toolGroupId: page.startsWith('FranckHertz') ? 'variac' : 'filter-wheel'
+}}));
+const rowBounds = row.getBoundingClientRect();
+const detailBounds = detail.getBoundingClientRect();
+const toolbarBounds = toolbar.getBoundingClientRect();
+assert(detailBounds.height >= 380, 'detail needs its usable mobile height');
+assert(rowBounds.bottom >= detailBounds.bottom - 2,
+    `detail must remain inside the mobile row: ${JSON.stringify({row: rowBounds.bottom, detail: detailBounds.bottom})}`);
+assert(toolbarBounds.top >= detailBounds.bottom - 2,
+    `toolbar must follow, not cover, detail: ${JSON.stringify({toolbar: toolbarBounds.top, detail: detailBounds.bottom})}`);
+""", viewport=(375, 667))
+
     def test_knob_and_image_map_emit_structured_commands(self):
         self.run_browser("""
 await import('/static/js/components/knob.js');

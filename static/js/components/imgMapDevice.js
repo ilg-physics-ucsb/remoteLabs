@@ -6,12 +6,13 @@ export class imgMapDevice extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
-        .image-map-device svg {
-          width: 100%;
-          height: auto;
+        :host {
+          display: block;
+          min-width: 0;
+          min-height: 0;
         }
 
-        :host([fit-panel]) .image-map-device {
+        .image-map-device {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -19,7 +20,7 @@ export class imgMapDevice extends HTMLElement {
           height: 100%;
         }
 
-        :host([fit-panel]) .image-map-device svg {
+        .image-map-device svg {
           width: auto;
           height: auto;
           max-width: 100%;

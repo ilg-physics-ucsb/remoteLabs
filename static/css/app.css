@@ -74,9 +74,17 @@ tool-detail-component .tool div {
 
 /* UPPER Div */
 .tool-heading {
+  box-sizing: border-box;
   padding: 1rem;
-  height: 30%;
+  width: 100%;
+  flex: 0 1 30%;
+  min-height: 0;
+  overflow: auto;
   gap: 1rem;
+}
+
+.tool-heading > * {
+  flex-shrink: 0;
 }
 
 .tool-title,
@@ -98,20 +106,23 @@ tool-detail-component .tool div {
   text-align: center;
 }
 
-/* Description - put this in a left-justified, scrollable textbox with 1rem margins on the left and right*/
+/* Scroll the heading instead of shrinking its description out of view. */
 .tool-description {
-  overflow: scroll;
+  overflow: visible;
 }
 
 /* LOWER Div */
 .tool-interface {
-  width: calc(100% - 2rem);
+  box-sizing: border-box;
+  width: 100%;
   padding: 1rem;
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
-  height: 70%;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
   background-color: var(--tertiary);
-  overflow: scroll;
+  overflow: auto;
   gap: 0.5rem;
   text-align: center;
 }
@@ -121,33 +132,12 @@ tool-detail-component .tool div {
 }
 
 .tool-interface > div {
-  flex: 1 1 0;
-  min-height: 0;
+  flex: 1 0 auto;
+  min-height: max-content;
   justify-content: center;
 }
 
-/* Opt-in wheel panels bound both dimensions; other instrument maps keep their layout. */
-tool-detail-component .wheel-tool {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.wheel-tool .tool-heading {
-  box-sizing: border-box;
-  flex: 0 1 30%;
-  height: auto;
-  min-height: 0;
-}
-
-.wheel-tool .tool-interface {
-  box-sizing: border-box;
-  flex: 1 1 0;
-  height: auto;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.wheel-tool img-map-device[fit-panel] {
+tool-detail-component .tool-interface img-map-device {
   display: block;
   flex: 1 1 0;
   min-width: 0;
@@ -253,8 +243,18 @@ video-component {
 }
 
 @media (max-width: 767px) {
-  .video-row tool-detail-component.wheel-containing-tools {
+  body {
+    height: auto;
+    min-height: 100vh;
+    grid-template-rows: auto auto auto;
+  }
+
+  .video-row video-component {
+    height: clamp(220px, 40vh, 320px);
+  }
+
+  .video-row tool-detail-component {
     flex-shrink: 0;
-    min-height: 380px;
+    height: 380px;
   }
 }
