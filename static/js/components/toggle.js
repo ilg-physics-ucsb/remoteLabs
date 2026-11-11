@@ -10,16 +10,29 @@ export class Toggle extends HTMLElement {
           text-align: center;
         }
         .toggle {
-          display: inline-flex;
-          flex-direction: column;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         img {
           width: 100%;
           height: 100%;
-          max-width: 128px;
-          max-height: 128px;
+          max-width: var(--toggle-fit-max-width, var(--toggle-legacy-max-width, 128px));
+          max-height: var(--toggle-fit-max-height, 128px);
           cursor: pointer;
+        }
+
+        @container tool-control (min-height: 0px) {
+          .toggle {
+            width: 100%;
+            height: 100%;
+          }
+
+          img {
+            width: min(100cqw, calc(100cqh * var(--toggle-ratio, 1)));
+            height: min(100cqh, calc(100cqw * var(--toggle-inverse-ratio, 1)));
+          }
         }
       </style>
 
@@ -46,8 +59,12 @@ export class Toggle extends HTMLElement {
     this.enabled = false; //initialize the toggle state to false (OFF)
 
     this.image = this.shadowRoot.querySelector('#toggle-image'); //"#" is used to select an element by its id. In this case, we are selecting the img element with id "toggleimage" that we defined in the shadow DOM.
+    this.style.setProperty('--toggle-legacy-max-width', this.maxWidth);
+    this.image.addEventListener('load', () => {
+      this.style.setProperty('--toggle-ratio', this.image.naturalWidth / this.image.naturalHeight);
+      this.style.setProperty('--toggle-inverse-ratio', this.image.naturalHeight / this.image.naturalWidth);
+    });
     this.image.src = this.OFFImageUrl; //set the initial image to OFF
-    this.image.style.maxWidth = this.maxWidth;
 
     this.image.addEventListener('click', () => {
       this.toggle();

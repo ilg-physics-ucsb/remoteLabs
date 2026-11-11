@@ -137,6 +137,29 @@ tool-detail-component .tool div {
   justify-content: center;
 }
 
+.tool-interface > p,
+.tool-interface > div > p {
+  flex-shrink: 0;
+}
+
+tool-detail-component .tool-interface toggle-component,
+tool-detail-component .tool-interface knob-component {
+  flex: 1 1 0;
+  min-width: 0;
+  container-type: size;
+  container-name: tool-control;
+}
+
+tool-detail-component .tool-interface toggle-component {
+  min-height: 40px;
+  --toggle-fit-max-width: 100%;
+  --toggle-fit-max-height: 100%;
+}
+
+tool-detail-component .tool-interface knob-component {
+  min-height: 64px;
+}
+
 tool-detail-component .tool-interface img-map-device {
   display: block;
   flex: 1 1 0;
@@ -152,7 +175,7 @@ tool-detail-component .tool-interface img-map-device {
 /* Tool Detail Component */
 tool-detail-component knob-component {
   justify-content: center;
-  display: flex
+  display: flex;
 }
 /* END - Tool Detail Styling*/
 
@@ -239,6 +262,27 @@ video-component {
 
   tool-detail-component {
     margin-top: 0;
+  }
+}
+
+@media (min-width: 1024px) and (min-height: 650px) and (orientation: landscape) {
+  .video-row tool-detail-component {
+    min-width: 360px;
+    min-height: 340px;
+  }
+
+  .tool-heading {
+    flex-basis: 20%;
+    min-height: 52px;
+  }
+
+  .tool-interface {
+    overflow: hidden;
+  }
+
+  .tool-interface > div {
+    flex: 1 1 0;
+    min-height: 0;
   }
 }
 

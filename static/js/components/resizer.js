@@ -35,6 +35,7 @@ export class Resizer extends HTMLElement {
   connectedCallback() {
     const handle = this.shadowRoot.querySelector('.handle');
     const leftElement = document.querySelector('video-component');
+    const rightElement = this.nextElementSibling;
 
     const allowResize = this.getAttribute('allow-resize');
 
@@ -55,18 +56,21 @@ export class Resizer extends HTMLElement {
     let pointerOffset = 0;
     let leftToHandle = 0;
 
-    const rightBoundary = 200;
     const leftBoundary = 200;
 
     const handleResize = (event) => {
-      // If user is close to the edge of the window, exit to prevent the layout from breaking.
-      if (event.clientX < leftBoundary || event.clientX > window.innerWidth - rightBoundary) {
+      if (event.clientX < leftBoundary || !rightElement) {
         return;
       }
 
-      let leftBounding = leftElement.getBoundingClientRect();
+      const leftBounding = leftElement.getBoundingClientRect();
+      const rightBounding = rightElement.getBoundingClientRect();
+      const row = this.parentElement;
+      const gap = parseFloat(getComputedStyle(row).columnGap) || 0;
+      const minimumDetailWidth = parseFloat(getComputedStyle(rightElement).minWidth) || 200;
+      const maximumVideoWidth = rightBounding.right - leftBounding.left - minimumDetailWidth - handle.getBoundingClientRect().width - 2 * gap;
 
-      leftElement.style.width = `${event.clientX - pointerOffset - leftBounding.left - leftToHandle}px`;
+      leftElement.style.width = `${Math.max(leftBoundary, Math.min(event.clientX - pointerOffset - leftBounding.left - leftToHandle, maximumVideoWidth))}px`;
     };
 
     handle.addEventListener('mousedown', (event) => {

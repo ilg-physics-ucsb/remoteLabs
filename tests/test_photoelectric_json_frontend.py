@@ -492,7 +492,7 @@ if (innerWidth < 768) {
     row.querySelector('video-component').style.height = '220px';
     detail.style.height = '380px';
 }
-for (const id of ids) {
+        for (const id of ids) {
     window.dispatchEvent(new CustomEvent('toolbarSelection', {detail: {toolGroupId: id}}));
     const tool = detail.querySelector('#' + id);
     const heading = tool.querySelector('.tool-heading');
@@ -530,6 +530,188 @@ for (const id of ids) {
             `${page} ${id} knob step selector must be reachable inside panel: ${JSON.stringify({select: [select.top, select.bottom], panel: [body.top, body.bottom]})}`);
     }
 }
+""", viewport=viewport)
+
+    def test_switches_and_knobs_fit_control_space_at_both_sizes(self):
+        for page, ids in (
+            ('PhotoElectricEffect/zindex.html', ['mercury-neon-lamp', 'potentiometer']),
+            ('FranckHertz/zindex.html', ['variac', 'accelerating-voltage']),
+        ):
+            with self.subTest(page=page):
+                self.run_browser('const page = ' + json.dumps(page) + '; const ids = ' +
+                                 json.dumps(ids) + ';\n' + """
+const stylesheet = document.createElement('link');
+stylesheet.rel = 'stylesheet';
+stylesheet.href = '/static/css/app.css';
+document.head.append(stylesheet);
+await new Promise((resolve, reject) => { stylesheet.onload = resolve; stylesheet.onerror = reject; });
+await import('/static/js/components/tool-detail.js');
+await import('/static/js/components/knob.js');
+await import('/static/js/components/toggle.js');
+const source = new DOMParser().parseFromString(
+    await (await reportFetch('/' + page)).text(), 'text/html');
+const detail = source.querySelector('tool-detail-component');
+for (const component of detail.querySelectorAll('toggle-component, knob-component')) {
+    for (const attr of ['on-image-url', 'off-image-url', 'knob-image-url']) {
+        if ((page.startsWith('FranckHertz/') || (page.startsWith('PhotoElectricEffect/') && attr === 'knob-image-url')) &&
+                component.hasAttribute(attr) && component.getAttribute(attr)) {
+            component.setAttribute(attr, '/' + page.split('/')[0] + '/' + component.getAttribute(attr));
+        }
+    }
+}
+detail.style.display = 'block';
+document.body.append(detail);
+const within = (inner, outer, label) => assert(
+    inner.width > 0 && inner.height > 0 && inner.left >= outer.left - 2 &&
+    inner.right <= outer.right + 2 && inner.top >= outer.top - 2 && inner.bottom <= outer.bottom + 2,
+    `${page} ${label} escaped: ${JSON.stringify({inner: [inner.x, inner.y, inner.width, inner.height], outer: [outer.x, outer.y, outer.width, outer.height]})}`);
+const measures = {};
+for (const [width, height] of [[460, 560], [290, 440], [150, 780]]) {
+    detail.style.width = width + 'px';
+    detail.style.height = height + 'px';
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    for (const id of ids) {
+        window.dispatchEvent(new CustomEvent('toolbarSelection', {detail: {toolGroupId: id}}));
+        const panel = detail.querySelector('#' + id + ' .tool-interface');
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const area = panel.getBoundingClientRect();
+        for (const instruction of panel.querySelectorAll('p')) {
+            within(instruction.getBoundingClientRect(), area, `${id} instruction`);
+        }
+        for (const toggle of panel.querySelectorAll('toggle-component')) {
+            const available = toggle.getBoundingClientRect();
+            const image = toggle.shadowRoot.querySelector('img');
+            await eventually(() => image.complete && image.naturalWidth > 0 &&
+                toggle.style.getPropertyValue('--toggle-ratio'));
+            const rect = image.getBoundingClientRect();
+            within(available, area, `${id} toggle area`);
+            within(rect, available, `${id} switch hit target`);
+            assert(toggle.shadowRoot.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2) === image,
+                `${id} switch center must be clickable`);
+            const scale = Math.min(available.width / image.naturalWidth, available.height / image.naturalHeight);
+            assert(Math.abs(rect.width - image.naturalWidth * scale) < 3 &&
+                Math.abs(rect.height - image.naturalHeight * scale) < 3,
+                `${id} switch should fit its area uniformly: ${JSON.stringify({rect: [rect.width, rect.height], available: [available.width, available.height], natural: [image.naturalWidth, image.naturalHeight]})}`);
+            measures[`${id}-switch-${width}`] = rect.width * rect.height;
+        }
+        for (const knob of panel.querySelectorAll('knob-component')) {
+            const available = knob.getBoundingClientRect();
+            const row = knob.shadowRoot.querySelector('.row').getBoundingClientRect();
+            const select = knob.shadowRoot.querySelector('select').getBoundingClientRect();
+            const image = knob.shadowRoot.querySelector('img');
+            await eventually(() => image.complete && image.naturalWidth > 0);
+            within(available, area, `${id} knob area`);
+            within(row, available, `${id} knob controls`);
+            within(select, available, `${id} step selector`);
+            const scale = Math.min(available.width / 160, (available.height - select.height - 8) / 97);
+            assert(Math.abs(row.width - 160 * scale) < 12 && Math.abs(row.height - 97 * scale) < 8 &&
+                Math.abs(row.width / row.height - 160 / 97) < 0.02,
+                `${id} knob should fill its remaining area uniformly: ${JSON.stringify({row: [row.width, row.height], available: [available.width, available.height], select: select.height})}`);
+            for (const part of knob.shadowRoot.querySelectorAll('.row > *')) {
+                const target = part.getBoundingClientRect();
+                within(target, row, `${id} knob hit target`);
+                const hit = knob.shadowRoot.elementFromPoint(target.x + target.width / 2, target.y + target.height / 2);
+                assert(part === hit || part.contains(hit), `${id} knob target must remain clickable`);
+            }
+            measures[`${id}-knob-${width}`] = row.width * row.height;
+        }
+    }
+}
+for (const id of ids) {
+    for (const kind of ['switch', 'knob']) {
+        const large = measures[`${id}-${kind}-460`];
+        if (large) for (const smaller of [290, 150]) {
+            assert(large > measures[`${id}-${kind}-${smaller}`] * 1.25,
+                `${id} ${kind} should grow with available space`);
+        }
+    }
+}
+const switchElement = detail.querySelector('toggle-component');
+const events = [];
+window.addEventListener('toggle', event => events.push(event.detail));
+switchElement.shadowRoot.querySelector('img').click();
+equal(events.length, 1);
+const knobElement = detail.querySelector('knob-component');
+const step = knobElement.shadowRoot.querySelector('select');
+step.value = step.options[1].value;
+step.dispatchEvent(new Event('change'));
+window.addEventListener('knob', event => events.push(event.detail));
+knobElement.shadowRoot.querySelector('#up').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+equal(events.length, 2);
+""")
+
+    def test_landscape_tablet_keeps_all_controls_visible_without_scrolling(self):
+        for page, ids in (
+            ('PhotoElectricEffect/zindex.html', ['mercury-neon-lamp', 'potentiometer', 'electrometer', 'filter-wheel']),
+            ('FranckHertz/zindex.html', ['variac', 'accelerating-voltage', 'filament', 'electrometer']),
+        ):
+            for viewport in ((1024, 768), (1200, 800)):
+                with self.subTest(page=page, viewport=viewport):
+                    self.run_browser('const page = ' + json.dumps(page) + '; const ids = ' +
+                                     json.dumps(ids) + ';\n' + """
+const stylesheet = document.createElement('link');
+stylesheet.rel = 'stylesheet';
+stylesheet.href = '/static/css/app.css';
+document.head.append(stylesheet);
+await new Promise((resolve, reject) => { stylesheet.onload = resolve; stylesheet.onerror = reject; });
+window.MediaMTXWebRTCReader = class { close() {} };
+await import('/static/js/components/header.js');
+await import('/static/js/components/video.js');
+await import('/static/js/components/resizer.js');
+await import('/static/js/components/tool-detail.js');
+await import('/static/js/components/imgMapDevice.js');
+await import('/static/js/components/knob.js');
+await import('/static/js/components/toggle.js');
+await import('/static/js/components/toolbar.js');
+const source = new DOMParser().parseFromString(
+    await (await reportFetch('/' + page)).text(), 'text/html');
+if (page.startsWith('FranckHertz/') || page.startsWith('PhotoElectricEffect/')) {
+    for (const element of source.querySelectorAll('[off-image-url], [on-image-url], [knob-image-url], [map-html-file]')) {
+        for (const attr of ['off-image-url', 'on-image-url', 'knob-image-url', 'map-html-file']) {
+            if (element.getAttribute(attr) && (page.startsWith('FranckHertz/') || attr === 'knob-image-url')) {
+                element.setAttribute(attr, '/' + page.split('/')[0] + '/' + element.getAttribute(attr));
+            }
+        }
+    }
+}
+document.body.innerHTML = source.body.innerHTML;
+const row = document.querySelector('.video-row');
+const video = row.querySelector('video-component');
+const detail = row.querySelector('tool-detail-component');
+const handle = row.querySelector('resizer-component').shadowRoot.querySelector('.handle');
+const outer = row.getBoundingClientRect();
+handle.dispatchEvent(new MouseEvent('mousedown', {bubbles: true, clientX: handle.getBoundingClientRect().left + 2}));
+window.dispatchEvent(new MouseEvent('mousemove', {clientX: outer.right - 10}));
+window.dispatchEvent(new MouseEvent('mouseup'));
+for (const id of ids) {
+    window.dispatchEvent(new CustomEvent('toolbarSelection', {detail: {toolGroupId: id}}));
+    const tool = detail.querySelector('#' + id);
+    const heading = tool.querySelector('.tool-heading');
+    const panel = tool.querySelector('.tool-interface');
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    const bounds = panel.getBoundingClientRect();
+    assert(detail.getBoundingClientRect().width >= 350,
+        `resizer must preserve tablet tool width: ${JSON.stringify({viewport: [innerWidth, innerHeight], row: [outer.width, outer.height], detail: detail.getBoundingClientRect().width, minWidth: getComputedStyle(detail).minWidth, video: video.getBoundingClientRect().width})}`);
+    assert(panel.scrollHeight <= panel.clientHeight + 2 && getComputedStyle(panel).overflowY !== 'auto',
+        `${page} ${id} controls must not scroll: ${JSON.stringify({panel: [panel.clientWidth, panel.clientHeight, panel.scrollHeight], detail: [detail.clientWidth, detail.clientHeight], video: video.clientWidth})}`);
+    for (const instruction of panel.querySelectorAll('p')) {
+        const rect = instruction.getBoundingClientRect();
+        assert(rect.top >= bounds.top - 2 && rect.bottom <= bounds.bottom + 2,
+            `${id} instruction must stay visible`);
+    }
+    for (const selector of panel.querySelectorAll('knob-component')) {
+        const select = selector.shadowRoot.querySelector('select').getBoundingClientRect();
+        const arrows = selector.shadowRoot.querySelector('.row').getBoundingClientRect();
+        const image = selector.shadowRoot.querySelector('img');
+        await eventually(() => image.complete && image.naturalWidth > 0);
+        assert(arrows.height >= 30 && select.top >= bounds.top - 2 && arrows.bottom <= bounds.bottom + 2,
+            `${id} knob must remain usable`);
+    }
+    assert(heading.getBoundingClientRect().height > 0, 'description area remains available');
+}
+assert(document.documentElement.scrollWidth <= innerWidth + 2 &&
+    document.documentElement.scrollHeight <= innerHeight + 2,
+    `tablet page must fit viewport: ${JSON.stringify({page: [document.documentElement.scrollWidth, document.documentElement.scrollHeight], viewport: [innerWidth, innerHeight]})}`);
 """, viewport=viewport)
 
     def test_full_mobile_pages_keep_toolbar_below_tool_detail(self):

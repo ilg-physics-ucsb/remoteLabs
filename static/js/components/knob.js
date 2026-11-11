@@ -10,27 +10,48 @@ export class Knob extends HTMLElement {
         .knob {
           display: inline-flex;
           flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
 
         select {
+          box-sizing: border-box;
+          height: 24px;
+          max-width: 100%;
           margin-bottom: 8px;
         }
 
         .row {
           display: flex;
           align-items: center;
-          gap: 8px;
+          flex: 0 0 auto;
+          width: 160px;
+          height: 97px;
+          gap: 5%;
         }
 
         img {
-          width: 60px;
-          height: 60px;
+          width: 37.5%;
+          height: 61.85567%;
+          object-fit: contain;
         }
 
         #up, #down {
-          width: 42px;
-          height: 97px;
+          width: 26.25%;
+          height: 100%;
           cursor: pointer;
+        }
+
+        @container tool-control (min-height: 0px) {
+          .knob {
+            width: 100%;
+            height: 100%;
+          }
+
+          .row {
+            width: min(100cqw, calc((100cqh - 32px) * 160 / 97));
+            height: min(calc(100cqw * 97 / 160), calc(100cqh - 32px));
+          }
         }
 
         #up path, #down path {
