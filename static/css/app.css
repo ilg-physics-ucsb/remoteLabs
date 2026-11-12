@@ -127,6 +127,16 @@ tool-detail-component .tool div {
   text-align: center;
 }
 
+body[data-remla-controls-disabled] tool-detail-component .tool-interface {
+  opacity: 0.45;
+}
+
+body[data-remla-controls-disabled] tool-detail-component .tool-interface toggle-component,
+body[data-remla-controls-disabled] tool-detail-component .tool-interface knob-component,
+body[data-remla-controls-disabled] tool-detail-component .tool-interface img-map-device {
+  pointer-events: none;
+}
+
 .tool-interface p {
   margin: 0;
 }

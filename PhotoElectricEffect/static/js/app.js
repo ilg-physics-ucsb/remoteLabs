@@ -23,6 +23,66 @@ function sendCommand({ deviceName, commandName, arguments: args = [] }) {
 }
 
 let handoffPromptPending = false;
+let handoffCancelled = false;
+let controlState = window.remlaJsonLatestControl || null;
+let queueState = window.remlaJsonLatestQueue || null;
+let queueNoticeShown = false;
+let queueNoticePending = false;
+let queueSession = 0;
+
+function hasControl() {
+  return controlState?.hasControl === true && controlState.lifecycle === 'ready';
+}
+
+function updateControlAvailability() {
+  const disabled = !hasControl();
+  document.body?.toggleAttribute('data-remla-controls-disabled', disabled);
+  document.querySelectorAll('tool-detail-component .tool-interface').forEach(interfaceElement => {
+    interfaceElement.querySelectorAll('toggle-component, knob-component, img-map-device').forEach(control => {
+      control.inert = disabled;
+      control.setAttribute('aria-disabled', String(disabled));
+    });
+  });
+  const header = document.querySelector('header-component');
+  header?.toggleAttribute('data-remla-controls-disabled', disabled);
+  const ambient = header?.shadowRoot?.querySelector('toggle-component[device-name="Ambient"]');
+  if (ambient) {
+    ambient.inert = disabled;
+    ambient.setAttribute('aria-disabled', String(disabled));
+  }
+}
+
+function isWaitingForControl() {
+  return controlState?.hasControl === false && controlState.lifecycle === 'ready'
+    && controlState.handoffRequired !== true && Number.isInteger(queueState?.position)
+    && queueState.position > 0;
+}
+
+async function showQueueNoticeOnJoin() {
+  if (queueNoticeShown || queueNoticePending || !isWaitingForControl()) return;
+  queueNoticePending = true;
+  const session = queueSession;
+  await customElements.whenDefined('alert-dialog');
+  if (session !== queueSession) return;
+  queueNoticePending = false;
+  if (!isWaitingForControl()) return;
+  const dialog = document.querySelector('alert-dialog');
+  if (!dialog) return;
+  queueNoticeShown = true;
+  dialog.show({
+    kind: 'queued-control',
+    title: 'Waiting for control',
+    message: 'You have joined the queue. You cannot control any lab equipment until it is your turn.',
+    severity: 'info',
+  });
+}
+
+function updateQueueState() {
+  if (!isWaitingForControl()) {
+    document.querySelector('alert-dialog')?.dismiss?.('queued-control');
+  }
+  showQueueNoticeOnJoin();
+}
 
 async function handleHandoff() {
   if (handoffPromptPending) {
@@ -30,14 +90,22 @@ async function handleHandoff() {
   }
   handoffPromptPending = true;
   window.remlaJsonPendingHandoff = null;
-  const continueWithoutReset = window.confirm(
-    "The previous controller disconnected. Select OK to continue, or Cancel to reset the lab before taking control.",
-  );
   try {
+    await customElements.whenDefined('alert-dialog');
+    if (handoffCancelled || window.remlaJsonLatestControl?.handoffRequired === false) return;
+    const dialog = document.querySelector('alert-dialog');
+    if (!dialog) throw new Error('The lab handoff dialog is unavailable');
+    const reset = await dialog.confirm({
+      kind: 'handoff',
+      title: 'Lab handoff',
+      message: 'The previous controller disconnected. Do you want to reset the lab before taking control? Yes resets the equipment; No continues without resetting.',
+      severity: 'warning',
+    });
+    if (reset == null || handoffCancelled || window.remlaJsonLatestControl?.handoffRequired === false) return;
     await sendCommand({
       deviceName: "Experiment",
       commandName: "handoff",
-      arguments: { choice: continueWithoutReset ? "continue" : "reset" },
+      arguments: { choice: reset ? "reset" : "continue" },
     });
   } catch (error) {
     console.error("Photoelectric handoff failed", error);
@@ -46,15 +114,43 @@ async function handleHandoff() {
   }
 }
 
-window.addEventListener("remla:ownership-handoff", handleHandoff);
+window.addEventListener('remla:connection-closed', () => {
+  handoffCancelled = true;
+  controlState = null;
+  queueState = null;
+  queueNoticeShown = false;
+  queueNoticePending = false;
+  queueSession++;
+  updateControlAvailability();
+});
+window.addEventListener('remla:ownership-control', (event) => {
+  controlState = event.detail;
+  updateControlAvailability();
+  updateQueueState();
+  if (event.detail?.handoffRequired === false) handoffCancelled = true;
+});
+window.addEventListener('remla:ownership-queue', (event) => {
+  queueState = event.detail;
+  updateQueueState();
+});
+window.addEventListener("remla:ownership-handoff", () => {
+  handoffCancelled = false;
+  handleHandoff();
+});
 if (window.remlaJsonPendingHandoff) {
   handleHandoff();
 }
+updateControlAvailability();
+updateQueueState();
 
 window.addEventListener("DOMContentLoaded", () => {
+  updateControlAvailability();
+  customElements.whenDefined('header-component').then(updateControlAvailability);
+  updateQueueState();
   window.addEventListener("remla-command", async (event) => {
     const source = event.detail.source;
     try {
+      if (event.detail.deviceName !== 'Experiment' && !hasControl()) return;
       await sendCommand(event.detail);
     } catch (error) {
       console.error("Photoelectric command failed", error);

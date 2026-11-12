@@ -50,6 +50,8 @@
                 window.remlaJsonConnected = false;
                 window.remlaJsonLatestQueue = null;
                 window.remlaJsonLatestControl = null;
+                window.remlaJsonPendingHandoff = null;
+                window.remlaJsonPendingAlerts = [];
                 client.pending.forEach((request) => {
                     request.reject(new Error("ReMLA WebSocket disconnected"));
                 });
@@ -69,6 +71,14 @@
                 window.location.reload();
             },
             onEvent: (name, data, meta) => {
+                if (name === "alert" && typeof data?.message === "string") {
+                    if (!window.remlaJsonAlertReady) {
+                        const pending = window.remlaJsonPendingAlerts ||= [];
+                        pending.push(data);
+                        if (pending.length > 10) pending.shift();
+                    }
+                    emit("remla:alert", data);
+                }
                 if (name === "command" && data && typeof data.command === "string") {
                     emitCameraSwitch(data.command);
                 }

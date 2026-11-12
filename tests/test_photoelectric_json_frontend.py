@@ -171,6 +171,43 @@ assert(rejectPending instanceof Error, 'disconnect must reject pending commands'
 equal(pending.size, 0);
 """)
 
+    def test_server_alerts_render_as_safe_dismissible_dialogs_even_if_early(self):
+        page = PageElements((ROOT / 'PhotoElectricEffect/zindex.html').read_text())
+        self.assertEqual(sum(tag == 'alert-dialog' for tag, _ in page.elements), 1)
+        self.run_browser("""
+let handlers;
+window.RemlaJsonSocket = class {
+    constructor(options) { handlers = options.handlers; this.pending = new Map(); }
+    connect() {}
+};
+await import('/static/js/remlaJsonApp.js');
+handlers.onEvent('alert', {severity: 'warning', title: '<img src=x onerror=alert(1)>',
+    message: 'Check <script>unsafe</scr' + 'ipt>'});
+await import('/static/js/components/alert-dialog.js');
+const focusBefore = document.createElement('button');
+document.body.append(focusBefore);
+focusBefore.focus();
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+const root = dialog.shadowRoot;
+assert(dialog.style.display === 'flex', 'early server alert must be replayed');
+assert(root.querySelector('[role="alertdialog"]'), 'alert dialog must have an accessible role');
+equal(root.querySelector('#title').textContent, '<img src=x onerror=alert(1)>');
+equal(root.querySelector('#message').textContent, 'Check <script>unsafe</scr' + 'ipt>');
+assert(!root.querySelector('img, script'), 'server text must not become markup');
+assert(root.activeElement === root.querySelector('#close'), 'OK must be keyboard reachable');
+root.querySelector('#close').click();
+equal(dialog.style.display, 'none');
+assert(document.activeElement === focusBefore, 'dismissal restores previous focus');
+handlers.onEvent('alert', {severity: 'info', title: 'ReMLA', message: 'Next alert'});
+equal(root.querySelector('#message').textContent, 'Next alert');
+root.querySelector('#close').click();
+handlers.onEvent('alert', {severity: 'info', title: 'ReMLA',
+    message: 'Experiment/controlStatus/0,The experiment is not accepting control actions.'});
+equal(root.querySelector('#message').textContent, 'The experiment is not accepting control actions.');
+root.querySelector('#close').click();
+""")
+
     def test_json_bridge_uses_directory_endpoint_for_explicit_page_url(self):
         for page_path, endpoint_path in (
             ("/", "/ws"),
@@ -232,6 +269,7 @@ const header = document.createElement('header-component');
 header.setAttribute('data-enable-ambient-light', 'true');
 document.body.append(lamp, header);
 window.remlaJsonLatestState = {devices: {HgNeLamp: {power: 'on'}, Ambient: {power: 'off'}}};
+window.remlaJsonLatestControl = {hasControl: true, lifecycle: 'ready'};
 let finish, fail;
 const calls = [];
 window.remlaCommand = (...args) => {
@@ -268,25 +306,171 @@ equal(calls[2], ['Ambient', 'power_off', []]);
 finish({});
 """)
 
-    def test_photoelectric_handoff_replays_pending_and_prevents_duplicate_prompt(self):
+    def test_photoelectric_handoff_uses_explicit_yes_reset_no_continue_without_duplicates(self):
         self.run_browser("""
-let prompts = 0, finish;
+await import('/static/js/components/alert-dialog.js');
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+let finish;
 const calls = [];
-window.confirm = () => { prompts++; return prompts === 1; };
+window.confirm = () => { throw Error('native confirm must not be used'); };
 window.remlaCommand = (...args) => { calls.push(args); return new Promise(r => finish = r); };
 window.remlaJsonPendingHandoff = {expiresAt: 123};
 await import('/PhotoElectricEffect/static/js/app.js');
-equal(prompts, 1);
-equal(calls[0], ['Experiment', 'handoff', {choice: 'continue'}]);
+assert(dialog.style.display === 'flex', 'early handoff should show a prompt');
+equal(calls.length, 0);
+assert(dialog.shadowRoot.querySelector('#message').textContent.includes('reset'), 'ask clearly about resetting');
+dialog.shadowRoot.querySelector('#yes').click();
+await tick();
+equal(calls[0], ['Experiment', 'handoff', {choice: 'reset'}]);
 equal(window.remlaJsonPendingHandoff, null);
 window.dispatchEvent(new CustomEvent('remla:ownership-handoff', {detail: {}}));
-equal(prompts, 1);
+equal(calls.length, 1);
 finish({});
 await tick();
 window.dispatchEvent(new CustomEvent('remla:ownership-handoff', {detail: {}}));
-equal(prompts, 2);
-equal(calls[1], ['Experiment', 'handoff', {choice: 'reset'}]);
+await tick();
+assert(dialog.style.display === 'flex', 'subsequent handoff should prompt again');
+dialog.shadowRoot.querySelector('#no').click();
+await tick();
+equal(calls[1], ['Experiment', 'handoff', {choice: 'continue'}]);
 finish({});
+""")
+
+    def test_handoff_prompt_takes_priority_over_server_alerts_and_disconnect_sends_no_choice(self):
+        self.run_browser("""
+await import('/static/js/components/alert-dialog.js');
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+window.dispatchEvent(new CustomEvent('remla:alert', {detail: {title: 'ReMLA',
+    message: 'Experiment/controlStatus/0,Choose CONTROL/handoff/reset.'}}));
+assert(getComputedStyle(dialog).display === 'none', 'control status belongs in the queue header');
+window.dispatchEvent(new CustomEvent('remla:alert', {detail: {
+    title: 'Notice', message: 'First informational message', severity: 'info'
+}}));
+equal(dialog.shadowRoot.querySelector('#message').textContent, 'First informational message');
+let calls = [];
+window.remlaCommand = (...args) => { calls.push(args); return Promise.resolve({}); };
+await import('/PhotoElectricEffect/static/js/app.js');
+window.dispatchEvent(new CustomEvent('remla:ownership-handoff', {detail: {}}));
+await tick();
+assert(dialog.shadowRoot.querySelector('#message').textContent.includes('reset'), 'handoff must preempt informational alert');
+window.dispatchEvent(new CustomEvent('remla:alert', {detail: {title: 'Second', message: 'Queued notice'}}));
+assert(dialog.shadowRoot.querySelector('#message').textContent.includes('reset'), 'alerts must not overwrite a pending choice');
+window.dispatchEvent(new Event('remla:connection-closed'));
+await tick();
+equal(calls.length, 0);
+equal(dialog.style.display, 'none');
+""")
+
+    def test_handoff_waits_for_dialog_module_before_answering(self):
+        self.run_browser("""
+const calls = [];
+window.remlaCommand = (...args) => { calls.push(args); return Promise.resolve({}); };
+window.remlaJsonPendingHandoff = {timeoutSeconds: 60};
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+await import('/PhotoElectricEffect/static/js/app.js');
+equal(calls.length, 0);
+await import('/static/js/components/alert-dialog.js');
+await eventually(() => dialog.style.display === 'flex');
+dialog.shadowRoot.querySelector('#no').click();
+await eventually(() => calls.length === 1);
+equal(calls[0], ['Experiment', 'handoff', {choice: 'continue'}]);
+""")
+
+    def test_handoff_expiring_before_dialog_module_load_does_not_offer_stale_choice(self):
+        self.run_browser("""
+const calls = [];
+window.remlaCommand = (...args) => { calls.push(args); return Promise.resolve({}); };
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+await import('/PhotoElectricEffect/static/js/app.js');
+window.dispatchEvent(new CustomEvent('remla:ownership-handoff', {detail: {timeoutSeconds: 60}}));
+window.remlaJsonLatestControl = {handoffRequired: false, hasControl: true};
+window.dispatchEvent(new CustomEvent('remla:ownership-control', {detail: window.remlaJsonLatestControl}));
+await import('/static/js/components/alert-dialog.js');
+await tick();
+assert(getComputedStyle(dialog).display === 'none', 'expired handoff cannot reopen after module loads');
+dialog.shadowRoot.querySelector('#yes').click();
+equal(calls.length, 0);
+""")
+
+    def test_disconnect_before_page_module_load_clears_early_handoff(self):
+        self.run_browser("""
+let handlers;
+const calls = [];
+window.RemlaJsonSocket = class {
+    constructor(options) { handlers = options.handlers; this.pending = new Map(); }
+    connect() {}
+    command(...args) { calls.push(args); return Promise.resolve({}); }
+};
+await import('/static/js/remlaJsonApp.js');
+handlers.onEvent('ownership.handoff', {timeoutSeconds: 60});
+assert(window.remlaJsonPendingHandoff, 'fixture retained the early handoff');
+handlers.onClose({code: 1006});
+equal(window.remlaJsonPendingHandoff, null);
+await import('/static/js/components/alert-dialog.js');
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+await import('/PhotoElectricEffect/static/js/app.js');
+assert(getComputedStyle(dialog).display === 'none', 'disconnected handoff must not be replayed');
+dialog.shadowRoot.querySelector('#yes').click();
+equal(calls.length, 0);
+""")
+
+    def test_alert_dismissal_restores_focus_inside_header_shadow_root(self):
+        self.run_browser("""
+await import('/static/js/components/toggle.js');
+await import('/static/js/components/header.js');
+await import('/static/js/components/alert-dialog.js');
+const header = document.createElement('header-component');
+document.body.append(header);
+const manuals = header.shadowRoot.querySelector('button.manuals');
+manuals.focus();
+assert(header.shadowRoot.activeElement === manuals, 'fixture focused Manuals');
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+window.dispatchEvent(new CustomEvent('remla:alert', {detail: {title: 'Server', message: 'Notice'}}));
+dialog.shadowRoot.querySelector('#close').click();
+assert(header.shadowRoot.activeElement === manuals, 'restore focus to the original control, not its host');
+""")
+
+    def test_handoff_timeout_dismisses_prompt_without_sending_stale_choice(self):
+        self.run_browser("""
+await import('/static/js/components/alert-dialog.js');
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+const calls = [];
+window.remlaCommand = (...args) => { calls.push(args); return Promise.resolve({}); };
+await import('/PhotoElectricEffect/static/js/app.js');
+window.dispatchEvent(new CustomEvent('remla:ownership-handoff', {detail: {timeoutSeconds: 60}}));
+await eventually(() => dialog.style.display === 'flex');
+window.dispatchEvent(new CustomEvent('remla:ownership-control', {detail: {
+    handoffRequired: false, hasControl: true, lifecycle: 'ready'
+}}));
+await tick();
+equal(dialog.style.display, 'none');
+dialog.shadowRoot.querySelector('#yes').click();
+equal(calls.length, 0);
+""")
+
+    def test_queued_server_alerts_resume_after_handoff_choice(self):
+        self.run_browser("""
+await import('/static/js/components/alert-dialog.js');
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+window.dispatchEvent(new CustomEvent('remla:alert', {detail: {title: 'First', message: 'First notice'}}));
+const choice = dialog.confirm({kind: 'handoff', title: 'Reset?', message: 'Reset lab?'});
+window.dispatchEvent(new CustomEvent('remla:alert', {detail: {title: 'Second', message: 'Second notice'}}));
+equal(dialog.shadowRoot.querySelector('#message').textContent, 'Reset lab?');
+dialog.shadowRoot.querySelector('#yes').click();
+equal(await choice, true);
+equal(dialog.shadowRoot.querySelector('#message').textContent, 'First notice');
+dialog.shadowRoot.querySelector('#close').click();
+equal(dialog.shadowRoot.querySelector('#message').textContent, 'Second notice');
+dialog.shadowRoot.querySelector('#close').click();
+equal(dialog.style.display, 'none');
 """)
 
     def test_queue_and_control_events_render_inside_existing_header(self):
@@ -315,6 +499,142 @@ window.dispatchEvent(new CustomEvent('remla:ownership-queue', {
     detail: {position: 1, waitingCount: 1, hasActiveOwner: true}
 }));
 assert(queue.textContent.toLowerCase().includes('disconnect'), 'detached header must stop listening');
+""")
+
+    def test_photoelectric_queue_notice_and_control_lock_follow_ownership(self):
+        self.run_browser("""
+const stylesheet = document.createElement('link');
+stylesheet.rel = 'stylesheet';
+stylesheet.href = '/static/css/app.css';
+document.head.append(stylesheet);
+await new Promise((resolve, reject) => { stylesheet.onload = resolve; stylesheet.onerror = reject; });
+await import('/static/js/components/toggle.js');
+await import('/static/js/components/knob.js');
+await import('/static/js/components/header.js');
+await import('/static/js/components/alert-dialog.js');
+const header = document.createElement('header-component');
+header.setAttribute('data-enable-ambient-light', 'true');
+const detail = document.createElement('tool-detail-component');
+detail.innerHTML = `<div class="tool-interface"><toggle-component device-name="HgNeLamp"></toggle-component>
+    <knob-component device-name="Pot" command-name="move" degrees-per-step="1.8"
+        intervals="[3.6,36,360]"></knob-component><img-map-device device-name="colorWheel"></img-map-device></div>`;
+const dialog = document.createElement('alert-dialog');
+document.body.append(header, detail, dialog);
+const calls = [];
+window.remlaCommand = (...args) => { calls.push(args); return Promise.resolve({}); };
+await import('/PhotoElectricEffect/static/js/app.js');
+window.dispatchEvent(new Event('DOMContentLoaded'));
+const controls = [...detail.querySelectorAll('toggle-component, knob-component, img-map-device')];
+const ambient = header.shadowRoot.querySelector('toggle-component');
+const lamp = controls[0];
+assert(controls.every(control => control.inert) && ambient.inert, 'initially no control: all tools disabled');
+const interval = controls[1].shadowRoot.querySelector('select');
+header.shadowRoot.querySelector('button.manuals').focus();
+interval.focus();
+assert(controls[1].shadowRoot.activeElement !== interval, 'disabled knob interval cannot receive focus');
+assert(parseFloat(getComputedStyle(detail.querySelector('.tool-interface')).opacity) < 1,
+    'disabled tool controls are visibly greyed out');
+assert(getComputedStyle(header.shadowRoot.querySelector('.toggle')).opacity !== '1',
+    'ambient switch is greyed out without ownership');
+window.dispatchEvent(new CustomEvent('remla:ownership-control', {detail: {
+    hasControl: false, handoffRequired: false, lifecycle: 'ready'
+}}));
+window.dispatchEvent(new CustomEvent('remla:ownership-queue', {detail: {
+    position: 2, waitingCount: 3, hasActiveOwner: true
+}}));
+await eventually(() => dialog.style.display === 'flex');
+equal(dialog.shadowRoot.querySelector('#title').textContent, 'Waiting for control');
+assert(dialog.shadowRoot.querySelector('#message').textContent.includes('cannot control'),
+    'new queued visitor sees that tools cannot be used yet');
+lamp.shadowRoot.querySelector('img').click();
+window.dispatchEvent(new CustomEvent('remla-command', {detail: {
+    deviceName: 'Pot', commandName: 'move', arguments: ['2']
+}}));
+await tick();
+equal(calls, []);
+dialog.shadowRoot.querySelector('#close').click();
+window.dispatchEvent(new CustomEvent('remla:ownership-queue', {detail: {
+    position: 1, waitingCount: 2, hasActiveOwner: true
+}}));
+await tick();
+equal(dialog.style.display, 'none'); // Position updates stay in the header, not repeated modals.
+window.dispatchEvent(new CustomEvent('remla:ownership-control', {detail: {
+    hasControl: true, handoffRequired: false, lifecycle: 'ready'
+}}));
+assert(controls.every(control => !control.inert) && !ambient.inert, 'owner can use tools again');
+equal(getComputedStyle(detail.querySelector('.tool-interface')).opacity, '1');
+interval.focus();
+assert(controls[1].shadowRoot.activeElement === interval, 'owner can focus knob interval');
+lamp.shadowRoot.querySelector('img').click();
+equal(calls[0], ['HgNeLamp', 'power_on', []]);
+window.dispatchEvent(new CustomEvent('remla:ownership-control', {detail: {
+    hasControl: false, handoffRequired: false, lifecycle: 'faulted'
+}}));
+assert(controls.every(control => control.inert), 'faults also disable hardware controls');
+equal(dialog.style.display, 'none'); // A fault must not be presented as normal queue waiting.
+window.dispatchEvent(new Event('remla:connection-closed'));
+assert(controls.every(control => control.inert) && ambient.inert, 'disconnect disables tools');
+""")
+
+    def test_early_queue_notice_does_not_survive_promotion_or_disconnection(self):
+        self.run_browser("""
+let handlers;
+window.RemlaJsonSocket = class {
+    constructor(options) { handlers = options.handlers; this.pending = new Map(); }
+    connect() {}
+};
+await import('/static/js/remlaJsonApp.js');
+handlers.onQueue({position: 1, waitingCount: 2, hasActiveOwner: true});
+handlers.onEvent('ownership.control', {hasControl: false, handoffRequired: false, lifecycle: 'ready'});
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+await import('/PhotoElectricEffect/static/js/app.js');
+await import('/static/js/components/alert-dialog.js');
+await eventually(() => dialog.style.display === 'flex');
+equal(dialog.shadowRoot.querySelector('#title').textContent, 'Waiting for control');
+handlers.onEvent('ownership.control', {hasControl: false, handoffRequired: true, lifecycle: 'ready'});
+await tick();
+equal(dialog.style.display, 'none');
+const choices = [];
+window.remlaCommand = (...args) => { choices.push(args); return Promise.resolve({}); };
+handlers.onEvent('ownership.handoff', {timeoutSeconds: 60});
+await eventually(() => dialog.shadowRoot.querySelector('#no').hidden === false);
+dialog.shadowRoot.querySelector('#no').click();
+await tick();
+equal(choices, [['Experiment', 'handoff', {choice: 'continue'}]]);
+equal(dialog.style.display, 'none'); // The obsolete queue notice must not resume after handoff.
+handlers.onEvent('ownership.control', {hasControl: true, handoffRequired: false, lifecycle: 'ready'});
+handlers.onQueue({position: null, waitingCount: 1, hasActiveOwner: true});
+await tick();
+equal(dialog.style.display, 'none');
+handlers.onClose({code: 1006});
+handlers.onEvent('ownership.control', {hasControl: false, handoffRequired: false, lifecycle: 'ready'});
+handlers.onQueue({position: 1, waitingCount: 1, hasActiveOwner: true});
+await eventually(() => dialog.style.display === 'flex');
+equal(dialog.shadowRoot.querySelector('#title').textContent, 'Waiting for control');
+handlers.onClose({code: 1006});
+equal(dialog.style.display, 'none');
+""")
+
+    def test_queue_notice_waiting_for_dialog_recovers_after_draining(self):
+        self.run_browser("""
+const dialog = document.createElement('alert-dialog');
+document.body.append(dialog);
+await import('/PhotoElectricEffect/static/js/app.js');
+const control = lifecycle => window.dispatchEvent(new CustomEvent('remla:ownership-control', {
+    detail: {hasControl: false, handoffRequired: false, lifecycle}
+}));
+control('ready');
+window.dispatchEvent(new CustomEvent('remla:ownership-queue', {detail: {
+    position: 2, waitingCount: 2, hasActiveOwner: true
+}}));
+control('draining'); // An owner disconnect can pause admission while the dialog module is loading.
+await import('/static/js/components/alert-dialog.js');
+await tick();
+equal(getComputedStyle(dialog).display, 'none');
+control('ready');
+await eventually(() => dialog.style.display === 'flex');
+equal(dialog.shadowRoot.querySelector('#title').textContent, 'Waiting for control');
 """)
 
     def test_header_replays_queue_received_before_it_connected(self):

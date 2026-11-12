@@ -87,6 +87,11 @@ export class Header extends HTMLElement {
           width: 100%;
         }
 
+        :host([data-remla-controls-disabled]) .toggle {
+          opacity: 0.45;
+          pointer-events: none;
+        }
+
         .toggle-label {
           text-transform: uppercase;
           font-size: 0.75rem;
