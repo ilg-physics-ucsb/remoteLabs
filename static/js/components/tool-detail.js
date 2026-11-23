@@ -15,6 +15,9 @@ export class ToolDetail extends HTMLElement {
         :host {
           display: block;
           box-sizing: border-box;
+          min-width: 0;
+          min-height: 0;
+          overflow: hidden;
         }
 
         .default {
@@ -25,20 +28,25 @@ export class ToolDetail extends HTMLElement {
 
         .tool-container {
           height: 100%;
+          min-width: 0;
+          min-height: 0;
         }
 
         .tool-container div {
           display: none;
           height: 100%;
           flex-direction: column;
-          // overflow: scroll;
         }
 
         ::slotted(div) {
           display: none;
+          box-sizing: border-box;
+          width: 100%;
           height: 100%;
+          min-width: 0;
+          min-height: 0;
+          overflow: hidden;
           flex-direction: column;
-          // overflow: scroll;
         }
 
         .active {

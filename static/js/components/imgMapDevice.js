@@ -6,9 +6,25 @@ export class imgMapDevice extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
-        .image-map-device svg {
+        :host {
+          display: block;
+          min-width: 0;
+          min-height: 0;
+        }
+
+        .image-map-device {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: 100%;
+          height: 100%;
+        }
+
+        .image-map-device svg {
+          width: auto;
           height: auto;
+          max-width: 100%;
+          max-height: 100%;
         }
 
         .image-map-device .map-button {
@@ -27,6 +43,21 @@ export class imgMapDevice extends HTMLElement {
         .image-map-device [data-cmd]:hover {
           fill: bisque;
           fill-opacity: 0.75;
+        }
+
+        .image-map-device .map-button.selected {
+          fill: bisque;
+          fill-opacity: 0.75;
+          stroke: bisque;
+          stroke-width: 7px;
+          animation: last-click 0.3s ease-out;
+        }
+
+        @keyframes last-click { from { fill-opacity: 0.2; } to { fill-opacity: 0.75; } }
+
+        :host([data-command-pending]) .image-map-device {
+          pointer-events: none;
+          opacity: 0.5;
         }
       </style>
 
@@ -57,15 +88,38 @@ export class imgMapDevice extends HTMLElement {
       })
       .then((svgText) => {
         target.innerHTML = svgText;
+        this.setSelectedControl(this.selectedControlId);
         target.addEventListener('click', (event) => {
+          if (this.hasAttribute('data-command-pending')) {
+            return;
+          }
           const control = event.target instanceof Element ? event.target.closest('[data-cmd]') : null;
           if (!control) {
             return;
           }
 
           const buttonValue = control.getAttribute('data-cmd');
-          const deviceCommand = `${deviceName}/${buttonValue}`
+          if (!buttonValue || !deviceName) {
+            return;
+          }
+          if (buttonValue.startsWith('power_') && !document.body?.hasAttribute('data-routed-power')) {
+            control.setAttribute('title', 'Power controls require a verified lab configuration.');
+            return;
+          }
+          if (control.matches('.map-button[id]')) {
+            window.dispatchEvent(new CustomEvent('remla:control-click', {
+              detail: { kind: 'map', deviceName, id: control.id },
+            }));
+          }
+          const deviceCommand = `${deviceName}/${buttonValue}`;
           this.emit(deviceCommand);
+          const [commandName, ...commandArguments] = buttonValue.split('/');
+          const command = { deviceName, commandName, arguments: commandArguments };
+          if (this.hasAttribute('lock-while-commanding')) {
+            this.setPending(true);
+            command.source = this;
+          }
+          window.dispatchEvent(new CustomEvent('remla-command', { detail: command }));
         });
       })
       .catch((error) => {
@@ -78,6 +132,26 @@ export class imgMapDevice extends HTMLElement {
     const imgMapEvent = new CustomEvent('imgMapDeviceEvent', { detail: { value: value } });
     window.dispatchEvent(imgMapEvent);
     console.log(value);
+  }
+
+  setSelectedControl(id, replay = false) {
+    this.selectedControlId = id || '';
+    const controls = [...this.shadowRoot.querySelectorAll('.map-button[id][data-cmd]')];
+    const selected = controls.find(control => control.id === id);
+    for (const control of controls) {
+      if (control !== selected) control.classList.remove('selected');
+    }
+    if (selected) {
+      if (replay && selected.classList.contains('selected')) {
+        selected.classList.remove('selected');
+        void selected.getBoundingClientRect();
+      }
+      selected.classList.add('selected');
+    }
+  }
+
+  setPending(pending) {
+    this.toggleAttribute('data-command-pending', pending);
   }
 }
 
