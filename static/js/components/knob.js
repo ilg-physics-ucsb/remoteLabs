@@ -10,31 +10,50 @@ export class Knob extends HTMLElement {
         .knob {
           display: inline-flex;
           flex-direction: column;
-        }
-
-        h3 {
-          text-align: center;
+          align-items: center;
+          justify-content: center;
         }
 
         select {
+          box-sizing: border-box;
+          height: 24px;
+          max-width: 100%;
           margin-bottom: 8px;
         }
+
+        select.selected { outline: 3px solid bisque; }
 
         .row {
           display: flex;
           align-items: center;
-          gap: 8px;
+          flex: 0 0 auto;
+          width: 160px;
+          height: 97px;
+          gap: 5%;
         }
 
         img {
-          width: 60px;
-          height: 60px;
+          width: 37.5%;
+          height: 61.85567%;
+          object-fit: contain;
         }
 
         #up, #down {
-          width: 42px;
-          height: 97px;
+          width: 26.25%;
+          height: 100%;
           cursor: pointer;
+        }
+
+        @container tool-control (min-height: 0px) {
+          .knob {
+            width: 100%;
+            height: 100%;
+          }
+
+          .row {
+            width: min(100cqw, calc((100cqh - 32px) * 160 / 97));
+            height: min(calc(100cqw * 97 / 160), calc(100cqh - 32px));
+          }
         }
 
         #up path, #down path {
@@ -50,12 +69,14 @@ export class Knob extends HTMLElement {
         #down.selected path {
           fill: bisque;
           fill-opacity: 0.75;
+          animation: last-click 0.3s ease-out;
         }
+
+        @keyframes last-click { from { fill-opacity: 0.2; } to { fill-opacity: 0.75; } }
       </style>
 
       <div class="knob">
-        <h3></h3>
-        <select>
+        <select id="interval">
           <option value="">Select an interval</option>
         </select>
         <div class="row">
@@ -77,8 +98,11 @@ export class Knob extends HTMLElement {
     const intervalSelect = this.shadowRoot.querySelector('select');
 
     this.componentId = this.getAttribute('component-id');
+    this.deviceName = this.getAttribute('device-name');
+    this.commandName = this.getAttribute('command-name');
+    this.degreesPerStep = Number(this.getAttribute('degrees-per-step'));
     this.intervals = JSON.parse(this.getAttribute('intervals'));
-    this.knobImageUrl = this.getAttribute('knobImageUrl');
+    this.knobImageUrl = this.getAttribute('knob-image-url');
 
     this.intervals.forEach((interval) => {
       const option = document.createElement('option');
@@ -93,38 +117,96 @@ export class Knob extends HTMLElement {
 
     intervalSelect.addEventListener('change', (event) => {
       this.selectedInterval = event.target.value;
+      window.dispatchEvent(new CustomEvent('knobIntervalChange', {
+        detail: { deviceName: this.deviceName, interval: this.selectedInterval },
+      }));
     });
 
     downButton.addEventListener('click', () => {
-      upButton.classList.remove('selected');
-      downButton.classList.add('selected');
+      this.setSelectedControl('down', true);
+      this.emitControlClick('down');
       this.down();
     });
 
     upButton.addEventListener('click', () => {
-      downButton.classList.remove('selected');
-      upButton.classList.add('selected');
+      this.setSelectedControl('up', true);
+      this.emitControlClick('up');
       this.up();
     });
   }
 
+  emitControlClick(id) {
+    if (this.deviceName) {
+      window.dispatchEvent(new CustomEvent('remla:control-click', {
+        detail: { kind: 'knob', deviceName: this.deviceName, id },
+      }));
+    }
+  }
+
+  setSelectedControl(id, replay = false) {
+    const targets = [...this.shadowRoot.querySelectorAll('#up, #down, #interval')];
+    const selected = targets.find(target => target.id === id);
+    for (const target of targets) {
+      if (target !== selected) target.classList.remove('selected');
+    }
+    if (selected) {
+      if (replay && selected.classList.contains('selected')) {
+        selected.classList.remove('selected');
+        void selected.getBoundingClientRect();
+      }
+      selected.classList.add('selected');
+    }
+  }
+
   up() {
-    if (!this.selectedInterval) {
+    if (!this.selectedInterval || this.pending) {
       return;
     }
     this.emit(+this.selectedInterval);
   }
 
   down() {
-    if (!this.selectedInterval) {
+    if (!this.selectedInterval || this.pending) {
       return;
     }
     this.emit(-this.selectedInterval);
   }
 
+  setInterval(value) {
+    const select = this.shadowRoot.querySelector('select');
+    if (value === '') {
+      select.value = '';
+      this.selectedInterval = '';
+      return true;
+    }
+    const option = [...select.options].find(item => item.value === String(value));
+    if (!option) return false;
+    select.value = option.value;
+    this.selectedInterval = option.value;
+    return true;
+  }
+
   emit(value) {
     const knobEvent = new CustomEvent('knob', { detail: { componentId: this.componentId, value: value } });
     window.dispatchEvent(knobEvent);
+    if (this.deviceName && this.commandName) {
+      this.setPending(true);
+      window.dispatchEvent(new CustomEvent('remla-command', {
+        detail: {
+          deviceName: this.deviceName,
+          commandName: this.commandName,
+          arguments: [String(this.degreesPerStep > 0 ? Math.round(value / this.degreesPerStep) : value)],
+          source: this,
+        },
+      }));
+    }
+  }
+
+  setPending(pending) {
+    this.pending = Boolean(pending);
+    const row = this.shadowRoot.querySelector('.row');
+    row.style.opacity = this.pending ? '0.5' : '1';
+    row.style.pointerEvents = this.pending ? 'none' : 'auto';
   }
 }
 

@@ -74,9 +74,17 @@ tool-detail-component .tool div {
 
 /* UPPER Div */
 .tool-heading {
+  box-sizing: border-box;
   padding: 1rem;
-  height: 40%;
+  width: 100%;
+  flex: 0 1 30%;
+  min-height: 0;
+  overflow: auto;
   gap: 1rem;
+}
+
+.tool-heading > * {
+  flex-shrink: 0;
 }
 
 .tool-title,
@@ -89,34 +97,94 @@ tool-detail-component .tool div {
   margin: 0;
 }
 
-/* Image */
+/* Image
 .tool-header-img {
-
 }
+*/
 /* Title */
 .tool-title {
   text-align: center;
 }
 
-/* Description - put this in a left-justified, scrollable textbox with 1rem margins on the left and right*/
+/* Scroll the heading instead of shrinking its description out of view. */
 .tool-description {
-  overflow: scroll;
+  overflow: visible;
 }
 
 /* LOWER Div */
 .tool-interface {
-  width: calc(100% - 2rem);
+  box-sizing: border-box;
+  width: 100%;
   padding: 1rem;
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
-  height: 60%;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
   background-color: var(--tertiary);
-  overflow: scroll;
-  gap: 1rem;
+  overflow: auto;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+body[data-remla-controls-disabled] tool-detail-component .tool-interface {
+  opacity: 0.45;
+}
+
+body[data-remla-controls-disabled] tool-detail-component .tool-interface toggle-component,
+body[data-remla-controls-disabled] tool-detail-component .tool-interface knob-component,
+body[data-remla-controls-disabled] tool-detail-component .tool-interface img-map-device {
+  pointer-events: none;
 }
 
 .tool-interface p {
   margin: 0;
+}
+
+#mercury-neon-lamp .tool-interface > .tool-lamp-img {
+  display: block;
+  align-self: center;
+  width: min(100%, 420px);
+  height: auto;
+  max-height: 30%;
+  object-fit: contain;
+  flex: 0 1 auto;
+}
+
+.tool-interface > div {
+  flex: 1 0 auto;
+  min-height: max-content;
+  justify-content: center;
+}
+
+.tool-interface > p,
+.tool-interface > div > p {
+  flex-shrink: 0;
+}
+
+tool-detail-component .tool-interface toggle-component,
+tool-detail-component .tool-interface knob-component {
+  flex: 1 1 0;
+  min-width: 0;
+  container-type: size;
+  container-name: tool-control;
+}
+
+tool-detail-component .tool-interface toggle-component {
+  min-height: 40px;
+  --toggle-fit-max-width: 100%;
+  --toggle-fit-max-height: 100%;
+}
+
+tool-detail-component .tool-interface knob-component {
+  min-height: 64px;
+}
+
+tool-detail-component .tool-interface img-map-device {
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
 }
 
 /* Instructions */
@@ -127,7 +195,7 @@ tool-detail-component .tool div {
 /* Tool Detail Component */
 tool-detail-component knob-component {
   justify-content: center;
-  display: flex
+  display: flex;
 }
 /* END - Tool Detail Styling*/
 
@@ -202,7 +270,55 @@ video-component {
     flex-direction: row;
   }
 
+  .video-row video-component {
+    flex: 0 1 auto;
+    width: 60%;
+    min-width: 0;
+  }
+
+  .video-row tool-detail-component {
+    flex: 1 1 40%;
+  }
+
   tool-detail-component {
     margin-top: 0;
+  }
+}
+
+@media (min-width: 1024px) and (min-height: 650px) and (orientation: landscape) {
+  .video-row tool-detail-component {
+    min-width: 360px;
+    min-height: 340px;
+  }
+
+  .tool-heading {
+    flex-basis: 20%;
+    min-height: 52px;
+  }
+
+  .tool-interface {
+    overflow: hidden;
+  }
+
+  .tool-interface > div {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    grid-template-rows: auto auto auto;
+  }
+
+  .video-row video-component {
+    height: clamp(220px, 40vh, 320px);
+  }
+
+  .video-row tool-detail-component {
+    flex-shrink: 0;
+    height: 380px;
   }
 }

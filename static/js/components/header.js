@@ -21,6 +21,9 @@ export class Header extends HTMLElement {
           margin-top: 0.5rem;
         }
 
+        .follow-controller { font-size: 0.8rem; white-space: nowrap; }
+        .follow-controller[hidden] { display: none; }
+
         .time {
           color: red;
         }
@@ -29,7 +32,7 @@ export class Header extends HTMLElement {
           display: grid;
           grid-template-columns: 160px auto 160px;
           align-items: center;
-          padding: 0.5rem 2rem;
+          padding: 0 2rem;
           background-color: var(--header-color);
           border-radius: var(--border-radius);
         }
@@ -87,6 +90,11 @@ export class Header extends HTMLElement {
           width: 100%;
         }
 
+        :host([data-remla-controls-disabled]) .toggle {
+          opacity: 0.45;
+          pointer-events: none;
+        }
+
         .toggle-label {
           text-transform: uppercase;
           font-size: 0.75rem;
@@ -115,11 +123,14 @@ export class Header extends HTMLElement {
         <div class="text">
           <h1></h1>
           <p class="session-message">This session will end and the motors will reset in <span class="time"></span></p>
+          <p><span class="queue-status" aria-live="polite"></span>
+            <label class="follow-controller" hidden><input type="checkbox" name="follow-controller" checked hidden> Follow controller's view</label>
+          </p>
         </div>
         <div class="button-container">
           <div class="toggle">
             <span class="toggle-label">Turn on ambient light</span>
-            <toggle-component></toggle-component>
+            <toggle-component device-name="Ambient"></toggle-component>
           </div>
         </div>
         <div class="manuals-menu">
@@ -147,6 +158,33 @@ export class Header extends HTMLElement {
     this.manualsSlot = this.shadowRoot.querySelector('slot[name="manuals"]');
     this.closeButton = this.shadowRoot.querySelector('.close');
     this.ambientLightSwitch = this.shadowRoot.querySelector('.toggle');
+    this.followControl = this.shadowRoot.querySelector('input[name="follow-controller"]');
+    this.handleFollowChange = () => window.dispatchEvent(new CustomEvent('remla:follow-change', {
+      detail: { enabled: this.followControl.checked },
+    }));
+    this.followControl.addEventListener('change', this.handleFollowChange);
+    this.handleQueue = (event) => {
+      this.queueState = event.detail;
+      this.renderQueueStatus();
+    };
+    this.handleControl = (event) => {
+      this.hasControl = event.detail?.hasControl === true;
+      this.renderQueueStatus();
+    };
+    this.handleConnectionClosed = () => {
+      this.queueState = null;
+      this.hasControl = false;
+      this.shadowRoot.querySelector('.queue-status').textContent = 'Disconnected from lab; refresh to reconnect.';
+      this.followControl.checked = true;
+      this.followControl.hidden = true;
+      this.followControl.closest('label').hidden = true;
+    };
+    window.addEventListener('remla:ownership-queue', this.handleQueue);
+    window.addEventListener('remla:ownership-control', this.handleControl);
+    window.addEventListener('remla:connection-closed', this.handleConnectionClosed);
+    this.queueState = window.remlaJsonLatestQueue || null;
+    this.hasControl = window.remlaJsonLatestControl?.hasControl === true;
+    this.renderQueueStatus();
 
     if (this.manualsButton) {
       this.manualsButton.addEventListener('click', this.handleManualsClick);
@@ -179,6 +217,10 @@ export class Header extends HTMLElement {
   }
 
   disconnectedCallback() {
+    this.followControl?.removeEventListener('change', this.handleFollowChange);
+    window.removeEventListener('remla:ownership-queue', this.handleQueue);
+    window.removeEventListener('remla:ownership-control', this.handleControl);
+    window.removeEventListener('remla:connection-closed', this.handleConnectionClosed);
     if (this.manualsButton) {
       this.manualsButton.removeEventListener('click', this.handleManualsClick);
     }
@@ -215,6 +257,30 @@ export class Header extends HTMLElement {
 
   getSidenavElement() {
     return this.shadowRoot.querySelector('.manuals-menu');
+  }
+
+  setAmbientLightState(enabled) {
+    this.shadowRoot.querySelector('toggle-component')?.setState(enabled);
+  }
+
+  setFollowing(enabled) {
+    if (this.followControl) this.followControl.checked = Boolean(enabled);
+  }
+
+  renderQueueStatus() {
+    const status = this.shadowRoot.querySelector('.queue-status');
+    const queue = this.queueState;
+    const canFollow = queue?.position != null && !this.hasControl;
+    this.followControl.hidden = !canFollow;
+    this.followControl.closest('label').hidden = !canFollow;
+    if (queue?.position != null) {
+      status.textContent = `Queue position ${queue.position} of ${queue.waitingCount}`;
+    } else if (this.hasControl && queue) {
+      const count = queue.waitingCount;
+      status.textContent = count ? `${count} ${count === 1 ? 'person' : 'people'} waiting` : 'You have control';
+    } else if (queue) {
+      status.textContent = queue.hasActiveOwner ? 'Waiting for lab control' : 'Waiting for lab to be ready';
+    }
   }
 
   startSessionTimer(minutes) {

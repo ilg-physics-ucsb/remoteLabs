@@ -44,18 +44,7 @@ export class Toolbar extends HTMLElement {
         return;
       }
 
-      // Set active class on selected tool button
-      const buttons = this.querySelectorAll('button[group-id]');
-
-      buttons.forEach((button) => {
-        if (button.attributes.getNamedItem('group-id').value === toolGroupId) {
-          button.classList.add('active');
-        } else {
-          button.classList.remove('active');
-        }
-      });
-
-      this.emit(toolGroupId);
+      this.selectTool(toolGroupId, 'local');
     });
 
     // Handle cameraChange event emitted by video component to filter
@@ -97,13 +86,21 @@ export class Toolbar extends HTMLElement {
 
     if (!hasActiveVisibleButton) {
       const firstVisibleButton = visibleButtons[0];
-      firstVisibleButton.classList.add('active');
-      this.emit(firstVisibleButton.getAttribute('group-id'));
+      this.selectTool(firstVisibleButton.getAttribute('group-id'), 'camera');
     }
   }
 
-  emit(value) {
-    const toolbarSelectionEvent = new CustomEvent('toolbarSelection', { detail: { toolGroupId: value } });
+  selectTool(value, source = 'remote') {
+    const buttons = [...this.querySelectorAll('button[group-id]')];
+    if (value && !buttons.some(button => button.getAttribute('group-id') === value)) return false;
+    buttons.forEach(button => button.classList.toggle('active', Boolean(value) && button.getAttribute('group-id') === value));
+    this.selectedGroupId = value;
+    this.emit(value, source);
+    return true;
+  }
+
+  emit(value, source = 'local') {
+    const toolbarSelectionEvent = new CustomEvent('toolbarSelection', { detail: { toolGroupId: value, source } });
     window.dispatchEvent(toolbarSelectionEvent);
   }
 }
